@@ -1,0 +1,154 @@
+.loginBox {
+    position: absolute;
+    left: 50%;
+    margin-left: -115px;
+    margin-top: 30px;
+    vertical-align:middle;
+    padding-top:10px;
+    padding-right:50px;
+    padding-left:30px;
+    padding-bottom:23px;
+    width:230px;
+    background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #ccc;
+    border-style: solid;
+
+}
+
+.welcomeBox {
+    margin-top:-70px;
+    margin-right:30px;
+    float:right;
+}
+
+.form_label {
+    font-size: 12px;
+    color: #333333;
+}
+
+.login_message {
+    color:red;
+}
+
+div.autocomplete {
+
+    position:absolute;
+    width:250px;
+    background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    margin:0px;
+    padding:0px;
+    overflow:hidden;
+    border: 1px solid;
+}
+
+div.autocomplete ul {
+    list-style-type:none;
+    margin:0px;
+    padding:0px;
+    overflow:auto;
+}
+
+div.autocomplete ul li.selected { background-color: #294597; color: #ffffff}
+
+div.autocomplete ul li {
+    list-style-type:none;
+    display:block;
+    margin:0 0 0 5;
+    padding:2px;
+    height:12px;
+    cursor:pointer;
+    font-size: 9px;
+}
+
+.currencyValue {
+    text-align:right;
+}
+
+.currencyDiscountValue {
+    color:red;
+    text-align:right;
+}
+
+.printLink {
+    background: transparent url(../images/skin/database_print.png) 5px 50% no-repeat;
+    padding-left: 28px;
+}
+
+.menuButton a.report {
+    background: url(../images/skin/report.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
+
+.menuButton a.chart {
+    background: url(../images/skin/chart_curve.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
+
+.menuButton a.excel {
+    background: url(../images/skin/page_white_excel.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
+
+.menuButton a.pdf {
+    background: url(../images/skin/page_white_acrobat.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
+
+.menuButton a.patient {
+    background: url(../images/skin/group.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
+
+.menuButton a.clinicalHistory {
+    background: url(../images/skin/tag_green.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
+
+div.import {
+    font-weight: normal;
+    font-size: 16px;
+    margin: .8em 0 .3em 0;
+}
+
+div.import a.button {
+	background: url(../images/skin/lightning_go.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
+
+.my-state-hover {
+    background: #fff url(../images/skin/shadow.jpg);
+    color: #333;
+    display: block;
+    text-decoration: none;
+    width: 100%;
+}
+
+.selectable { 
+   list-style-type: none; 
+   margin: 0; 
+   padding: 0; 
+   width: 60%; 
+}
+
+.selectable li { 
+   margin: 3px; 
+   padding: 0.3em; 
+   font-size: 1.4em; 
+   height: 60px; 
+}
+
+.selectable .ui-selecting { 
+   background: #b2d1ff; 
+}
+.selectable .ui-selected { 
+   background: #0033FF; 
+   color: white; 
+}
+  
