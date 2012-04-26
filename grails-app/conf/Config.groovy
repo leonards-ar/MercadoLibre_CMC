@@ -95,4 +95,15 @@ grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.ml.cmc.Us
 grails.plugins.springsecurity.authority.className = 'com.ml.cmc.Role'
 grails.plugins.springsecurity.useHttpSessionEventPublisher = true
 grails.plugins.springsecurity.logout.handlerNames = ['rememberMeServices','securityContextLogoutHandler', 'unlockLogoutHander']
+grails.plugins.springsecurity.securityConfigType = "InterceptUrlMap"
+grails.plugins.springsecurity.interceptUrlMap = [
+    '/home/**':    ['ROLE_USER'],
+    '/preconciliation/**':    ['ROLE_USER'],
+    '/index.gsp':  ['IS_AUTHENTICATED_ANONYMOUSLY'],
+    '/login/**':     ['IS_AUTHENTICATED_ANONYMOUSLY'],
+    '/logout/**':    ['IS_AUTHENTICATED_ANONYMOUSLY']
+    
+ ]
 
+// jquery configuration
+grails.views.javascript.library="jquery"
