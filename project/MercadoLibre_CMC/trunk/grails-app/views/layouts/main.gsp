@@ -1,17 +1,28 @@
-<!DOCTYPE html>
 <html>
-    <head>
-        <title><g:layoutTitle default="Grails" /></title>
-        <link rel="stylesheet" href="${resource(dir:'css',file:'main.css')}" />
-        <link rel="shortcut icon" href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
-        <g:layoutHead />
-        <g:javascript library="application" />
-    </head>
-    <body>
-        <div id="spinner" class="spinner" style="display:none;">
-            <img src="${resource(dir:'images',file:'spinner.gif')}" alt="${message(code:'spinner.alt',default:'Loading...')}" />
-        </div>
-        <div id="grailsLogo"><a href="http://grails.org"><img src="${resource(dir:'images',file:'grails_logo.png')}" alt="Grails" border="0" /></a></div>
-        <g:layoutBody />
-    </body>
+  <head>
+    <title><g:layoutTitle default="Grails" /></title>
+    <link rel="stylesheet" href="${resource(dir:'css',file:'main.css')}" />
+    <!-- link rel="shortcut icon" href="${resource(dir:'images',file:grailsApplication.config.application.favicon)}" type="image/x-icon" /-->
+  <g:layoutHead />
+  <link rel="stylesheet" href="${createLinkTo(dir:'css',file:'cmc.css')}" type="text/css" media="screen" charset="utf-8">
+  <g:javascript library="application" />
+</head>
+<body>
+  <div id="spinner" class="spinner" style="display:none;">
+    <img src="${resource(dir:'images',file:'spinner.gif')}" alt="Spinner" />
+  </div>
+  <div class="logo"><img src="${resource(dir:'images',file:'logo-mercadolibre.png')}" alt="${message(code:'cmc.title', default:'Consolidador de Medios de Cobro')}" />
+
+      <p>  </p>
+      <div class="welcomeBox">
+        <br/><br/>
+        <sec:ifLoggedIn>
+          <g:link controller="logout"><g:message code="logout" default="Abandonar" /></g:link>
+          <br/><br/>
+          <g:message code="login.bar.welcomeback" args="${[sec.loggedInUserInfo(field:'username')]}"/>
+        </sec:ifLoggedIn>
+        <br/><br/>
+  </div>
+<g:layoutBody/>
+</body>
 </html>

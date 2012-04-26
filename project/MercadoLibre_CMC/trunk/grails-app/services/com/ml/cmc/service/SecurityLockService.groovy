@@ -1,28 +1,38 @@
 package com.ml.cmc.service
 
 import com.ml.cmc.Lock
+import com.ml.cmc.Medio
+import com.ml.cmc.constants.Constant
 import com.ml.cmc.exception.SecLockException
 
 class SecurityLockService {
 
     static transactional = true
+    
+    private static Map constraints = [
+        (Constant.FUNC_PRECONCILIATE):[(Constant.FUNC_COMPENSATE)], 
+        (Constant.FUNC_CONCILIATE):[(Constant.FUNC_DESPRECONCILIATE)],
+        (Constant.FUNC_COMPENSATE):[(Constant.FUNC_PRECONCILIATE)],
+        (Constant.FUNC_DESPRECONCILIATE):[(Constant.FUNC_CONCILIATE)]
+        ]
 
-    Lock lockFunctionality(String username, String functionality, String sessionId) {
+    Lock lockFunctionality(String username, String functionality, String sessionId, Medio medio) {
         
         Lock lockFound = Lock.findByFunction(functionality)
-        if(lockFound != null){
+        if(lockFound == null){
+            Lock lock = new Lock(username:username, function:functionality, sessionId: sessionId, medio: medio)
+            lock.save(flush: true)
             
-          throw new SecLockException("Resource locked by user: ${lockFound?.username}", lockFound);
+            return lock
         }
         
-        def locker = new Lock()
-        locker.sessionId = sessionId
-        locker.username = username
-        locker.function = functionality
+        def funcConstraint = constraints.get(functionality) != null ? constraints.get(functionality) : []  
+        if(funcConstraint.contains(lockFound.function)) throw new SecLockException("Resource locked by user: ${lockFound?.username}", lockFound);
         
-        locker.save(flush: true)
+        Lock lock = new Lock(username:username, function:functionality, sessionId: sessionId, medio: medio)
+        lock.save(flush: true)
         
-        return locker
+        return lock
         
     }
     
@@ -33,5 +43,5 @@ class SecurityLockService {
             locker.delete(flush:true)
         }
     }
-
+    
 }
