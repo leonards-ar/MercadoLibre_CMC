@@ -1,8 +1,7 @@
 package com.ml.cmc
 
-class SiteSales {
-    Long saleId
-    Integer saleQuota
+class SalesSite {
+    Long saleMl
     Medio medio
     State state
     RegisterType registerType
@@ -25,7 +24,8 @@ class SiteSales {
     Long store
     String cardLot
     String uniqueRo
-    String documentNumber   
+    String documentNumber 
+    Payment payment  
     
     static constraints = {
     }
@@ -33,9 +33,10 @@ class SiteSales {
     static mapping = {
         
         table 'VENTAS_SITE'
-        id generator:'assigned', name:'saleId'
-        saleId column:'CD_VENTA_ML'
-        saleQuota column:'CD_VENTA_CUOTA'
+        version false
+        
+        id column:'CD_VENTA_CUOTA', generator:'assigned'
+        saleMl column:'CD_VENTA_ML'
         medio column:'CD_MEDIO'
         state column:'CD_ESTADO'
         registerType column:'CD_TIPO_REGISTRO'
@@ -59,5 +60,6 @@ class SiteSales {
         cardLot column:'LOTE_TARJETA'
         uniqueRo column:'NU_UNICO_RO'
         documentNumber column:'DOC_NUMBER'
+        payment column:'PAYMENT_ID'
     }
 }

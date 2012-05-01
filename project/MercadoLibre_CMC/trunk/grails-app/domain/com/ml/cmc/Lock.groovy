@@ -15,19 +15,12 @@ class Lock {
         table 'LOCK_FUNCTIONALITY'
         id generator: 'assigned', name:'sessionId', type:'string'
         sessionId column:'session_id'
+        medio column:'cd_medio'
+        function column:'function'
     }
     
     String toString() {
         return sessionId + '-' + username + '-' + function
-    }
-    
-    Lock(String username, String sessionId, String function, Medio medio) {
-        
-        this.username = username 
-        this.sessionId = sessionId
-        this.function = function
-        this.medio = medio
-        
     }
     
 }

@@ -51,10 +51,7 @@ jQuery.fn.chainSelect = function( target, url, settings )
 			data = eval(data);//get json array
 			for (i = 0; i < data.length; i++)//iterate over all options
 			{
-			  for ( key in data[i] )//get key => value
-			  {	
-					$(target).get(0).add(new Option(data[i][key],[key]), document.all ? i : null);
-              }
+				$(target).get(0).add(new Option(data[i],data[i]), document.all ? i : null);
 			}
 
 			if (settings.defaultValue != null)

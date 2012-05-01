@@ -2,7 +2,6 @@ package com.ml.cmc
 
 class Financial {
 
-    Long financialId
     Medio medio
     State state
     Long lot
@@ -19,9 +18,9 @@ class Financial {
     
     static mappings = {
         table 'FINANCIERO'
-
-        id generator:'assigned', name:'financialId'
-        financialId column:'CD_RECIB_FINAN'
+        version false
+        id column:'CD_RECIB_FINAN', generator:'assigned'
+        //financialId column:''
         medio column:'CD_MEDIO'
         state column:'CD_ESTADO'
         lot column:'LOTE'
