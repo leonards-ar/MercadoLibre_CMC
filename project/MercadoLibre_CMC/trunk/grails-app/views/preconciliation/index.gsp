@@ -36,12 +36,9 @@
   $('.filtered').find(".paginateButtons a, th.sortable a").live('click', function(event) {
         event.preventDefault();
         var url = $(this).attr('href');
-        alert(url);
+
         var closestDiv = $(this).closest('div');
         
-        alert($(closestDiv).html());
- 
-        //var sales_grid = $(this).parents("#sales_table");
         $(closestDiv).html($("#spinner").html());
  
         $.ajax({
