@@ -1,7 +1,6 @@
 package com.ml.cmc
 
 class State {
-    Long id
     String value
      
     static constraints = {
@@ -10,9 +9,13 @@ class State {
     
     static mapping = {
         table 'LKP_ESTADOS'
-        id generator:'assigned', name:'id'
-        id column:'CD_ESTADO'
+        version false
+        id column:'CD_ESTADO', generator:'assigned'
         value column:'TX_ESTADO'
         
+    }
+    
+    String toString() {
+        retunr value
     }
 }

@@ -6,9 +6,10 @@
     <g:javascript library="jquery" />
     <g:javascript library="jquery.chainedSelects"/>
   <g:javascript>
+  
    $(function(){
 	 $('#country').chainSelect('#card','${createLink(action:"cards")}',
-  { 
+   { 
     before:function (target) //before request hide the target combobox and display the loading message
     { 
       $(target).attr("disabled",true);
@@ -20,7 +21,7 @@
     }
   });
   
-   $('#card').chainSelect('#site','${createLink(action:"sites")}',
+  $('#card').chainSelect('#site','${createLink(action:"sites")}',
   { 
     before:function (target) //before request hide the target combobox and display the loading message
     { 
@@ -30,8 +31,32 @@
     { 
       $(target).attr("disabled",false);
     }
-  });  
+  });
+
+  $('.filtered').find(".paginateButtons a, th.sortable a").live('click', function(event) {
+        event.preventDefault();
+        var url = $(this).attr('href');
+        alert(url);
+        var closestDiv = $(this).closest('div');
+        
+        alert($(closestDiv).html());
+ 
+        //var sales_grid = $(this).parents("#sales_table");
+        $(closestDiv).html($("#spinner").html());
+ 
+        $.ajax({
+            type: 'POST',
+            url: url,
+            success: function(data) {
+                $(closestDiv).fadeOut('fast', function() {$(this).html(data).fadeIn('slow');});
+            }
+        })
+    });
+    
 });
+
+
+
   </g:javascript>    
   </head>
   
@@ -43,7 +68,7 @@
 		<h1><g:message code="preconciliation.manual" default="Preconciliacion Manual"/></h1>  
 		
     <div id="lockBox">
-      <form action="#" method="post" name="searchForm" id="searchForm" >
+      <g:form method="post" name="lockForm" id="lockForm" >
         <table>
           <tr>
           <td>
@@ -62,13 +87,16 @@
 
           </td>
           <td>
-            <span class="button"><input type="button" name="search" class="save" value="Lock" id="lock" onClick=" $( '#myBody' ).show( 'blind', {}, 500, '' );" /></span>
+            <span class="button">
+              <g:submitToRemote update="myBody" name="lock" class="save" value="Lock" id="lock" action="lock"/>
+            </span>
           </td>
 
           </tr>
         </table>
 
-      </form>
-		
+      </g:form>
+    <br/>
+    <div id="myBody" />
   </body>
 </html>

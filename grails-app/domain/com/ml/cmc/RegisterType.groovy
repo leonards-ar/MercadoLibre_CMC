@@ -2,7 +2,6 @@ package com.ml.cmc
 
 class RegisterType {
 
-    Long id
     String value
      
     static constraints = {
@@ -11,9 +10,15 @@ class RegisterType {
     
     static mapping = {
         table 'LKP_TIPO_REGISTRO'
-        id generator:'assigned', name:'id'
-        id column:'CD_TIPO_REGISTRO'
+        version false
+        id column:'CD_TIPO_REGISTRO', generator:'assigned'
         value column:'TX_TIPO_REGISTRO'
+        
+    }
+    
+    String toString() {
+        
+        return value
         
     }
 }

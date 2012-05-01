@@ -2,8 +2,7 @@ package com.ml.cmc
 
 class Preconciliation {
 
-    Long preconciliationId
-    SiteSales sale
+    SalesSite sale
     Receipt receipt
     Long lot
     Medio medio
@@ -15,9 +14,10 @@ class Preconciliation {
     }
     
     static mappings = {
+        table 'preconciliacion'
+        version false
         
-        id generator:'auto', name:'preconciliationId'
-        preconciliationId column:'CD_PRECONCILIACION'
+        id column:'CD_PRECONCILIACION', generator:'auto'
         sale column:'CD_VENTA_ML'
         receipt column:'CD_RECIBO'
         lot column:'LOTE'

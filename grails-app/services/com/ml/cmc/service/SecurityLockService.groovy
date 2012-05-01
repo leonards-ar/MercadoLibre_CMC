@@ -18,18 +18,19 @@ class SecurityLockService {
 
     Lock lockFunctionality(String username, String functionality, String sessionId, Medio medio) {
         
-        Lock lockFound = Lock.findByFunction(functionality)
+        def lockFound = Lock.findByMedio(medio)
         if(lockFound == null){
-            Lock lock = new Lock(username:username, function:functionality, sessionId: sessionId, medio: medio)
+            def lock = new Lock(username:username,function:functionality,sessionId:sessionId,medio:medio)
+            
             lock.save(flush: true)
             
             return lock
         }
         
         def funcConstraint = constraints.get(functionality) != null ? constraints.get(functionality) : []  
-        if(funcConstraint.contains(lockFound.function)) throw new SecLockException("Resource locked by user: ${lockFound?.username}", lockFound);
+        if(funcConstraint.contains(lockFound.function) || lockFound.function == functionality ) throw new SecLockException("Resource locked by user: ${lockFound?.username}", lockFound);
         
-        Lock lock = new Lock(username:username, function:functionality, sessionId: sessionId, medio: medio)
+        def lock = new Lock(username:username, function:functionality, sessionId: sessionId, medio: medio)
         lock.save(flush: true)
         
         return lock

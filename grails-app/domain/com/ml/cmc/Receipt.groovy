@@ -4,7 +4,6 @@ import java.util.Date;
 
 class Receipt {
 
-    Long receiptId
     Medio medio
     State state
     RegisterType registerType
@@ -28,6 +27,7 @@ class Receipt {
     String cardLot
     String uniqueRo
     String documentNumber
+    Payment payment
 
     
     static constraints = {
@@ -36,9 +36,8 @@ class Receipt {
     static mapping = {
         
         table 'RECIBOS'
-        
-        id generator:'assigned', name:'receiptId'
-        receiptId column:'CD_RECIBO'
+        version false
+        id column:'CD_RECIBO', generator:'assigned'
         medio column:'CD_MEDIO'
         state column:'CD_ESTADO'
         registerType column:'CD_TIPO_REGISTRO'
@@ -62,6 +61,7 @@ class Receipt {
         cardLot column:'LOTE_TARJETA'
         uniqueRo column:'NU_UNICO_RO'
         documentNumber column:'DOC_NUMBER'
+        payment column:'PAYMENT_ID'
     }
 
 }
