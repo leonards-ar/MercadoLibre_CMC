@@ -35,7 +35,7 @@ jQuery.fn.chainSelect = function( target, url, settings )
 			before : null,
 			usePost : false,
 			defaultValue : null,
-			parameters : {'_id' : $(this).attr('id'), '_name' : $(this).attr('name')}
+			parameters : {'id' : $(this).attr('id'), 'name' : $(this).attr('name'), 'value':$(this).attr('value')}
         } , settings);
 
 		settings.parameters._value =  $(this).val();

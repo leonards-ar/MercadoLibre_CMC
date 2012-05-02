@@ -1,4 +1,3 @@
-<div id="receipt_filtered" style="width:450;height:200;overflow:auto;">
     
   <table id="receipt_table">
   <thead>
@@ -23,7 +22,10 @@
         <g:each in="${receiptInstanceList}" status="i" var="receiptInstance">
           <tr class="${(i % 2) == 0 ? 'odd' : 'even'} id="${receiptInstance.id}>
             <td><g:checkBox name="receiptCheckbox_${receiptInstance.id}" value="${false}" /></td>            
-            <td>${receiptInstance?.registerType}</td>
+            <td>
+            	<g:hiddenField name="receipt_${receiptInstance?.id}" value="${formatNumber(number:receiptInstance?.id, format:'###.##')}"/>
+            	${receiptInstance?.registerType}
+            </td>
             <td>${receiptInstance?.cardNumber}</td>
             <td>${receiptInstance?.transactionDate}</td>
             <td>${receiptInstance?.amount}</td>
@@ -39,4 +41,4 @@
         </g:each>
       </tbody>
   </table>
-</div>
+

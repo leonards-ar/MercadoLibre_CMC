@@ -2,17 +2,29 @@
     <table>
     <tr>
       <td>
-        <div id="receipts" style="width:450;height:200;overflow:auto;">
+        <div id="receipts" style="width:550;height:200;overflow:auto;border:1px solid #ccc;position:relative">
           <g:render template="receiptTable"/>
        </div>
       
       </td>
       <td>
-        <span class="button"><input type="button" class="save" value="agrupar" id="agrupar"/></span><br><br><br>
-        <p id='balance'>0</p></span>
+         <table style="border:0px">
+         <tr>
+           <td align="center">
+				<span class="button"><input type="button" class="save" value="agrupar" id="agrupar"/></span>           
+           </td>
+         </tr>
+         <tr>
+           <td align="center">
+           	<p id='balance'>0</p></span>
+           </td>
+         </tr>
+         </table>
+        
+        
       </td>
       <td>
-        <div id="sales" style="width:450;height:200">
+        <div id="sales" style="width:550;height:200;overflow:auto;border:1px solid #ccc;position:relative">
           <g:render template="salesSiteTable"/>
         </div>
       </td>      
@@ -24,7 +36,7 @@
       <table>
       <tr>
       <td> 
-        <div  style="width:300;height:200;overflow:auto;"/>
+        <div  style="width:100%;height:200;overflow:auto;"/>
  
        </td>
         <td>

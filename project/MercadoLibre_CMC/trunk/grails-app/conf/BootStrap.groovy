@@ -1,5 +1,6 @@
 import org.codehaus.groovy.grails.plugins.springsecurity.SecurityFilterPosition
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
+import com.ml.cmc.Medio
 import com.ml.cmc.Role
 import com.ml.cmc.State
 import com.ml.cmc.RegisterType
@@ -60,6 +61,40 @@ class BootStrap {
         def cbksTypeType = new RegisterType(id:4, value: 'CBKS')
         cbksTypeType.id=4
         cbksTypeType.save(flush:true)
+		
+		def medio = new Medio(country:'ARG',bank:'SANTANDER' ,card:'VISA'     , store:'1113255' , site:'MP')
+		medio.id=1
+		medio.save(flush:true)
+		medio = new Medio(country:'ARG',bank:'HSBC'      ,card:'AMEX'     , store:'1113266' , site:'MP')
+		medio.id=2
+		medio.save(flush:true)
+		medio =new Medio(country:'ARG',bank:'ITAU'      ,card:'NARANJA'  , store:'1113221' , site:'MP')
+		medio.id=3
+		medio.save(flush:true)
+		medio =new Medio(country:'BRA',bank:'SANTANDER' ,card:'VISA'     , store:'1113243' , site:'MP')
+		medio.id=4
+		medio.save(flush:true)
+		medio =new Medio(country:'BRA',bank:'ITAU'      ,card:'REDECARD' , store:'1113265' , site:'MP')
+		medio.id=5
+		medio.save(flush:true)
+		medio =new Medio(country:'BRA',bank:'BRADESCO'  ,card:'HIPERCARD', store:'1113287' , site:'ML')
+		medio.id=6
+		medio.save(flush:true)
+		medio =new Medio(country:'CHI',bank:'SANTANDER' ,card:'VISA'     , store:'1113299' , site:'MP')
+		medio.id=7
+		medio.save(flush:true)
+		medio =new Medio(country:'CHI',bank:'FRANCES'   ,card:'AMEX'     , store:'1113211' , site:'MP')
+		medio.id=8
+		medio.save(flush:true)
+		medio =new Medio(country:'MEX',bank:'SANTANDER' ,card:'VISA'     , store:'1113223' , site:'ML')
+		medio.id=9
+		medio.save(flush:true)
+		medio =new Medio(country:'MEX',bank:'BITAL'     ,card:'AMEX'     , store:'1113254' , site:'MP')
+		medio.id=10
+		medio.save(flush:true)
+		medio =new Medio(country:'VEN',bank:'SANTANDER' ,card:'VISA'     , store:'1113278' , site:'ML')
+		medio.id=11
+		medio.save(flush:true)
         
         assert User.count() == 1
         assert Role.count() == 1
@@ -73,5 +108,6 @@ class BootStrap {
     def destroy = {
     }
 }
+
 
 

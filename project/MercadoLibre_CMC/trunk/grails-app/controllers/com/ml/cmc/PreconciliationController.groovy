@@ -10,16 +10,38 @@ class PreconciliationController extends SessionInfoController{
     
     def index = {
         securityLockService.unLockFunctionality(getSessionId())
-        render(view:'index') 
+		def countryList = Medio.withCriteria{
+			projections{
+				distinct "country"
+			}
+		}
+        render(view:'index', model:[countryList: countryList]) 
         }
     
     def cards = {
-        def cardsToSelect = [['---'],['VISA'], ['MASTERCARD'], ['AMEX'], ['NARANJA'],['CABAL']]
+		println params.id
+		println params.name
+		println params.value
+		println params.country
+		
+        def cardsToSelect = Medio.withCriteria{
+			projections{
+				distinct "card"
+			}
+			eq("country", params.value)
+		}
+		
         render cardsToSelect as JSON
     }
     
     def sites = {
-         def sitesToSelect = [['---'],['MP'],['ML']]   
+         def sitesToSelect = Medio.withCriteria{
+			projections{
+				distinct "card"
+			}
+			eq("country", params.card)
+			eq("card", params.card)
+		}   
         render sitesToSelect as JSON
     }
     

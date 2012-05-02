@@ -52,7 +52,9 @@
     
 });
 
-
+function showLoading() {
+	$('#myBody').html($('#spinner').html())
+}
 
   </g:javascript>    
   </head>
@@ -70,8 +72,7 @@
           <tr>
           <td>
             <div><g:message code="preconciliation.country" default="País"/></div>
-            <g:select name="country" id="country" from="${['Argentina', 'Bolivia', 'Brasil','Chile','Colombia','Ecuador','Mexico','Peru','Uruguay','Venezuela']}"
-             noSelection="['':'']" />
+            <g:select name="country" id="country" from="${countryList}" noSelection="['':'']" />
           </td>
           <td>
             <div><g:message code="preconciliation.card" default="Tarjeta"/> </div>
@@ -85,7 +86,7 @@
           </td>
           <td>
             <span class="button">
-              <g:submitToRemote update="myBody" name="lock" class="save" value="Lock" id="lock" action="lock"/>
+              <g:submitToRemote update="myBody" name="lock" class="save" value="Lock" id="lock" action="lock" onLoading="showLoading()"/>
             </span>
           </td>
 

@@ -18,7 +18,7 @@ class Preconciliation {
         version false
         
         id column:'CD_PRECONCILIACION', generator:'auto'
-        sale column:'CD_VENTA_ML'
+        sale column:'CD_VENTA_CUOTA'
         receipt column:'CD_RECIBO'
         lot column:'LOTE'
         medio column:'CD_MEDIO'
