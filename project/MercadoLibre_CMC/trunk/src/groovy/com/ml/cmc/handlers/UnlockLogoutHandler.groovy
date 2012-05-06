@@ -13,8 +13,10 @@ class UnlockLogoutHandler implements LogoutHandler, HttpSessionListener{
     SecurityLockService lockService = new SecurityLockService()
     
     void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        authentication.with {
-            lockService.unLockFunctionality(details.sessionId)
+        if(authentication != null) {
+            authentication.with {
+                lockService.unLockFunctionality(details.sessionId)
+            }
         }
     }
     

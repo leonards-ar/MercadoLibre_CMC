@@ -35,7 +35,7 @@ jQuery.fn.chainSelect = function( target, url, settings )
 			before : null,
 			usePost : false,
 			defaultValue : null,
-			parameters : {'id' : $(this).attr('id'), 'name' : $(this).attr('name'), 'value':$(this).attr('value')}
+			parameters : {'id' : $(this).attr('id'), 'name' : $(this).attr('name')}
         } , settings);
 
 		settings.parameters._value =  $(this).val();
@@ -47,11 +47,18 @@ jQuery.fn.chainSelect = function( target, url, settings )
 
 		ajaxCallback = function(data, textStatus) 
 		{
+			var index = 0;
 			$(target).html("");//clear old options
 			data = eval(data);//get json array
+			
+			if(settings.nonSelectedValue != null) {
+				$(target).get(0).add(new Option(settings.nonSelectedValue, settings.nonSelectedValue), document.all ? 0 : null);
+				index = 1;
+			}
+			
 			for (i = 0; i < data.length; i++)//iterate over all options
 			{
-				$(target).get(0).add(new Option(data[i],data[i]), document.all ? i : null);
+				$(target).get(0).add(new Option(data[i],data[i]), document.all ? index++ : null);
 			}
 
 			if (settings.defaultValue != null)
@@ -67,7 +74,7 @@ jQuery.fn.chainSelect = function( target, url, settings )
 				settings.after(target);
 			}
 
-			$(target).change();//call next chain
+			//$(target).change();//call next chain
 		};
 
 		if (settings.usePost == true)

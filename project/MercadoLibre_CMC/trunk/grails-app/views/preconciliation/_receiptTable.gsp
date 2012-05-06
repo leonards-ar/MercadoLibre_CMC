@@ -20,8 +20,8 @@
       </thead>
       <tbody>
         <g:each in="${receiptInstanceList}" status="i" var="receiptInstance">
-          <tr class="${(i % 2) == 0 ? 'odd' : 'even'} id="${receiptInstance.id}>
-            <td><g:checkBox name="receiptCheckbox_${receiptInstance.id}" value="${false}" /></td>            
+          <tr id="${receiptInstance.id}">
+            <td><g:checkBox class="receipt_check" id="receiptCheckbox_${receiptInstance.id}" name="receiptCheckbox_${receiptInstance.id}" value="${false}" /></td>            
             <td>
             	<g:hiddenField name="receipt_${receiptInstance?.id}" value="${formatNumber(number:receiptInstance?.id, format:'###.##')}"/>
             	${receiptInstance?.registerType}

@@ -28,6 +28,7 @@ class SalesSite {
     Payment payment  
     
     static constraints = {
+        payment(nullable:true)
     }
     
     static mapping = {
