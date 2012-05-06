@@ -31,6 +31,7 @@ class Receipt {
 
     
     static constraints = {
+        payment(nullable:true)
     }
     
     static mapping = {

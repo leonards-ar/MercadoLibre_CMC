@@ -1,7 +1,9 @@
 import org.codehaus.groovy.grails.plugins.springsecurity.SecurityFilterPosition
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 import com.ml.cmc.Medio
+import com.ml.cmc.Receipt
 import com.ml.cmc.Role
+import com.ml.cmc.SalesSite
 import com.ml.cmc.State
 import com.ml.cmc.RegisterType
 import com.ml.cmc.User
@@ -96,11 +98,32 @@ class BootStrap {
 		medio.id=11
 		medio.save(flush:true)
         
+        def receipt = new Receipt(medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123132',
+            transactionDate: new Date(),paymentDate: new Date(),amount:500.00, secQuotesAmount:0.0, authorization:123192,
+            quotaNumber:2,quotaQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',
+            tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L)
+        
+        def salesSite = new SalesSite(saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123132',
+            transactionDate: new Date(),paymentDate: new Date(),amount:500.00, secQuotesAmount:0.0, authorization:123192,
+            quotaNumber:2,quotaQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',
+            tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L)
+
+        receipt.id=1;
+        salesSite.id=1;
+
+        receipt.save(flush:true)
+        salesSite.save(flush:true)
+        
+        println receipt.errors
+        println salesSite.errors
+        assert receipt.hasErrors() == false
+        assert salesSite.hasErrors() == false
         assert User.count() == 1
         assert Role.count() == 1
         assert UserRole.count() == 1
         assert State.count() == 5
         assert RegisterType.count() == 4
+        assert Receipt.count() == 1
         
         //def SalesSite = new SalesSite(id:1, )
     }

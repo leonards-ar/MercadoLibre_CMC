@@ -16,9 +16,9 @@
     },
     after:function (target) //after request show the target combobox and hide the loading message
     { 
-
       $(target).attr("disabled",false);
-    }
+    },
+    nonSelectedValue:'---'
   });
   
   $('#card').chainSelect('#site','${createLink(action:"sites")}',
@@ -30,9 +30,90 @@
     after:function (target) //after request show the target combobox and hide the loading message
     { 
       $(target).attr("disabled",false);
-    }
+    },
+    nonSelectedValue:'---'
+  });
+  
+  
+  $('#agrupar').live('click',function(){
+
+    var salesSiteRow = $('#sales_table').find('tr:.yellow').clone();
+    var receiptRow = $('#receipt_table').find('tr:.yellow').clone();
+    
+      if(salesSiteRow.length == 0 || receiptRow == 0) {
+        alert("Please select a sale and a card");
+        return;
+      }     
+          
+    
+    //alert(receiptRow.html());
+    var receiptId = receiptRow.find('td:eq(1)').find('input:hidden').val();
+    var salesSiteId = salesSiteRow.find('td:eq(1)').find('input:hidden').val();
+    
+    $.ajax({
+        type: 'POST',
+        url: '${createLink(action:"group")}',
+        data: {salesId: salesSiteId, receiptId: receiptId},
+        success: function(data) {
+            $('#conciliado').fadeOut('fast', function() {$(this).html(data).fadeIn('slow');});
+            $('#sales_table').find('tr:.yellow').remove();
+            $('#receipt_table').find('tr:.yellow').remove();
+            var balanced = 0;
+            $('#balance').html(String(balanced));            
+        }
+      })
   });
 
+  $('.receipt_check').live('click', function(){
+    if(this.checked) {
+      var misselected = $('#receipt_table').find('tr:.yellow').get();
+      if(misselected.length > 0){
+        alert("Select only one");
+        this.checked = false;
+        return;
+      }
+      $(this).parent().parent().toggleClass('yellow');
+      var monto = $(this).parent().parent().find('td:eq(4)').text();
+      var balanced = parseFloat($('#balance').text());
+      balanced = isNaN(balanced)? 0 : balanced;
+      balanced += parseFloat(monto);
+      $('#balance').html(String(balanced));
+    } else {
+      $(this).parent().parent().removeClass('yellow');
+      var monto = $(this).parent().parent().find('td:eq(4)').text();
+      var balanced = parseFloat($('#balance').text());
+      if(!(isNaN(balanced))){
+         balanced -= parseFloat(monto);
+         $('#balance').html(String(balanced));
+        }
+    }
+  });
+  
+  $('.salesSite_check').live('click',function(){
+    if(this.checked) {
+      var misselected = $('#sales_table').find('tr:.yellow').get();
+      if(misselected.length > 0){
+        alert("Select only one");
+        this.checked = false;
+        return;
+      }    
+      $(this).parent().parent().toggleClass('yellow');
+      var monto = $(this).parent().parent().find('td:eq(5)').text();
+      var balanced = parseFloat($('#balance').text());
+      balanced = isNaN(balanced)? 0 : balanced;
+      balanced -= parseFloat(monto);
+      $('#balance').html(String(balanced));
+    } else {
+      $(this).parent().parent().removeClass('yellow');
+      var monto = $(this).parent().parent().find('td:eq(5)').text();
+      var balanced = parseFloat($('#balance').text());
+      if(!(isNaN(balanced))){
+        balanced += parseFloat(monto);
+        $('#balance').html(String(balanced));       
+      }
+    }
+  });
+    
   $('.filtered').find(".paginateButtons a, th.sortable a").live('click', function(event) {
         event.preventDefault();
         var url = $(this).attr('href');
@@ -49,17 +130,33 @@
             }
         })
     });
-    
 });
 
 function showLoading() {
 	$('#myBody').html($('#spinner').html())
 }
 
+function lockCombo() {
+
+   $('#country').attr("disabled",true);
+   $('#card').attr("disabled",true);
+   $('#site').attr("disabled",true);
+}
+
+function showError(XMLHttpRequest,textStatus,errorThrown) {
+//$('#errorDialog').html("<p>Ha ocurrido un error en la aplicacion. En breve lo vamos a ver!!!</p>");
+//	$('#errorDialog').dialog('open');
+    $('#myBody').html("");
+  alert(XMLHttpRequest.responseText);
+
+}
+
   </g:javascript>    
   </head>
   
   <body>
+    <div id="errorDialog"/>
+
 		<div class="nav">
 		  <span class="menuButton"><a class="home" href="${createLinkTo(dir: '')}"><g:message code="home" default="Home"/></a></span>
 		</div>
@@ -86,7 +183,7 @@ function showLoading() {
           </td>
           <td>
             <span class="button">
-              <g:submitToRemote update="myBody" name="lock" class="save" value="Lock" id="lock" action="lock" onLoading="showLoading()"/>
+              <g:submitToRemote update="myBody" name="lock" class="save" value="Lock" id="lock" action="lock" onLoading="showLoading()" onFailure="showError(XMLHttpRequest,textStatus,errorThrown)" onSuccess="lockCombo()"/>
             </span>
           </td>
 
