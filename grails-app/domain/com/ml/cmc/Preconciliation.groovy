@@ -1,30 +1,28 @@
 package com.ml.cmc
 
-class Preconciliation {
+class Preconciliation implements Serializable{
 
     SalesSite sale
     Receipt receipt
     Long lot
     Medio medio
-    Long preconciliationType
-    String state
+    RegisterType registerType
     
     
     static constraints = {
     }
     
     static mappings = {
-        table 'preconciliacion'
+        table 'TMP_PRECON'
         version false
         
-        id column:'CD_PRECONCILIACION', generator:'auto'
+        id composite: ['lot','sale','receipt']
         sale column:'CD_VENTA_CUOTA'
         receipt column:'CD_RECIBO'
-        lot column:'LOTE'
+        lot column:'LOTE_JAVA'
         medio column:'CD_MEDIO'
-        preconciliationType column:'CD_TIPO_PRECONCILIACION'
         state column:'CD_CAMBIO_ESTADO'
-        
+        register_type column:'CD_TIPO_REGISTRO'
         
     }
 }
