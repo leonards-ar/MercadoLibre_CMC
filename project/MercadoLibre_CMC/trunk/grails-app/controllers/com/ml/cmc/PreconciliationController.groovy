@@ -1,12 +1,14 @@
 package com.ml.cmc
 import grails.converters.JSON
 import com.ml.cmc.service.SecurityLockService
+import com.ml.cmc.service.LotGeneratorService
 import com.ml.cmc.constants.Constant
 import com.ml.cmc.exception.SecLockException
 
 class PreconciliationController extends SessionInfoController{
 
     def securityLockService
+    def lotGeneratorService
     
     def index = {
         securityLockService.unLockFunctionality(getSessionId())
@@ -85,7 +87,8 @@ class PreconciliationController extends SessionInfoController{
 
     }
 
-    def listReceipts = {
+    def listReceipts = {PreconciliationCmd preconciliationCmd ->
+       
         def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site]);
         def state1 = State.findById(1)
         def state2 = State.findById(2)
@@ -93,19 +96,26 @@ class PreconciliationController extends SessionInfoController{
             order(params.sort, params.order)
              if(medio != null) eq('medio', medio)
              inList('state',[state1,state2])
+             if(preconciliationCmd.receiptIds.size() >0) {
+                 //List<Long> longIds = preconciliationCmd.receiptIds.collect{it.toLong()}
+                 List<Long> longIds = (preconciliationCmd.receiptIds instanceof String)?[preconciliationCmd.receiptIds.toLong()]:preconciliationCmd.receiptIds.collect{it.toLong()}
+                 not{inList('id', longIds)}
+             }
         }
         
         render(template:"receiptTable", model:[receiptInstanceList: receiptInstanceList])
         
     }
     
-    def listSalesSite = {
+    def listSalesSite = {PreconciliationCmd preconciliationCmd ->
         def medios = Medio.find("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
         def state = State.findById(1)
         def salesSiteInstanceList = SalesSite.withCriteria {
             order(params.sort, params.order)
              if(medios != null) inList('medio', medios)
              eq('state',state)
+             List<Long> longIds = (preconciliationCmd.salesSiteIds instanceof String)?[preconciliationCmd.salesSiteIds.toLong()]:preconciliationCmd.salesSiteIds.collect{it.toLong()}
+             not{inList('id', longIds)}
         }
         
         render(template:"salesSiteTable", model:[salesSiteInstanceList: salesSiteInstanceList])
@@ -114,7 +124,6 @@ class PreconciliationController extends SessionInfoController{
     
     def group = { PreconciliationCmd preconciliationCmd ->
         
-        
         def salesSiteInstance = SalesSite.findById(params.salesId)
         def receiptInstance = Receipt.findById(params.receiptId)
         
@@ -122,6 +131,37 @@ class PreconciliationController extends SessionInfoController{
         
         render(template:"preconciliateTable", model:[preconciliationInstancelist: preconciliation])
         
+    }
+    
+    def save = { PreconciliationCmd preconciliationCmd ->
+        
+        def lot = lotGeneratorService.getLotId()
+        
+        List salesSiteReceiptList = preconcliationCmd.createList()
+        
+        salesSiteReciptList.each{ item ->
+            
+            def preconciliation = new Preconciliation(sale:item.salesSite, receipt:item.receipt, 
+                lot:lot, medio:item.receipt?.medio, registerType:item.receipt?.registerType)
+            
+            preconciliation.save()
+        }
+        
+        /* call datastage */
+        
+        def job = "ls -ltr".execute()
+        job.waitFor()
+        if(job.exitValue()){
+            response.setStatus(500)
+            render job.err.text
+        }
+        render job.text
+         
+    }
+    
+    def exit = {
+        securityLockService.unLockFunctionality(getSessionId())
+        redirect(controller:'home', action:'index')
     }
     
 
@@ -155,7 +195,8 @@ class PreconciliationCmd {
             list.add(salesSiteReceipt)
         }
         return list
-    }    
+    }
+    
 }
 
 class SalesSiteReceiptCmd {

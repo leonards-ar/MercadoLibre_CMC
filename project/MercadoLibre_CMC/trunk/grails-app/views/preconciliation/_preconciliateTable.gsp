@@ -30,14 +30,14 @@
     <th>S<g:message code="salesSite.documentNumber" default="DNI"/></th>
   </tr>
   </thead>
-  <tbody>
-	  <g:each in="${preconciliationInstancelist}" status="i" var="salesSiteReceiptInstance">
-	     <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
- 	        <!-- td><g:checkBox name="receiptCheckbox_${salesSiteReceiptInstance?.receipt?.id}" value="${false}" /></td-->            
-            <td>
-   	        	<g:hiddenField name="receipt" value="${formatNumber(number:salesSiteReceiptInstance?.receipt?.id, format:'###.##')}"/>
-   	        	<g:hiddenField name="salesSite" value="${formatNumber(number:salesSiteReceiptInstance?.salesSite?.id, format:'###.##')}"/>
-            	${receiptInstance?.registerType}
+	  <tbody>
+		  <g:each in="${preconciliationInstancelist}" status="i" var="salesSiteReceiptInstance">
+		     <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+	 	        <!-- td><g:checkBox name="receiptCheckbox_${salesSiteReceiptInstance?.receipt?.id}" value="${false}" /></td-->            
+	            <td>
+	   	        	<g:hiddenField name="receiptIds[${i}]" value="${formatNumber(number:salesSiteReceiptInstance?.receipt?.id, format:'###.##')}"/>
+	   	        	<g:hiddenField name="salesSiteIds[${i}]" value="${formatNumber(number:salesSiteReceiptInstance?.salesSite?.id, format:'###.##')}"/>
+            	${salesSiteReceiptInstance?.receipt?.registerType}
             </td>
             <td>${salesSiteReceiptInstance?.receipt?.cardNumber}</td>
             <td>${salesSiteReceiptInstance?.receipt?.transactionDate}</td>

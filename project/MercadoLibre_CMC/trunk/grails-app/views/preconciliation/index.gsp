@@ -40,20 +40,32 @@
     var salesSiteRow = $('#sales_table').find('tr:.yellow').clone();
     var receiptRow = $('#receipt_table').find('tr:.yellow').clone();
     
+    var receiptList = new Array();
+    var salesSiteList = new Array();
+    $('#preconciliate_table input:hidden').each(function(){
+      if($(this).attr('id') == 'receiptIds') {
+        receiptList.push($(this).val());
+      } else {
+        salesSiteList.push($(this).val());
+      }
+    });
+
+    console.log(receiptList);
+    console.log(salesSiteList);    
+    
+    
       if(salesSiteRow.length == 0 || receiptRow == 0) {
-        alert("Please select a sale and a card");
+        alert("${message(code:'preconciliation.noselection.error', default:'Seleccione un Recibo y una Venta')}");
         return;
       }     
-          
     
-    //alert(receiptRow.html());
     var receiptId = receiptRow.find('td:eq(1)').find('input:hidden').val();
     var salesSiteId = salesSiteRow.find('td:eq(1)').find('input:hidden').val();
     
     $.ajax({
         type: 'POST',
         url: '${createLink(action:"group")}',
-        data: {salesId: salesSiteId, receiptId: receiptId},
+        data: {salesId: salesSiteId, receiptId: receiptId, receiptIds:receiptList, salesSiteIds:salesSiteList},
         success: function(data) {
             $('#conciliado').fadeOut('fast', function() {$(this).html(data).fadeIn('slow');});
             $('#sales_table').find('tr:.yellow').remove();
@@ -68,7 +80,7 @@
     if(this.checked) {
       var misselected = $('#receipt_table').find('tr:.yellow').get();
       if(misselected.length > 0){
-        alert("Select only one");
+        alert("${message(code:'preconcliation.onlyone.error', default:'Seleccione solo uno') }");
         this.checked = false;
         return;
       }
@@ -120,11 +132,23 @@
 
         var closestDiv = $(this).closest('div');
         
-        $(closestDiv).html($("#spinner").html());
+   var strdata = $('#country').attr('id') + "=" + $('#country').val();
+   strdata+= "&" + $('#card').attr('id') + "=" + $('#card').val();
+   strdata+= "&" + $('#site').attr('id') + "=" + $('#site').val();
+   
+    $('#preconciliate_table input:hidden').each(function(){
+      if(strdata.length > 0) {
+        strdata+= "&";
+      }
+       strdata+= $(this).attr('id') + "=" + $(this).val(); 
+    });
+
+    $(closestDiv).html($("#spinner").html());
  
-        $.ajax({
-            type: 'POST',
-            url: url,
+    $.ajax({
+    type: 'POST',
+    url: url,
+    data:strdata,
             success: function(data) {
                 $(closestDiv).fadeOut('fast', function() {$(this).html(data).fadeIn('slow');});
             }
@@ -158,7 +182,7 @@ function showError(XMLHttpRequest,textStatus,errorThrown) {
     <div id="errorDialog"/>
 
 		<div class="nav">
-		  <span class="menuButton"><a class="home" href="${createLinkTo(dir: '')}"><g:message code="home" default="Home"/></a></span>
+		  <span class="menuButton"><a class="home" href="${createLink(action: 'exit')}"><g:message code="home" default="Home"/></a></span>
 		</div>
 		
 		<h1><g:message code="preconciliation.manual" default="Preconciliacion Manual"/></h1>  

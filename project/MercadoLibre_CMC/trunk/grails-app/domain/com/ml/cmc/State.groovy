@@ -16,6 +16,6 @@ class State {
     }
     
     String toString() {
-        retunr value
+        return value
     }
 }
