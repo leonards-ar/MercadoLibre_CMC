@@ -49,22 +49,21 @@ class PreconciliationController extends SessionInfoController{
         
         def lock = new Lock()
         if(medio == null) {
-            //throw new Exception("No Medio found for ${params.country} - ${params.card} - ${params.site} ")
             response.setStatus(500)
-            render "No Medio found for ${params.country} - ${params.card} - ${params.site}"
+            render message(code:"preconciliation.nomedio.found.error", default:"No se encontró ningun medio", args:[params.country, params.card, params.site])
             return
         }
 
         try{
             securityLockService.lockFunctionality(getUsername(), Constant.FUNC_PRECONCILIATE, getSessionId(), medio)
         }catch (SecLockException e) {
-           def error = message(code:"preconciliation.security.error" ,default:"Error",args:[e.invalidObject?.username,e.invalidObject?.function])           
+           def error = message(code:"preconciliation.security.error" ,default:"Error",args:[e.invalidObject?.username, medio])           
            response.setStatus(500)
            render error
            return
         } catch (Exception e){
             response.setStatus(500)
-            render e.toString()
+            render e.message
             return
         }
         
@@ -97,7 +96,6 @@ class PreconciliationController extends SessionInfoController{
              if(medio != null) eq('medio', medio)
              inList('state',[state1,state2])
              if(preconciliationCmd.receiptIds.size() >0) {
-                 //List<Long> longIds = preconciliationCmd.receiptIds.collect{it.toLong()}
                  List<Long> longIds = (preconciliationCmd.receiptIds instanceof String)?[preconciliationCmd.receiptIds.toLong()]:preconciliationCmd.receiptIds.collect{it.toLong()}
                  not{inList('id', longIds)}
              }
@@ -114,8 +112,10 @@ class PreconciliationController extends SessionInfoController{
             order(params.sort, params.order)
              if(medios != null) inList('medio', medios)
              eq('state',state)
-             List<Long> longIds = (preconciliationCmd.salesSiteIds instanceof String)?[preconciliationCmd.salesSiteIds.toLong()]:preconciliationCmd.salesSiteIds.collect{it.toLong()}
-             not{inList('id', longIds)}
+             if(preconciliationCmd.salesSiteIds.size() >0) {
+                 List<Long> longIds = (preconciliationCmd.salesSiteIds instanceof String)?[preconciliationCmd.salesSiteIds.toLong()]:preconciliationCmd.salesSiteIds.collect{it.toLong()}
+                 not{inList('id', longIds)}
+             }
         }
         
         render(template:"salesSiteTable", model:[salesSiteInstanceList: salesSiteInstanceList])
@@ -124,7 +124,7 @@ class PreconciliationController extends SessionInfoController{
     
     def group = { PreconciliationCmd preconciliationCmd ->
         
-        def salesSiteInstance = SalesSite.findById(params.salesId)
+        def salesSiteInstance = SalesSite.findById(params.salesSiteId)
         def receiptInstance = Receipt.findById(params.receiptId)
         
         List preconciliation = preconciliationCmd.insertPair(new SalesSiteReceiptCmd(salesSite: salesSiteInstance, receipt:receiptInstance ))
@@ -137,9 +137,9 @@ class PreconciliationController extends SessionInfoController{
         
         def lot = lotGeneratorService.getLotId()
         
-        List salesSiteReceiptList = preconcliationCmd.createList()
+        List salesSiteReceiptList = preconciliationCmd.createList()
         
-        salesSiteReciptList.each{ item ->
+        salesSiteReceiptList.each{ item ->
             
             def preconciliation = new Preconciliation(sale:item.salesSite, receipt:item.receipt, 
                 lot:lot, medio:item.receipt?.medio, registerType:item.receipt?.registerType)
@@ -148,10 +148,9 @@ class PreconciliationController extends SessionInfoController{
         }
         
         /* call datastage */
-        
-        def job = "ls -ltr".execute()
+        def job = "cmd.exe /C echo El proceso se ejecuto satisfactoriamente.".execute()
         job.waitFor()
-        if(job.exitValue()){
+        if(job.exitValue()){    
             response.setStatus(500)
             render job.err.text
         }
@@ -175,9 +174,9 @@ class PreconciliationCmd {
     List createList() {
         List list = []
         salesSiteIds.eachWithIndex {salesSiteId, i ->
-            def salesSite = SalesSite.findById(salesSiteId)
-            def receipt = Receipt.findById(reciptids[i])
-            def salesSiteRecepit = new SalesSiteReceiptCmd(salesSite: salesSite, receipt: receipt)
+            def salesSite = SalesSite.findById(salesSiteIds[i])
+            def receipt = Receipt.findById(receiptIds[i])
+            def salesSiteReceipt = new SalesSiteReceiptCmd(salesSite: salesSite, receipt: receipt)
             
             list.add(salesSiteReceipt)
         }
