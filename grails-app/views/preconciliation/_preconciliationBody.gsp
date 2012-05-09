@@ -36,7 +36,7 @@
     </div></center>
 
     <div class="buttons">
-        <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'save', 'default': 'save')}" /></span>
+        <span class="button"><input type="button" class="save" id="preconciliateButton" value="${message(code:'save', default:'Grabar')}"/></span>
     </div>    
  
 </div>

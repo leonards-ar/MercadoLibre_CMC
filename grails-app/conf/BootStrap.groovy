@@ -25,16 +25,15 @@ class BootStrap {
         // Temporary Users
         def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
 
-        def testUser2 = new User(username: 'jorge', enabled: true, password: '1234')
+        def testUser = new User(username:'elvis',enabled: true,password: '1234')
+        def testUser2 = new User(username:'jorge',enabled:true,password: '1234')
 
+        testUser.save(flush:true)
         testUser2.save(flush: true)
 
         UserRole.create testUser2, userRole, true
+        UserRole.create testUser, userRole, true
 
-        assert User.count() == 1
-        assert Role.count() == 1
-        assert UserRole.count() == 1
-        
         def pendienteState = new State(id:1,value:'Pendiente')
         pendienteState.id=1
         pendienteState.save(flush: true)
@@ -118,9 +117,9 @@ class BootStrap {
         println salesSite.errors
         assert receipt.hasErrors() == false
         assert salesSite.hasErrors() == false
-        assert User.count() == 1
+        assert User.count() == 2
         assert Role.count() == 1
-        assert UserRole.count() == 1
+        assert UserRole.count() == 2
         assert State.count() == 5
         assert RegisterType.count() == 4
         assert Receipt.count() == 1

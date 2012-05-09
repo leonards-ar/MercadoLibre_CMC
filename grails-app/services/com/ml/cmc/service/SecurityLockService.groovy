@@ -16,7 +16,7 @@ class SecurityLockService {
         (Constant.FUNC_DESPRECONCILIATE):[(Constant.FUNC_CONCILIATE)]
         ]
 
-    Lock lockFunctionality(String username, String functionality, String sessionId, Medio medio) {
+    Lock lockFunctionality(String username, String functionality, String sessionId, Medio medio) throws SecLockException {
         
         def lockFound = Lock.findByMedio(medio)
         if(lockFound == null){
