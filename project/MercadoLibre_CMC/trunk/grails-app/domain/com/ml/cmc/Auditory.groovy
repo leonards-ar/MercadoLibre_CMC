@@ -13,6 +13,19 @@ class Auditory {
 	AccountantPeriod period
 	
     static constraints = {
+		
+		auditoryDate (nullable:true)
+		time(nullable:true)
+		user(nullable:true)
+		auditoryType(nullable:true)
+		medio(nullable:true)
+		description(nullable:true)
+		rollback(nullable:true)
+		rollbackLot(nullable:true)
+		period(nullable:true)
+		
+		
+		
     }
 	
 	static mapping = {
