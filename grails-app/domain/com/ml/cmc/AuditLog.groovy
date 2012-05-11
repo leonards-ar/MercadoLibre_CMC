@@ -1,11 +1,11 @@
 package com.ml.cmc
 
-class Auditory {
+class AuditLog {
 
-	Date auditoryDate
+	Date date
 	String time
 	String user
-	AuditoryType auditoryType
+	String auditLogType
 	Medio medio
 	String description
 	String rollback
@@ -14,10 +14,10 @@ class Auditory {
 	
     static constraints = {
 		
-		auditoryDate (nullable:true)
+		date (nullable:true)
 		time(nullable:true)
 		user(nullable:true)
-		auditoryType(nullable:true)
+		auditLogType(nullable:true)
 		medio(nullable:true)
 		description(nullable:true)
 		rollback(nullable:true)
@@ -33,10 +33,10 @@ class Auditory {
 		version false
 		
 		id column:'LOTE', generator:'assigned'
-		auditoryDate column:'FC_FECHA'
+		date column:'FC_FECHA'
 		time column:'HORA'
 		user column:'TX_USUARIO'
-		auditoryType column:'TX_TIPO_AUDITORIA'
+		auditLogType column:'TX_TIPO_AUDITORIA'
 		medio column:'CD_MEDIO'
 		description column:'TX_DESC_AUDITORIA'
 		rollback column:'FL_ROLLBACK'
