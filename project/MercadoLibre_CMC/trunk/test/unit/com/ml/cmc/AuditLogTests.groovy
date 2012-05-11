@@ -2,7 +2,7 @@ package com.ml.cmc
 
 import grails.test.*
 
-class AuditoryTests extends GrailsUnitTestCase {
+class AuditLogTests extends GrailsUnitTestCase {
     protected void setUp() {
         super.setUp()
     }

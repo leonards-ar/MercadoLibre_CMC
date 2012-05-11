@@ -72,6 +72,28 @@
 						      }
 						    });
           }
+          
+				  function showError(XMLHttpRequest, textStatus, errorThrown) {
+				    
+				      var $dialog = getDialog(XMLHttpRequest.responseText);
+				    
+				      $dialog.dialog('open');
+				  }
+
+					function getDialog(message) {
+					
+					  var $dialog = $('<div></div>').html('<p>' + message + '</p>').dialog({
+					    autoOpen : false,
+					    title : 'Error',
+					    modal : true,
+					    buttons : {
+					      Ok : function() {
+					        $(this).dialog("close");
+					      }
+					    }
+					  });
+					  return $dialog;				            
+         }
         </g:javascript>        
     </head>
     <body>
