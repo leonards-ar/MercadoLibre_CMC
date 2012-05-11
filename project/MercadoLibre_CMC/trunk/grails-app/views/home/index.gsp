@@ -23,7 +23,7 @@
        <g:link controller="#" action="#"><g:message code="cmc.bar.desconciliation"/></g:link>
       </span>
       <span class="menuButton">
-        <g:link controller="#" action="#"><g:message code="cmc.bar.auditory"/></g:link>
+        <g:link controller="auditLog" action="index"><g:message code="cmc.bar.auditory"/></g:link>
       </span>
       <!-- /sec:ifAnyGranted -->
     </div>

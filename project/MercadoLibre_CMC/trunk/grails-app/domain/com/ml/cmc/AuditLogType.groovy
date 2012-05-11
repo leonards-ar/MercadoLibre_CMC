@@ -1,6 +1,6 @@
 package com.ml.cmc
 
-class AuditoryType {
+class AuditLogType {
 
 	String value
     static constraints = {
