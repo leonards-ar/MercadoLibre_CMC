@@ -10,10 +10,10 @@ class SalesSite {
     Date transactionDate
     Date paymentDate
     Double amount
-    Double secQuotesAmount
+    Double shareAmount
     String authorization
-    Integer quotaNumber
-    Integer quotaQty
+    Integer shareNumber
+    Integer shareQty
     String liq
     String customerId
     String documentId
@@ -25,7 +25,7 @@ class SalesSite {
     String cardLot
     String uniqueRo
     String documentNumber 
-    Payment payment  
+    Long payment  
     
     static constraints = {
         payment(nullable:true)
@@ -46,10 +46,10 @@ class SalesSite {
         transactionDate column:'FC_OPERACION'
         paymentDate column:'FC_PAGO'
         amount column:'VL_IMPORTE'
-        secQuotesAmount column:'VL_SEG_CUOTA'
+        shareAmount column:'VL_SEG_CUOTA'
         authorization column:'NU_AUTORIZACION'
-        quotaNumber column:'NU_CUOTA'
-        quotaQty column:'NU_CANT_CUOTAS'
+        shareNumber column:'NU_CUOTA'
+        shareQty column:'NU_CANT_CUOTAS'
         liq column:'NU_LIQUIDACION'
         customerId column:'CUST_ID'
         documentId column:'DOC_ID'

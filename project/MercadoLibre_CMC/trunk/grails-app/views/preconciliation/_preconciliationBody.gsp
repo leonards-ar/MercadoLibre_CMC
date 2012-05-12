@@ -31,7 +31,7 @@
  </tr>
  </table>
  <br/>
-     <center><div id="conciliado" style="width:800;height:200;overflow:auto;">
+     <center><div id="conciliado" style="width:1000;height:200;overflow:auto;">
        <g:render template="preconciliateTable"/>  
     </div></center>
 
