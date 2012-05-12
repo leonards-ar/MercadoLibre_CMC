@@ -1,5 +1,6 @@
 import org.codehaus.groovy.grails.plugins.springsecurity.SecurityFilterPosition
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
+import com.ml.cmc.AuditLog
 import com.ml.cmc.Medio
 import com.ml.cmc.Receipt
 import com.ml.cmc.Role
@@ -98,13 +99,13 @@ class BootStrap {
 		medio.save(flush:true)
         
         def receipt = new Receipt(medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123132',
-            transactionDate: new Date(),paymentDate: new Date(),amount:500.00, secQuotesAmount:0.0, authorization:123192,
-            quotaNumber:2,quotaQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',
+            transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,
+            shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',
             tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L)
         
         def salesSite = new SalesSite(saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123132',
-            transactionDate: new Date(),paymentDate: new Date(),amount:500.00, secQuotesAmount:0.0, authorization:123192,
-            quotaNumber:2,quotaQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',
+            transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,
+            shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',
             tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L)
 
         receipt.id=1;
@@ -113,8 +114,12 @@ class BootStrap {
         receipt.save(flush:true)
         salesSite.save(flush:true)
         
-        println receipt.errors
-        println salesSite.errors
+		def auditLog = new AuditLog(date: new Date(), time:'11:00:00', user:'jorge', auditLogType:'Conciliacion Manual',
+			medio:Medio.findById(1), description:'no hay seguridad');
+		
+		auditLog.id = 1
+		auditLog.save(flush:true)
+		
         assert receipt.hasErrors() == false
         assert salesSite.hasErrors() == false
         assert User.count() == 2
@@ -124,7 +129,6 @@ class BootStrap {
         assert RegisterType.count() == 4
         assert Receipt.count() == 1
         
-        //def SalesSite = new SalesSite(id:1, )
     }
     
     def destroy = {
