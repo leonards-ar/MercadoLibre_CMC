@@ -12,32 +12,34 @@
         
         <g:javascript>
           $(function() {
-            $('.ui-icon ui-icon-circle-triangle-w').click(function() {
+            $('#rollbackButton').click(function() {
+
+
+              var $confirmDialog = $('<div></div>').html('<p>Estas seguro?</p>').dialog({
+                autoOpen : false,
+                title : 'Confirm',
+                modal : true,
+                buttons : {
+                  Ok : function() {
+                    $(this).dialog('close');
+                    doRollback();
+                  },
+                  Cancel: function() {
+                    $(this).dialog('close');
+                  }
+                }
+              });
               
-              var $confirmDialog = $('<div></div>').html('<p>' + message + '</p>').dialog({
-						    autoOpen : false,
-						    title : 'Error',
-						    modal : true,
-						    buttons : {
-						      Ok : function() {
-						        $(this).dialog("close");
-						        doRollback();
-						        
-						      }
-						      Cancel: function() {
-						        $(this).dialog("close");
-						      }
-						    }
-					    }
-					    
-					    $confirmDialog.dialog('open');
-					    
-            });
-            
+              $confirmDialog.dialog('open');
+              
+            });              
+              
           });
+          
+          
           function doRollback() {
           
-			       var $processing = $('<div></div>').html('<p> Procesando...' + '</p>' + $("#spinner").html()).dialog({
+			       var $processing = $('<div></div>').html('<cener><p> Procesando...' + '</p>' + $("#spinner").html() + '</cener>').dialog({
 			            autoOpen : false,
 			            modal : true,
 			            closeOnEscape: false,
@@ -47,30 +49,30 @@
 			            }
 			        });
 			        
-						    $.ajax({
-						      type : 'POST',
-						      url : ${createLink(action:'rollback') },
-						      data : {id: 1},
-						      beforeSend: function() {
-						          $processing.dialog('open');
-						      },
-						      complete: function(){
-						          $processing.dialog('close');
-						        },
-						      success : function(data) {
-						        var $dialog = getDialog(data);
-						        $dialog.dialog('option','title','');
-						        $dialog.dialog( "option", "buttons", { 
-						            "Ok": function() { 
-						                $(this).dialog("close");
-						            } 
-						        });
-						        $dialog.dialog('open');
-						      },
-						      error : function(XMLHttpRequest, textStatus, errorThrown) {
-						        showError(XMLHttpRequest, textStatus,errorThrown);
-						      }
-						    });
+					    $.ajax({
+					      type : 'POST',
+					      url : '${createLink(action:'rollback')}',
+					      data : "id=1",
+					      beforeSend: function() {
+					          $processing.dialog('open');
+					      },
+					      complete: function(){
+					          $processing.dialog('close');
+					      },
+					      success : function(resp) {
+                  var $dialog = getDialog(resp);
+                  $dialog.dialog('option','title','');
+                  $dialog.dialog( "option", "buttons", { 
+                      "Ok": function() { 
+                          $(this).dialog("close");
+                      } 
+                  });
+                  $dialog.dialog('open');
+					      },
+					      error : function(XMLHttpRequest, textStatus, errorThrown) {
+					        showError(XMLHttpRequest, textStatus,errorThrown);
+					      }
+					    });
           }
           
 				  function showError(XMLHttpRequest, textStatus, errorThrown) {
@@ -98,7 +100,7 @@
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(action:'home')}"><g:message code="home" default="Home"/></a></span>
+            <span class="menuButton"><a class="home" href="${createLink(controller:'home', action:'index')}"><g:message code="home" default="Home"/></a></span>
         </div>
         <div class="body">
             <h1><g:message code="auditLog.label" /></h1>
@@ -138,8 +140,6 @@
                     <g:each in="${auditLogInstanceList}" status="i" var="auditLogInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${auditLogInstance.id}">${fieldValue(bean: auditLogInstance, field: "id")}</g:link></td>
-                        
                             <td><g:formatDate date="${auditLogInstance.date}" /></td>
                         
                             <td>${fieldValue(bean: auditLogInstance, field: "time")}</td>
@@ -155,6 +155,8 @@
                             <td>${fieldValue(bean: auditLogInstance, field: "description")}</td>
                             
                             <td>${fieldValue(bean: auditLogInstance, field: "rollbackLot")}</td>
+                            
+                            <td>${fieldValue(bean: auditLogInstance, field: "rollback")}</td>
                             
                             <td>${fieldValue(bean: auditLogInstance, field: "period")}</td>
                             
