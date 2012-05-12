@@ -12,10 +12,10 @@ class Receipt {
     Date transactionDate
     Date paymentDate
     Double amount
-    Double secQuotesAmount
+    Double shareAmount
     String authorization
-    Integer quotaNumber
-    Integer quotaQty
+    Integer shareNumber
+    Integer shareQty
     String liq
     String customerId
     String documentId
@@ -27,7 +27,7 @@ class Receipt {
     String cardLot
     String uniqueRo
     String documentNumber
-    Payment payment
+    Long payment
 
     
     static constraints = {
@@ -36,7 +36,7 @@ class Receipt {
     
     static mapping = {
         
-        table 'RECIBOS'
+        table 'F_RECIBOS'
         version false
         id column:'CD_RECIBO', generator:'assigned'
         medio column:'CD_MEDIO'
@@ -47,10 +47,10 @@ class Receipt {
         transactionDate column:'FC_OPERACION'
         paymentDate column:'FC_PAGO'
         amount column:'VL_IMPORTE'
-        secQuotesAmount column:'VL_SEG_CUOTA'
+        shareAmount column:'VL_SEG_CUOTA'
         authorization column:'NU_AUTORIZACION'
-        quotaNumber column:'NU_CUOTA'
-        quotaQty column:'NU_CANT_CUOTAS'
+        shareNumber column:'NU_CUOTA'
+        shareQty column:'NU_CANT_CUOTAS'
         liq column:'NU_LIQUIDACION'
         customerId column:'CUST_ID'
         documentId column:'DOC_ID'

@@ -5,10 +5,10 @@
     <th>R<g:message code="salesSite.cardNumber" default="Nro Tarjeta"/></th>
     <th>R<g:message code="salesSite.transDate" default="Fecha de la Transaccion"/></th>
     <th>R<g:message code="salesSite.amount" default="Monto"/></th>
-    <th>R<g:message code="salesSite.secQuotesAmount" default="Cuotas Sec."/></th>
+    <th>R<g:message code="salesSite.shareAmount" default="Monto Cuota"/></th>
     <th>R<g:message code="salesSite.authorization" default="Autorizacion"/></th>
-    <th>R<g:message code="salesSite.quotaNumber" default="Nro Cuota"/></th>
-    <th>R<g:message code="salesSite.quotaQty" default="Cant. Cuotas"/></th>
+    <th>R<g:message code="salesSite.shareNumber" default="Nro Cuota"/></th>
+    <th>R<g:message code="salesSite.shareQty" default="Cant. Cuotas"/></th>
     <th>R<g:message code="salesSite.customerId" default="Cliente"/></th>
     <th>R<g:message code="salesSite.documentId" default="Doc."/></th>
     <th>R<g:message code="salesSite.tid" default="TID"/></th>
@@ -19,10 +19,10 @@
     <th>S<g:message code="salesSite.cardNumber" default="Nro Tarjeta"/></th>
     <th>S<g:message code="salesSite.transDate" default="Fecha de la Transaccion"/></th>
     <th>S<g:message code="salesSite.amount" default="Monto"/></th>
-    <th>S<g:message code="salesSite.secQuotesAmount" default="Cuotas Sec."/></th>
+    <th>S<g:message code="salesSite.shareAmount" default="Monto Cuota"/></th>
     <th>S<g:message code="salesSite.authorization" default="Autorizacion"/></th>
-    <th>S<g:message code="salesSite.quotaNumber" default="Nro Cuota"/></th>
-    <th>S<g:message code="salesSite.quotaQty" default="Cant. Cuotas"/></th>
+    <th>S<g:message code="salesSite.shareNumber" default="Nro Cuota"/></th>
+    <th>S<g:message code="salesSite.shareQty" default="Cant. Cuotas"/></th>
     <th>S<g:message code="salesSite.customerId" default="Cliente"/></th>
     <th>S<g:message code="salesSite.documentId" default="Doc."/></th>
     <th>S<g:message code="salesSite.tid" default="TID"/></th>
@@ -42,10 +42,10 @@
             <td>${salesSiteReceiptInstance?.receipt?.cardNumber}</td>
             <td>${salesSiteReceiptInstance?.receipt?.transactionDate}</td>
             <td>${salesSiteReceiptInstance?.receipt?.amount}</td>
-            <td>${salesSiteReceiptInstance?.receipt?.secQuotesAmount}</td>
+            <td>${salesSiteReceiptInstance?.receipt?.shareAmount}</td>
             <td>${salesSiteReceiptInstance?.receipt?.authorization}</td>
-            <td>${salesSiteReceiptInstance?.receipt?.quotaNumber}</td>
-            <td>${salesSiteReceiptInstance?.receipt?.quotaQty}</td>
+            <td>${salesSiteReceiptInstance?.receipt?.shareNumber}</td>
+            <td>${salesSiteReceiptInstance?.receipt?.shareQty}</td>
             <td>${salesSiteReceiptInstance?.receipt?.customerId}</td>
             <td>${salesSiteReceiptInstance?.receipt?.documentId}</td>
             <td>${salesSiteReceiptInstance?.receipt?.tid}</td>
@@ -56,10 +56,10 @@
             <td>${salesSiteReceiptInstance?.salesSite?.cardNumber}</td>
             <td>${salesSiteReceiptInstance?.salesSite?.transactionDate}</td>
             <td>${salesSiteReceiptInstance?.salesSite?.amount}</td>
-            <td>${salesSiteReceiptInstance?.salesSite?.secQuotesAmount}</td>
+            <td>${salesSiteReceiptInstance?.salesSite?.shareAmount}</td>
             <td>${salesSiteReceiptInstance?.salesSite?.authorization}</td>
-            <td>${salesSiteReceiptInstance?.salesSite?.quotaNumber}</td>
-            <td>${salesSiteReceiptInstance?.salesSite?.quotaQty}</td>
+            <td>${salesSiteReceiptInstance?.salesSite?.shareNumber}</td>
+            <td>${salesSiteReceiptInstance?.salesSite?.shareQty}</td>
             <td>${salesSiteReceiptInstance?.salesSite?.customerId}</td>
             <td>${salesSiteReceiptInstance?.salesSite?.documentId}</td>
             <td>${salesSiteReceiptInstance?.salesSite?.tid}</td>

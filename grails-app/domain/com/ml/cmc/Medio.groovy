@@ -13,11 +13,11 @@ class Medio {
     
     static mappings = {
         
-        table 'MEDIO_COBRO'
+        table 'F_MEDIO_COBRO'
         version false
-        id column:'CD_MEDIO', generator:'assigned', name:'medioId'
+        id column:'CD_MEDIO', generator:'assigned'
         country column:'TX_PAIS'
-        bank column:'TX_BANCO_CTA'
+        bank column:'TX_BANCO'
         card column:'TX_TARJETA'
         store column:'CD_COMERCIO'
         site column:'TX_SITE'

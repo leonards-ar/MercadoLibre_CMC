@@ -7,10 +7,10 @@
    <g:sortableColumn action="listSalesSite" property="cardNumber" title="${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}" />
    <g:sortableColumn action="listSalesSite" property="transactionDate" title="${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}" />
 	 <g:sortableColumn action="listSalesSite" property="amount" title="${message(code: 'salesSite.amount', default: 'Monto')}" />
-	 <g:sortableColumn action="listSalesSite" property="secQuotesAmount" title="${message(code: 'salesSite.secQuotesAmount', default: 'Cuotas Sec.')}" />
+	 <g:sortableColumn action="listSalesSite" property="sharesAmount" title="${message(code: 'salesSite.shareAmount', default: 'Monto Cuota')}" />
 	 <g:sortableColumn action="listSalesSite" property="authorization" title="${message(code: 'salesSite.authorization', default: 'Autorizacion')}" />
-	 <g:sortableColumn action="listSalesSite" property="quotaNumber" title="${message(code: 'salesSite.quotaNumber', default: 'Nro Cuota')}" />
-	 <g:sortableColumn action="listSalesSite" property="quotaQty" title="${message(code: 'salesSite.quotaQty', default: 'Cant. Cuotas')}" />
+	 <g:sortableColumn action="listSalesSite" property="shareNumber" title="${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}" />
+	 <g:sortableColumn action="listSalesSite" property="shareQty" title="${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}" />
 	 <g:sortableColumn action="listSalesSite" property="customerId" title="${message(code: 'salesSite.customerId', default: 'Cliente')}" />
 	 <g:sortableColumn action="listSalesSite" property="documentId" title="${message(code: 'salesSite.documentId', default: 'Doc.')}" />
 	 <g:sortableColumn action="listSalesSite" property="tid" title="${message(code: 'salesSite.tid', default: 'TID')}" />
@@ -30,10 +30,10 @@
             <td>${salesSiteInstance?.cardNumber}</td>
             <td>${salesSiteInstance?.transactionDate}</td>
             <td>${salesSiteInstance?.amount}</td>
-            <td>${salesSiteInstance?.secQuotesAmount}</td>
+            <td>${salesSiteInstance?.shareAmount}</td>
             <td>${salesSiteInstance?.authorization}</td>
-            <td>${salesSiteInstance?.quotaNumber}</td>
-            <td>${salesSiteInstance?.quotaQty}</td>
+            <td>${salesSiteInstance?.shareNumber}</td>
+            <td>${salesSiteInstance?.shareQty}</td>
             <td>${salesSiteInstance?.customerId}</td>
             <td>${salesSiteInstance?.documentId}</td>
             <td>${salesSiteInstance?.tid}</td>
