@@ -1,6 +1,8 @@
 import org.codehaus.groovy.grails.plugins.springsecurity.SecurityFilterPosition
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
+import grails.util.GrailsUtil
 import com.ml.cmc.AuditLog
+import com.ml.cmc.Lock
 import com.ml.cmc.Medio
 import com.ml.cmc.Receipt
 import com.ml.cmc.Role
@@ -23,6 +25,16 @@ class BootStrap {
         SpringSecurityUtils.clientRegisterFilter('concurrencyFilter', SecurityFilterPosition.CONCURRENT_SESSION_FILTER)
         authenticationProcessingFilter.sessionAuthenticationStrategy = concurrentSessionControlStrategy
 
+		//delete locks.
+		if(Lock.count() > 0){
+			
+			def locks = Lock.findAll()
+			locks.each{lock ->
+				lock.delete(flush:true)
+			}
+			
+		}
+		if(!GrailsUtil.getEnvironment().equals('mercadolibre') ){
         // Temporary Users
         def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
 
@@ -129,9 +141,44 @@ class BootStrap {
         assert RegisterType.count() == 4
         assert Receipt.count() == 1
         
+      } else {
+
+		  // Temporary Users
+		  if(Role.count() == 0) {	  
+		  
+			  def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
+		  
+		  }
+		  
+		  if(User.count() == 0) {
+	
+			  def testUser = new User(username:'elvis',enabled: true,password: '1234')
+			  def testUser2 = new User(username:'jorge',enabled:true,password: '1234')
+		
+			  testUser.save(flush:true)
+			  testUser2.save(flush: true)
+		  }
+		  
+		  if(UserRole.count() == 0) {
+			  def userRole = Role.findByAuthority('ROLE_USER')
+			  def testUser2 = User.findByUsername('elvis');
+			  def testUser = User.findByUsername('jorge');
+			  
+			  UserRole.create testUser2, userRole, true
+			  UserRole.create testUser, userRole, true
+			  
+		  }  
+
+	  }
+		
     }
     
     def destroy = {
+		
+		def locks = Lock.findAll()
+		locks.each{lock ->
+			lock.delete(flush:true)
+		}
     }
 }
 
