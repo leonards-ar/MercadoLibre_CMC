@@ -12,7 +12,7 @@ class Preconciliation implements Serializable{
     static constraints = {
     }
     
-    static mappings = {
+    static mapping = {
         table 'TMP_PRECON'
         version false
         

@@ -18,6 +18,19 @@ environments {
             url = "jdbc:hsqldb:mem:devDB"
         }
     }
+	mercadolibre {
+		hibernate {
+			show_sql=true
+		}
+		dataSource {
+			//dbCreate = "create-drop" // one of 'create', 'create-drop','update'
+			dialect = "org.hibernate.dialect.OracleDialect"
+			url = "jdbc:oracle:thin:@10.3.207.108:1521:ORCL "
+			driverClassName = "oracle.jdbc.driver.OracleDriver"
+			username = "ORCL_W01"
+			password = "ORCL_W01"
+		}
+	}
     test {
         dataSource {
             dbCreate = "update"

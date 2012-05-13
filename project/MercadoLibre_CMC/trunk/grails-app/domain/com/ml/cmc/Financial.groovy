@@ -16,7 +16,7 @@ class Financial {
     static constraints = {
     }
     
-    static mappings = {
+    static mapping = {
         table 'FINANCIERO'
         version false
         id column:'CD_RECIB_FINAN', generator:'assigned'

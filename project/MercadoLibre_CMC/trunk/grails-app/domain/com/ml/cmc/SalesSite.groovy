@@ -26,6 +26,7 @@ class SalesSite {
     String uniqueRo
     String documentNumber 
     Long payment  
+	AccountantPeriod period
     
     static constraints = {
         payment(nullable:true)
@@ -33,7 +34,7 @@ class SalesSite {
     
     static mapping = {
         
-        table 'VENTAS_SITE'
+        table 'F_VENTAS_SITE'
         version false
         
         id column:'CD_VENTA_CUOTA', generator:'assigned'
@@ -57,10 +58,11 @@ class SalesSite {
         tid column:'TID'
         nsu column:'NSU'
         ro column:'RO'
-        store column:'NRO_COMERCIO'
+        store column:'NU_COMERCIO'
         cardLot column:'LOTE_TARJETA'
         uniqueRo column:'NU_UNICO_RO'
         documentNumber column:'DOC_NUMBER'
         payment column:'PAYMENT_ID'
+		period column:'CD_PERIODO'
     }
 }

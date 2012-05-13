@@ -9,7 +9,7 @@ class RegisterType {
     }
     
     static mapping = {
-        table 'LKP_TIPO_REGISTRO'
+        table 'F_LKP_TIPO_REGISTRO'
         version false
         id column:'CD_TIPO_REGISTRO', generator:'assigned'
         value column:'TX_TIPO_REGISTRO'

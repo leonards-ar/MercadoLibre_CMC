@@ -6,9 +6,12 @@ class Role {
 
 	static mapping = {
 		cache true
+		table 'A_ROLE'
+		version false
 	}
 
 	static constraints = {
 		authority blank: false, unique: true
 	}
+	
 }

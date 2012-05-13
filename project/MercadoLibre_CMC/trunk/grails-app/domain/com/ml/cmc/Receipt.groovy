@@ -27,7 +27,7 @@ class Receipt {
     String cardLot
     String uniqueRo
     String documentNumber
-    Long payment
+    //Long payment
 
     
     static constraints = {
@@ -47,7 +47,7 @@ class Receipt {
         transactionDate column:'FC_OPERACION'
         paymentDate column:'FC_PAGO'
         amount column:'VL_IMPORTE'
-        shareAmount column:'VL_SEG_CUOTA'
+        shareAmount column:'VL_CUOTA'
         authorization column:'NU_AUTORIZACION'
         shareNumber column:'NU_CUOTA'
         shareQty column:'NU_CANT_CUOTAS'
@@ -58,11 +58,11 @@ class Receipt {
         tid column:'TID'
         nsu column:'NSU'
         ro column:'RO'
-        store column:'NRO_COMERCIO'
+        store column:'NU_COMERCIO'
         cardLot column:'LOTE_TARJETA'
         uniqueRo column:'NU_UNICO_RO'
         documentNumber column:'DOC_NUMBER'
-        payment column:'PAYMENT_ID'
+        //payment column:'PAYMENT_ID'
     }
 
 }

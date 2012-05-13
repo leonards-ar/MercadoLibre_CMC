@@ -8,7 +8,7 @@ class State {
     }
     
     static mapping = {
-        table 'LKP_ESTADOS'
+        table 'F_LKP_ESTADOS'
         version false
         id column:'CD_ESTADO', generator:'assigned'
         value column:'TX_ESTADO'

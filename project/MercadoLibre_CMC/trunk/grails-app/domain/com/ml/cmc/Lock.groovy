@@ -12,7 +12,9 @@ class Lock {
     }
     
     static mapping = {
-        table 'LOCK_FUNCTIONALITY'
+        table 'A_LOCK_FUNCTIONALITY'
+		version false
+		
         id generator: 'assigned', name:'sessionId', type:'string'
         sessionId column:'session_id'
         medio column:'cd_medio'
