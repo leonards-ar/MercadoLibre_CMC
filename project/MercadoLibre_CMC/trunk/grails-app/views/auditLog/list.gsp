@@ -8,95 +8,14 @@
         <link rel="stylesheet" href="${createLinkTo(dir:'css/smoothness',file:'jquery-ui-1.8.20.custom.css')}" type="text/css" media="screen" charset="utf-8">
         <g:javascript library="jquery-1.6.2.min" />
         <g:javascript library="jquery-ui-1.8.16.custom.min" />
+        <g:javascript library="commons" />
+        <g:javascript library="auditLog" />
         <title><g:message code="auditLog.label"/></title>
         
         <g:javascript>
-          $(function() {
-            $('#rollbackButton').click(function() {
-
-
-              var $confirmDialog = $('<div></div>').html('<p>Estas seguro?</p>').dialog({
-                autoOpen : false,
-                title : 'Confirm',
-                modal : true,
-                buttons : {
-                  Ok : function() {
-                    $(this).dialog('close');
-                    doRollback();
-                  },
-                  Cancel: function() {
-                    $(this).dialog('close');
-                  }
-                }
-              });
-              
-              $confirmDialog.dialog('open');
-              
-            });              
-              
-          });
-          
-          
-          function doRollback() {
-          
-			       var $processing = $('<div></div>').html('<cener><p> Procesando...' + '</p>' + $("#spinner").html() + '</cener>').dialog({
-			            autoOpen : false,
-			            modal : true,
-			            closeOnEscape: false,
-			            open: function(event, ui) { 
-			              //hide close button.
-			              $(this).parent().children().children('.ui-dialog-titlebar-close').hide();
-			            }
-			        });
-			        
-					    $.ajax({
-					      type : 'POST',
-					      url : '${createLink(action:'rollback')}',
-					      data : "id=1",
-					      beforeSend: function() {
-					          $processing.dialog('open');
-					      },
-					      complete: function(){
-					          $processing.dialog('close');
-					      },
-					      success : function(resp) {
-                  var $dialog = getDialog(resp);
-                  $dialog.dialog('option','title','');
-                  $dialog.dialog( "option", "buttons", { 
-                      "Ok": function() { 
-                          $(this).dialog("close");
-                      } 
-                  });
-                  $dialog.dialog('open');
-					      },
-					      error : function(XMLHttpRequest, textStatus, errorThrown) {
-					        showError(XMLHttpRequest, textStatus,errorThrown);
-					      }
-					    });
-          }
-          
-				  function showError(XMLHttpRequest, textStatus, errorThrown) {
-				    
-				      var $dialog = getDialog(XMLHttpRequest.responseText);
-				    
-				      $dialog.dialog('open');
-				  }
-
-					function getDialog(message) {
-					
-					  var $dialog = $('<div></div>').html('<p>' + message + '</p>').dialog({
-					    autoOpen : false,
-					    title : 'Error',
-					    modal : true,
-					    buttons : {
-					      Ok : function() {
-					        $(this).dialog("close");
-					      }
-					    }
-					  });
-					  return $dialog;				            
-         }
-        </g:javascript>        
+          var rollbackUrl = '${createLink(action:"rollback")}';
+          var confirmMessage = '${message(code:"auditLog.confirm", default:"Esta seguro?")}'
+         </g:javascript>        
     </head>
     <body>
         <div class="nav">
@@ -122,17 +41,17 @@
                         
                             <g:sortableColumn property="auditoryType" title="${message(code: 'auditLog.auditLogType', default: 'Auditory Type')}" />
                         
-                            <th><g:message code="auditLog.medio" default="Medio" /></th>
+                            <th class="sortable"><g:message code="auditLog.medio" default="Medio" /></th>
                             
-                            <th><g:message code="auditLog.description" default="Descripcion" /></th>
+                            <th class="sortable"><g:message code="auditLog.description" default="Descripcion" /></th>
                             
-                            <th><g:message code="auditLog.rollbackLot" default="Rollback" /></th>
+                            <th class="sortable"><g:message code="auditLog.rollbackLot" default="Rollback" /></th>
                             
-                            <th><g:message code="auditLog.rollback" default="Rollback" /></th>
+                            <th class="sortable"><g:message code="auditLog.rollback" default="Rollback" /></th>
                             
-                            <th><g:message code="auditLog.period" default="Periodo Contable" /></th>
+                            <th class="sortable"><g:message code="auditLog.period" default="Periodo Contable" /></th>
                             
-                            <th><g:message code="auditLog.rollbackJob" default="Deshacer" /></th>
+                            <th class="sortable"><g:message code="auditLog.rollbackJob" default="Deshacer" /></th>
                         
                         </tr>
                     </thead>

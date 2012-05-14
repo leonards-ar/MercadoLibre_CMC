@@ -142,7 +142,7 @@ class PreconciliationController extends SessionInfoController{
         salesSiteReceiptList.each{ item ->
             
             def preconciliation = new Preconciliation(sale:item.salesSite, receipt:item.receipt, 
-                lot:lot, medio:item.receipt?.medio, registerType:item.receipt?.registerType)
+                lot:lot, medio:item.receipt?.medio, period: item.salesSite?.period)
             
             preconciliation.save()
         }

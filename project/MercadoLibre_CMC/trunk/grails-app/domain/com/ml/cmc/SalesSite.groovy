@@ -30,6 +30,7 @@ class SalesSite {
     
     static constraints = {
         payment(nullable:true)
+		period(nullable:true)
     }
     
     static mapping = {
