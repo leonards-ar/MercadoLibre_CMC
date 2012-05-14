@@ -6,14 +6,13 @@ class Preconciliation implements Serializable{
     Receipt receipt
     Long lot
     Medio medio
-    RegisterType registerType
-    
+    AccountantPeriod period
     
     static constraints = {
     }
     
     static mapping = {
-        table 'TMP_PRECON'
+        table 'A_PRECONCILIACIONES_TMP'
         version false
         
         id composite: ['lot','sale','receipt']
@@ -21,8 +20,8 @@ class Preconciliation implements Serializable{
         receipt column:'CD_RECIBO'
         lot column:'LOTE_JAVA'
         medio column:'CD_MEDIO'
-        state column:'CD_CAMBIO_ESTADO'
-        register_type column:'CD_TIPO_REGISTRO'
+		period column:'CD_PERIODO'
+        
         
     }
 }

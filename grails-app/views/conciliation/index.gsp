@@ -6,7 +6,6 @@
     <g:javascript library="jquery-1.6.2.min" />
     <g:javascript library="jquery-ui-1.8.16.custom.min" />
     <g:javascript library="jquery.chainedSelects"/>
-    <g:javascript library="commons"/>
     <g:javascript library="preconciliation"/>
     <g:javascript>
       var cardLink = '${createLink(action:"cards")}';
@@ -14,8 +13,8 @@
       var groupLink = '${createLink(action:"group")}';
       var saveLink = '${createLink(action:"save")}';
       var exitLink = '${createLink(action:"exit")}';
-      var preconciliationNoselectionError = "${message(code:'preconciliation.noselection.error', default:'Seleccione un Recibo y una Venta')}";
-      var preconcliationOnlyoneError = "${message(code:'preconcliation.onlyone.error', default:'Seleccione solo uno') }";
+      var preconciliationNoselectionError = "${message(code:'conciliation.noselection.error', default:'Seleccione un Recibo y una Venta')}";
+      var preconcliationOnlyoneError = "${message(code:'concliation.onlyone.error', default:'Seleccione solo uno') }";
     </g:javascript>
   
   </head>
@@ -26,23 +25,23 @@
 		  <span class="menuButton"><a class="home" href="${createLink(action: 'exit')}"><g:message code="home" default="Home"/></a></span>
 		</div>
 		
-		<h1><g:message code="preconciliation.manual" default="Preconciliacion Manual"/></h1>  
+		<h1><g:message code="conciliation.manual" default="Preconciliacion Manual"/></h1>  
 		
     <div id="lockBox">
       <g:form method="post" name="lockForm" id="lockForm" >
         <table>
           <tr>
           <td>
-            <div><g:message code="preconciliation.country" default="País"/></div>
+            <div><g:message code="conciliation.country" default="País"/></div>
             <g:select name="country" id="country" from="${countryList}" noSelection="['':'']" />
           </td>
           <td>
-            <div><g:message code="preconciliation.card" default="Tarjeta"/> </div>
+            <div><g:message code="conciliation.card" default="Tarjeta"/> </div>
           <g:select name="card" id="card" noSelection="['':'']" disabled="true"/>
 
           </td>
           <td>
-            <div><g:message code="preconciliation.site" default="Site"/> </div>
+            <div><g:message code="conciliation.site" default="Site"/> </div>
           <g:select name="site" id="site" noSelection="['':'']" disabled="true"/>
 
           </td>

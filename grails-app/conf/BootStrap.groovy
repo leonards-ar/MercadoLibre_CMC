@@ -120,7 +120,7 @@ class BootStrap {
             shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',
             tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L)
 
-        receipt.id=1;
+        receipt.id="1";
         salesSite.id=1;
 
         receipt.save(flush:true)

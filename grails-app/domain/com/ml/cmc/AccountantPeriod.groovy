@@ -18,4 +18,8 @@ class AccountantPeriod {
 		endDate column:'FC_HASTA'
 		status column:'TX_ESTADO'
 	}
+	
+	String toString() {
+		startDate - endDate
+	}
 }

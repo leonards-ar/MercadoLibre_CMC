@@ -6,7 +6,7 @@ class AuditLogController {
 	
 	def list = {
 		def auditCriteria = AuditLog.createCriteria()
-		def auditLogInstanceList = auditCriteria.list(max:15, offset:0){
+		def auditLogInstanceList = auditCriteria.list(max:15, offset:params.offset? params.offset : 0){
 			order('date', 'desc')
 			order('time', 'desc')
 		}

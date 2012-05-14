@@ -165,6 +165,13 @@ $(function() {
 	$('.button').find('#preconciliateButton').live('click', function() {
 
 		var strdata = "";
+
+		if($('#preconciliate_table input:hidden').length == 0) {
+			var $dialog = getDialog("No hay elementos para preconciliar");
+			$dialog.dialog('open');
+			
+			return;
+		}
 		
 		$('#preconciliate_table input:hidden').each(
 				function() {
@@ -174,15 +181,7 @@ $(function() {
 					strdata += $(this).attr('id') + "=" + $(this).val();
 				});
 
-        var $processing = $('<div></div>').html('<p> Procesando...' + '</p>' + $("#spinner").html()).dialog({
-            autoOpen : false,
-            modal : true,
-            closeOnEscape: false,
-            open: function(event, ui) { 
-              //hide close button.
-              $(this).parent().children().children('.ui-dialog-titlebar-close').hide();
-            }
-        });		
+        var $processing = getProcessingDialog();
         
 		$.ajax({
 			type : 'POST',
@@ -223,27 +222,4 @@ function lockCombo() {
 	$('#country').attr("disabled", true);
 	$('#card').attr("disabled", true);
 	$('#site').attr("disabled", true);
-}
-
-function showError(XMLHttpRequest, textStatus, errorThrown) {
-
-	var $dialog = getDialog(XMLHttpRequest.responseText);
-
-	$dialog.dialog('open');
-	// prevent the default action, e.g., following a link
-}
-
-function getDialog(message) {
-
-	var $dialog = $('<div></div>').html('<p>' + message + '</p>').dialog({
-		autoOpen : false,
-		title : 'Error',
-		modal : true,
-		buttons : {
-			Ok : function() {
-				$(this).dialog("close");
-			}
-		}
-	});
-	return $dialog;
 }

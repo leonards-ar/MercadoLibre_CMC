@@ -4,6 +4,7 @@ import java.util.Date;
 
 class Receipt {
 
+	String id
     Medio medio
     State state
     RegisterType registerType
@@ -28,16 +29,19 @@ class Receipt {
     String uniqueRo
     String documentNumber
     //Long payment
+	AccountantPeriod period
 
     
     static constraints = {
-        payment(nullable:true)
+		period(nullable:true)
+       
     }
     
     static mapping = {
         
         table 'F_RECIBOS'
         version false
+		
         id column:'CD_RECIBO', generator:'assigned'
         medio column:'CD_MEDIO'
         state column:'CD_ESTADO'
@@ -63,6 +67,7 @@ class Receipt {
         uniqueRo column:'NU_UNICO_RO'
         documentNumber column:'DOC_NUMBER'
         //payment column:'PAYMENT_ID'
+		period column:'CD_PERIODO'
     }
 
 }
