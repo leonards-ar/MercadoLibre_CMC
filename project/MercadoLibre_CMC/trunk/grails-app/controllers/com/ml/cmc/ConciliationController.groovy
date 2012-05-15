@@ -67,19 +67,18 @@ class ConciliationController extends SessionInfoController{
 			return
 		}
 		
-		def state1 = State.findById(1)
-		def state2 = State.findById(2)
+		def state3 = State.findById(3)
 		def receiptInstanceList = Receipt.withCriteria {
 			order(params.sort != null? params.sort:'receiptNumber', params.order != null?params.order:'asc')
 			if(medio != null) eq('medio', medio)
-			inList('state',[state1,state2])
+			eq('state',state3)
 		}
 
 		def medios = Medio.find("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
 		def salesSiteInstanceList = SalesSite.withCriteria {
 			order(params.sort != null? params.sort:'receiptNumber', params.order != null?params.order:'asc')
 			 if(medios != null) inList('medio', medios)
-			 eq('state',state1)
+			 eq('state',state3)
 		}
 		
 		render(template: "conciliationBody", model:[receiptInstanceList:receiptInstanceList, salesSiteInstanceList:salesSiteInstanceList])
@@ -89,12 +88,12 @@ class ConciliationController extends SessionInfoController{
 	def listReceipts = {ConciliationCmd conciliationCmd ->
 	   
 		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site]);
-		def state1 = State.findById(1)
-		def state2 = State.findById(2)
+		def state3 = State.findById(3)
+
 		def receiptInstanceList = Receipt.withCriteria {
 			order(params.sort, params.order)
 			 if(medio != null) eq('medio', medio)
-			 inList('state',[state1,state2])
+			 eq('state',state3)
 			 if(conciliationCmd.receiptIds.size() >0) {
 				 List<Long> longIds = (conciliationCmd.receiptIds instanceof String)?[conciliationCmd.receiptIds.toLong()]:conciliationCmd.receiptIds.collect{it.toLong()}
 				 not{inList('id', longIds)}
@@ -107,7 +106,7 @@ class ConciliationController extends SessionInfoController{
 	
 	def listSalesSite = {ConciliationCmd conciliationCmd ->
 		def medios = Medio.find("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
-		def state = State.findById(1)
+		def state = State.findById(3)
 		def salesSiteInstanceList = SalesSite.withCriteria {
 			order(params.sort, params.order)
 			 if(medios != null) inList('medio', medios)
@@ -142,7 +141,7 @@ class ConciliationController extends SessionInfoController{
 		salesSiteReceiptList.each{ item ->
 			
 			def conciliation = new Conciliation(sale:item.salesSite, receipt:item.receipt,
-				lot:lot, medio:item.receipt?.medio, registerType:item.receipt?.registerType)
+				lot:lot, medio:item.receipt?.medio, period:item.receipt?.period)
 			
 			conciliation.save()
 		}

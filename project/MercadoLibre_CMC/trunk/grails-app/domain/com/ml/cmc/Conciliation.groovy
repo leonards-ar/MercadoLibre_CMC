@@ -6,19 +6,17 @@ class Conciliation {
 	Receipt receipt
 	Long lot
 	Medio medio
-	String preconciliationType
 	AccountantPeriod period
 	
     static constraints = {
 		
 		period(nullable:true)
 		lot(nullable:true)
-		preconciliationType(nullable:true)
 		
     }
 	
 	static mapping = {
-		table 'TMP_COMPENSACIONES'
+		table 'A_CONCILIACIONES_TMP'
 		version false
 		
 		id column:'CD_COMPENSACION'
@@ -26,7 +24,6 @@ class Conciliation {
 		receipt column: 'CD_RECIBO'
 		lot: 'LOTE'
 		medio: 'CD_MEDIO'
-		preconciliationType: 'CD_TIPO_PRECONC'
 		period: 'CD_PERIODO'
 	}
 }

@@ -1,6 +1,7 @@
 package com.ml.cmc
 
 class SalesSite {
+    String id
     Long saleMl
     Medio medio
     State state
