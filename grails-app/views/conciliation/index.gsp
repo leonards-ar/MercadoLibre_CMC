@@ -6,15 +6,16 @@
     <g:javascript library="jquery-1.6.2.min" />
     <g:javascript library="jquery-ui-1.8.16.custom.min" />
     <g:javascript library="jquery.chainedSelects"/>
-    <g:javascript library="preconciliation"/>
+    <g:javascript library="commons"/>
+    <g:javascript library="conciliation"/>
     <g:javascript>
       var cardLink = '${createLink(action:"cards")}';
       var siteLink = '${createLink(action:"sites")}';
       var groupLink = '${createLink(action:"group")}';
       var saveLink = '${createLink(action:"save")}';
       var exitLink = '${createLink(action:"exit")}';
-      var preconciliationNoselectionError = "${message(code:'conciliation.noselection.error', default:'Seleccione un Recibo y una Venta')}";
-      var preconcliationOnlyoneError = "${message(code:'concliation.onlyone.error', default:'Seleccione solo uno') }";
+      var conciliationNoselectionError = "${message(code:'conciliation.noselection.error', default:'Seleccione un Recibo y una Venta')}";
+      var concliationOnlyoneError = "${message(code:'concliation.onlyone.error', default:'Seleccione solo uno') }";
     </g:javascript>
   
   </head>

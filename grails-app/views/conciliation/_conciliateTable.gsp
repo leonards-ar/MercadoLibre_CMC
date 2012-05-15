@@ -1,4 +1,4 @@
-  <table id="preconciliate_table" width="100%" align="center">
+  <table id="conciliate_table" width="100%" align="center">
   <thead>
   <tr>
     <th>R<g:message code="salesSite.registerType" default="Tipo de Registro"/></th>
