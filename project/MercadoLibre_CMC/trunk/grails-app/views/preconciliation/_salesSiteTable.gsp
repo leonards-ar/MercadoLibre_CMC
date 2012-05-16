@@ -6,16 +6,16 @@
    <g:sortableColumn action="listSalesSite" property="registerType" title="${message(code: 'salesSite.registerType', default: 'Tipo de Registro')}" />
    <g:sortableColumn action="listSalesSite" property="cardNumber" title="${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}" />
    <g:sortableColumn action="listSalesSite" property="transactionDate" title="${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}" />
-	 <g:sortableColumn action="listSalesSite" property="amount" title="${message(code: 'salesSite.amount', default: 'Monto')}" />
-	 <g:sortableColumn action="listSalesSite" property="sharesAmount" title="${message(code: 'salesSite.shareAmount', default: 'Monto Cuota')}" />
-	 <g:sortableColumn action="listSalesSite" property="authorization" title="${message(code: 'salesSite.authorization', default: 'Autorizacion')}" />
-	 <g:sortableColumn action="listSalesSite" property="shareNumber" title="${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}" />
-	 <g:sortableColumn action="listSalesSite" property="shareQty" title="${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}" />
-	 <g:sortableColumn action="listSalesSite" property="customerId" title="${message(code: 'salesSite.customerId', default: 'Cliente')}" />
-	 <g:sortableColumn action="listSalesSite" property="documentId" title="${message(code: 'salesSite.documentId', default: 'Doc.')}" />
-	 <g:sortableColumn action="listSalesSite" property="tid" title="${message(code: 'salesSite.tid', default: 'TID')}" />
-	 <g:sortableColumn action="listSalesSite" property="nsu" title="${message(code: 'salesSite.nsu', default: 'NSU')}" />
-	 <g:sortableColumn action="listSalesSite" property="documentNumber" title="${message(code: 'salesSite.documentNumber', default: 'DNI')}" />
+   <g:sortableColumn action="listSalesSite" property="amount" title="${message(code: 'salesSite.amount', default: 'Monto')}" />
+   <g:sortableColumn action="listSalesSite" property="sharesAmount" title="${message(code: 'salesSite.shareAmount', default: 'Monto Cuota')}" />
+   <g:sortableColumn action="listSalesSite" property="authorization" title="${message(code: 'salesSite.authorization', default: 'Autorizacion')}" />
+   <g:sortableColumn action="listSalesSite" property="shareNumber" title="${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}" />
+   <g:sortableColumn action="listSalesSite" property="shareQty" title="${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}" />
+   <g:sortableColumn action="listSalesSite" property="customerId" title="${message(code: 'salesSite.customerId', default: 'Cliente')}" />
+   <g:sortableColumn action="listSalesSite" property="documentId" title="${message(code: 'salesSite.documentId', default: 'Doc.')}" />
+   <g:sortableColumn action="listSalesSite" property="tid" title="${message(code: 'salesSite.tid', default: 'TID')}" />
+   <g:sortableColumn action="listSalesSite" property="nsu" title="${message(code: 'salesSite.nsu', default: 'NSU')}" />
+   <g:sortableColumn action="listSalesSite" property="documentNumber" title="${message(code: 'salesSite.documentNumber', default: 'DNI')}" />
       </tr>
       </thead>
       <tbody>
@@ -23,8 +23,8 @@
           <tr id="${salesSiteInstance.id}">
             <td><g:checkBox class="salesSite_check" name="saleSiteCheckbox_${salesSiteInstance.id}" value="${false}" /></td>
             <td>
-            	<g:hiddenField name="sales_${salesSiteInstance?.id}" value="${formatNumber(number:salesSiteInstance?.id, format:'###.##')}"/>
-            	${salesSiteInstance?.medio?.id}
+              <g:hiddenField name="sales_${salesSiteInstance?.id}" value="${salesSiteInstance?.id}"/>
+              ${salesSiteInstance?.medio?.id}
             </td>            
             <td>${salesSiteInstance?.registerType}</td>
             <td>${salesSiteInstance?.cardNumber}</td>

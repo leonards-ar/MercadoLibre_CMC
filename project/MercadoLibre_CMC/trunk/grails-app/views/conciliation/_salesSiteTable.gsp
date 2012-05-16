@@ -23,7 +23,7 @@
           <tr id="${salesSiteInstance.id}">
             <td><g:checkBox class="salesSite_check" name="saleSiteCheckbox_${salesSiteInstance.id}" value="${false}" /></td>
             <td>
-            	<g:hiddenField name="sales_${salesSiteInstance?.id}" value="${formatNumber(number:salesSiteInstance?.id, format:'###.##')}"/>
+            	<g:hiddenField name="sales_${salesSiteInstance?.id}" value="${salesSiteInstance?.id}"/>
             	${salesSiteInstance?.medio?.id}
             </td>            
             <td>${salesSiteInstance?.registerType}</td>

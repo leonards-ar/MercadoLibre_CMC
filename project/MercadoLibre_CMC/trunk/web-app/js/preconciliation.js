@@ -84,17 +84,17 @@ $(function() {
     		}
     		$(this).parent().parent().toggleClass('yellow');
     		
-    		var monto = $(this).parent().parent().find('td:eq(4)').text();
+    		var monto = parseFloat($(this).parent().parent().find('td:eq(4)').text());
     		var balanced = parseFloat($('#balance').text());
     		balanced = isNaN(balanced) ? 0 : balanced;
-    		balanced += parseFloat(monto);
+    		balanced += isNaN(monto)? 0 : monto;
     		$('#balance').html(String(balanced));
     	} else {
     		$(this).parent().parent().removeClass('yellow');
-    		var monto = $(this).parent().parent().find('td:eq(4)').text();
+    		var monto = parseFloat($(this).parent().parent().find('td:eq(4)').text());
     		var balanced = parseFloat($('#balance').text());
     		if (!(isNaN(balanced))) {
-    			balanced -= parseFloat(monto);
+    			balanced -= isNaN(monto)? 0 : monto;
     			$('#balance').html(String(balanced));
     		}
     	}
@@ -110,17 +110,17 @@ $(function() {
 				return;
 			}
 			$(this).parent().parent().toggleClass('yellow');
-			var monto = $(this).parent().parent().find('td:eq(5)').text();
+			var monto = parseFloat($(this).parent().parent().find('td:eq(5)').text());
 			var balanced = parseFloat($('#balance').text());
 			balanced = isNaN(balanced) ? 0 : balanced;
-			balanced -= parseFloat(monto);
+			balanced -= isNaN(monto) ? 0 : monto;
 			$('#balance').html(String(balanced));
 		} else {
 			$(this).parent().parent().removeClass('yellow');
-			var monto = $(this).parent().parent().find('td:eq(5)').text();
+			var monto = parseFloat($(this).parent().parent().find('td:eq(5)').text());
 			var balanced = parseFloat($('#balance').text());
 			if (!(isNaN(balanced))) {
-				balanced += parseFloat(monto);
+				balanced += isNaN(monto) ? 0 : monto;
 				$('#balance').html(String(balanced));
 			}
 		}

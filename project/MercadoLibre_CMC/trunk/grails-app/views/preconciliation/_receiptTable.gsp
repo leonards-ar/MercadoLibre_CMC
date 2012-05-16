@@ -23,7 +23,7 @@
           <tr id="${receiptInstance.id}">
             <td><g:checkBox class="receipt_check" id="receiptCheckbox_${receiptInstance.id}" name="receiptCheckbox_${receiptInstance.id}" value="${false}" /></td>            
             <td>
-            	<g:hiddenField name="receipt_${receiptInstance?.id}" value="${formatNumber(number:receiptInstance?.id, format:'###.##')}"/>
+            	<g:hiddenField name="receipt_${receiptInstance?.id}" value="${receiptInstance?.id}"/>
             	${receiptInstance?.registerType}
             </td>
             <td>${receiptInstance?.cardNumber}</td>
