@@ -33,7 +33,28 @@ class Receipt {
 
     
     static constraints = {
-		period(nullable:true)
+
+		lot(nullable:true)
+		cardNumber(nullable:true)
+		transactionDate(nullable:true)
+		paymentDate(nullable:true)
+		amount(nullable:true)
+		shareAmount(nullable:true)
+		authorization(nullable:true)
+		shareNumber(nullable:true)
+		shareQty(nullable:true)
+		liq(nullable:true)
+		customerId(nullable:true)
+		documentId(nullable:true)
+		receiptNumber(nullable:true)
+		tid(nullable:true)
+		nsu(nullable:true)
+		ro(nullable:true)
+		store(nullable:true)
+		cardLot(nullable:true)
+		uniqueRo(nullable:true)
+		documentNumber(nullable:true)
+		//Long payment
        
     }
     

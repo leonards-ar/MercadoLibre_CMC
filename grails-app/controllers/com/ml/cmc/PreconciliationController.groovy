@@ -96,7 +96,7 @@ class PreconciliationController extends SessionInfoController{
              if(medio != null) eq('medio', medio)
              inList('state',[state1,state2])
              if(preconciliationCmd.receiptIds.size() >0) {
-                 List<Long> longIds = (preconciliationCmd.receiptIds instanceof String)?[preconciliationCmd.receiptIds.toLong()]:preconciliationCmd.receiptIds.collect{it.toLong()}
+                 List<String> longIds = (preconciliationCmd.receiptIds instanceof String)?[preconciliationCmd.receiptIds]:preconciliationCmd.receiptIds.collect{it}
                  not{inList('id', longIds)}
              }
         }
@@ -113,7 +113,7 @@ class PreconciliationController extends SessionInfoController{
              if(medios != null) inList('medio', medios)
              eq('state',state)
              if(preconciliationCmd.salesSiteIds.size() >0) {
-                 List<Long> longIds = (preconciliationCmd.salesSiteIds instanceof String)?[preconciliationCmd.salesSiteIds.toLong()]:preconciliationCmd.salesSiteIds.collect{it.toLong()}
+                 List<String> longIds = (preconciliationCmd.salesSiteIds instanceof String)?[preconciliationCmd.salesSiteIds]:preconciliationCmd.salesSiteIds.collect{it}
                  not{inList('id', longIds)}
              }
         }
@@ -127,7 +127,7 @@ class PreconciliationController extends SessionInfoController{
         def salesSiteInstance = SalesSite.findById(params.salesSiteId)
         def receiptInstance = Receipt.findById(params.receiptId)
         
-        List preconciliation = preconciliationCmd.insertPair(new SalesSiteReceiptCmd(salesSite: salesSiteInstance, receipt:receiptInstance ))
+        List preconciliation = preconciliationCmd.insertPair(new PreSalesSiteReceiptCmd(salesSite: salesSiteInstance, receipt:receiptInstance ))
         
         render(template:"preconciliateTable", model:[preconciliationInstancelist: preconciliation])
         
@@ -168,37 +168,40 @@ class PreconciliationController extends SessionInfoController{
 
 class PreconciliationCmd {
     
-    List salesSiteIds = []
-    List receiptIds = []
+    List<String> salesSiteIds = []
+    List<String> receiptIds = []
 
     List createList() {
         List list = []
         salesSiteIds.eachWithIndex {salesSiteId, i ->
             def salesSite = SalesSite.findById(salesSiteIds[i])
             def receipt = Receipt.findById(receiptIds[i])
-            def salesSiteReceipt = new SalesSiteReceiptCmd(salesSite: salesSite, receipt: receipt)
+            def salesSiteReceipt = new PreSalesSiteReceiptCmd(salesSite: salesSite, receipt: receipt)
             
             list.add(salesSiteReceipt)
         }
         return list
         
     }
-    List insertPair(SalesSiteReceiptCmd salesSiteReceipt) {
+    List insertPair(PreSalesSiteReceiptCmd salesSiteReceipt) {
         List list = []
         list.add(salesSiteReceipt)
-        salesSiteIds.eachWithIndex {salesSiteId, i ->
-            def salesSiteInstance = SalesSite.findById(salesSiteId)
-            def receiptInstance = Receipt.findById(reciptids[i])
-            def salesSiteRecepit = new SalesSiteReceiptCmd(salesSite: salesSiteInstance, receipt: receiptInstance)
-            
-            list.add(salesSiteReceipt)
+		if(!(salesSiteIds instanceof String)){
+	        salesSiteIds.eachWithIndex {salesSiteId, i ->
+	            def salesSiteInstance = SalesSite.findById(salesSiteId)
+	            def receiptInstance = Receipt.findById(receiptIds[i])
+	            def salesSiteRecepit = new PreSalesSiteReceiptCmd(salesSite: salesSiteInstance, receipt: receiptInstance)
+	            
+	            list.add(salesSiteReceipt)
+	        }
         }
         return list
     }
     
 }
 
-class SalesSiteReceiptCmd {
+
+class PreSalesSiteReceiptCmd {
     SalesSite salesSite
     Receipt receipt
 }
