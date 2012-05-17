@@ -13,8 +13,8 @@ class SalesSite {
     Double amount
     Double shareAmount
     String authorization
-    Integer shareNumber
-    Integer shareQty
+    Long shareNumber
+    Long shareQty
     String liq
     String customerId
     String documentId
