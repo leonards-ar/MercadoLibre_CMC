@@ -117,6 +117,13 @@ $(function() {
 			$('#balance').html(String(balanced));
 		} else {
 			$(this).parent().parent().removeClass('yellow');
+			var trId = parseInt($(this).parent().parent().attr('id'));
+			if(trId % 2 == 0){
+				$(this).parent().parent().addClass('even');
+			}else{
+				$(this).parent().parent().addClass('odd');
+			}
+			
 			var monto = parseFloat($(this).parent().parent().find('td:eq(5)').text());
 			var balanced = parseFloat($('#balance').text());
 			if (!(isNaN(balanced))) {
@@ -208,8 +215,14 @@ $(function() {
 				showError(XMLHttpRequest, textStatus,errorThrown);
 			}
 		});
-	});		
+	});	
+	
+	$('#receiptFilter').live('click',function(){
+		alert("you click me!");
+	});
 		
+
+	
 
 });
 
