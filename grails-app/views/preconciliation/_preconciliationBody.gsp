@@ -2,6 +2,42 @@
  <table>
  <tr>
    <td>
+  <div id="filterReceiptColumns" class="filterColumns">
+  <table>
+    <tr>
+      <td><g:checkBox name="registerType" value="${true}" /></td>
+      <td>${message(code: 'salesSite.registerType', default: 'Tipo de Registro')}</td>
+      <td><g:checkBox name="${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}" value="${true}" /></td>
+      <td>${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}</td>
+      <td><g:checkBox name="${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}" value="${true}" /></td>
+      <td>${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}</td>
+    </tr>
+    <tr>
+      <td><g:checkBox name="${message(code: 'salesSite.amount', default: 'Monto')}" value="${true}" /></td>
+      <td>${message(code: 'salesSite.amount', default: 'Monto')}</td>
+      <td><g:checkBox name="${message(code: 'salesSite.shareAmount', default: 'Monto Cuota')}" value="${true}" /></td>
+      <td>${message(code: 'salesSite.shareAmount', default: 'Monto Cuota')}</td>
+      <td><g:checkBox name="${message(code: 'salesSite.authorization', default: 'Autorizacion')}" value="${true}" /></td>
+      <td>${message(code: 'salesSite.authorization', default: 'Autorizacion')}</td>
+    </tr>
+    <tr>
+      <td><g:checkBox name="${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}" value="${true}" /></td>
+      <td>${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}</td>
+      <td><g:checkBox name="${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}" value="${true}" /></td>
+      <td>${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}</td>
+      <td><g:checkBox name="${message(code: 'salesSite.customerId', default: 'Cliente')}" value="${true}" /></td>
+      <td>${message(code: 'salesSite.customerId', default: 'Cliente')}</td>
+    </tr>
+    <tr>
+      <td><g:checkBox name="${message(code: 'salesSite.documentId', default: 'Doc.')}" value="${true}" /></td>
+      <td>${message(code: 'salesSite.documentId', default: 'Doc.')}</td>
+      <td><g:checkBox name="${message(code: 'salesSite.tid', default: 'TID')}" value="${true}" /></td>
+      <td>${message(code: 'salesSite.tid', default: 'TID')}</td>
+      <td><g:checkBox name="${message(code: 'salesSite.nsu', default: 'TID')}" value="${true}" /></td>
+      <td>${message(code: 'salesSite.tid', default: 'NSU')}</td>
+    </tr>                    
+  </table>
+  </div>       
      <div id="receipts" style="width:550;height:200;overflow:auto;border:1px solid #ccc;position:relative">
        <g:render template="receiptTable" model="[receiptInstanceList:receiptInstanceList]"/>
     </div>

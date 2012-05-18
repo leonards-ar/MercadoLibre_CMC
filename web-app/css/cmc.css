@@ -60,6 +60,17 @@ div.autocomplete ul li {
     font-size: 9px;
 }
 
+.filterColumns {
+	
+  display:none;
+  position:absolute;
+  top:50;left:30;
+  z-index:10;
+  background:#f7f7f7;
+
+	
+}
+
 .currencyValue {
     text-align:right;
 }

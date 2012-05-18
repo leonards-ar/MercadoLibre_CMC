@@ -218,11 +218,17 @@ $(function() {
 	});	
 	
 	$('#receiptFilter').live('click',function(){
-		alert("you click me!");
+		$('#filterReceiptColumns').toggle('blind',500);
 	});
-		
-
 	
+	$('#registerType').live('click',function(){
+		if(this.checked) {
+			$('#receipt_table').find('td:nth-child(2),th:nth-child(2)').show('slide',500);
+		} else {
+			$('#receipt_table').find('td:nth-child(2),th:nth-child(2)').hide('slide',500);
+		}
+		
+	});	
 
 });
 
