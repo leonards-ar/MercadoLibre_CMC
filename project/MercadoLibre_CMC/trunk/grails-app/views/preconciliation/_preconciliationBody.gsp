@@ -2,14 +2,14 @@
  <table>
  <tr>
    <td>
-  <div id="filterReceiptColumns" class="filterColumns">
+  <div id="filterReceiptColumns" class="receiptfilterColumns">
   <table>
     <tr>
-      <td><g:checkBox name="registerType" value="${true}" /></td>
+      <td><g:checkBox class='receiptCol' name="2" value="${true}" /></td>
       <td>${message(code: 'salesSite.registerType', default: 'Tipo de Registro')}</td>
-      <td><g:checkBox name="${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}" value="${true}" /></td>
+      <td><g:checkBox class='receiptCol' name="3" value="${true}" /></td>
       <td>${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}</td>
-      <td><g:checkBox name="${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}" value="${true}" /></td>
+      <td><g:checkBox class='receiptCol' name="4" value="${true}" /></td>
       <td>${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}</td>
     </tr>
     <tr>

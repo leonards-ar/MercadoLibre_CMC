@@ -221,11 +221,14 @@ $(function() {
 		$('#filterReceiptColumns').toggle('blind',500);
 	});
 	
-	$('#registerType').live('click',function(){
+	$('.receiptCol').live('click',function(){
+
+		var column = $(this).attr('name');
+
 		if(this.checked) {
-			$('#receipt_table').find('td:nth-child(2),th:nth-child(2)').show('slide',500);
+			$('#receipt_table').find('td:nth-child(' + column + '),th:nth-child(' + column + ')').show('slide',500);
 		} else {
-			$('#receipt_table').find('td:nth-child(2),th:nth-child(2)').hide('slide',500);
+			$('#receipt_table').find('td:nth-child(' + column + '),th:nth-child(' + column + ')').hide('slide',500);
 		}
 		
 	});	
