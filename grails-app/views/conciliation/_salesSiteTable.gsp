@@ -20,7 +20,7 @@
       </thead>
       <tbody>
         <g:each in="${salesSiteInstanceList}" status="i" var="salesSiteInstance">
-          <tr id="${salesSiteInstance.id}">
+          <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
             <td><g:checkBox class="salesSite_check" name="saleSiteCheckbox_${salesSiteInstance.id}" value="${false}" /></td>
             <td>
             	<g:hiddenField name="sales_${salesSiteInstance?.id}" value="${salesSiteInstance?.id}"/>
