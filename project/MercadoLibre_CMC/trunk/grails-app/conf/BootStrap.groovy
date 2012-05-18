@@ -1,6 +1,7 @@
 import org.codehaus.groovy.grails.plugins.springsecurity.SecurityFilterPosition
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 import grails.util.GrailsUtil
+import com.ml.cmc.AccountantPeriod
 import com.ml.cmc.AuditLog
 import com.ml.cmc.Lock
 import com.ml.cmc.Medio
@@ -109,25 +110,34 @@ class BootStrap {
 		medio =new Medio(country:'VEN',bank:'SANTANDER' ,card:'VISA'     , store:'1113278' , site:'ML')
 		medio.id=11
 		medio.save(flush:true)
-        
+		
+		def period = new AccountantPeriod(startDate:new Date(), endDate: new Date(), status:'ACTIVO')
+		period.id = 1L
+		period.save(flush:true)
+		
+		
+		
         def receipt = new Receipt(medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123132',
             transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,
             shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',
-            tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L)
+            tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
         
         def salesSite = new SalesSite(saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123132',
             transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,
             shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',
-            tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L)
+            tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
 
         receipt.id="1";
-        salesSite.id=1;
+        salesSite.id="1";
 
+		
         receipt.save(flush:true)
         salesSite.save(flush:true)
-        
+
+		
 		def auditLog = new AuditLog(date: new Date(), time:'11:00:00', user:'jorge', auditLogType:'Conciliacion Manual',
 			medio:Medio.findById(1), description:'no hay seguridad');
+		
 		
 		auditLog.id = 1
 		auditLog.save(flush:true)

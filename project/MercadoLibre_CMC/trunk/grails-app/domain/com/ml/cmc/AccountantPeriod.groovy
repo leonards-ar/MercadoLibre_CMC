@@ -20,6 +20,6 @@ class AccountantPeriod {
 	}
 	
 	String toString() {
-		startDate - endDate
+		"${startDate} - ${endDate}"
 	}
 }
