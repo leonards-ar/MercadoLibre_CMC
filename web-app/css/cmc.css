@@ -80,6 +80,10 @@ div.autocomplete ul li {
   
 }
 
+.submitButton {
+	   cursor: pointer;
+}
+	
 .currencyValue {
     text-align:right;
 }

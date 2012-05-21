@@ -16,6 +16,7 @@
       var exitLink = '${createLink(action:"exit")}';
       var preconciliationNoselectionError = "${message(code:'preconciliation.noselection.error', default:'Seleccione un Recibo y una Venta')}";
       var preconcliationOnlyoneError = "${message(code:'preconcliation.onlyone.error', default:'Seleccione solo uno') }";
+      var $loading = getProcessingDialog();
     </g:javascript>
   
   </head>
@@ -48,7 +49,7 @@
           </td>
           <td>
             <span class="button">
-              <g:submitToRemote update="myBody" name="lock" class="save" value="Lock" id="lock" action="lock" onLoading="showLoading()" onFailure="showError(XMLHttpRequest,textStatus,errorThrown);" onSuccess="lockCombo()"/>
+              <g:submitToRemote class="menuButton" update="myBody" name="lock" class="save" value="Lock" id="lock" action="lock" onLoading="showLoading()" onFailure="showError(XMLHttpRequest,textStatus,errorThrown);" onComplete="closeLoading()" onSuccess="lockCombo()"/>
             </span>
           </td>
 

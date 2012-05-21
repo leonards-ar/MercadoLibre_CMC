@@ -1,11 +1,13 @@
 package com.ml.cmc
 import java.security.Principal
 import org.springframework.security.core.session.SessionInformation
+import grails.converters.JSON
 
 class SessionInfoController {
 
     def sessionRegistry
     def springSecurityService
+	def securityLockService
 
     protected String getSessionId() {
         
@@ -36,6 +38,33 @@ class SessionInfoController {
         return locker;
         
     }
-    
+
+	def cards = {
+		
+		def cardsToSelect = Medio.withCriteria{
+			projections{
+				distinct "card"
+			}
+			eq("country", params._value)
+		}
+		
+		render cardsToSelect as JSON
+	}
+	
+	def sites = {
+		
+		 def sitesToSelect = Medio.withCriteria{
+			projections{
+				distinct "site"
+			}
+			eq("card", params._value)
+		}
+		render sitesToSelect as JSON
+	}
+		
+	def exit = {
+		securityLockService.unLockFunctionality(getSessionId())
+		redirect(controller:'home', action:'index')
+	}
     
 }
