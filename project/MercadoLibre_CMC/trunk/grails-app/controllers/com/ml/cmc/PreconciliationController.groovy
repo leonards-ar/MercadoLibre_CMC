@@ -20,30 +20,13 @@ class PreconciliationController extends SessionInfoController{
         render(view:'index', model:[countryList: countryList]) 
         }
     
-    def cards = {
-
-        def cardsToSelect = Medio.withCriteria{
-			projections{
-				distinct "card"
-			}
-			eq("country", params._value)
-		}
-		
-        render cardsToSelect as JSON
-    }
-    
-    def sites = {
-        
-         def sitesToSelect = Medio.withCriteria{
-            projections{
-                distinct "site"
-            }
-            eq("card", params._value)
-        }
-        render sitesToSelect as JSON
-    }
-
     def lock = {
+		
+		if(params.country == null || params.card == null || params.site == null){
+			response.setStatus(500)
+			render message(code:"preconciliation.nocomboselected.error")
+			return
+		}
         
         def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
         
@@ -158,10 +141,7 @@ class PreconciliationController extends SessionInfoController{
          
     }
     
-    def exit = {
-        securityLockService.unLockFunctionality(getSessionId())
-        redirect(controller:'home', action:'index')
-    }
+ 
     
 
 }

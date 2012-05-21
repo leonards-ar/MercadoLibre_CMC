@@ -1,13 +1,13 @@
   <table id="sales_table">
   <thead>
   <tr>
-   <th><input type="button" class="ui-icon ui-icon-arrowthick-2-n-s" id="salesSiteFilter" /></th>
+   <th><input type="button" class="ui-icon ui-icon-arrowthick-2-n-s" id="salesSiteFilter" alt="Filtrar Columnas"/></th>
    <g:sortableColumn action="listSalesSite" property="medio" title="${message(code: 'salesSite.medio', default: 'Medio')}" />   
    <g:sortableColumn action="listSalesSite" property="registerType" title="${message(code: 'salesSite.registerType', default: 'Tipo de Registro')}" />
    <g:sortableColumn action="listSalesSite" property="cardNumber" title="${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}" />
    <g:sortableColumn action="listSalesSite" property="transactionDate" title="${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}" />
    <g:sortableColumn action="listSalesSite" property="amount" title="${message(code: 'salesSite.amount', default: 'Monto')}" />
-   <g:sortableColumn action="listSalesSite" property="sharesAmount" title="${message(code: 'salesSite.shareAmount', default: 'Monto Cuota')}" />
+   <g:sortableColumn action="listSalesSite" property="shareAmount" title="${message(code: 'salesSite.shareAmount', default: 'Monto Cuota')}" />
    <g:sortableColumn action="listSalesSite" property="authorization" title="${message(code: 'salesSite.authorization', default: 'Autorizacion')}" />
    <g:sortableColumn action="listSalesSite" property="shareNumber" title="${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}" />
    <g:sortableColumn action="listSalesSite" property="shareQty" title="${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}" />
