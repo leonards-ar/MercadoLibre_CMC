@@ -99,6 +99,7 @@ grails.plugins.springsecurity.securityConfigType = "InterceptUrlMap"
 grails.plugins.springsecurity.interceptUrlMap = [
     '/home/**':    ['ROLE_USER'],
     '/preconciliation/**':    ['ROLE_USER'],
+	'/compensation/**':    ['ROLE_USER'],
 	'/conciliation/**':    ['ROLE_USER'],
 	'/auditLog/**':    ['ROLE_USER'],
     '/index.gsp':  ['IS_AUTHENTICATED_ANONYMOUSLY'],
