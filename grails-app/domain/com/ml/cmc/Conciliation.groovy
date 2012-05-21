@@ -1,6 +1,6 @@
 package com.ml.cmc
 
-class Conciliation {
+class Conciliation implements Serializable {
 
 	SalesSite sale
 	Receipt receipt
@@ -19,8 +19,8 @@ class Conciliation {
 		table 'A_CONCILIACIONES_TMP'
 		version false
 		
-		id column:'CD_COMPENSACION'
-		sale column: 'CD_SITE'
+		id composite: ['lot','sale','receipt']
+		sale column: 'CD_VENTA_CUOTA'
 		receipt column: 'CD_RECIBO'
 		lot: 'LOTE'
 		medio: 'CD_MEDIO'
