@@ -14,7 +14,7 @@
         <g:link controller="conciliation" action="index"><g:message code="cmc.bar.conciliation"/></g:link>
       </span>
       <span class="menuButton">
-        <g:link controller="#" action="#"><g:message code="cmc.bar.compensation"/></g:link>
+        <g:link controller="compensation" action="index"><g:message code="cmc.bar.compensation"/></g:link>
       </span>
       <span class="menuButton">
         <g:link controller="#" action="#"><g:message code="cmc.bar.despreconciliation"/></g:link>
