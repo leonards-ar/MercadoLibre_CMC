@@ -1,7 +1,7 @@
   <table id="receipt_table">
   <thead>
   <tr>
-   <th></th>
+   <th><input type="button" class="ui-icon ui-icon-arrowthick-2-n-s" id="receiptFilter" /></th>
      <g:sortableColumn action="listReceipts" property="registerType" title="${message(code: 'salesSite.registerType', default: 'Tipo de Registro')}" onclick("sortReceipt()")/>
      <g:sortableColumn action="listReceipts" property="cardNumber" title="${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}" />
      <g:sortableColumn action="listReceipts" property="transactionDate" title="${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}" />
