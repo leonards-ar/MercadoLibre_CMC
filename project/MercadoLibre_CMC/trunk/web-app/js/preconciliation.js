@@ -1,29 +1,9 @@
 $(function() {
 	$('#country').chainSelect('#card', cardLink, {
-		before : function(target) // before request hide the target combobox
-									// and display the loading message
-		{
-			$(target).attr("disabled", true);
-		},
-		after : function(target) // after request show the target combobox
-									// and hide the loading message
-		{
-			$(target).attr("disabled", false);
-		},
 		nonSelectedValue : '---'
 	});
 
 	$('#card').chainSelect('#site', siteLink, {
-		before : function(target) // before request hide the target combobox
-									// and display the loading message
-		{
-			$(target).attr("disabled", true);
-		},
-		after : function(target) // after request show the target combobox
-									// and hide the loading message
-		{
-			$(target).attr("disabled", false);
-		},
 		nonSelectedValue : '---'
 	});
 
@@ -127,13 +107,6 @@ $(function() {
 			$('#balance').html(String(balanced));
 		} else {
 			$(this).parent().parent().removeClass('yellow');
-			var trId = parseInt($(this).parent().parent().attr('id'));
-			if(trId % 2 == 0){
-				$(this).parent().parent().addClass('even');
-			}else{
-				$(this).parent().parent().addClass('odd');
-			}
-			
 			var monto = parseFloat($(this).parent().parent().find('td:eq(5)').text());
 			var balanced = parseFloat($('#balance').text());
 			if (!(isNaN(balanced))) {
@@ -282,7 +255,42 @@ $(function() {
 			$('#sales_table').find('td:nth-child(' + column + '),th:nth-child(' + column + ')').hide('slide',500);
 		}
 		
-	});	
+	});
+	
+	$('#lock').click(function(){
+		
+		if($(this).attr('value') == 'Lock'){
+			var strdata = $('#country').attr('id') + "=" + $('#country').val();
+			strdata += "&" + $('#card').attr('id') + "=" + $('#card').val();
+			strdata += "&" + $('#site').attr('id') + "=" + $('#site').val();
+			
+	        var $processing = getProcessingDialog();
+	        
+			$.ajax({
+				type : 'POST',
+				url : lockLink,
+				data : strdata,
+				beforeSend: function() {
+				    $processing.dialog('open');
+				},
+				complete: function(){
+				    $processing.dialog('close');
+			    },
+				success : function(data) {
+			    	$('#country').attr("disabled", true);
+			    	$('#card').attr("disabled", true);
+			    	$('#site').attr("disabled", true);
+			    	$('#lock').attr("value","Unlock");
+			    	$('#myBody').html(data);
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					showError(XMLHttpRequest, textStatus,errorThrown);
+				}
+			});		
+		} else {
+			$(location).attr('href',index);
+		}
+	});
 	
 });
 

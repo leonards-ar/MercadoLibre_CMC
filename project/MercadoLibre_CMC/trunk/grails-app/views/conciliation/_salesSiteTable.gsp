@@ -1,7 +1,7 @@
   <table id="sales_table">
   <thead>
   <tr>
-   <th></th>
+   <th><input type="button" class="ui-icon ui-icon-arrowthick-2-n-s" id="salesSiteFilter" alt="Filtrar Columnas"/></th>
    <g:sortableColumn action="listSalesSite" property="medio" title="${message(code: 'salesSite.medio', default: 'Medio')}" />   
    <g:sortableColumn action="listSalesSite" property="registerType" title="${message(code: 'salesSite.registerType', default: 'Tipo de Registro')}" />
    <g:sortableColumn action="listSalesSite" property="cardNumber" title="${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}" />
