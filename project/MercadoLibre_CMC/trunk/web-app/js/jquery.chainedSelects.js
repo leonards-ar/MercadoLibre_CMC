@@ -52,7 +52,7 @@ jQuery.fn.chainSelect = function( target, url, settings )
 			data = eval(data);//get json array
 			
 			if(settings.nonSelectedValue != null) {
-				$(target).get(0).add(new Option(settings.nonSelectedValue, ''), document.all ? 0 : null);
+				$(target).get(0).add(new Option(settings.nonSelectedValue, settings.nonSelectedValue), document.all ? 0 : null);
 				index = 1;
 			}
 			
