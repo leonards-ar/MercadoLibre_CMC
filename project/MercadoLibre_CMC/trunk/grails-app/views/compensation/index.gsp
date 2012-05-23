@@ -14,6 +14,8 @@
       var groupLink = '${createLink(action:"group")}';
       var saveLink = '${createLink(action:"save")}';
       var exitLink = '${createLink(action:"exit")}';
+      var lockLink = '${createLink(action:"lock")}';
+      var index = '${createLink(action:"index")}';
       var preconciliationNoselectionError = "${message(code:'preconciliation.noselection.error', default:'Seleccione un Recibo y una Venta')}";
       var preconcliationOnlyoneError = "${message(code:'preconcliation.onlyone.error', default:'Seleccione solo uno') }";
       var $loading = getProcessingDialog();
@@ -30,7 +32,6 @@
     <h1><g:message code="compensation.label" default="Compensacion Manual"/></h1>  
     
     <div id="lockBox">
-      <g:form method="post" name="lockForm" id="lockForm" >
         <table>
           <tr>
           <td>
@@ -39,24 +40,23 @@
           </td>
           <td>
             <div><g:message code="compensation.card" default="Tarjeta"/> </div>
-          <g:select name="card" id="card" noSelection="['':'']" disabled="true"/>
+          <g:select name="card" id="card" noSelection="['':'']"/>
 
           </td>
           <td>
             <div><g:message code="compensation.site" default="Site"/> </div>
-          <g:select name="site" id="site" noSelection="['':'']" disabled="true"/>
+          <g:select name="site" id="site" noSelection="['':'']"/>
 
           </td>
           <td>
             <span class="button">
-              <g:submitToRemote class="menuButton" update="tabs" name="lock" class="save" value="Lock" id="lock" action="lock" onLoading="showLoading()" onFailure="showError(XMLHttpRequest,textStatus,errorThrown);" onComplete="closeLoading()" onSuccess="lockCombo()"/>
+              <input type="button" class="save" value="Lock" id="lock"/>
             </span>
           </td>
 
           </tr>
         </table>
 
-      </g:form>
     <br/>
     <div id="tabs"/>
   </body>
