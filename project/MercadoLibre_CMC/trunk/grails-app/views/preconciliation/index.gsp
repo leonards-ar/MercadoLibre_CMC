@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="${createLinkTo(dir:'css/smoothness',file:'jquery-ui-1.8.20.custom.css')}" type="text/css" media="screen" charset="utf-8">
     <g:javascript library="jquery-1.6.2.min" />
     <g:javascript library="jquery-ui-1.8.16.custom.min" />
+    <g:javascript library="DataTables-1.9.1/media/js/jquery.dataTables" />
     <g:javascript library="jquery.chainedSelects"/>
     <g:javascript library="commons"/>
     <g:javascript library="preconciliation"/>
@@ -58,6 +59,6 @@
         </table>
 
     <br/>
-    <div id="myBody" />
+    <div id="myBody" class="body" />
   </body>
 </html>

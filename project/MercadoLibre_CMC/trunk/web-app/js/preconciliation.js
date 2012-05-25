@@ -63,25 +63,16 @@ $(function() {
 	
 	});
 
-	$('.receipt_check').live('click',function() {
-    	if (this.checked) {
-    		var misselected = $('#receipt_table').find('tr:.yellow').get();
-    		if (misselected.length > 0) {
-    			var $dialog = getDialog(preconcliationOnlyoneError);
-    			$dialog.dialog("open");								
-    			this.checked = false;
-    			return;
-    		}
-    		$(this).parent().parent().toggleClass('yellow');
-    		
-    		var monto = parseFloat($(this).parent().parent().find('td:eq(4)').text());
+	$('#receipt_table tr').live('click',function() {
+	    $(this).toggleClass('yellow');
+    	if ($(this).hasClass('yellow')) {
+    		var monto = parseFloat($(this).find('td:eq(8)').text());
     		var balanced = parseFloat($('#balance').text());
     		balanced = isNaN(balanced) ? 0 : balanced;
     		balanced += isNaN(monto)? 0 : monto;
     		$('#balance').html(String(balanced));
     	} else {
-    		$(this).parent().parent().removeClass('yellow');
-    		var monto = parseFloat($(this).parent().parent().find('td:eq(4)').text());
+    		var monto = parseFloat($(this).find('td:eq(8)').text());
     		var balanced = parseFloat($('#balance').text());
     		if (!(isNaN(balanced))) {
     			balanced -= isNaN(monto)? 0 : monto;
@@ -90,24 +81,16 @@ $(function() {
     	}
     });
 
-	$('.salesSite_check').live('click', function() {
-		if (this.checked) {
-			var misselected = $('#sales_table').find('tr:.yellow').get();
-			if (misselected.length > 0) {
-				var $dialog = getDialog(preconcliationOnlyoneError);
-				$dialog.dialog('open');
-				this.checked = false;
-				return;
-			}
-			$(this).parent().parent().toggleClass('yellow');
-			var monto = parseFloat($(this).parent().parent().find('td:eq(5)').text());
+	$('#sales_table tr').live('click', function() {
+		$(this).toggleClass('yellow');
+		if ($(this).hasClass('yellow')) {
+			var monto = parseFloat($(this).parent().parent().find('td:eq(9)').text());
 			var balanced = parseFloat($('#balance').text());
 			balanced = isNaN(balanced) ? 0 : balanced;
 			balanced -= isNaN(monto) ? 0 : monto;
 			$('#balance').html(String(balanced));
 		} else {
-			$(this).parent().parent().removeClass('yellow');
-			var monto = parseFloat($(this).parent().parent().find('td:eq(5)').text());
+			var monto = parseFloat($(this).parent().parent().find('td:eq(9)').text());
 			var balanced = parseFloat($('#balance').text());
 			if (!(isNaN(balanced))) {
 				balanced += isNaN(monto) ? 0 : monto;
@@ -282,6 +265,16 @@ $(function() {
 			    	$('#site').attr("disabled", true);
 			    	$('#lock').attr("value","Unlock");
 			    	$('#myBody').html(data);
+			    	$('#receipt_table').dataTable({
+			    	    "bPaginate": false,
+			    	    "bFilter":false,
+			    	    "bInfo":false
+			    	});
+                    $('#sales_table').dataTable({
+                        "bPaginate": false,
+                        "bFilter":false,
+                        "bInfo":false
+                    });
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					showError(XMLHttpRequest, textStatus,errorThrown);
@@ -293,21 +286,6 @@ $(function() {
 	});
 	
 });
-
-function showLoading() {
-	$loading.dialog("open");
-}
-
-function closeLoading() {
-	$loading.dialog("close");
-}
-
-function lockCombo() {
-
-	$('#country').attr("disabled", true);
-	$('#card').attr("disabled", true);
-	$('#site').attr("disabled", true);
-}
 
 function updateTable(target){
 
