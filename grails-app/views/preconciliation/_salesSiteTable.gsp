@@ -29,6 +29,36 @@
    <g:sortableColumn action="listSalesSite" property="payment" title="${message(code: 'salesSite.payment', default: 'Pago')}" />
    <g:sortableColumn action="listSalesSite" property="period" title="${message(code: 'salesSite.period', default: 'Periodo')}" />
       </tr>
+    <tr>
+     <td></td>
+     <th></th>
+     <th></th>  
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>     
+     <th></th>
+     <th></th>
+     <th></th>          
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>     
+    </tr>
+      
       </thead>
       <tbody>
         <g:each in="${salesSiteInstanceList}" status="i" var="salesSiteInstance">

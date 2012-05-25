@@ -27,6 +27,34 @@
      <g:sortableColumn action="listReceipts" property="documentNumber" title="${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}" />
      <g:sortableColumn action="listReceipts" property="period" title="${message(code: 'salesSite.period', default: 'Periodo')}" />
 	  </tr>
+	  <tr>
+     <td></td>
+     <th></th>
+     <th></th>  
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>     
+     <th></th>
+     <th></th>
+     <th></th>          
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+     <th></th>
+    </tr>
+	  
 	  </thead>
 	  <tbody>
 	    <g:each in="${receiptInstanceList}" status="i" var="receiptInstance">

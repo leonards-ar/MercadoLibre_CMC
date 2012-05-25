@@ -63,7 +63,7 @@ $(function() {
 	
 	});
 
-	$('#receipt_table tr').live('click',function() {
+	$('#receipt_table tbody tr').live('click',function() {
 	    $(this).toggleClass('yellow');
     	if ($(this).hasClass('yellow')) {
     		var monto = parseFloat($(this).find('td:eq(8)').text());
@@ -81,16 +81,16 @@ $(function() {
     	}
     });
 
-	$('#sales_table tr').live('click', function() {
+	$('#sales_table tbody tr').live('click', function() {
 		$(this).toggleClass('yellow');
 		if ($(this).hasClass('yellow')) {
-			var monto = parseFloat($(this).parent().parent().find('td:eq(9)').text());
+			var monto = parseFloat($(this).parent().parent().find('td:eq(10)').text());
 			var balanced = parseFloat($('#balance').text());
 			balanced = isNaN(balanced) ? 0 : balanced;
 			balanced -= isNaN(monto) ? 0 : monto;
 			$('#balance').html(String(balanced));
 		} else {
-			var monto = parseFloat($(this).parent().parent().find('td:eq(9)').text());
+			var monto = parseFloat($(this).parent().parent().find('td:eq(10)').text());
 			var balanced = parseFloat($('#balance').text());
 			if (!(isNaN(balanced))) {
 				balanced += isNaN(monto) ? 0 : monto;
@@ -265,16 +265,35 @@ $(function() {
 			    	$('#site').attr("disabled", true);
 			    	$('#lock').attr("value","Unlock");
 			    	$('#myBody').html(data);
-			    	$('#receipt_table').dataTable({
-			    	    "bPaginate": false,
-			    	    "bFilter":false,
-			    	    "bInfo":false
-			    	});
-                    $('#sales_table').dataTable({
+			    	
+                    var oreceiptTable = $('#receipt_table').dataTable({
                         "bPaginate": false,
                         "bFilter":false,
                         "bInfo":false
                     });
+
+                    var osalesTable = $('#sales_table').dataTable({
+                        "bPaginate": false,
+                        "bFilter":false,
+                        "bInfo":false
+                    });
+
+                    $("#receipt_table thead tr:nth-child(2)").find("th").each( function ( i ) {
+                        this.innerHTML = fnCreateSelect( oreceiptTable.fnGetColumnData(i + 1) );
+                        $('select', this).change( function () {
+                            oreceiptTable.fnFilter( $(this).val(), i+1 );
+                        } );
+                    } );    
+
+                    $("#sales_table thead tr:nth-child(2)").find("th").each( function ( i ) {
+                        alert("sales: " + i);
+                        this.innerHTML = fnCreateSelect( osalesTable.fnGetColumnData(i + 1) );
+                        $('select', this).change( function () {
+                            osalesTable.fnFilter( $(this).val(), i+1 );
+                        } );
+                    } );                        
+                
+                    
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					showError(XMLHttpRequest, textStatus,errorThrown);
@@ -284,6 +303,7 @@ $(function() {
 			$(location).attr('href',index);
 		}
 	});
+	
 	
 });
 
