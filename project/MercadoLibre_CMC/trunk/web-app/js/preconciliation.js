@@ -286,7 +286,6 @@ $(function() {
                     } );    
 
                     $("#sales_table thead tr:nth-child(2)").find("th").each( function ( i ) {
-                        alert("sales: " + i);
                         this.innerHTML = fnCreateSelect( osalesTable.fnGetColumnData(i + 1) );
                         $('select', this).change( function () {
                             osalesTable.fnFilter( $(this).val(), i+1 );
