@@ -28,7 +28,7 @@
      <g:sortableColumn action="listReceipts" property="period" title="${message(code: 'salesSite.period', default: 'Periodo')}" />
 	  </tr>
 	  <tr>
-     <td></td>
+     <th></th>
      <th></th>
      <th></th>  
      <th></th>

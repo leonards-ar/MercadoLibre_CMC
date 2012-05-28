@@ -303,28 +303,26 @@ function updateTable(target){
 
 function fillSelects(target) {
 	
-	var columns = $(target).find('thead tr:nth-child(1) th').length;
-	var i,j;
-	
-	for(j=1; j < columns; j++){
-		var vals = new Array();
-		var options = "<select><option value=''></option>";
-		i=0;
-		$(target).find("tbody tr td:nth-child(" + j + ")").each(function(){
-		       var t=$(this).html();
-		       if($.inArray(t, vals) < 0)
-		       {
-		           vals[i]=t;
-		           i++;
-		       }
-		    });
-
-		for(i=0;i<vals.length; i++) {
-			options += '<option value="' + vals[i] + '">' + vals[i] + '</option>';
-		}
-		options+="</select>"
-		alert(options);
-		$(target).find('thead tr:nth-child(2) th:nth-child(' + j + ')').html(options);
-	}
-	
+    $(target).find('thead tr:nth-child(2) th').each(function(i) {
+        alert(i);
+        if(i>0){
+            var vals = new Array();
+            var options = "<select><option value=''></option>";
+            var index = i + 1;
+            var j=0;
+            $(target).find("tbody tr td:nth-child(" + index + ")").each(function(){
+                   alert(index + " element: " + $(this).html());
+                   var t=$(this).html();
+                   if($.inArray(t, vals) < 0)
+                   {
+                       options += '<option value="' + t + '">' + t + '</option>';
+                       vals[j]=t;
+                       j++;
+                   }
+                });
+            options += '</select>'
+            $(this).html(options);
+        }  
+    });
+    
 }
