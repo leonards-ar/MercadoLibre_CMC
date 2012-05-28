@@ -134,7 +134,7 @@
       <td>${message(code: 'salesSite.receiptNumber', default: 'DNI')}</td>
       <td><g:checkBox class='salesSiteCol' name="19" value="${true}" /></td>
       <td>${message(code: 'salesSite.tid', default: 'TID')}</td>
-      <td><g:checkBox class='salesSiteCol' name=20" value="${true}" /></td>    
+      <td><g:checkBox class='salesSiteCol' name="20" value="${true}" /></td>    
       <td>${message(code: 'salesSite.nsu', default: 'NSU')}</td>
       <td><g:checkBox class='salesSiteCol' name="21" value="${true}" /></td>    
       <td>${message(code: 'salesSite.ro', default: 'RO')}</td>

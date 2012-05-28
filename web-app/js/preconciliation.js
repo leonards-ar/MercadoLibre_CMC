@@ -266,33 +266,7 @@ $(function() {
 			    	$('#lock').attr("value","Unlock");
 			    	$('#myBody').html(data);
 			    	
-                    var oreceiptTable = $('#receipt_table').dataTable({
-                        "bPaginate": false,
-                        "bFilter":false,
-                        "bInfo":false
-                    });
-
-                    var osalesTable = $('#sales_table').dataTable({
-                        "bPaginate": false,
-                        "bFilter":false,
-                        "bInfo":false
-                    });
-
-                    $("#receipt_table thead tr:nth-child(2)").find("th").each( function ( i ) {
-                        this.innerHTML = fnCreateSelect( oreceiptTable.fnGetColumnData(i + 1) );
-                        $('select', this).change( function () {
-                            oreceiptTable.fnFilter( $(this).val(), i+1 );
-                        } );
-                    } );    
-
-                    $("#sales_table thead tr:nth-child(2)").find("th").each( function ( i ) {
-                        this.innerHTML = fnCreateSelect( osalesTable.fnGetColumnData(i + 1) );
-                        $('select', this).change( function () {
-                            osalesTable.fnFilter( $(this).val(), i+1 );
-                        } );
-                    } );                        
-                
-                    
+			    	fillSelects('#receipt_table');
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					showError(XMLHttpRequest, textStatus,errorThrown);
@@ -325,4 +299,32 @@ function updateTable(target){
 		
 	}
 
+}
+
+function fillSelects(target) {
+	
+	var columns = $(target).find('thead tr:nth-child(1) th').length;
+	var i,j;
+	
+	for(j=1; j < columns; j++){
+		var vals = new Array();
+		var options = "<select><option value=''></option>";
+		i=0;
+		$(target).find("tbody tr td:nth-child(" + j + ")").each(function(){
+		       var t=$(this).html();
+		       if($.inArray(t, vals) < 0)
+		       {
+		           vals[i]=t;
+		           i++;
+		       }
+		    });
+
+		for(i=0;i<vals.length; i++) {
+			options += '<option value="' + vals[i] + '">' + vals[i] + '</option>';
+		}
+		options+="</select>"
+		alert(options);
+		$(target).find('thead tr:nth-child(2) th:nth-child(' + j + ')').html(options);
+	}
+	
 }
