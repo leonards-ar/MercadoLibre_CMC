@@ -121,18 +121,35 @@ class BootStrap {
             transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,
             shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',
             tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
-        
+
+		def receipt2 = new Receipt(medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123132',
+			transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,
+			shareNumber:1,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',
+			tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+
         def salesSite = new SalesSite(saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123132',
             transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,
             shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',
             tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
 
+		def salesSite2 = new SalesSite(saleMl:2L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123132',
+			transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,
+			shareNumber:1,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',
+			tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+
+
         receipt.id="1";
         salesSite.id="1";
+
+		receipt2.id="2";
+		salesSite2.id="2";
 
 		
         receipt.save(flush:true)
         salesSite.save(flush:true)
+
+		receipt2.save(flush:true)
+		salesSite2.save(flush:true)
 
 		
 		def auditLog = new AuditLog(date: new Date(), time:'11:00:00', user:'jorge', auditLogType:'Conciliacion Manual',
@@ -149,7 +166,7 @@ class BootStrap {
         assert UserRole.count() == 2
         assert State.count() == 5
         assert RegisterType.count() == 4
-        assert Receipt.count() == 1
+        assert Receipt.count() == 2
         
       } else {
 

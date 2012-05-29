@@ -30,7 +30,7 @@
    <g:sortableColumn action="listSalesSite" property="period" title="${message(code: 'salesSite.period', default: 'Periodo')}" />
       </tr>
     <tr>
-     <td></td>
+     <th></th>
      <th></th>
      <th></th>  
      <th></th>
@@ -70,8 +70,8 @@
             <td>${salesSiteInstance?.registerType}</td>
             <td>${salesSiteInstance?.lot}</td>
             <td>${salesSiteInstance?.cardNumber}</td>
-            <td>${salesSiteInstance?.transactionDate}</td>
-            <td>${salesSiteInstance?.paymentDate}</td>
+            <td><g:formatDate date="${salesSiteInstance?.transactionDate}" formatName="default.date.format"/></td>
+            <td><g:formatDate date="${salesSiteInstance?.paymentDate}" formatName="default.date.format"/></td>
             <td>${salesSiteInstance?.amount}</td>
             <td>${salesSiteInstance?.shareAmount}</td>
             <td>${salesSiteInstance?.authorization}</td>
