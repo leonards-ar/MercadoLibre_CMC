@@ -266,8 +266,8 @@ $(function() {
 			    	$('#lock').attr("value","Unlock");
 			    	$('#myBody').html(data);
 			    	
-			    	fillSelects('#receipt_table');
-			    	fillSelects('#sales_table');
+			    	$('#receipt_table').dataTable();
+			    	$('#sales_table').dataTable();
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					showError(XMLHttpRequest, textStatus,errorThrown);
@@ -302,45 +302,4 @@ function updateTable(target){
 
 }
 
-function fillSelects(target) {
-	
-    $(target).find('thead tr:nth-child(2) th').each(function(i) {
-        if(i>0){
-            var vals = new Array();
-            var options = "<select><option value=''></option>";
-            var index = i + 1;
-            var j=0;
-            $(target).find("tbody tr td:nth-child(" + index + ")").each(function(){
-                   var t=$(this).html();
-                   if($.inArray(t, vals) < 0)
-                   {
-                       options += '<option value="' + t + '">' + t + '</option>';
-                       vals[j]=t;
-                       j++;
-                   }
-                });
-            options += '</select>'
-            $(this).html(options);
-            
-            $('select',this).change(function(){
-            	alert($(this).val());
-            	if($(this).val() != ""){
-	            	var value = $(this).val();
-	            	$(target).find("tbody tr").each(function(){
-	            		alert($(this).find("td:nth-child(" + index + ")").html());
-	            	if($(this).find("td:nth-child(" + index + ")").html() == value) {
-	            		$(this).show();
-	            	} else {
-	            		$(this).hide();
-	            	}
-            	});
-            	} else {
-            		$(target).find("tbody tr").each(function(){
-            			$(this).show();
-            		});
-            	}
-            });
-        }  
-    });
-    
-}
+

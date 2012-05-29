@@ -1,4 +1,4 @@
-  <table id="receipt_table">
+  <table id="receipt_table" class="display">
   <thead>
   <tr>
      <th><input type="button" class="ui-icon ui-icon-arrowthick-2-n-s" id="receiptFilter" /></th>
@@ -27,7 +27,7 @@
      <g:sortableColumn action="listReceipts" property="documentNumber" title="${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}" />
      <g:sortableColumn action="listReceipts" property="period" title="${message(code: 'salesSite.period', default: 'Periodo')}" />
 	  </tr>
-	  <tr>
+	  <!-- tr>
      <th></th>
      <th></th>
      <th></th>  
@@ -53,7 +53,7 @@
      <th></th>
      <th></th>
      <th></th>
-    </tr>
+    </tr-->
 	  
 	  </thead>
 	  <tbody>
