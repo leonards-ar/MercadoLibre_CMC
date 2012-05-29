@@ -65,8 +65,8 @@
 	        <td>${receiptInstance?.registerType}</td>
 	        <td>${receiptInstance?.lot}</td>
 	        <td>${receiptInstance?.cardNumber}</td>
-          <td>${receiptInstance?.transactionDate}</td>
-          <td>${receiptInstance?.paymentDate}</td>
+          <td><g:formatDate date="${receiptInstance?.transactionDate}" formatName="default.date.format"/></td>
+          <td><g:formatDate date="${receiptInstance?.paymentDate}" formatName="default.date.format"/></td>
           <td>${receiptInstance?.amount}</td>
           <td>${receiptInstance?.shareAmount}</td>          
 	        <td>${receiptInstance?.authorization}</td>

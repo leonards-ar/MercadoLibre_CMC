@@ -84,13 +84,13 @@ $(function() {
 	$('#sales_table tbody tr').live('click', function() {
 		$(this).toggleClass('yellow');
 		if ($(this).hasClass('yellow')) {
-			var monto = parseFloat($(this).parent().parent().find('td:eq(10)').text());
+			var monto = parseFloat($(this).parent().parent().find('td:eq(9)').text());
 			var balanced = parseFloat($('#balance').text());
 			balanced = isNaN(balanced) ? 0 : balanced;
 			balanced -= isNaN(monto) ? 0 : monto;
 			$('#balance').html(String(balanced));
 		} else {
-			var monto = parseFloat($(this).parent().parent().find('td:eq(10)').text());
+			var monto = parseFloat($(this).parent().parent().find('td:eq(9)').text());
 			var balanced = parseFloat($('#balance').text());
 			if (!(isNaN(balanced))) {
 				balanced += isNaN(monto) ? 0 : monto;
@@ -267,6 +267,7 @@ $(function() {
 			    	$('#myBody').html(data);
 			    	
 			    	fillSelects('#receipt_table');
+			    	fillSelects('#sales_table');
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					showError(XMLHttpRequest, textStatus,errorThrown);
@@ -304,14 +305,12 @@ function updateTable(target){
 function fillSelects(target) {
 	
     $(target).find('thead tr:nth-child(2) th').each(function(i) {
-        alert(i);
         if(i>0){
             var vals = new Array();
             var options = "<select><option value=''></option>";
             var index = i + 1;
             var j=0;
             $(target).find("tbody tr td:nth-child(" + index + ")").each(function(){
-                   alert(index + " element: " + $(this).html());
                    var t=$(this).html();
                    if($.inArray(t, vals) < 0)
                    {
@@ -322,6 +321,25 @@ function fillSelects(target) {
                 });
             options += '</select>'
             $(this).html(options);
+            
+            $('select',this).change(function(){
+            	alert($(this).val());
+            	if($(this).val() != ""){
+	            	var value = $(this).val();
+	            	$(target).find("tbody tr").each(function(){
+	            		alert($(this).find("td:nth-child(" + index + ")").html());
+	            	if($(this).find("td:nth-child(" + index + ")").html() == value) {
+	            		$(this).show();
+	            	} else {
+	            		$(this).hide();
+	            	}
+            	});
+            	} else {
+            		$(target).find("tbody tr").each(function(){
+            			$(this).show();
+            		});
+            	}
+            });
         }  
     });
     
