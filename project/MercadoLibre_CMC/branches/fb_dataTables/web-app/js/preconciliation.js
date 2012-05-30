@@ -9,20 +9,29 @@ $(function() {
 
 	$('#agrupar').live({
 	click: function() {
-
-		var salesSiteRow = $('#sales_table').find('tr:.yellow').clone();
-		var receiptRow = $('#receipt_table').find('tr:.yellow').clone();
-
-		if (salesSiteRow.length == 0 || receiptRow == 0) {
+	    
+		if ($('#sales_table tbody tr:.yellow').length == 0 || $('#receipt_table tbody tr:.yellow').length == 0) {
 			var $dialog = getDialog(preconciliationNoselectionError);
 			$dialog.dialog("open");
 			return;
 		}
 
-		var strData = ""
+		var strData = "";
 
-        strData +="receiptId=" + receiptRow.find('td:eq(1)').find('input:hidden').val();
-		strData +="&salesSiteId=" + salesSiteRow.find('td:eq(1)').find('input:hidden').val();
+
+	    $('#receipt_table tbody tr:.yellow').each(function(){
+	        if(strData.length > 0){
+	            strData += "&";
+	        }
+	        strData += "receiptId=" + $(this).find('td:eq(0)').find('input:hidden').val();
+	    });
+
+        $('#sales_table tbody tr:.yellow').each(function(){
+            if(strData.length > 0){
+                strData += "&";
+            }
+            strData += "salesSiteId=" + $(this).find('td:eq(0)').find('input:hidden').val();
+        });		    
 		    
         $('#preconciliate_table input:hidden').each(
             function() {
@@ -64,6 +73,7 @@ $(function() {
 	});
 
 	$('#receipt_table tbody tr').live('click',function() {
+
 	    $(this).toggleClass('yellow');
     	if ($(this).hasClass('yellow')) {
     		var monto = parseFloat($(this).find('td:eq(8)').text());
@@ -266,8 +276,42 @@ $(function() {
 			    	$('#lock').attr("value","Unlock");
 			    	$('#myBody').html(data);
 			    	
-			    	$('#receipt_table').dataTable();
-			    	$('#sales_table').dataTable();
+			    	var oReceiptTable = $('#receipt_table').dataTable({
+		                "bPaginate":false,
+		                "bInfo":false,
+		                "sDom": 'rt',
+                        "aoColumnDefs": [
+                                         { "bSortable": false, "aTargets": [ 0 ] }
+                                       ]                                		                
+		               
+		             });
+			    	$('#receipt_table').find('td:nth-child(1),th:nth-child(1)').hide();
+		            $('#receipt_table').find('thead tr:nth-child(1) th').each(function(i){
+		                 
+		                 this.innerHTML = fnCreateSelect( oReceiptTable.fnGetColumnData(i) );
+		                 $('select', this).change( function () {
+		                     oReceiptTable.fnFilter( $(this).val(), i );
+		                 });		                 
+		             });
+		                     
+			    	var oSalesTable = $('#sales_table').dataTable({
+    	                        "bPaginate":false,
+    	                        "bInfo":false,
+    	                        "sDom": 'rt',
+    	                        "aoColumnDefs": [
+    	                                         { "bSortable": false, "aTargets": [ 0 ] }
+    	                                       ]     	                        
+    			    	});
+			    	$('#sales_table').find('td:nth-child(1),th:nth-child(1)').hide();
+			    	
+                    $('#sales_table').find('thead tr:nth-child(1) th').each(function(i){
+                        
+                        this.innerHTML = fnCreateSelect( oSalesTable.fnGetColumnData(i) );
+                        $('select', this).change( function () {
+                            oSalesTable.fnFilter( $(this).val(), i);
+                        });                         
+                    });
+
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					showError(XMLHttpRequest, textStatus,errorThrown);

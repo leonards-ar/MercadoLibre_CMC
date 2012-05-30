@@ -2,6 +2,7 @@
  <table>
  <tr>
    <td>
+   <div style="position:relative"><span class="menuButton"><input type="button" class="filter" id="receiptFilter" value="${message(code:'preconciliation.filtercolumns', default:'Filtrar Columnas')}"/></span></div>
   <div id="filterReceiptColumns" class="receiptfilterColumns">
    <h3>${message(code: 'preconciliation.receipts', default: 'Recibos')}</h3>
   <table>
@@ -88,8 +89,9 @@
      
    </td>
    <td>
-  <div id="filterSalesColumns" class="salesSitefilterColumns">
-  <h3>${message(code: 'preconciliation.salesSite', default: 'Ventas del Sitio')}</h3>
+    <div style="position:relative"><span class="menuButton"><input type="button" class="filter" id="salesSiteFilter" value="${message(code:'preconciliation.filtercolumns', default:'Filtrar Columnas')}"></span></div>
+    <div id="filterSalesColumns" class="salesSitefilterColumns">
+    <h3>${message(code: 'preconciliation.salesSite', default: 'Ventas del Sitio')}</h3>
   <table>
     <tr>
       <td><g:checkBox class='salesSiteCol' name="2" value="${true}" /></td>
