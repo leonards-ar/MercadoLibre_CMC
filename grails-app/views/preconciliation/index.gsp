@@ -3,11 +3,15 @@
      <title><g:message code='cmc.title' default="Consolidador de Medios de Cobro"/></title>
     <meta name="layout" content="main" />
     <link rel="stylesheet" href="${createLinkTo(dir:'css/smoothness',file:'jquery-ui-1.8.20.custom.css')}" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" title="custom" href="${createLinkTo(dir:'DataTables/media/css',file:'demo_table.css')}" type="text/css" charset="utf-8">
+    
     <g:javascript library="jquery-1.6.2.min" />
     <g:javascript library="jquery-ui-1.8.16.custom.min" />
     <g:javascript library="jquery.chainedSelects"/>
     <g:javascript library="commons"/>
     <g:javascript library="preconciliation"/>
+    <script type="text/javascript" src="${resource(dir:'DataTables/media/js',file:'jquery.dataTables.js')}"></script>
+    <g:javascript library="jquery.dataTables.columnFilter"/>
     <g:javascript>
       var cardLink = '${createLink(action:"cards")}';
       var siteLink = '${createLink(action:"sites")}';
