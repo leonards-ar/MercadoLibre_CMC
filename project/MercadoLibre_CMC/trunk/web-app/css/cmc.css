@@ -134,6 +134,11 @@ div.autocomplete ul li {
     padding-left: 25px;
 }
 
+.menuButton input.filter {
+    background: url(../images/skin/funnel-icon.png) center left no-repeat;
+    color: #333;
+    padding-left: 25px;
+}
 h3 {
     color: #006dba;
     font-weight: normal;

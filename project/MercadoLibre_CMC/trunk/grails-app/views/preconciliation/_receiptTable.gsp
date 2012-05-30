@@ -1,60 +1,59 @@
-  <table id="receipt_table">
+  <table id="receipt_table" class="display">
   <thead>
   <tr>
-     <th><input type="button" class="ui-icon ui-icon-arrowthick-2-n-s" id="receiptFilter" /></th>
-     <g:sortableColumn action="listReceipts" property="medio" title="${message(code: 'salesSite.medio', default: 'Medio')}"/>
-     <g:sortableColumn action="listReceipts" property="state" title="${message(code: 'salesSite.state', default: 'Estado')}" onclick("sortReceipt()")/>  
-     <g:sortableColumn action="listReceipts" property="registerType" title="${message(code: 'salesSite.registerType', default: 'Tipo de Registro')}"/>
-     <g:sortableColumn action="listReceipts" property="lot" title="${message(code: 'salesSite.lot', default: 'Lote')}"/>
-     <g:sortableColumn action="listReceipts" property="cardNumber" title="${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}" />
-     <g:sortableColumn action="listReceipts" property="transactionDate" title="${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}" />
-     <g:sortableColumn action="listReceipts" property="paymentDate" title="${message(code: 'salesSite.paymentDate', default: 'Fecha de Pago')}" />
-     <g:sortableColumn action="listReceipts" property="amount" title="${message(code: 'salesSite.amount', default: 'Monto')}" />
-     <g:sortableColumn action="listReceipts" property="shareAmount" title="${message(code: 'salesSite.shareAmount', default: 'Monto Cuota')}" />
-     <g:sortableColumn action="listReceipts" property="authorization" title="${message(code: 'salesSite.authorization', default: 'Autorizacion')}" />
-     <g:sortableColumn action="listReceipts" property="shareNumber" title="${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}" />
-     <g:sortableColumn action="listReceipts" property="shareQty" title="${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}" />
-     <g:sortableColumn action="listReceipts" property="liq" title="${message(code: 'salesSite.liq', default: 'Liquidacion')}" />
-     <g:sortableColumn action="listReceipts" property="customerId" title="${message(code: 'salesSite.customerId', default: 'Cliente')}" />
-     <g:sortableColumn action="listReceipts" property="documentId" title="${message(code: 'salesSite.documentId', default: 'DNI')}" />     
-     <g:sortableColumn action="listReceipts" property="receiptNumber" title="${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}" />
-     <g:sortableColumn action="listReceipts" property="tid" title="${message(code: 'salesSite.tid', default: 'TID')}" />
-     <g:sortableColumn action="listReceipts" property="nsu" title="${message(code: 'salesSite.nsu', default: 'NSU')}" />          
-     <g:sortableColumn action="listReceipts" property="ro" title="${message(code: 'salesSite.ro', default: 'RO')}" />
-     <g:sortableColumn action="listReceipts" property="store" title="${message(code: 'salesSite.store', default: 'P. de Venta')}" />
-     <g:sortableColumn action="listReceipts" property="cardLot" title="${message(code: 'salesSite.cardLot', default: 'Lote Tarjeta')}" />
-     <g:sortableColumn action="listReceipts" property="uniqueRo" title="${message(code: 'salesSite.uniqueRo', default: 'RO Unico')}" />
-     <g:sortableColumn action="listReceipts" property="documentNumber" title="${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}" />
-     <g:sortableColumn action="listReceipts" property="period" title="${message(code: 'salesSite.period', default: 'Periodo')}" />
+     <th></th>
+			<th>${message(code: 'salesSite.medio', default: 'Medio')}</th>
+			<th>${message(code: 'salesSite.state', default: 'Estado')}</th>  
+			<th>${message(code: 'salesSite.registerType', default: 'Tipo de Registro')}</th>
+			<th>${message(code: 'salesSite.lot', default: 'Lote')}</th>
+			<th>${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}</th>
+			<th>${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}</th>
+			<th>${message(code: 'salesSite.paymentDate', default: 'Fecha de Pago')}</th>
+			<th>${message(code: 'salesSite.amount', default: 'Monto')}</th>
+			<th>${message(code: 'salesSite.shareAmount', default: 'Monto Cuota')}</th>
+			<th>${message(code: 'salesSite.authorization', default: 'Autorizacion')}</th>
+			<th>${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}</th>
+			<th>${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}</th>
+			<th>${message(code: 'salesSite.liq', default: 'Liquidacion')}</th>
+			<th>${message(code: 'salesSite.customerId', default: 'Cliente')}</th>
+			<th>${message(code: 'salesSite.documentId', default: 'DNI')}</th>     
+			<th>${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</th>
+			<th>${message(code: 'salesSite.tid', default: 'TID')}</th>
+			<th>${message(code: 'salesSite.nsu', default: 'NSU')}</th>          
+			<th>${message(code: 'salesSite.ro', default: 'RO')}</th>
+			<th>${message(code: 'salesSite.store', default: 'P. de Venta')}</th>
+			<th>${message(code: 'salesSite.cardLot', default: 'Lote Tarjeta')}</th>
+			<th>${message(code: 'salesSite.uniqueRo', default: 'RO Unico')}</th>
+			<th>${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</th>
+			<th>${message(code: 'salesSite.period', default: 'Periodo')}</th>
 	  </tr>
 	  <tr>
      <th></th>
-     <th></th>
-     <th></th>  
-     <th></th>
-     <th></th>
-     <th></th>
-     <th></th>
-     <th></th>
-     <th></th>
-     <th></th>
-     <th></th>
-     <th></th>
-     <th></th>
-     <th></th>
-     <th></th>
-     <th></th>     
-     <th></th>
-     <th></th>
-     <th></th>          
-     <th></th>
-     <th></th>
-     <th></th>
-     <th></th>
-     <th></th>
-     <th></th>
+			<th>${message(code: 'salesSite.medio', default: 'Medio')}</th>
+			<th>${message(code: 'salesSite.state', default: 'Estado')}</th>  
+			<th>${message(code: 'salesSite.registerType', default: 'Tipo de Registro')}</th>
+			<th>${message(code: 'salesSite.lot', default: 'Lote')}</th>
+			<th>${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}</th>
+			<th>${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}</th>
+			<th>${message(code: 'salesSite.paymentDate', default: 'Fecha de Pago')}</th>
+			<th>${message(code: 'salesSite.amount', default: 'Monto')}</th>
+			<th>${message(code: 'salesSite.shareAmount', default: 'Monto Cuota')}</th>
+			<th>${message(code: 'salesSite.authorization', default: 'Autorizacion')}</th>
+			<th>${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}</th>
+			<th>${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}</th>
+			<th>${message(code: 'salesSite.liq', default: 'Liquidacion')}</th>
+			<th>${message(code: 'salesSite.customerId', default: 'Cliente')}</th>
+			<th>${message(code: 'salesSite.documentId', default: 'DNI')}</th>     
+			<th>${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</th>
+			<th>${message(code: 'salesSite.tid', default: 'TID')}</th>
+			<th>${message(code: 'salesSite.nsu', default: 'NSU')}</th>          
+			<th>${message(code: 'salesSite.ro', default: 'RO')}</th>
+			<th>${message(code: 'salesSite.store', default: 'P. de Venta')}</th>
+			<th>${message(code: 'salesSite.cardLot', default: 'Lote Tarjeta')}</th>
+			<th>${message(code: 'salesSite.uniqueRo', default: 'RO Unico')}</th>
+			<th>${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</th>
+			<th>${message(code: 'salesSite.period', default: 'Periodo')}</th>
     </tr>
-	  
 	  </thead>
 	  <tbody>
 	    <g:each in="${receiptInstanceList}" status="i" var="receiptInstance">
