@@ -106,11 +106,27 @@ class PreconciliationController extends SessionInfoController{
     }
     
     def group = { PreconciliationCmd preconciliationCmd ->
-        
-        def salesSiteInstance = SalesSite.findById(params.salesSiteId)
-        def receiptInstance = Receipt.findById(params.receiptId)
-        
-        List preconciliation = preconciliationCmd.insertPair(new PreSalesSiteReceiptCmd(salesSite: salesSiteInstance, receipt:receiptInstance ))
+        if(params.salesSiteId.size() > 1 && params.receiptId.size() > 1){
+            response.setStatus(500)
+            render message(code:"preconcliation.relationship.error", default:"La relacion entre los Recibos y Ventas no es correcta")
+            return
+        }
+
+        LinkedList preconciliation = (LinkedList)preconciliationCmd.createList() 
+                
+        if(params.salesSiteId.size() > 1){
+            def receiptInstance = Receipt.findById(params.receiptId)
+            params.salesSiteId.each{ saleId ->
+                def salesSiteInstance = SalesSite.findById(saleId)
+                preconciliation.addFirst(new PreSalesSiteReceiptCmd(salesSite: salesSiteInstance, receipt:receiptInstance ))
+            }
+        } else {
+            def salesSiteInstance = SalesSite.findById(params.salesSiteId)
+            params.receiptId.each{ receipt ->
+                def receiptInstance = Receipt.findById(receipt)
+                preconciliation.addFirst(new PreSalesSiteReceiptCmd(salesSite: salesSiteInstance, receipt:receiptInstance ))
+            } 
+        }
         
         render(template:"preconciliateTable", model:[preconciliationInstancelist: preconciliation])
         
@@ -152,7 +168,7 @@ class PreconciliationCmd {
     List<String> receiptIds = []
 
     List createList() {
-        List list = []
+        List list = new LinkedList();
         salesSiteIds.eachWithIndex {salesSiteId, i ->
             def salesSite = SalesSite.findById(salesSiteIds[i])
             def receipt = Receipt.findById(receiptIds[i])
@@ -163,21 +179,6 @@ class PreconciliationCmd {
         return list
         
     }
-    List insertPair(PreSalesSiteReceiptCmd salesSiteReceipt) {
-        List list = []
-        list.add(salesSiteReceipt)
-		if(!(salesSiteIds instanceof String)){
-	        salesSiteIds.eachWithIndex {salesSiteId, i ->
-	            def salesSiteInstance = SalesSite.findById(salesSiteId)
-	            def receiptInstance = Receipt.findById(receiptIds[i])
-	            def salesSiteRecepit = new PreSalesSiteReceiptCmd(salesSite: salesSiteInstance, receipt: receiptInstance)
-	            
-	            list.add(salesSiteReceipt)
-	        }
-        }
-        return list
-    }
-    
 }
 
 

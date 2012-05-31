@@ -9,13 +9,17 @@ $(function() {
 
 	$('#agrupar').live({
 	click: function() {
-	    
+
 		if ($('#sales_table tbody tr:.yellow').length == 0 || $('#receipt_table tbody tr:.yellow').length == 0) {
 			var $dialog = getDialog(preconciliationNoselectionError);
 			$dialog.dialog("open");
 			return;
 		}
-
+		if ($('#sales_table tbody tr:.yellow').length > 1 && $('#receipt_table tbody tr:.yellow').length > 1) {
+	          var $dialog = getDialog(preconciliationBadRelationError);
+	            $dialog.dialog("open");
+	            return;
+		}
 		var strData = "";
 
 
@@ -31,14 +35,14 @@ $(function() {
                 strData += "&";
             }
             strData += "salesSiteId=" + $(this).find('td:eq(0)').find('input:hidden').val();
-        });		    
-		    
+        });		
+    
         $('#preconciliate_table input:hidden').each(
             function() {
-                if (strdata.length > 0) {
-                    strdata += "&";
+                if (strData.length > 0) {
+                    strData += "&";
                 }
-                strdata += $(this).attr('id') + "=" + $(this).val();
+                strData += $(this).attr('id') + "=" + $(this).val();
             });
 		    
 
@@ -50,15 +54,19 @@ $(function() {
 				$('#conciliado').fadeOut('fast',function() {
 				    $(this).html(data).fadeIn('slow');
 				});
+
+				deleteRows('#receipt_table');
+				deleteRows('#sales_table');
 				
-				$('#sales_table').find('tr:.yellow').remove();
-				$('#receipt_table').find('tr:.yellow').remove();
+				createCombos('#receipt_table');
+				createCombos('#sales_table');
+				
 				
 				var balanced = 0;
 				$('#balance').html(String(balanced));
 			},
 			error : function(XMLHttpRequest,textStatus, errorThrown) {
-				showError(XMLHttpRequest, textStatus,errorThrown);
+				showError(XMLHttpRequest,textStatus,errorThrown);
 			}
 		})
 	},
@@ -109,43 +117,6 @@ $(function() {
 		}
 	});
 
-	$('.filtered').find(".paginateButtons a, th.sortable a").live('click',function(event) {
-		event.preventDefault();
-		var url = $(this).attr('href');
-
-		var closestDiv = $(this).closest('div');
-
-		var strdata = $('#country').attr('id') + "=" + $('#country').val();
-		strdata += "&" + $('#card').attr('id') + "=" + $('#card').val();
-		strdata += "&" + $('#site').attr('id') + "=" + $('#site').val();
-
-		$('#preconciliate_table input:hidden').each(function() {
-    		if (strdata.length > 0) {
-    			strdata += "&";
-    		}
-    		strdata += $(this).attr('id') + "=" + $(this).val();
-		});
-
-		$(closestDiv).html($("#spinner").html());
-
-		$.ajax({
-			type : 'POST',
-			url : url,
-			data : strdata,
-			success : function(data) {
-				$(closestDiv).fadeOut('fast', function() {
-					$(this).html(data).fadeIn('slow');
-					updateTable(closestDiv);
-				});
-			},
-			error : function(XMLHttpRequest, textStatus,
-					errorThrown) {
-				showError(XMLHttpRequest, textStatus,
-						errorThrown);
-				$(closestDiv).html("");
-			}
-		})
-	});
 	$('.button').find('#preconciliateButton').live('click', function() {
 
 		var strdata = "";
@@ -207,9 +178,6 @@ $(function() {
 		$(this).removeClass("ui-state-hover");
 	}
 	});
-	
-	
-	
 	
 	$('#salesSiteFilter').live({
 	click: function(){
@@ -276,42 +244,8 @@ $(function() {
 			    	$('#lock').attr("value","Unlock");
 			    	$('#myBody').html(data);
 			    	
-			    	var oReceiptTable = $('#receipt_table').dataTable({
-		                "bPaginate":false,
-		                "bInfo":false,
-		                "sDom": 'rt',
-                        "aoColumnDefs": [
-                                         { "bSortable": false, "aTargets": [ 0 ] }
-                                       ]                                		                
-		               
-		             });
-			    	$('#receipt_table').find('td:nth-child(1),th:nth-child(1)').hide();
-		            $('#receipt_table').find('thead tr:nth-child(1) th').each(function(i){
-		                 
-		                 this.innerHTML = fnCreateSelect( oReceiptTable.fnGetColumnData(i) );
-		                 $('select', this).change( function () {
-		                     oReceiptTable.fnFilter( $(this).val(), i );
-		                 });		                 
-		             });
-		                     
-			    	var oSalesTable = $('#sales_table').dataTable({
-    	                        "bPaginate":false,
-    	                        "bInfo":false,
-    	                        "sDom": 'rt',
-    	                        "aoColumnDefs": [
-    	                                         { "bSortable": false, "aTargets": [ 0 ] }
-    	                                       ]     	                        
-    			    	});
-			    	$('#sales_table').find('td:nth-child(1),th:nth-child(1)').hide();
-			    	
-                    $('#sales_table').find('thead tr:nth-child(1) th').each(function(i){
-                        
-                        this.innerHTML = fnCreateSelect( oSalesTable.fnGetColumnData(i) );
-                        $('select', this).change( function () {
-                            oSalesTable.fnFilter( $(this).val(), i);
-                        });                         
-                    });
-
+			    	createTable('#receipt_table');
+			    	createTable('#sales_table');
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					showError(XMLHttpRequest, textStatus,errorThrown);
@@ -344,6 +278,42 @@ function updateTable(target){
 		
 	}
 
+}
+
+function createCombos(target){
+    var oTable = $(target).dataTable();
+    $(target).find('thead tr:nth-child(1) th').each(function(i){
+        
+        this.innerHTML = fnCreateSelect( oTable.fnGetColumnData(i) );
+        $('select', this).change( function () {
+            oTable.fnFilter( $(this).val(), i);
+        });                         
+    });
+    
+}
+
+function deleteRows(target){
+    var oTable = $(target).dataTable();
+    selectedRows = oTable.$('tr.yellow');
+    for(var i=0; i < selectedRows.length; i++) {
+        oTable.fnDeleteRow(selectedRows[i]);
+    }
+    
+}
+
+function createTable(target){
+    $(target).dataTable({
+        "bPaginate":false,
+        "bInfo":false,
+        "sDom": 'rt',
+        "aoColumnDefs": [
+                         { "bSortable": false, "aTargets": [ 0 ] }
+                       ]                                                        
+       
+     });
+    $(target).find('td:nth-child(1),th:nth-child(1)').hide();
+    createCombos(target);
+    
 }
 
 

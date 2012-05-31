@@ -22,6 +22,7 @@
       var index = '${createLink(action:"index")}';
       var preconciliationNoselectionError = "${message(code:'preconciliation.noselection.error', default:'Seleccione un Recibo y una Venta')}";
       var preconcliationOnlyoneError = "${message(code:'preconcliation.onlyone.error', default:'Seleccione solo uno') }";
+      var preconciliationBadRelationError = "${message(code:'preconcliation.relationship.error', default:'La relacion entre los Recibos y Ventas no es correcta') }";
 
     </g:javascript>
   
