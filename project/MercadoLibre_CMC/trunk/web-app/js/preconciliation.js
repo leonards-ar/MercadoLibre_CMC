@@ -280,40 +280,5 @@ function updateTable(target){
 
 }
 
-function createCombos(target){
-    var oTable = $(target).dataTable();
-    $(target).find('thead tr:nth-child(1) th').each(function(i){
-        
-        this.innerHTML = fnCreateSelect( oTable.fnGetColumnData(i) );
-        $('select', this).change( function () {
-            oTable.fnFilter( $(this).val(), i);
-        });                         
-    });
-    
-}
-
-function deleteRows(target){
-    var oTable = $(target).dataTable();
-    selectedRows = oTable.$('tr.yellow');
-    for(var i=0; i < selectedRows.length; i++) {
-        oTable.fnDeleteRow(selectedRows[i]);
-    }
-    
-}
-
-function createTable(target){
-    $(target).dataTable({
-        "bPaginate":false,
-        "bInfo":false,
-        "sDom": 'rt',
-        "aoColumnDefs": [
-                         { "bSortable": false, "aTargets": [ 0 ] }
-                       ]                                                        
-       
-     });
-    $(target).find('td:nth-child(1),th:nth-child(1)').hide();
-    createCombos(target);
-    
-}
 
 

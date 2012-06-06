@@ -30,7 +30,6 @@ class PreconciliationController extends SessionInfoController{
         
         def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
         
-        def lock = new Lock()
         if(medio == null) {
             response.setStatus(500)
             render message(code:"preconciliation.nomedio.found.error", default:"No se encontró ningun medio", args:[params.country, params.card, params.site])
@@ -140,14 +139,14 @@ class PreconciliationController extends SessionInfoController{
         
         salesSiteReceiptList.each{ item ->
             
-            def preconciliation = new Preconciliation(sale:item.salesSite, receipt:item.receipt, 
+            def conciliation = new Conciliation(sale:item.salesSite, receipt:item.receipt, 
                 lot:lot, medio:item.receipt?.medio, period: item.salesSite?.period)
             
-            preconciliation.save()
+            conciliation.save()
         }
         
         /* call datastage */
-        def job = "cmd.exe /C echo El proceso se ejecuto satisfactoriamente.".execute()
+        def job = "echo El proceso se ejecuto satisfactoriamente.".execute()
         job.waitFor()
         if(job.exitValue()){    
             response.setStatus(500)
