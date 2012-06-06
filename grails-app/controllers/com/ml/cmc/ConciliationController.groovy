@@ -47,7 +47,6 @@ class ConciliationController extends SessionInfoController{
 		
 		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
 		
-		def lock = new Lock()
 		if(medio == null) {
 			response.setStatus(500)
 			render message(code:"conciliation.nomedio.found.error", default:"No se encontró ningun medio", args:[params.country, params.card, params.site])
@@ -123,10 +122,29 @@ class ConciliationController extends SessionInfoController{
 	
 	def group = { ConciliationCmd conciliationCmd ->
 		
-		def salesSiteInstance = SalesSite.findById(params.salesSiteId)
-		def receiptInstance = Receipt.findById(params.receiptId)
-		
-		List conciliation = conciliationCmd.insertPair(new SalesSiteReceiptCmd(salesSite: salesSiteInstance, receipt:receiptInstance ))
+        if(params.salesSiteId.size() > 1 && params.receiptId.size() > 1){
+            response.setStatus(500)
+            render message(code:"preconcliation.relationship.error", default:"La relacion entre los Recibos y Ventas no es correcta")
+            return
+        }
+
+        LinkedList conciliation = (LinkedList)conciliationCmd.createList() 
+                
+        if(params.salesSiteId.size() > 1){
+            def receiptInstance = Receipt.findById(params.receiptId)
+            params.salesSiteId.each{ saleId ->
+                def salesSiteInstance = SalesSite.findById(saleId)
+                conciliation.addFirst(new SalesSiteReceiptCmd(salesSite: salesSiteInstance, receipt:receiptInstance ))
+            }
+        } else {
+            def salesSiteInstance = SalesSite.findById(params.salesSiteId)
+            params.receiptId.each{ receipt ->
+                def receiptInstance = Receipt.findById(receipt)
+                conciliation.addFirst(new SalesSiteReceiptCmd(salesSite: salesSiteInstance, receipt:receiptInstance ))
+            } 
+        }
+        
+
 		
 		render(template:"conciliateTable", model:[conciliationInstancelist: conciliation])
 		
@@ -147,7 +165,7 @@ class ConciliationController extends SessionInfoController{
 		}
 		
 		/* call datastage */
-		def job = "cmd.exe /C echo El proceso se ejecuto satisfactoriamente.".execute()
+		def job = "echo El proceso se ejecuto satisfactoriamente.".execute()
 		job.waitFor()
 		if(job.exitValue()){
 			response.setStatus(500)

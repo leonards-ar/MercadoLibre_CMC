@@ -7,141 +7,116 @@ $(function() {
 		nonSelectedValue : '---'
 	});
 
-	$('#agrupar').live('click',function() {
+	$('#agrupar').live({
+		click: function() {
 
-		var salesSiteRow = $('#sales_table').find('tr:.yellow').clone();
-		var receiptRow = $('#receipt_table').find('tr:.yellow').clone();
-
-		if (salesSiteRow.length == 0 || receiptRow == 0) {
-			var $dialog = getDialog(conciliationNoselectionError);
-			$dialog.dialog("open");
-			return;
-		}
-
-		var strData = ""
-
-        strData +="receiptId=" + receiptRow.find('td:eq(1)').find('input:hidden').val();
-		strData +="&salesSiteId=" + salesSiteRow.find('td:eq(1)').find('input:hidden').val();
-		    
-        $('#conciliate_table input:hidden').each(
-            function() {
-                if (strdata.length > 0) {
-                    strdata += "&";
-                }
-                strdata += $(this).attr('id') + "=" + $(this).val();
-            });
-		    
-
-		$.ajax({
-		    type : 'POST',
-			url : groupLink,
-			data : strData,
-			success : function(data) {
-				$('#conciliado').fadeOut('fast',function() {
-				    $(this).html(data).fadeIn('slow');
-				});
-				
-				$('#sales_table').find('tr:.yellow').remove();
-				$('#receipt_table').find('tr:.yellow').remove();
-				
-				var balanced = 0;
-				$('#balance').html(String(balanced));
-			},
-			error : function(XMLHttpRequest,textStatus, errorThrown) {
-				showError(XMLHttpRequest, textStatus,errorThrown);
+			if ($('#sales_table tbody tr:.yellow').length == 0 || $('#receipt_table tbody tr:.yellow').length == 0) {
+				var $dialog = getDialog(preconciliationNoselectionError);
+				$dialog.dialog("open");
+				return;
 			}
-		})
+			if ($('#sales_table tbody tr:.yellow').length > 1 && $('#receipt_table tbody tr:.yellow').length > 1) {
+		          var $dialog = getDialog(preconciliationBadRelationError);
+		            $dialog.dialog("open");
+		            return;
+			}
+			var strData = "";
+
+
+		    $('#receipt_table tbody tr:.yellow').each(function(){
+		        if(strData.length > 0){
+		            strData += "&";
+		        }
+		        strData += "receiptId=" + $(this).find('td:eq(0)').find('input:hidden').val();
+		    });
+
+	        $('#sales_table tbody tr:.yellow').each(function(){
+	            if(strData.length > 0){
+	                strData += "&";
+	            }
+	            strData += "salesSiteId=" + $(this).find('td:eq(0)').find('input:hidden').val();
+	        });		
+	    
+	        $('#preconciliate_table input:hidden').each(
+	            function() {
+	                if (strData.length > 0) {
+	                    strData += "&";
+	                }
+	                strData += $(this).attr('id') + "=" + $(this).val();
+	            });
+			    
+
+			$.ajax({
+			    type : 'POST',
+				url : groupLink,
+				data : strData,
+				success : function(data) {
+					$('#conciliado').fadeOut('fast',function() {
+					    $(this).html(data).fadeIn('slow');
+					});
+
+					deleteRows('#receipt_table');
+					deleteRows('#sales_table');
+					
+					createCombos('#receipt_table');
+					createCombos('#sales_table');
+					
+					
+					var balanced = 0;
+					$('#balance').html(String(balanced));
+				},
+				error : function(XMLHttpRequest,textStatus, errorThrown) {
+					showError(XMLHttpRequest,textStatus,errorThrown);
+				}
+			})
+		},
+		mouseover: function() {
+			$(this).addClass("ui-state-hover");
+			$(this).css("cursor","pointer");
+		},
+		  mouseout: function() {
+			$(this).removeClass("ui-state-hover");
+		}
+		
 	});
 
-	$('.receipt_check').live('click',function() {
-    	if (this.checked) {
-    		var misselected = $('#receipt_table').find('tr:.yellow').get();
-    		if (misselected.length > 0) {
-    			var $dialog = getDialog(conciliationOnlyoneError);
-    			$dialog.dialog("open");								
-    			this.checked = false;
-    			return;
-    		}
-    		$(this).parent().parent().toggleClass('yellow');
-    		
-    		var monto = $(this).parent().parent().find('td:eq(4)').text();
+	$('#receipt_table tbody tr').live('click',function() {
+
+	    $(this).toggleClass('yellow');
+    	if ($(this).hasClass('yellow')) {
+    		var monto = parseFloat($(this).find('td:eq(8)').text());
     		var balanced = parseFloat($('#balance').text());
     		balanced = isNaN(balanced) ? 0 : balanced;
-    		balanced += parseFloat(monto);
+    		balanced += isNaN(monto)? 0 : monto;
     		$('#balance').html(String(balanced));
     	} else {
-    		$(this).parent().parent().removeClass('yellow');
-    		var monto = $(this).parent().parent().find('td:eq(4)').text();
+    		var monto = parseFloat($(this).find('td:eq(8)').text());
     		var balanced = parseFloat($('#balance').text());
     		if (!(isNaN(balanced))) {
-    			balanced -= parseFloat(monto);
+    			balanced -= isNaN(monto)? 0 : monto;
     			$('#balance').html(String(balanced));
     		}
     	}
     });
 
-	$('.salesSite_check').live('click', function() {
-		if (this.checked) {
-			var misselected = $('#sales_table').find('tr:.yellow').get();
-			if (misselected.length > 0) {
-				var $dialog = getDialog(conciliationOnlyoneError);
-				$dialog.dialog('open');
-				this.checked = false;
-				return;
-			}
-			$(this).parent().parent().toggleClass('yellow');
-			var monto = $(this).parent().parent().find('td:eq(5)').text();
+	$('#sales_table tbody tr').live('click', function() {
+		$(this).toggleClass('yellow');
+		if ($(this).hasClass('yellow')) {
+			var monto = parseFloat($(this).parent().parent().find('td:eq(9)').text());
 			var balanced = parseFloat($('#balance').text());
 			balanced = isNaN(balanced) ? 0 : balanced;
-			balanced -= parseFloat(monto);
+			balanced -= isNaN(monto) ? 0 : monto;
 			$('#balance').html(String(balanced));
 		} else {
-			$(this).parent().parent().removeClass('yellow');
-			var monto = $(this).parent().parent().find('td:eq(5)').text();
+			var monto = parseFloat($(this).parent().parent().find('td:eq(9)').text());
 			var balanced = parseFloat($('#balance').text());
 			if (!(isNaN(balanced))) {
-				balanced += parseFloat(monto);
+				balanced += isNaN(monto) ? 0 : monto;
 				$('#balance').html(String(balanced));
 			}
 		}
 	});
 
-	$('.filtered').find(".paginateButtons a, th.sortable a").live('click',function(event) {
-		event.preventDefault();
-		var url = $(this).attr('href');
-
-		var closestDiv = $(this).closest('div');
-
-		var strdata = $('#country').attr('id') + "=" + $('#country').val();
-		strdata += "&" + $('#card').attr('id') + "=" + $('#card').val();
-		strdata += "&" + $('#site').attr('id') + "=" + $('#site').val();
-
-		$('#conciliate_table input:hidden').each(function() {
-    		if (strdata.length > 0) {
-    			strdata += "&";
-    		}
-    		strdata += $(this).attr('id') + "=" + $(this).val();
-		});
-
-		$(closestDiv).html($("#spinner").html());
-
-		$.ajax({
-			type : 'POST',
-			url : url,
-			data : strdata,
-			success : function(data) {
-				$(closestDiv).fadeOut('fast', function() {
-					$(this).html(data).fadeIn('slow');
-				});
-			},
-			error : function(XMLHttpRequest, textStatus,
-					errorThrown) {
-				showError(XMLHttpRequest, textStatus,
-						errorThrown);
-				$(closestDiv).html("");
-			}
-		})
-	});
 	$('.button').find('#conciliateButton').live('click', function() {
 
 		var strdata = "";
@@ -268,6 +243,9 @@ $(function() {
 			    	$('#site').attr("disabled", true);
 			    	$('#lock').attr("value","Unlock");
 			    	$('#myBody').html(data);
+			    	
+			    	createTable('#receipt_table');
+			    	createTable('#sales_table');
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					showError(XMLHttpRequest, textStatus,errorThrown);
