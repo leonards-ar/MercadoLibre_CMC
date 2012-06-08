@@ -196,16 +196,35 @@ $(function() {
 		
 		$('.receiptCol').live('click',function(){
 
-			var column = $(this).attr('name');
-
-			if(this.checked) {
-				$('#receipt_table').find('td:nth-child(' + column + '),th:nth-child(' + column + ')').show('slide',500);
-			} else {
-				$('#receipt_table').find('td:nth-child(' + column + '),th:nth-child(' + column + ')').hide('slide',500);
-			}
+			showHideColumn('#receipt_table', $(this).attr('name'), this.checked);
 			
 		});	
+		
+		$('#receiptColAll').live('click',function(){
+			var checked = this.checked;
+			$('.receiptCol').each(function() {
+					this.checked = checked;
+					var column = $(this).attr('name');
+					showHideColumn('#receipt_table', column, checked);
+			});
+			
+		});
+		
+		$('.salesSiteCol').live('click',function(){
 
+			showHideColumn('#sales_table', $(this).attr('name'), this.checked);
+			
+		});
+		
+		$('#salesColAll').live('click',function(){
+			var checked = this.checked;
+			$('.salesSiteCol').each(function() {
+					this.checked = checked;
+					showHideColumn('#sales_table', $(this).attr('name'), checked);
+			});
+			
+		});
+		
 		$('.salesSiteCol').live('click',function(){
 
 			var column = $(this).attr('name');

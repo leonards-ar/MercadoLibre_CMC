@@ -30,6 +30,7 @@ class Receipt {
     String documentNumber
     //Long payment
 	AccountantPeriod period
+	String payed;
 
     
     static constraints = {
@@ -54,6 +55,7 @@ class Receipt {
 		cardLot(nullable:true)
 		uniqueRo(nullable:true)
 		documentNumber(nullable:true)
+		payed(nullable:true)
 		//Long payment
        
     }
@@ -89,6 +91,7 @@ class Receipt {
         documentNumber column:'DOC_NUMBER'
         //payment column:'PAYMENT_ID'
 		period column:'CD_PERIODO'
+		payed column:'FL_PAGADO'
     }
 
 }

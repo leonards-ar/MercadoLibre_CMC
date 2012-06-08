@@ -61,6 +61,7 @@ function createTable(target){
         "bPaginate":false,
         "bInfo":false,
         "sDom": 'rt',
+        "bAutoWidth":false,
         "aoColumnDefs": [
                          { "bSortable": false, "aTargets": [ 0 ] }
                        ]                                                        
@@ -70,3 +71,14 @@ function createTable(target){
     createCombos(target);
     
 }
+
+function showHideColumn(target, column, show) {
+	if(show) {
+		$(target).find('td:nth-child(' + column + '),th:nth-child(' + column + ')').show();
+	} else {
+		$(target).find('td:nth-child(' + column + '),th:nth-child(' + column + ')').hide();
+	}
+	
+	
+}
+

@@ -28,6 +28,7 @@ class SalesSite {
     String documentNumber 
     Long payment  
 	AccountantPeriod period
+	String origin
     
     static constraints = {
 		cardNumber(nullable:true)
@@ -50,6 +51,7 @@ class SalesSite {
 		uniqueRo(nullable:true)
 		documentNumber(nullable:true)
 		payment(nullable:true)
+		origin(nullable:true)
     }
     
     static mapping = {
@@ -84,5 +86,6 @@ class SalesSite {
         documentNumber column:'DOC_NUMBER'
         payment column:'PAYMENT_ID'
 		period column:'CD_PERIODO'
+		origin column:'FL_ORIGEN'
     }
 }

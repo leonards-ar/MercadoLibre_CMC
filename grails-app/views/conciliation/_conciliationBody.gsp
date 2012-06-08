@@ -7,6 +7,18 @@
 	   <h3>${message(code: 'preconciliation.receipts', default: 'Recibos')}</h3>
 	  <table>
 	    <tr>
+	     <td><g:checkBox id='receiptColAll' value="${true}" /></td>
+	     <td>${message(code: 'salesSite.unselect', default: 'Seleccionar Todo')}</td>
+	     <td>&nbsp;</td>
+	     <td>&nbsp;</td>
+	     <td>&nbsp;</td>
+	     <td>&nbsp;</td>
+	     <td>&nbsp;</td>
+	     <td>&nbsp;</td>
+	     <td>&nbsp;</td>
+	     <td>&nbsp;</td>
+	    </tr>	  
+	    <tr>
 	      <td><g:checkBox class='receiptCol' name="2" value="${true}" /></td>
 	      <td>${message(code: 'salesSite.medio', default: 'Medio')}</td>
 	      <td><g:checkBox class='receiptCol' name="3" value="${true}" /></td>
@@ -38,13 +50,13 @@
 	      <td><g:checkBox class='receiptCol' name="14" value="${true}" /></td>
 	      <td>${message(code: 'salesSite.liq', default: 'Liquidacion')}</td>
 	      <td><g:checkBox class='receiptCol' name="15" value="true"/></td>
-	      <td>${message(code: 'salesSite.documentId', default: 'DNI')}</td>
-	      <td><g:checkBox class='receiptCol' name="16" value="${true}" /></td>
-	      <td>${message(code: 'salesSite.customerId', default: 'Cliente')}</td>
-	     </tr>
-	     <tr>      
-	      <td><g:checkBox class='receiptCol' name="17" value="true"/></td>
-	      <td>${message(code: 'salesSite.receiptNumber', default: 'DNI')}</td>
+        <td>${message(code: 'salesSite.customerId', default: 'Cliente')}</td>
+        <td><g:checkBox class='receiptCol' name="16" value="${true}" /></td>
+        <td>${message(code: 'salesSite.documentId', default: 'DNI')}</td>      
+     </tr>
+     <tr>      
+        <td><g:checkBox class='receiptCol' name="17" value="true"/></td>
+        <td>${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</td>
 	      <td><g:checkBox class='receiptCol' name="18" value="${true}" /></td>
 	      <td>${message(code: 'salesSite.tid', default: 'TID')}</td>
 	      <td><g:checkBox class='receiptCol' name="19" value="${true}" /></td>    
@@ -63,7 +75,8 @@
 	      <td>${message(code: 'salesSite.documentNumber', default: 'Nro. Doc.')}</td>
 	      <td><g:checkBox class='receiptCol' name="25" value="${true}" /></td>    
 	      <td>${message(code: 'salesSite.period', default: 'Periodo')}</td>
-	      <td colspan="2">&nbsp;</td>
+        <td><g:checkBox class='receiptCol' name="26" value="${true}" /></td>    
+        <td>${message(code: 'salesSite.payed', default: 'Pagado')}</td>
 	    </tr>                    
 	  </table>
 	  </div>       
@@ -93,6 +106,18 @@
     <div id="filterSalesColumns" class="salesSitefilterColumns">
     <h3>${message(code: 'preconciliation.salesSite', default: 'Ventas del Sitio')}</h3>
   <table>
+    <tr>
+     <td><g:checkBox id='salesColAll' value="${true}" /></td>
+     <td>${message(code: 'salesSite.unselect', default: 'Seleccionar Todo')}</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+    </tr>
     <tr>
       <td><g:checkBox class='salesSiteCol' name="2" value="${true}" /></td>
       <td>${message(code: 'salesSite.saleMl', default: 'Venta ML')}</td>
@@ -156,7 +181,9 @@
     <tr>      
       <td><g:checkBox class='salesSiteCol' name="27" value="${true}" /></td>    
       <td>${message(code: 'salesSite.period', default: 'Periodo')}</td>
-      <td colspan="8">&nbsp;</td>
+      <td><g:checkBox class='salesSiteCol' name="28" value="${true}" /></td>    
+      <td>${message(code: 'salesSite.origin', default: 'Origen')}</td>      
+      <td colspan="6">&nbsp;</td>
     </tr>                    
   </table>
   </div>       
