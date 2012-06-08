@@ -78,6 +78,7 @@ class ConciliationController extends SessionInfoController{
 			order(params.sort != null? params.sort:'receiptNumber', params.order != null?params.order:'asc')
 			 if(medios != null) inList('medio', medios)
 			 eq('state',state3)
+			 eq('origin',"I")
 		}
 		
 		render(template: "conciliationBody", model:[receiptInstanceList:receiptInstanceList, salesSiteInstanceList:salesSiteInstanceList])

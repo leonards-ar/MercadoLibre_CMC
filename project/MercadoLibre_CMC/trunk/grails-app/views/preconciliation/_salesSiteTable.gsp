@@ -28,6 +28,7 @@
     <th>${message(code: 'salesSite.documentNumber', default: 'DNI')}</th>
     <th>${message(code: 'salesSite.payment', default: 'Pago')}</th>
     <th>${message(code: 'salesSite.period', default: 'Periodo')}</th>
+    <th>${message(code: 'salesSite.origin', default: 'Origen')}</th>
    </tr>
  
   <tr>
@@ -58,6 +59,7 @@
 		<th>${message(code: 'salesSite.documentNumber', default: 'DNI')}</th>
 		<th>${message(code: 'salesSite.payment', default: 'Pago')}</th>
 		<th>${message(code: 'salesSite.period', default: 'Periodo')}</th>
+		<th>${message(code: 'salesSite.origin', default: 'Origen')}</th>
    </tr>
   </thead>
   <tbody>
@@ -92,6 +94,7 @@
         <td>${salesSiteInstance?.documentNumber}</td>
         <td>${salesSiteInstance?.payment}</td>
         <td>${salesSiteInstance?.period}</td>
+        <td>${salesSiteInstance?.origin}</td>
        </tr>
       </g:each>
      </tbody>

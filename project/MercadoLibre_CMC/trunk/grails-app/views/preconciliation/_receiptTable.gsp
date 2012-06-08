@@ -26,6 +26,7 @@
 			<th>${message(code: 'salesSite.uniqueRo', default: 'RO Unico')}</th>
 			<th>${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</th>
 			<th>${message(code: 'salesSite.period', default: 'Periodo')}</th>
+			<th>${message(code: 'salesSite.payed', default: 'Pagado')}</th>
 	  </tr>
 	  <tr>
      <th></th>
@@ -53,6 +54,7 @@
 			<th>${message(code: 'salesSite.uniqueRo', default: 'RO Unico')}</th>
 			<th>${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</th>
 			<th>${message(code: 'salesSite.period', default: 'Periodo')}</th>
+			<th>${message(code: 'salesSite.payed', default: 'Pagado')}</th>
     </tr>
 	  </thead>
 	  <tbody>
@@ -83,6 +85,7 @@
 	        <td>${receiptInstance?.uniqueRo}</td>
           <td>${receiptInstance?.documentNumber}</td>
           <td>${receiptInstance?.period}</td> 	        
+          <td>${receiptInstance?.payed}</td>
 	      </tr>            
 	    </g:each>
   </tbody>
