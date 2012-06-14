@@ -160,13 +160,14 @@ class ConciliationController extends SessionInfoController{
 		salesSiteReceiptList.each{ item ->
 			
 			def conciliation = new Conciliation(sale:item.salesSite, receipt:item.receipt,
-				lot:lot, medio:item.receipt?.medio, period:item.receipt?.period)
+				lot:lot, medio:item.receipt?.medio, period:item.receipt?.period, registerType:item.receipt?.registerType)
 			
 			conciliation.save()
 		}
 		
 		/* call datastage */
-		def job = "echo El proceso se ejecuto satisfactoriamente.".execute()
+		String jobName = "echo 'ML_JOB_CONCILIACION_MAN ${lot}'." 
+		def job = jobName.execute()
 		job.waitFor()
 		if(job.exitValue()){
 			response.setStatus(500)
