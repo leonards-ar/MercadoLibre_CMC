@@ -225,18 +225,6 @@ $(function() {
 			
 		});
 		
-		$('.salesSiteCol').live('click',function(){
-
-			var column = $(this).attr('name');
-
-			if(this.checked) {
-				$('#sales_table').find('td:nth-child(' + column + '),th:nth-child(' + column + ')').show('slide',500);
-			} else {
-				$('#sales_table').find('td:nth-child(' + column + '),th:nth-child(' + column + ')').hide('slide',500);
-			}
-			
-		});
-
 	$('#lock').click(function(){
 		
 		if($(this).attr('value') == 'Lock'){
