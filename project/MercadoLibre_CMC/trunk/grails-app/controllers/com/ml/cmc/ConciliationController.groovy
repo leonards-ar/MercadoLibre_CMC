@@ -166,7 +166,7 @@ class ConciliationController extends SessionInfoController{
 		}
 		
 		/* call datastage */
-		String jobName = "echo 'ML_JOB_CONCILIACION_MAN ${lot}'." 
+		String jobName = "ML_JOB_CONCILIACION_MAN ${lot}" 
 		def job = jobName.execute()
 		job.waitFor()
 		if(job.exitValue()){
