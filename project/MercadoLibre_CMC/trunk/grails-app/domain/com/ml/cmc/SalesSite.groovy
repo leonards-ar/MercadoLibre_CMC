@@ -69,7 +69,7 @@ class SalesSite {
         transactionDate column:'FC_OPERACION'
         paymentDate column:'FC_PAGO'
         amount column:'VL_IMPORTE'
-        shareAmount column:'VL_SEG_CUOTA'
+        shareAmount column:'VL_CUOTA'
         authorization column:'NU_AUTORIZACION'
         shareNumber column:'NU_CUOTA'
         shareQty column:'NU_CANT_CUOTAS'

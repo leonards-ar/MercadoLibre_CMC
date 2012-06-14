@@ -7,23 +7,22 @@ class Conciliation implements Serializable {
 	Long lot
 	Medio medio
 	AccountantPeriod period
+	RegisterType registerType
 	
     static constraints = {
-		
-		period(nullable:true)
-		lot(nullable:true)
 		
     }
 	
 	static mapping = {
-		table 'A_CONCILIACIONES_TMP'
+		table 'F_TMP_CONCILIACIONES'
 		version false
 		
 		id composite: ['lot','sale','receipt']
 		sale column: 'CD_VENTA_CUOTA'
 		receipt column: 'CD_RECIBO'
-		lot: 'LOTE'
-		medio: 'CD_MEDIO'
-		period: 'CD_PERIODO'
+		lot column: 'SERIAL_JAVA'
+		medio column: 'CD_MEDIO'
+		period column: 'CD_PERIODO'
+		registerType column:'CD_TIPO_CONC'
 	}
 }
