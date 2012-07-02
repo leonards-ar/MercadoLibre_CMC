@@ -9,9 +9,9 @@ $(function() {
 
 	$('#agrupar').live({
 		click: function() {
-
+		$('#sales_table tbody tr:.yellow').length
 			if ($('#sales_table tbody tr:.yellow').length == 0 || $('#receipt_table tbody tr:.yellow').length == 0) {
-				var $dialog = getDialog(preconciliationNoselectionError);
+				var $dialog = getDialog(conciliationNoselectionError);
 				$dialog.dialog("open");
 				return;
 			}
@@ -117,8 +117,8 @@ $(function() {
 		}
 	});
 
-	$('.button').find('#conciliateButton').live('click', function() {
-
+	$('#conciliateButton').live('click', function() {
+		
 		var strdata = "";
 
 		if($('#conciliate_table input:hidden').length == 0) {
@@ -163,6 +163,7 @@ $(function() {
 				showError(XMLHttpRequest, textStatus,errorThrown);
 			}
 		});
+
 	});		
 	
 	$('#receiptFilter').live({
