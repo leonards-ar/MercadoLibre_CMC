@@ -16,33 +16,11 @@ class ConciliationController extends SessionInfoController{
 			projections{
 				distinct "country"
 			}
+			order("country")
 		}
 		render(view:'index', model:[countryList: countryList])
-		}
-	
-	def cards = {
-
-		def cardsToSelect = Medio.withCriteria{
-			projections{
-				distinct "card"
-			}
-			eq("country", params._value)
-		}
-		
-		render cardsToSelect as JSON
 	}
 	
-	def sites = {
-		
-		 def sitesToSelect = Medio.withCriteria{
-			projections{
-				distinct "site"
-			}
-			eq("card", params._value)
-		}
-		render sitesToSelect as JSON
-	}
-
 	def lock = {
 		
 		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
@@ -67,14 +45,17 @@ class ConciliationController extends SessionInfoController{
 		}
 		
 		def state3 = State.findById(3)
-		def receiptInstanceList = Receipt.withCriteria {
+		def receiptCriteria = Receipt.createCriteria()
+		def receiptInstanceList = receiptCriteria.list(max:10, offset:10) {
 			order(params.sort != null? params.sort:'receiptNumber', params.order != null?params.order:'asc')
 			if(medio != null) eq('medio', medio)
 			eq('state',state3)
 		}
 
 		def medios = Medio.find("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
-		def salesSiteInstanceList = SalesSite.withCriteria {
+		
+		def salesSiteCriteria = SalesSite.createCriteria()
+		def salesSiteInstanceList = salesSiteCriteria.list(max:10, offset:10) {
 			order(params.sort != null? params.sort:'receiptNumber', params.order != null?params.order:'asc')
 			 if(medios != null) inList('medio', medios)
 			 eq('state',state3)
@@ -123,7 +104,7 @@ class ConciliationController extends SessionInfoController{
 	
 	def group = { ConciliationCmd conciliationCmd ->
 		
-        if(params.salesSiteId.size() > 1 && params.receiptId.size() > 1){
+        if(!params.salesSiteId instanceof String && params.salesSiteId.size() > 1 && !params.receiptId instanceof String && params.receiptId.size() > 1){
             response.setStatus(500)
             render message(code:"preconcliation.relationship.error", default:"La relacion entre los Recibos y Ventas no es correcta")
             return
@@ -131,7 +112,7 @@ class ConciliationController extends SessionInfoController{
 
         LinkedList conciliation = (LinkedList)conciliationCmd.createList() 
                 
-        if(params.salesSiteId.size() > 1){
+        if(!params.salesSiteId instanceof String && params.salesSiteId.size() > 1){
             def receiptInstance = Receipt.findById(params.receiptId)
             params.salesSiteId.each{ saleId ->
                 def salesSiteInstance = SalesSite.findById(saleId)
@@ -139,10 +120,15 @@ class ConciliationController extends SessionInfoController{
             }
         } else {
             def salesSiteInstance = SalesSite.findById(params.salesSiteId)
-            params.receiptId.each{ receipt ->
-                def receiptInstance = Receipt.findById(receipt)
-                conciliation.addFirst(new SalesSiteReceiptCmd(salesSite: salesSiteInstance, receipt:receiptInstance ))
-            } 
+			if(params.receiptId instanceof String){
+				def receiptInstance = Receipt.findById(params.receiptId)
+				conciliation.addFirst(new SalesSiteReceiptCmd(salesSite: salesSiteInstance, receipt:receiptInstance ))
+			} else { 
+	            params.receiptId.each{ receipt ->
+	                def receiptInstance = Receipt.findById(receipt)
+	                conciliation.addFirst(new SalesSiteReceiptCmd(salesSite: salesSiteInstance, receipt:receiptInstance ))
+	            } 
+			}
         }
         
 
@@ -166,7 +152,8 @@ class ConciliationController extends SessionInfoController{
 		}
 		
 		/* call datastage */
-		String jobName = "ML_JOB_CONCILIACION_MAN ${lot}" 
+		def username = getUsername()
+		String jobName = "/datastage/ConcManual.sh ${username} ${lot}" 
 		def job = jobName.execute()
 		job.waitFor()
 		if(job.exitValue()){
@@ -177,12 +164,6 @@ class ConciliationController extends SessionInfoController{
 		 
 	}
 	
-	def exit = {
-		securityLockService.unLockFunctionality(getSessionId())
-		redirect(controller:'home', action:'index')
-	}
-	
-
 }
 
 class ConciliationCmd {
@@ -193,7 +174,7 @@ class ConciliationCmd {
 	List createList() {
 		List list = []
 		salesSiteIds.eachWithIndex {salesSiteId, i ->
-			def salesSite = SalesSite.findById(salesSiteIds[i])
+			def salesSite = SalesSite.findBySalesShare(salesSiteId)
 			def receipt = Receipt.findById(receiptIds[i])
 			def salesSiteReceipt = new SalesSiteReceiptCmd(salesSite: salesSite, receipt: receipt)
 			
