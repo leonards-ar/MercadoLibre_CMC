@@ -46,6 +46,7 @@ class SessionInfoController {
 				distinct "card"
 			}
 			eq("country", params._value)
+			order("card")
 		}
 		
 		render cardsToSelect as JSON
@@ -58,6 +59,7 @@ class SessionInfoController {
 				distinct "site"
 			}
 			eq("card", params._value)
+			order("site")
 		}
 		render sitesToSelect as JSON
 	}
