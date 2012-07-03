@@ -46,7 +46,7 @@ class ConciliationController extends SessionInfoController{
 		
 		def state3 = State.findById(3)
 		def receiptCriteria = Receipt.createCriteria()
-		def receiptInstanceList = receiptCriteria.list(max:10, offset:10) {
+		def receiptInstanceList = receiptCriteria.list() {
 			order(params.sort != null? params.sort:'receiptNumber', params.order != null?params.order:'asc')
 			if(medio != null) eq('medio', medio)
 			eq('state',state3)
@@ -55,7 +55,7 @@ class ConciliationController extends SessionInfoController{
 		def medios = Medio.find("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
 		
 		def salesSiteCriteria = SalesSite.createCriteria()
-		def salesSiteInstanceList = salesSiteCriteria.list(max:10, offset:10) {
+		def salesSiteInstanceList = salesSiteCriteria.list() {
 			order(params.sort != null? params.sort:'receiptNumber', params.order != null?params.order:'asc')
 			 if(medios != null) inList('medio', medios)
 			 eq('state',state3)
@@ -153,8 +153,7 @@ class ConciliationController extends SessionInfoController{
 		
 		/* call datastage */
 		def username = getUsername()
-		String jobName = "/datastage/ConcManual.sh ${username} ${lot}" 
-		def job = jobName.execute()
+		def job = ["/datastage/ConcManual.sh", username, lot].execute()
 		job.waitFor()
 		if(job.exitValue()){
 			response.setStatus(500)
@@ -174,7 +173,7 @@ class ConciliationCmd {
 	List createList() {
 		List list = []
 		salesSiteIds.eachWithIndex {salesSiteId, i ->
-			def salesSite = SalesSite.findBySalesShare(salesSiteId)
+			def salesSite = SalesSite.findById(salesSiteId)
 			def receipt = Receipt.findById(receiptIds[i])
 			def salesSiteReceipt = new SalesSiteReceiptCmd(salesSite: salesSite, receipt: receipt)
 			
