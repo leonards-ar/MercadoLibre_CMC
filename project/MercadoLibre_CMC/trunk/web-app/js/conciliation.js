@@ -102,13 +102,13 @@ $(function() {
 	$('#sales_table tbody tr').live('click', function() {
 		$(this).toggleClass('yellow');
 		if ($(this).hasClass('yellow')) {
-			var monto = parseFloat($(this).parent().parent().find('td:eq(9)').text());
+			var monto = parseFloat($(this).find('td:eq(9)').text());
 			var balanced = parseFloat($('#balance').text());
 			balanced = isNaN(balanced) ? 0 : balanced;
 			balanced -= isNaN(monto) ? 0 : monto;
 			$('#balance').html(String(balanced));
 		} else {
-			var monto = parseFloat($(this).parent().parent().find('td:eq(9)').text());
+			var monto = parseFloat($(this).find('td:eq(9)').text());
 			var balanced = parseFloat($('#balance').text());
 			if (!(isNaN(balanced))) {
 				balanced += isNaN(monto) ? 0 : monto;

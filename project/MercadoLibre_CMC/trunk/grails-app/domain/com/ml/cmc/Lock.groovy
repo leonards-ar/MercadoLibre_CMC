@@ -18,7 +18,7 @@ class Lock {
         id generator: 'assigned', name:'sessionId', type:'string'
         sessionId column:'session_id'
         medio column:'cd_medio'
-        function column:'function'
+        function column:'funcionalidad'
     }
     
     String toString() {
