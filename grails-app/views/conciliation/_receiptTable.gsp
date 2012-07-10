@@ -15,8 +15,6 @@
       <th>${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}</th>
       <th>${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}</th>
       <th>${message(code: 'salesSite.liq', default: 'Liquidacion')}</th>
-      <th>${message(code: 'salesSite.customerId', default: 'Cliente')}</th>
-      <th>${message(code: 'salesSite.documentId', default: 'DNI')}</th>     
       <th>${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</th>
       <th>${message(code: 'salesSite.tid', default: 'TID')}</th>
       <th>${message(code: 'salesSite.nsu', default: 'NSU')}</th>          
@@ -43,8 +41,6 @@
       <th>${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}</th>
       <th>${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}</th>
       <th>${message(code: 'salesSite.liq', default: 'Liquidacion')}</th>
-      <th>${message(code: 'salesSite.customerId', default: 'Cliente')}</th>
-      <th>${message(code: 'salesSite.documentId', default: 'DNI')}</th>     
       <th>${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</th>
       <th>${message(code: 'salesSite.tid', default: 'TID')}</th>
       <th>${message(code: 'salesSite.nsu', default: 'NSU')}</th>          
@@ -74,8 +70,6 @@
           <td>${receiptInstance?.shareNumber}</td>
           <td>${receiptInstance?.shareQty}</td>
           <td>${receiptInstance?.liq}</td>
-          <td>${receiptInstance?.customerId}</td>
-          <td>${receiptInstance?.documentId}</td>
           <td>${receiptInstance?.receiptNumber}</td>          
           <td>${receiptInstance?.tid}</td>
           <td>${receiptInstance?.nsu}</td>
