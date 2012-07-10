@@ -16,6 +16,7 @@ class PreconciliationController extends SessionInfoController{
 			projections{
 				distinct "country"
 			}
+			order("country")
 		}
         render(view:'index', model:[countryList: countryList]) 
         }
