@@ -88,13 +88,13 @@ $(function() {
     		var balanced = parseFloat($('#balance').text());
     		balanced = isNaN(balanced) ? 0 : balanced;
     		balanced += isNaN(monto)? 0 : monto;
-    		$('#balance').html(String(balanced));
+    		$('#balance').html(String(balanced.toFixed(2)));
     	} else {
     		var monto = parseFloat($(this).find('td:eq(8)').text());
     		var balanced = parseFloat($('#balance').text());
     		if (!(isNaN(balanced))) {
     			balanced -= isNaN(monto)? 0 : monto;
-    			$('#balance').html(String(balanced));
+    			$('#balance').html(String(balanced.toFixed(2)));
     		}
     	}
     });
@@ -106,13 +106,13 @@ $(function() {
 			var balanced = parseFloat($('#balance').text());
 			balanced = isNaN(balanced) ? 0 : balanced;
 			balanced -= isNaN(monto) ? 0 : monto;
-			$('#balance').html(String(balanced));
+			$('#balance').html(String(balanced.toFixed(2)));
 		} else {
 			var monto = parseFloat($(this).find('td:eq(9)').text());
 			var balanced = parseFloat($('#balance').text());
 			if (!(isNaN(balanced))) {
 				balanced += isNaN(monto) ? 0 : monto;
-				$('#balance').html(String(balanced));
+				$('#balance').html(String(balanced.toFixed(2)));
 			}
 		}
 	});

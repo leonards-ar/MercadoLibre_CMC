@@ -50,6 +50,7 @@ class ConciliationController extends SessionInfoController{
 			order(params.sort != null? params.sort:'receiptNumber', params.order != null?params.order:'asc')
 			if(medio != null) eq('medio', medio)
 			eq('state',state3)
+			eq('payed', 'ok', [ignoreCase: true])
 		}
 
 		def medios = Medio.find("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
