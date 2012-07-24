@@ -9,6 +9,8 @@ class ConciliationController extends SessionInfoController{
 
 	def securityLockService
 	def lotGeneratorService
+	def sessionFactory
+	
 	
 	def index = {
 		securityLockService.unLockFunctionality(getSessionId())
@@ -144,13 +146,17 @@ class ConciliationController extends SessionInfoController{
 		
 		List salesSiteReceiptList = conciliationCmd.createList()
 		
-		salesSiteReceiptList.each{ item ->
-			
-			def conciliation = new Conciliation(sale:item.salesSite, receipt:item.receipt,
-				lot:lot, medio:item.receipt?.medio, period:item.receipt?.period, registerType:item.receipt?.registerType)
-			
-			conciliation.save(flush:true)
+		Conciliation.withTransaction{
+			salesSiteReceiptList.each{ item ->
+				
+				def conciliation = new Conciliation(sale:item.salesSite, receipt:item.receipt,
+					lot:lot, medio:item.receipt?.medio, period:item.receipt?.period, registerType:item.receipt?.registerType)
+				
+				conciliation.save()
+			}
 		}
+		
+		sessionFactory.getCurrentSession().clear();
 		
 		/* call datastage */
 		def username = getUsername()
