@@ -19,6 +19,8 @@
       var saveLink = '${createLink(action:"save")}';
       var exitLink = '${createLink(action:"exit")}';
       var lockLink = '${createLink(action:"lock")}';
+      var listReceiptsLink = '${createLink(action:"listReceipts")}';
+      var listSalesLink = '${createLink(action:"listSalesSite")}';
       var index = '${createLink(action:"index")}';
       var preconciliationNoselectionError = "${message(code:'preconciliation.noselection.error', default:'Seleccione un Recibo y una Venta')}";
       var preconcliationOnlyoneError = "${message(code:'preconcliation.onlyone.error', default:'Seleccione solo uno') }";
