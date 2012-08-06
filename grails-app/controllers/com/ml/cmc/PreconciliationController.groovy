@@ -9,6 +9,7 @@ class PreconciliationController extends SessionInfoController{
 
     def securityLockService
     def lotGeneratorService
+	def sessionFactory
     
     def index = {
         securityLockService.unLockFunctionality(getSessionId())
@@ -23,12 +24,6 @@ class PreconciliationController extends SessionInfoController{
     
     def lock = {
 		
-		if(params.country == null || params.card == null || params.site == null){
-			response.setStatus(500)
-			render message(code:"preconciliation.nocomboselected.error")
-			return
-		}
-        
         def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
         
         if(medio == null) {
@@ -50,38 +45,29 @@ class PreconciliationController extends SessionInfoController{
             return
         }
         
-        def state1 = State.findById(1)
-        def state2 = State.findById(2)
-        def receiptInstanceList = Receipt.withCriteria {
-            order(params.sort != null? params.sort:'receiptNumber', params.order != null?params.order:'asc')
-            if(medio != null) eq('medio', medio)
-            inList('state',[state1,state2])
-        }
+        def receiptInstanceList = getReceiptsForSales(medio, null, null)
 
-        def medios = Medio.find("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
-        def salesSiteInstanceList = SalesSite.withCriteria {
-            order(params.sort != null? params.sort:'receiptNumber', params.order != null?params.order:'asc')
-             if(medios != null) inList('medio', medios)
-             eq('state',state1)
-        }
+		def medios = Medio.find("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
+		
+		if(medios instanceof Medio){
+			medios = [medios]
+		} 
+
+		def salesSiteInstanceList = getSalesForSales(medios, null, null)
         
-        render(template: "preconciliationBody", model:[receiptInstanceList:receiptInstanceList, salesSiteInstanceList:salesSiteInstanceList])
+        render(template: "preconciliationBody", model:[receiptInstanceList:receiptInstanceList, salesSiteInstanceList:salesSiteInstanceList, filterType:"salesFilter"])
 
     }
 
-    def listReceipts = {PreconciliationCmd preconciliationCmd ->
+    def listReceipts = {
        
         def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site]);
         def state1 = State.findById(1)
         def state2 = State.findById(2)
         def receiptInstanceList = Receipt.withCriteria {
-            order(params.sort, params.order)
-             if(medio != null) eq('medio', medio)
+			if(medio != null) eq('medio', medio)
              inList('state',[state1,state2])
-             if(preconciliationCmd.receiptIds.size() >0) {
-                 List<String> longIds = (preconciliationCmd.receiptIds instanceof String)?[preconciliationCmd.receiptIds]:preconciliationCmd.receiptIds.collect{it}
-                 not{inList('id', longIds)}
-             }
+           
         }
         
         render(template:"receiptTable", model:[receiptInstanceList: receiptInstanceList])
@@ -89,8 +75,22 @@ class PreconciliationController extends SessionInfoController{
     }
     
     def listSalesSite = {PreconciliationCmd preconciliationCmd ->
+		
         def medios = Medio.find("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
-        def state = State.findById(1)
+		if(medios instanceof Medio){
+			medios = [medios]
+		}
+
+		def salesSiteInstanceList = []
+		
+		if(params.filterType == 'salesFilter') {
+			salesSiteInstanceList = getSalesForSales(medios, params.sort, params.order)
+		} else {
+			salesSiteInstanceList = getSalesForDisable(medios, params.sort, params.order)
+		}
+		
+
+/*        def state = State.findById(1)
         def salesSiteInstanceList = SalesSite.withCriteria {
             order(params.sort, params.order)
              if(medios != null) inList('medio', medios)
@@ -100,6 +100,7 @@ class PreconciliationController extends SessionInfoController{
                  not{inList('id', longIds)}
              }
         }
+*/
         
         render(template:"salesSiteTable", model:[salesSiteInstanceList: salesSiteInstanceList])
         
@@ -138,12 +139,14 @@ class PreconciliationController extends SessionInfoController{
         
         List salesSiteReceiptList = preconciliationCmd.createList()
         
-        salesSiteReceiptList.each{ item ->
-            
-            def conciliation = new Conciliation(sale:item.salesSite, receipt:item.receipt, 
-                lot:lot, medio:item.receipt?.medio, period: item.salesSite?.period)
-            
-            conciliation.save()
+		Preconciliation.withTransaction{
+	        salesSiteReceiptList.each{ item ->
+	            
+	            def conciliation = new Conciliation(sale:item.salesSite, receipt:item.receipt, 
+	                lot:lot, medio:item.receipt?.medio, period: item.salesSite?.period)
+	            
+	            conciliation.save()
+	        }
         }
         
         /* call datastage */
@@ -156,9 +159,77 @@ class PreconciliationController extends SessionInfoController{
         render job.text
          
     }
-    
- 
-    
+	
+	private getReceiptsForSales(Medio medio, String sortType, String orderType) {
+		
+		def state1 = State.findById(1)
+		
+		def registerType1 = RegisterType.findById(1);
+		def registerType2 = RegisterType.findById(2);
+		def registerType5 = RegisterType.findById(5);
+
+		def receiptInstanceList = Receipt.withCriteria {
+			order(sortType != null? sortType:'receiptNumber', orderType != null?orderType:'asc')
+			if(medio != null) eq('medio', medio)
+			eq('state',state1)
+			inList('registerType',[registerType1, registerType2, registerType5])
+		}
+		
+		return receiptInstanceList
+		
+	}
+	
+	private getSalesForSales(List medios,String sortType, String orderType ) {
+
+		def state1 = State.findById(1)
+		def state2 = State.findById(2)
+		def registerType1 = RegisterType.findById(1);
+		def registerType5 = RegisterType.findById(5);
+
+		
+		def salesSiteInstanceList = SalesSite.withCriteria {
+			order(sortType != null? sortType:'receiptNumber', orderType != null?orderType:'asc')
+			 if(medios != null) inList('medio', medios)
+			 inList('state',[state1, state2])
+			 inList('registerType',[registerType1, registerType5])
+		}
+
+		
+	}
+	
+	private getReceiptsForDisable(Medio medio, String sortType, String orderType) {
+		
+		def state1 = State.findById(1)
+		
+		def registerType3 = RegisterType.findById(3);
+
+
+		def receiptInstanceList = Receipt.withCriteria {
+			order(sortType != null? sortType:'receiptNumber', orderType != null?orderType:'asc')
+			if(medio != null) eq('medio', medio)
+			eq('state',state1)
+			eq('registerType',registerType3)
+		}
+		
+		return receiptInstanceList
+		
+	}
+	
+	private getSalesForDisable(List medios,String sortType, String orderType ) {
+
+		def state1 = State.findById(1)
+		def state2 = State.findById(2)
+		
+		def registerType3 = RegisterType.findById(3);
+		
+		def salesSiteInstanceList = SalesSite.withCriteria {
+			order(sortType != null? sortType:'receiptNumber', orderType != null?orderType:'asc')
+			 if(medios != null) inList('medio', medios)
+			 inList('state',[state1, state2])
+			 eq('registerType',registerType3)
+		}
+
+	}
 
 }
 

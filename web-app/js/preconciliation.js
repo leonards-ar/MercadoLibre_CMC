@@ -116,6 +116,69 @@ $(function() {
 			}
 		}
 	});
+	
+	$('#filterType').live('change', function(){
+		
+		var strdata = "filterType=" + $(this).val(); 
+		strdata += "&" + $('#country').attr('id') + "=" + $('#country').val();
+		strdata += "&" + $('#card').attr('id') + "=" + $('#card').val();
+		strdata += "&" + $('#site').attr('id') + "=" + $('#site').val();
+
+		
+		$('#preconciliate_table input:hidden').each(
+				function() {
+					if (strdata.length > 0) {
+						strdata += "&";
+					}
+					strdata += $(this).attr('id') + "=" + $(this).val();
+				});
+		
+        var $processing = getProcessingDialog();
+		
+		$.ajax({
+			type : 'POST',
+			url : listReceiptsLink,
+			data : strdata,
+			beforeSend: function() {
+			    $processing.dialog('open');
+			},
+			complete: function(){
+			    $processing.dialog('close');
+		    },
+			success : function(data) {
+		    	$('#receipts').fadeOut('fast',function() {
+		    		$(this).html(data).fadeIn('slow');
+		    		}); 		    	
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				showError(XMLHttpRequest, textStatus,errorThrown);
+			}
+		});
+		
+		$.ajax({
+			type : 'POST',
+			url : listSalesLink,
+			data : strdata,
+			beforeSend: function() {
+			    $processing.dialog('open');
+			},
+			complete: function(){
+			    $processing.dialog('close');
+		    },
+			success : function(data) {
+		    	$('#sales').fadeOut('fast',function() {
+		    		$(this).html(data).fadeIn('slow');
+		    		}); 		    	
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				showError(XMLHttpRequest, textStatus,errorThrown);
+			}
+		});
+		
+    	createTable('#receipt_table');
+    	createTable('#sales_table');
+		
+	});
 
 	$('.button').find('#preconciliateButton').live('click', function() {
 
@@ -266,24 +329,4 @@ $(function() {
 	
 });
 
-function updateTable(target){
-
-	if($(target).attr('id') == 'receipts') {
-		$('.receiptCol').each(function(){
-			var column = $(this).attr('name');
-			if(!this.checked){
-				$('#receipt_table').find('td:nth-child(' + column + '),th:nth-child(' + column + ')').hide();	
-			}
-		});
-	} else {
-		$('.salesSiteCol').each(function(){
-			var column = $(this).attr('name');
-			if(!this.checked){
-				$('#sales_table').find('td:nth-child(' + column + '),th:nth-child(' + column + ')').hide();	
-			}
-		});		
-		
-	}
-
-}
 

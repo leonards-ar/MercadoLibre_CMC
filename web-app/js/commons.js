@@ -60,6 +60,7 @@ function createTable(target){
     $(target).dataTable({
         "bPaginate":false,
         "bInfo":false,
+        "bDestroy":true,
         "sDom": 'rt',
         "bAutoWidth":false,
         "aoColumnDefs": [
@@ -71,6 +72,13 @@ function createTable(target){
     createCombos(target);
     
 }
+
+function refreshTable(target){
+    $(target).dataTable();
+    $(target).find('td:nth-child(1),th:nth-child(1)').hide();
+    createCombos(target);
+}
+
 
 function showHideColumn(target, column, show) {
 	if(show) {
