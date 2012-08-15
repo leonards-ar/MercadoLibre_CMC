@@ -133,22 +133,18 @@ $(function() {
 					strdata += $(this).attr('id') + "=" + $(this).val();
 				});
 		
-        var $processing = getProcessingDialog();
+		var oDiv = $('<div></div>').html('<cener><p> Procesando...' + '</p>' + $("#spinner").html() + '</cener>')
 		
 		$.ajax({
 			type : 'POST',
 			url : listReceiptsLink,
 			data : strdata,
 			beforeSend: function() {
-			    $processing.dialog('open');
+			    $('#receipts').html(oDiv);
 			},
-			complete: function(){
-			    $processing.dialog('close');
-		    },
 			success : function(data) {
-		    	$('#receipts').fadeOut('fast',function() {
-		    		$(this).html(data).fadeIn('slow');
-		    		}); 		    	
+		    	$('#receipts').html(data);
+		    	createTable($('#receipts').find('#receipt_table'));
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				showError(XMLHttpRequest, textStatus,errorThrown);
@@ -160,23 +156,16 @@ $(function() {
 			url : listSalesLink,
 			data : strdata,
 			beforeSend: function() {
-			    $processing.dialog('open');
+			    $('#sales').html(oDiv);
 			},
-			complete: function(){
-			    $processing.dialog('close');
-		    },
 			success : function(data) {
-		    	$('#sales').fadeOut('fast',function() {
-		    		$(this).html(data).fadeIn('slow');
-		    		}); 		    	
+		    	$('#sales').html(data);
+		    	createTable($('#sales').find('#sales_table'));
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				showError(XMLHttpRequest, textStatus,errorThrown);
 			}
 		});
-		
-    	createTable('#receipt_table');
-    	createTable('#sales_table');
 		
 	});
 
