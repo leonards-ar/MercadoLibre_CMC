@@ -2,6 +2,7 @@ package com.ml.cmc
 
 class Conciliated {
 
+    String id
 	SalesSite sale
 	Receipt receipt
 	Long lot

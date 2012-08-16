@@ -15,7 +15,7 @@ class Desconciliation {
     }
 	
 	static mapping = {
-		table 'F_CONCILIACIONES'
+		table 'F_TMP_DESCONCILIACIONES'
 		version false
 		
 		id column:'CD_CONCILIACION', generator:'assigned'

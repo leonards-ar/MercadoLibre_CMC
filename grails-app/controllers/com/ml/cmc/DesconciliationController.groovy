@@ -47,16 +47,15 @@ class DesconciliationController extends SessionInfoController {
              render e.message
              securityLockService.unLockFunctionality(getSessionId())
              return
-     }
+         }
 
     }
     
     def list = {
-        println(params.iColumns);
-        println(params.country);
-        
+        def responseMap = [:]
         def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
         def state4 = State.findById(4)
+        //def conciliationInstanceList = Conciliated.list();
         def conciliatedCriteria = Conciliated.createCriteria()
         def max = params.iDisplayLength?params.iDisplayLength:10
         def offset = params.iDisplayStart?params.iDisplayStart:0
@@ -64,13 +63,21 @@ class DesconciliationController extends SessionInfoController {
             order(params.sort != null? params.sort:'receipt', params.order != null?params.order:'asc')
             receipt{
                 if(medio != null) eq('medio', medio)
-                eq('transactionDate', new Date().parse('dd/MM/yyyy', params.datepicker))
+                //eq('transactionDate', new Date().parse('dd/MM/yyyy', params.datepicker))
                 eq('state',state4)
             }
             
         }
         
-        def responseMap = ['aaData':conciliationInstanceList,'sEcho':params.sEcho, 'iTotalRecords':conciliationInstanceList.totalCount,'iTotalDisplayRecords':conciliationInstanceList.size()] 
+        responseMap.aaData = []
+        conciliationInstanceList.each(){
+            responseMap.aaData << ["0":it.receipt?.registerType.toString(),"1":it.receipt?.cardNumber.toString(),"2":it.receipt?.transactionDate.toString(),
+                       "3":it.receipt?.amount.toString()]
+        }
+        
+        responseMap.sEcho = params.sEcho
+        responseMap.iTotalRecords = conciliationInstanceList.totalCount
+        responseMap.iTotalDisplayRecords = conciliationInstanceList.size()
         
         render responseMap as JSON
         
