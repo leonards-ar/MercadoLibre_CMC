@@ -45,6 +45,7 @@ $(function() {
                         "bProcessing": true,
                         "bServerSide": true,
                         "sAjaxSource": listLink,
+                        "sDom": 'rt<ip>',
                         "sServerMethod": "POST",
                         "fnServerParams": function ( aoData ) {
                             aoData.push( { "name": "country", "value": $('#country').val() } );
