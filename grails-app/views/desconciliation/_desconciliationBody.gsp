@@ -97,78 +97,81 @@
  </tr>
  <tr>
   <td>
-  <table id="conciliate_table" class="display">
-  <thead>
-  <tr>
-    <th>R<g:message code="salesSite.registerType" default="Tipo de Registro"/></th>
-    <th>R<g:message code="salesSite.cardNumber" default="Nro Tarjeta"/></th>
-    <th>R<g:message code="salesSite.transDate" default="Fecha de la Transaccion"/></th>
-    <th>R<g:message code="salesSite.amount" default="Monto"/></th>
-    <th>R<g:message code="salesSite.shareAmount" default="Monto Cuota"/></th>
-    <th>R<g:message code="salesSite.authorization" default="Autorizacion"/></th>
-    <th>R<g:message code="salesSite.shareNumber" default="Nro Cuota"/></th>
-    <th>R<g:message code="salesSite.shareQty" default="Cant. Cuotas"/></th>
-    <th>R<g:message code="salesSite.customerId" default="Cliente"/></th>
-    <th>R<g:message code="salesSite.documentId" default="Doc."/></th>
-    <th>R<g:message code="salesSite.tid" default="TID"/></th>
-    <th>R<g:message code="salesSite.nsu" default="NSU"/></th>
-    <th>R<g:message code="salesSite.documentNumber" default="DNI"/></th>
-    <th>S<g:message code="salesSite.medio" default="Medio"/></th>
-    <th>S<g:message code="salesSite.registerType" default="Tipo de Registro"/></th>
-    <th>S<g:message code="salesSite.cardNumber" default="Nro Tarjeta"/></th>
-    <th>S<g:message code="salesSite.transDate" default="Fecha de la Transaccion"/></th>
-    <th>S<g:message code="salesSite.amount" default="Monto"/></th>
-    <th>S<g:message code="salesSite.shareAmount" default="Monto Cuota"/></th>
-    <th>S<g:message code="salesSite.authorization" default="Autorizacion"/></th>
-    <th>S<g:message code="salesSite.shareNumber" default="Nro Cuota"/></th>
-    <th>S<g:message code="salesSite.shareQty" default="Cant. Cuotas"/></th>
-    <th>S<g:message code="salesSite.customerId" default="Cliente"/></th>
-    <th>S<g:message code="salesSite.documentId" default="Doc."/></th>
-    <th>S<g:message code="salesSite.tid" default="TID"/></th>
-    <th>S<g:message code="salesSite.nsu" default="NSU"/></th>
-    <th>S<g:message code="salesSite.documentNumber" default="DNI"/></th>
-  </tr>
-  <tr>
-    <th>R<g:message code="salesSite.registerType" default="Tipo de Registro"/></th>
-    <th>R<g:message code="salesSite.cardNumber" default="Nro Tarjeta"/></th>
-    <th>R<g:message code="salesSite.transDate" default="Fecha de la Transaccion"/></th>
-    <th>R<g:message code="salesSite.amount" default="Monto"/></th>
-    <th>R<g:message code="salesSite.shareAmount" default="Monto Cuota"/></th>
-    <th>R<g:message code="salesSite.authorization" default="Autorizacion"/></th>
-    <th>R<g:message code="salesSite.shareNumber" default="Nro Cuota"/></th>
-    <th>R<g:message code="salesSite.shareQty" default="Cant. Cuotas"/></th>
-    <th>R<g:message code="salesSite.customerId" default="Cliente"/></th>
-    <th>R<g:message code="salesSite.documentId" default="Doc."/></th>
-    <th>R<g:message code="salesSite.tid" default="TID"/></th>
-    <th>R<g:message code="salesSite.nsu" default="NSU"/></th>
-    <th>R<g:message code="salesSite.documentNumber" default="DNI"/></th>
-    <th>S<g:message code="salesSite.medio" default="Medio"/></th>
-    <th>S<g:message code="salesSite.registerType" default="Tipo de Registro"/></th>
-    <th>S<g:message code="salesSite.cardNumber" default="Nro Tarjeta"/></th>
-    <th>S<g:message code="salesSite.transDate" default="Fecha de la Transaccion"/></th>
-    <th>S<g:message code="salesSite.amount" default="Monto"/></th>
-    <th>S<g:message code="salesSite.shareAmount" default="Monto Cuota"/></th>
-    <th>S<g:message code="salesSite.authorization" default="Autorizacion"/></th>
-    <th>S<g:message code="salesSite.shareNumber" default="Nro Cuota"/></th>
-    <th>S<g:message code="salesSite.shareQty" default="Cant. Cuotas"/></th>
-    <th>S<g:message code="salesSite.customerId" default="Cliente"/></th>
-    <th>S<g:message code="salesSite.documentId" default="Doc."/></th>
-    <th>S<g:message code="salesSite.tid" default="TID"/></th>
-    <th>S<g:message code="salesSite.nsu" default="NSU"/></th>
-    <th>S<g:message code="salesSite.documentNumber" default="DNI"/></th>
-  </tr>
-  </thead>
-    <tbody>
-    <tr>
-      <td colspan="27" class="dataTables_empty">Loading data from server</td>
-    </tr>
-      </tbody>
-  </table>    
+   <div style="width:100%;width:1200px;overflow:auto;border:1px solid #ccc;position:relative">
+	  <table id="conciliate_table" class="display">
+	  <thead>
+	  <tr>
+	    <th>R<g:message code="salesSite.registerType" default="Tipo de Registro"/></th>
+	    <th>R<g:message code="salesSite.cardNumber" default="Nro Tarjeta"/></th>
+	    <th>R<g:message code="salesSite.transDate" default="Fecha de la Transaccion"/></th>
+	    <th>R<g:message code="salesSite.amount" default="Monto"/></th>
+	    <th>R<g:message code="salesSite.shareAmount" default="Monto Cuota"/></th>
+	    <th>R<g:message code="salesSite.authorization" default="Autorizacion"/></th>
+	    <th>R<g:message code="salesSite.shareNumber" default="Nro Cuota"/></th>
+	    <th>R<g:message code="salesSite.shareQty" default="Cant. Cuotas"/></th>
+	    <th>R<g:message code="salesSite.customerId" default="Cliente"/></th>
+	    <th>R<g:message code="salesSite.documentId" default="Doc."/></th>
+	    <th>R<g:message code="salesSite.tid" default="TID"/></th>
+	    <th>R<g:message code="salesSite.nsu" default="NSU"/></th>
+	    <th>R<g:message code="salesSite.documentNumber" default="DNI"/></th>
+	    <th>S<g:message code="salesSite.medio" default="Medio"/></th>
+	    <th>S<g:message code="salesSite.registerType" default="Tipo de Registro"/></th>
+	    <th>S<g:message code="salesSite.cardNumber" default="Nro Tarjeta"/></th>
+	    <th>S<g:message code="salesSite.transDate" default="Fecha de la Transaccion"/></th>
+	    <th>S<g:message code="salesSite.amount" default="Monto"/></th>
+	    <th>S<g:message code="salesSite.shareAmount" default="Monto Cuota"/></th>
+	    <th>S<g:message code="salesSite.authorization" default="Autorizacion"/></th>
+	    <th>S<g:message code="salesSite.shareNumber" default="Nro Cuota"/></th>
+	    <th>S<g:message code="salesSite.shareQty" default="Cant. Cuotas"/></th>
+	    <th>S<g:message code="salesSite.customerId" default="Cliente"/></th>
+	    <th>S<g:message code="salesSite.documentId" default="Doc."/></th>
+	    <th>S<g:message code="salesSite.tid" default="TID"/></th>
+	    <th>S<g:message code="salesSite.nsu" default="NSU"/></th>
+	    <th>S<g:message code="salesSite.documentNumber" default="DNI"/></th>
+	  </tr>
+	  <tr>
+	    <th>R<g:message code="salesSite.registerType" default="Tipo de Registro"/></th>
+	    <th>R<g:message code="salesSite.cardNumber" default="Nro Tarjeta"/></th>
+	    <th>R<g:message code="salesSite.transDate" default="Fecha de la Transaccion"/></th>
+	    <th>R<g:message code="salesSite.amount" default="Monto"/></th>
+	    <th>R<g:message code="salesSite.shareAmount" default="Monto Cuota"/></th>
+	    <th>R<g:message code="salesSite.authorization" default="Autorizacion"/></th>
+	    <th>R<g:message code="salesSite.shareNumber" default="Nro Cuota"/></th>
+	    <th>R<g:message code="salesSite.shareQty" default="Cant. Cuotas"/></th>
+	    <th>R<g:message code="salesSite.customerId" default="Cliente"/></th>
+	    <th>R<g:message code="salesSite.documentId" default="Doc."/></th>
+	    <th>R<g:message code="salesSite.tid" default="TID"/></th>
+	    <th>R<g:message code="salesSite.nsu" default="NSU"/></th>
+	    <th>R<g:message code="salesSite.documentNumber" default="DNI"/></th>
+	    <th>S<g:message code="salesSite.medio" default="Medio"/></th>
+	    <th>S<g:message code="salesSite.registerType" default="Tipo de Registro"/></th>
+	    <th>S<g:message code="salesSite.cardNumber" default="Nro Tarjeta"/></th>
+	    <th>S<g:message code="salesSite.transDate" default="Fecha de la Transaccion"/></th>
+	    <th>S<g:message code="salesSite.amount" default="Monto"/></th>
+	    <th>S<g:message code="salesSite.shareAmount" default="Monto Cuota"/></th>
+	    <th>S<g:message code="salesSite.authorization" default="Autorizacion"/></th>
+	    <th>S<g:message code="salesSite.shareNumber" default="Nro Cuota"/></th>
+	    <th>S<g:message code="salesSite.shareQty" default="Cant. Cuotas"/></th>
+	    <th>S<g:message code="salesSite.customerId" default="Cliente"/></th>
+	    <th>S<g:message code="salesSite.documentId" default="Doc."/></th>
+	    <th>S<g:message code="salesSite.tid" default="TID"/></th>
+	    <th>S<g:message code="salesSite.nsu" default="NSU"/></th>
+	    <th>S<g:message code="salesSite.documentNumber" default="DNI"/></th>
+	  </tr>
+	  </thead>
+	    <tbody>
+	    <tr>
+	      <td colspan="27" class="dataTables_empty">Loading data from server</td>
+	    </tr>
+	      </tbody>
+	  </table>
+   </div>    
   </td>
+
  </tr>       
 </table>
 <div class="buttons">
-  <span class="button"><input type="button" class="save" id="conciliateButton" value="${message(code:'save', default:'Grabar')}"/></span>
+  <span class="button"><input type="button" class="save" id="desconciliateButton" value="${message(code:'save', default:'Grabar')}"/></span>
 </div>    
  
 </div>

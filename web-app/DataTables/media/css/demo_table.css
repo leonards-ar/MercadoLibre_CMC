@@ -569,6 +569,9 @@ table.display tr.gradeU {
 table.display tr.yellow {
 	background: #FCFC06;
 }
+table.display tr.red {
+  background: #CC0033;
+}
 
 div.box {
 	height: 100px;

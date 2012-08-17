@@ -69,17 +69,62 @@ class DesconciliationController extends SessionInfoController {
             
         }
         
-        responseMap.aaData = []
-        conciliationInstanceList.each(){
-            responseMap.aaData << ["0":it.receipt?.registerType.toString(),"1":it.receipt?.cardNumber.toString(),"2":it.receipt?.transactionDate.toString(),
-                       "3":it.receipt?.amount.toString()]
-        }
+        responseMap.aaData = serializeData(conciliationInstanceList)
         
         responseMap.sEcho = params.sEcho
         responseMap.iTotalRecords = conciliationInstanceList.totalCount
-        responseMap.iTotalDisplayRecords = conciliationInstanceList.size()
+        responseMap.iTotalDisplayRecords = conciliationInstanceList.totalCount
         
         render responseMap as JSON
         
+    }
+    
+    def save = {
+
+        def conciliatedIds = params.ids.split(",")
+        
+        def desconciliations = []
+        
+        conciliatedIds        
+        render "la pucha"
+        
+    }
+    
+    private serializeData(conciliationInstanceList) {
+        
+        def data = []
+        
+        conciliationInstanceList.each(){
+            data << ["DT_RowId":it.id.toString(),
+                     "0":it.receipt?.registerType.toString(),
+                     "1":it.receipt?.cardNumber.toString(),
+                     "2":it.receipt?.transactionDate.toString(),
+                     "3":it.receipt?.amount.toString(),
+                     "4":it.receipt?.shareAmount.toString(),
+                     "5":it.receipt?.authorization.toString(),
+                     "6":it.receipt?.shareNumber.toString(),
+                     "7":it.receipt?.shareQty.toString(),
+                     "8":it.receipt?.customerId.toString(),
+                     "9":it.receipt?.documentId.toString(),
+                     "10":it.receipt?.tid.toString(),
+                     "11":it.receipt?.nsu.toString(),
+                     "12":it.receipt?.documentNumber.toString(),
+                     "13":it.sale?.medio?.id.toString(),
+                     "14":it.sale?.registerType.toString(),
+                     "15":it.sale?.cardNumber.toString(),
+                     "16":it.sale?.amount.toString(),
+                     "17":it.sale?.shareAmount.toString(),
+                     "18":it.sale?.authorization.toString(),
+                     "19":it.sale?.shareNumber.toString(),
+                     "20":it.sale?.shareQty.toString(),
+                     "21":it.sale?.customerId.toString(),
+                     "22":it.sale?.documentId.toString(),
+                     "23":it.sale?.tid.toString(),
+                     "24":it.sale?.nsu.toString(),
+                     "25":it.sale?.documentNumber.toString(),
+                     "26":it.sale?.transactionDate.toString()]
+        }
+        
+        return data
     }
 }

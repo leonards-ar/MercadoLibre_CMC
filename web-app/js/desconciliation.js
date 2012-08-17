@@ -1,4 +1,6 @@
 $(function() {
+    var aSelected = [];
+    
     $('#country').chainSelect('#card', cardLink, {
         nonSelectedValue : '---'
     });
@@ -42,18 +44,29 @@ $(function() {
                     $('#myBody').html(data);
                     
                     $('#conciliate_table').dataTable({
+                        "bPaginate": true,
                         "bProcessing": true,
                         "bServerSide": true,
                         "sAjaxSource": listLink,
-                        "sDom": 'rt<ip>',
+                        
                         "sServerMethod": "POST",
                         "fnServerParams": function ( aoData ) {
                             aoData.push( { "name": "country", "value": $('#country').val() } );
                             aoData.push( { "name": "card", "value": $('#card').val() } );
                             aoData.push( { "name": "site", "value": $('#site').val() } );
                             aoData.push( { "name": "datepicker", "value": $('#datepicker').val() } );
+                        },
+                        "fnInitComplete": function(oSettings, json) {
+                            createCombos('this');
+                        },
+                        "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                            if ( jQuery.inArray(aData.DT_RowId, aSelected) !== -1 ) {
+                                $(nRow).addClass('row_selected');
+                            }
                         }
                      });
+                    
+                    createCombos('#conciliate_table');
 
                     
                 },
@@ -85,6 +98,10 @@ $(function() {
 
             showHideColumn('#conciliate_table', $(this).attr('name'), this.checked);
             
+            if(!this.checked){
+                $('#desconciliationColAll').attr('checked', false);
+            }
+            
         }); 
         
         $('#desconciliationColAll').live('click',function(){
@@ -96,6 +113,69 @@ $(function() {
             });
             
         });
-    
+        
+        $('#conciliate_table tbody tr').live('click',function() {
+            var id = this.id;
+            var index = jQuery.inArray(id, aSelected);
+            
+            if ( index === -1 ) {
+                aSelected.push( id );
+            } else {
+                aSelected.splice( index, 1 );
+            }
+            
+            $(this).toggleClass('row_selected');
+
+
+            
+        });
+        
+        $('#desconciliateButton').live('click', function() {
+            
+            var strdata = "";
+            
+            if(aSelected.length == 0) {
+                var $dialog = getDialog("No hay elementos para desconciliar");
+                $dialog.dialog('open');
+                
+                return;
+            }
+            
+            $.each(aSelected, function(index, value){
+                if(strdata.length > 0) strdata +=",";
+                
+                strdata+= value;
+            });
+            
+            var $processing = getProcessingDialog();
+            
+            $.ajax({
+                type : 'POST',
+                url : saveLink,
+                data : "ids=" + strdata,
+                beforeSend: function() {
+                    $processing.dialog('open');
+                },
+                complete: function(){
+                    $processing.dialog('close');
+                },
+                success : function(data) {
+                    var $dialog = getDialog(data);
+                    $dialog.dialog('option','title','');
+                    $dialog.dialog( "option", "buttons", { 
+                        "Ok": function() { 
+                            $(this).dialog("close");
+                            $(location).attr('href',exitLink);
+                        } 
+                    });
+                    $dialog.dialog('open');
+                },
+                error : function(XMLHttpRequest, textStatus, errorThrown) {
+                    showError(XMLHttpRequest, textStatus,errorThrown);
+                }
+            });
+
+        });     
+        
     
 });
