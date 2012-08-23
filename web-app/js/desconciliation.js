@@ -56,24 +56,32 @@ $(function() {
                             aoData.push( { "name": "site", "value": $('#site').val() } );
                             aoData.push( { "name": "datepicker", "value": $('#datepicker').val() } );
                         },
-                        "fnInitComplete": function(oSettings, json) {
-                            createCombos('this');
-                        },
+                        //"fnInitComplete": function(oSettings, json) {
+                        //    createCombos('this');
+                        //},
                         "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
                             if ( jQuery.inArray(aData.DT_RowId, aSelected) !== -1 ) {
                                 $(nRow).addClass('row_selected');
                             }
-                        }
+                        },
+                        "fnDrawCallback": function (oSettings){
+                            //show hide selected columns
+                            $('.desconciliationCol').each(function() {
+                                showHideColumn('#conciliate_table', $(this).attr('name'), this.checked);
+                            });                            
+                            
+                        },
                      });
                     
-                    createCombos('#conciliate_table');
-
+                    //createCombos('#conciliate_table');
                     
                 },
                 error : function(XMLHttpRequest, textStatus, errorThrown) {
                     showError(XMLHttpRequest, textStatus,errorThrown);
                 }
-            });     
+            });
+            
+
         } else {
             //Redirect to index action
             $(location).attr('href',index);

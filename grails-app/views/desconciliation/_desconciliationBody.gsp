@@ -100,7 +100,7 @@
    <div style="width:100%;width:1200px;overflow:auto;border:1px solid #ccc;position:relative">
 	  <table id="conciliate_table" class="display">
 	  <thead>
-	  <tr>
+	  <!-- tr>
 	    <th>R<g:message code="salesSite.registerType" default="Tipo de Registro"/></th>
 	    <th>R<g:message code="salesSite.cardNumber" default="Nro Tarjeta"/></th>
 	    <th>R<g:message code="salesSite.transDate" default="Fecha de la Transaccion"/></th>
@@ -128,7 +128,7 @@
 	    <th>S<g:message code="salesSite.tid" default="TID"/></th>
 	    <th>S<g:message code="salesSite.nsu" default="NSU"/></th>
 	    <th>S<g:message code="salesSite.documentNumber" default="DNI"/></th>
-	  </tr>
+	  </tr-->
 	  <tr>
 	    <th>R<g:message code="salesSite.registerType" default="Tipo de Registro"/></th>
 	    <th>R<g:message code="salesSite.cardNumber" default="Nro Tarjeta"/></th>
