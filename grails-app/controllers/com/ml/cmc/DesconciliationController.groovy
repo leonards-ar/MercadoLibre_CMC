@@ -12,6 +12,8 @@ class DesconciliationController extends SessionInfoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+    def colNames = ["registerType","cardNumber","transactionDate","amount","shareAmount","authorization","shareNumber","shareQty","customerId","documentId","tid","nsu","documentNumber",
+                "registerType","cardNumber","amount","shareAmount","authorization","shareNumber","shareQty","customerId","documentId","tid","nsu","documentNumber","transactionDate"]
     def index = {
         securityLockService.unLockFunctionality(getSessionId())
         def countryList = Medio.withCriteria{
@@ -59,12 +61,25 @@ class DesconciliationController extends SessionInfoController {
         def conciliatedCriteria = Conciliated.createCriteria()
         def max = params.iDisplayLength?params.iDisplayLength:10
         def offset = params.iDisplayStart?params.iDisplayStart:0
+
+        def colIdx = Integer.parseInt(params.iSortCol_0)
+        def colName = colNames[colIdx]
+
         def conciliationInstanceList = conciliatedCriteria.list(max:max, offset:offset) {
-            order(params.sort != null? params.sort:'receipt', params.order != null?params.order:'asc')
+            
             receipt{
                 if(medio != null) eq('medio', medio)
                 //eq('transactionDate', new Date().parse('dd/MM/yyyy', params.datepicker))
                 eq('state',state4)
+                if(colIdx < 13)
+                order(colName, params.sSortDir_0)
+            }
+            
+            if(colIdx > 12) {
+                
+                sale {
+                    order(colName, params.sSortDir_0)
+                }
             }
             
         }
@@ -142,17 +157,18 @@ class DesconciliationController extends SessionInfoController {
                      "13":it.sale?.medio?.id.toString(),
                      "14":it.sale?.registerType.toString(),
                      "15":it.sale?.cardNumber.toString(),
-                     "16":it.sale?.amount.toString(),
-                     "17":it.sale?.shareAmount.toString(),
-                     "18":it.sale?.authorization.toString(),
-                     "19":it.sale?.shareNumber.toString(),
-                     "20":it.sale?.shareQty.toString(),
-                     "21":it.sale?.customerId.toString(),
-                     "22":it.sale?.documentId.toString(),
-                     "23":it.sale?.tid.toString(),
-                     "24":it.sale?.nsu.toString(),
-                     "25":it.sale?.documentNumber.toString(),
-                     "26":it.sale?.transactionDate.toString()]
+                     "16":it.sale?.transactionDate.toString(),
+                     "17":it.sale?.amount.toString(),
+                     "18":it.sale?.shareAmount.toString(),
+                     "19":it.sale?.authorization.toString(),
+                     "20":it.sale?.shareNumber.toString(),
+                     "21":it.sale?.shareQty.toString(),
+                     "22":it.sale?.customerId.toString(),
+                     "23":it.sale?.documentId.toString(),
+                     "24":it.sale?.tid.toString(),
+                     "25":it.sale?.nsu.toString(),
+                     "26":it.sale?.documentNumber.toString()]
+         
         }
         
         return data
