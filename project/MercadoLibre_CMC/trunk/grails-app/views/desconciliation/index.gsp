@@ -52,7 +52,7 @@
           <g:select name="site" id="site" noSelection="['':'']" />
           </td>
           <td>
-            <div><g:message code="desconciliation.date" default="Site"/> </div>
+            <div><g:message code="desconciliation.transDate" default="Fecha de Transaccion"/> </div>
           <g:textField name="datepicker" id="datepicker" value="${ datepicker }" size="10" />
           </td>
           <td>

@@ -1,6 +1,6 @@
 package com.ml.cmc
 
-class Desconciliation {
+class Desconciliation implements Serializable{
 
  	SalesSite sale
 	Receipt receipt
@@ -15,10 +15,11 @@ class Desconciliation {
     }
 	
 	static mapping = {
-		table 'F_TMP_DESCONCILIACIONES'
+		table ' F_ROLLBACK_DESCONCILIAR'
 		version false
 		
-		id column:'CD_CONCILIACION', generator:'assigned'
+		id composite:['conciliated']
+        conciliated column: 'CD_CONCILIACION'
 		sale column: 'CD_VENTA_CUOTA'
 		receipt column: 'CD_RECIBO'
 		lot column: 'LOTE_CONCILIACION'

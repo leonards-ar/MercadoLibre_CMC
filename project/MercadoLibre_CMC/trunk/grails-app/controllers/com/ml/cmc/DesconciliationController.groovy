@@ -85,8 +85,38 @@ class DesconciliationController extends SessionInfoController {
         
         def desconciliations = []
         
-        conciliatedIds        
-        render "la pucha"
+        Desconciliation.withTransaction {
+            
+            conciliatedIds.each {id ->
+                
+                def conciliated = Conciliated.findById(id)
+                
+                def desconciliation = new Desconciliation(sale:conciliated?.sale,
+                    receipt:conciliated?.receipt,
+                    lot:conciliated?.lot,
+                    conciliated: conciliated,
+                    username:getUsername(),
+                    medio: conciliated.medio,
+                    period: conciliated.period
+                )
+                
+                desconciliation.save();
+                
+            }
+            
+        }
+        
+        sessionFactory.getCurrentSession().clear();
+        
+//        def job = ["/datastage/ConcManual.sh", username, lot].execute()
+//        job.waitFor()
+//        if(job.exitValue()){
+//            response.setStatus(500)
+//            render job.err.text
+//        }
+//        render job.text
+
+        render "job needs to be defined"
         
     }
     
