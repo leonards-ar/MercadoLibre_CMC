@@ -1,4 +1,7 @@
 $(function() {
+    var aReceiptSelected = [];
+    var aSalesSelected = [];
+    
 	$('#country').chainSelect('#card', cardLink, {
 		nonSelectedValue : '---'
 	});
@@ -61,16 +64,53 @@ $(function() {
 			    	$('#site').attr("disabled", true);
 			    	$('#lock').attr("value","Unlock");
 			    	$('#tabs').html(data);
-			    	$('#tabs').tabs({
-			    		ajaxOptions: {
-			    		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			    			showError(XMLHttpRequest, textStatus, errorThrown);
-			    			},
-			    			data: $('#country').attr('id') + "=" + $('#country').val() +
-			    			      "&" + $('#card').attr('id') + "=" + $('#card').val() +
-			    			      "&" + $('#site').attr('id') + "=" + $('#site').val()
-			    		}		
-			    	});			    	
+			    	$('#tabs').tabs();
+			    	
+                    $('#receipt_table').dataTable({
+                        "bPaginate": true,
+                        "bProcessing": true,
+                        "bServerSide": true,
+                        "sAjaxSource": listReceiptLink,
+                        
+                        "sServerMethod": "POST",
+                        "fnServerParams": function ( aoData ) {
+                            aoData.push( { "name": "country", "value": $('#country').val() } );
+                            aoData.push( { "name": "card", "value": $('#card').val() } );
+                            aoData.push( { "name": "site", "value": $('#site').val() } );
+                        },
+                        //"fnInitComplete": function(oSettings, json) {
+                        //    createCombos('this');
+                        //},
+                        "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                            if ( jQuery.inArray(aData.DT_RowId, aReceiptSelected) !== -1 ) {
+                                $(nRow).addClass('row_selected');
+                            }
+                        },
+                     });
+                    
+                    $('#sales_table').dataTable({
+                        "bPaginate": true,
+                        "bProcessing": true,
+                        "bServerSide": true,
+                        "sAjaxSource": listSalesLink,
+                        "sServerMethod": "POST",
+                        "fnServerParams": function ( aoData ) {
+                            aoData.push( { "name": "country", "value": $('#country').val() } );
+                            aoData.push( { "name": "card", "value": $('#card').val() } );
+                            aoData.push( { "name": "site", "value": $('#site').val() } );
+                        },
+                        //"fnInitComplete": function(oSettings, json) {
+                        //    createCombos('this');
+                        //},
+                        "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+                            if ( jQuery.inArray(aData.DT_RowId, aSalesSelected) !== -1 ) {
+                                $(nRow).addClass('row_selected');
+                            }
+                        },
+
+                     });
+                    
+			    	
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					showError(XMLHttpRequest, textStatus,errorThrown);
@@ -81,15 +121,31 @@ $(function() {
 		}
 	});
 	
-	$('.receipt_check').live('click',function() {
-		alert('si man estoy aca');
-		$(this).parent().parent().toggleClass('yellow');
+    $('#receipt_table tbody tr').live('click',function() {
+        var id = this.id;
+        var index = jQuery.inArray(id, aReceiptSelected);
+        
+        if ( index === -1 ) {
+            aReceiptSelected.push( id );
+        } else {
+            aReceiptSelected.splice( index, 1 );
+        }
+        
+        $(this).toggleClass('row_selected');
     });
 	
-	$('.salesSite_check').live('click', function() {
-		$(this).parent().parent().toggleClass('yellow');			
-		
-	});	
+    $('#sales_table tbody tr').live('click',function() {
+        var id = this.id;
+        var index = jQuery.inArray(id, aSalesSelected);
+        
+        if ( index === -1 ) {
+            aSalesSelected.push( id );
+        } else {
+            aSalesSelected.splice( index, 1 );
+        }
+        
+        $(this).toggleClass('row_selected');
+    });
 	
 });
 

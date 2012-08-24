@@ -1,10 +1,14 @@
 package com.ml.cmc
 
 import com.ml.cmc.constants.Constant 
-import com.ml.cmc.exception.SecLockException 
+import com.ml.cmc.exception.SecLockException
+import grails.converters.JSON
 
 class CompensationController extends SessionInfoController {
 
+    def colNames = ["registerType","cardNumber","transactionDate","amount","shareAmount","authorization",
+                    "shareNumber","shareQty","customerId","documentId","tid","nsu","documentNumber"]
+    
     def index = {
 		securityLockService.unLockFunctionality(getSessionId())
 		def countryList = Medio.withCriteria{
@@ -44,40 +48,115 @@ class CompensationController extends SessionInfoController {
 			return
 		}
 		
-
-		
-		
-		
 		render(template: "compensationBody")
 
 	}
 	
 	def listReceipts = {
+        def responseMap = [:]
+        
 		def state1 = State.findById(1);
 		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
 
-				def receiptInstanceList = Receipt.withCriteria {
-			order(params.sort != null? params.sort:'receiptNumber', params.order != null?params.order:'asc')
+        def receiptCriteria = Receipt.createCriteria()
+        def max = params.iDisplayLength?params.iDisplayLength:10
+        def offset = params.iDisplayStart?params.iDisplayStart:0
+
+        def colIdx = params.iSortCol? Integer.parseInt(params.iSortCol_0):0
+        def colName = colNames[colIdx]
+        def sortDir = params.sSortDir_0? params.sSortDir_0:'asc'
+        
+		def receiptInstanceList = receiptCriteria.list(max:max, offset:offset) {
+			order(colName, sortDir)
 			eq('medio', medio)
 			eq('state',state1)
 		}
 		
-		render(template:"receiptTable", model:[receiptInstanceList: receiptInstanceList])
-
+        responseMap.aaData = serializeReceiptData(receiptInstanceList)
+        
+        responseMap.sEcho = params.sEcho
+        responseMap.iTotalRecords = receiptInstanceList.totalCount
+        responseMap.iTotalDisplayRecords = receiptInstanceList.totalCount
+        
+        render responseMap as JSON
 	}
 	
 	def listSalesSite = {
+        def responseMap = [:]
+        
 		def state1 = State.findById(1);
 		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
 		
-		def salesSiteInstanceList = SalesSite.withCriteria {
-			order(params.sort != null? params.sort:'receiptNumber', params.order != null?params.order:'asc')
+        def salesCriteria = SalesSite.createCriteria()
+
+        def max = params.iDisplayLength?params.iDisplayLength:10
+        def offset = params.iDisplayStart?params.iDisplayStart:0
+
+        def colIdx = params.iSortCol? Integer.parseInt(params.iSortCol_0):0
+        def colName = colNames[colIdx]
+        def sortDir = params.sSortDir_0? params.sSortDir_0:'asc'
+		def salesSiteInstanceList = salesCriteria.list(max:max, offset:offset) {
+			order(colName, sortDir)
 			 eq('medio', medio)
 			 eq('state',state1)
 		}
 		
-		render(template:"salesSiteTable", model:[salesSiteInstanceList: salesSiteInstanceList])
-
+        responseMap.aaData = serializeSalesData(salesSiteInstanceList)
+        
+        responseMap.sEcho = params.sEcho
+        responseMap.iTotalRecords = salesSiteInstanceList.totalCount
+        responseMap.iTotalDisplayRecords = salesSiteInstanceList.totalCount
+        
+        render responseMap as JSON
+        
 	}
+    
+    private serializeReceiptData(instanceList) {
+        
+        def data = []
+        
+        instanceList.each(){
+            data << ["DT_RowId":it.id.toString(),
+                     "0":it?.registerType.toString(),
+                     "1":it?.cardNumber.toString(),
+                     "2":formatDate(date:it?.transactionDate, format:"dd-mm-yyyy"),
+                     "3":it?.amount.toString(),
+                     "4":it?.shareAmount.toString(),
+                     "5":it?.authorization.toString(),
+                     "6":it?.shareNumber.toString(),
+                     "7":it?.shareQty.toString(),
+                     "8":it?.tid.toString(),
+                     "9":it?.nsu.toString(),
+                     "10":it?.documentNumber.toString()]
+        }
+        
+        return data
+    }
+    
+    private serializeSalesData(instanceList) {
+        
+        def data = []
+        
+        instanceList.each(){
+            data << ["DT_RowId":it.id.toString(),
+                     "0":it?.medio?.id.toString(),
+                     "1":it?.registerType.toString(),
+                     "2":it?.cardNumber.toString(),
+                     "3":formatDate(date:it?.transactionDate,format:"dd-mm-yyyy"),
+                     "4":it?.amount.toString(),
+                     "5":it?.shareAmount.toString(),
+                     "6":it?.authorization.toString(),
+                     "7":it?.shareNumber.toString(),
+                     "8":it?.shareQty.toString(),
+                     "9":it?.customerId.toString(),
+                     "10":it?.documentId.toString(),
+                     "11":it?.tid.toString(),
+                     "12":it?.nsu.toString(),
+                     "13":it?.documentNumber.toString()]
+        }
+        
+        return data
+    }
+
 		 
 }

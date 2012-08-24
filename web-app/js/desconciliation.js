@@ -73,8 +73,6 @@ $(function() {
                         },
                      });
                     
-                    //createCombos('#conciliate_table');
-                    
                 },
                 error : function(XMLHttpRequest, textStatus, errorThrown) {
                     showError(XMLHttpRequest, textStatus,errorThrown);
@@ -133,9 +131,6 @@ $(function() {
             }
             
             $(this).toggleClass('row_selected');
-
-
-            
         });
         
         $('#desconciliateButton').live('click', function() {
