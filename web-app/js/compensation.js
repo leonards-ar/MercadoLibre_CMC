@@ -2,6 +2,9 @@ $(function() {
     var aReceiptSelected = [];
     var aSalesSelected = [];
     
+    var receiptBalance;
+    var salesBalance;
+    
 	$('#country').chainSelect('#card', cardLink, {
 		nonSelectedValue : '---'
 	});
@@ -41,6 +44,9 @@ $(function() {
 	
 	$('#lock').click(function(){
 		
+	    receiptBalance = 0;
+	    salesBalance = 0;
+	    
 		if($(this).attr('value') == 'Lock'){
 			var strdata = $('#country').attr('id') + "=" + $('#country').val();
 			strdata += "&" + $('#card').attr('id') + "=" + $('#card').val();
@@ -67,6 +73,7 @@ $(function() {
 			    	$('#tabs').tabs();
 			    	
                     $('#receipt_table').dataTable({
+                        "sDom":'l<"receiptBalance">rtip',
                         "bPaginate": true,
                         "bProcessing": true,
                         "bServerSide": true,
@@ -88,7 +95,10 @@ $(function() {
                         },
                      });
                     
+                    $("div.receiptBalance").html('<p id="receiptBalance" align="right"><b>Balance:' + receiptBalance + '</b></p>');
+                    
                     $('#sales_table').dataTable({
+                        "sDom":'l<"salesBalance">rtip',
                         "bPaginate": true,
                         "bProcessing": true,
                         "bServerSide": true,
@@ -109,7 +119,7 @@ $(function() {
                         },
 
                      });
-                    
+                    $("div.salesBalance").html('<p id="salesBalance" align="right"><b>Balance:' + salesBalance + '</b></p>');
 			    	
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -125,10 +135,15 @@ $(function() {
         var id = this.id;
         var index = jQuery.inArray(id, aReceiptSelected);
         
-        if ( index === -1 ) {
+        if ( index == -1 ) {
             aReceiptSelected.push( id );
+            receiptBalance=10;
+            $("div.receiptBalance").html('<p id="receiptBalance" align="right"><b>Balance:' + receiptBalance + '</b></p>');
+            
         } else {
             aReceiptSelected.splice( index, 1 );
+            receiptBalance=0;
+            $("div.receiptBalance").html('<p id="receiptBalance" align="right"><b>Balance:' + receiptBalance + '</b></p>');
         }
         
         $(this).toggleClass('row_selected');
@@ -138,8 +153,9 @@ $(function() {
         var id = this.id;
         var index = jQuery.inArray(id, aSalesSelected);
         
-        if ( index === -1 ) {
+        if ( index == -1 ) {
             aSalesSelected.push( id );
+            
         } else {
             aSalesSelected.splice( index, 1 );
         }

@@ -119,7 +119,7 @@ class CompensationController extends SessionInfoController {
             data << ["DT_RowId":it.id.toString(),
                      "0":it?.registerType.toString(),
                      "1":it?.cardNumber.toString(),
-                     "2":formatDate(date:it?.transactionDate, format:"dd-mm-yyyy"),
+                     "2":formatDate(date:it?.transactionDate, format:"dd-MM-yyyy"),
                      "3":it?.amount.toString(),
                      "4":it?.shareAmount.toString(),
                      "5":it?.authorization.toString(),
@@ -139,20 +139,17 @@ class CompensationController extends SessionInfoController {
         
         instanceList.each(){
             data << ["DT_RowId":it.id.toString(),
-                     "0":it?.medio?.id.toString(),
-                     "1":it?.registerType.toString(),
-                     "2":it?.cardNumber.toString(),
-                     "3":formatDate(date:it?.transactionDate,format:"dd-mm-yyyy"),
-                     "4":it?.amount.toString(),
-                     "5":it?.shareAmount.toString(),
-                     "6":it?.authorization.toString(),
-                     "7":it?.shareNumber.toString(),
-                     "8":it?.shareQty.toString(),
-                     "9":it?.customerId.toString(),
-                     "10":it?.documentId.toString(),
-                     "11":it?.tid.toString(),
-                     "12":it?.nsu.toString(),
-                     "13":it?.documentNumber.toString()]
+                     "0":it?.registerType.toString(),
+                     "1":it?.cardNumber.toString(),
+                     "2":formatDate(date:it?.transactionDate,format:"dd-MM-yyyy"),
+                     "3":it?.amount.toString(),
+                     "4":it?.shareAmount.toString(),
+                     "5":it?.authorization.toString(),
+                     "6":it?.shareNumber.toString(),
+                     "7":it?.shareQty.toString(),
+                     "8":it?.tid.toString(),
+                     "9":it?.nsu.toString(),
+                     "10":it?.documentNumber.toString()]
         }
         
         return data
