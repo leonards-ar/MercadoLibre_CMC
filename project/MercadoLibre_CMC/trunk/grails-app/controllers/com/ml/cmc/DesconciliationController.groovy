@@ -55,6 +55,7 @@ class DesconciliationController extends SessionInfoController {
     
     def list = {
         def responseMap = [:]
+        
         def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
         def state4 = State.findById(4)
         //def conciliationInstanceList = Conciliated.list();
