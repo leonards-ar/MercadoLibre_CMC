@@ -135,17 +135,17 @@ $(function() {
         var id = this.id;
         var index = jQuery.inArray(id, aReceiptSelected);
         
+        var monto = parseFloat($(this).find('td:eq(3)').text());
+        
         if ( index == -1 ) {
             aReceiptSelected.push( id );
-            receiptBalance=10;
-            $("div.receiptBalance").html('<p id="receiptBalance" align="right"><b>Balance:' + receiptBalance + '</b></p>');
-            
+            receiptBalance+= isNaN(monto)? 0 : monto;
         } else {
             aReceiptSelected.splice( index, 1 );
-            receiptBalance=0;
-            $("div.receiptBalance").html('<p id="receiptBalance" align="right"><b>Balance:' + receiptBalance + '</b></p>');
+            receiptBalance-= isNaN(monto)? 0 : monto;
         }
         
+        $("#receiptBalance").html('<b>Balance:' + receiptBalance + '</b>');        
         $(this).toggleClass('row_selected');
     });
 	
@@ -153,13 +153,17 @@ $(function() {
         var id = this.id;
         var index = jQuery.inArray(id, aSalesSelected);
         
+        var monto = parseFloat($(this).find('td:eq(3)').text());
         if ( index == -1 ) {
             aSalesSelected.push( id );
+            salesBalance+= isNaN(monto)? 0 : monto;
             
         } else {
             aSalesSelected.splice( index, 1 );
+            salesBalance-= isNaN(monto)? 0 : monto;
         }
-        
+
+        $('#salesBalance').html("<b>Balance: " + String(salesBalance.toFixed(2))) + "</b>";        
         $(this).toggleClass('row_selected');
     });
 	
