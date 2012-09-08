@@ -23,8 +23,7 @@
       var listReceiptLink = '${createLink(action:"listReceipts")}';
       var listSalesLink = '${createLink(action:"listSalesSite")}';
       var index = '${createLink(action:"index")}';
-      var preconciliationNoselectionError = "${message(code:'preconciliation.noselection.error', default:'Seleccione un Recibo y una Venta')}";
-      var preconcliationOnlyoneError = "${message(code:'preconcliation.onlyone.error', default:'Seleccione solo uno') }";
+      var compensationNoselectionError = "${message(code:'compensation.noselection.error', default:'Seleccione mas de un elemento')}";
       var $loading = getProcessingDialog();
     </g:javascript>
   

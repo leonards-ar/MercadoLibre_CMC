@@ -572,6 +572,12 @@ table.display tr.yellow {
 table.display tr.red {
   background: #CC0033;
 }
+table.display tr.groupodd {
+  background: #CCCCFF;
+}
+table.display tr.groupeven {
+  background: #CC99FF;
+}
 
 div.box {
 	height: 100px;

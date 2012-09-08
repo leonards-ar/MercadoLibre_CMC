@@ -154,6 +154,32 @@ class BootStrap {
         def receipt26 = new Receipt(id:26,medio: Medio.findById(1), state:State.findById(4), registerType:RegisterType.findById(1),cardNumber:'123123155',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123114,shareNumber:5,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213236',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
         def receipt27 = new Receipt(id:27,medio: Medio.findById(1), state:State.findById(4), registerType:RegisterType.findById(1),cardNumber:'123123156',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123115,shareNumber:6,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213237',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
         
+        def receipt28 = new Receipt(id:3,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123132',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt29 = new Receipt(id:4,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123133',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123193,shareNumber:3,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213214',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt30 = new Receipt(id:5,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123134',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123194,shareNumber:4,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213215',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt31 = new Receipt(id:6,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123135',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123195,shareNumber:5,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213216',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt32 = new Receipt(id:7,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123136',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123196,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213217',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt33 = new Receipt(id:8,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123137',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123197,shareNumber:3,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213218',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt34 = new Receipt(id:9,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123138',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123198,shareNumber:4,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213219',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt35 = new Receipt(id:10,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123139',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123199,shareNumber:5,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213220',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt36 = new Receipt(id:11,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123140',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123200,shareNumber:6,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213221',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt37 = new Receipt(id:12,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123141',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:1231201,shareNumber:7,shareQty:7,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213222',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt38 = new Receipt(id:13,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123142',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123100,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213223',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt39 = new Receipt(id:14,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123143',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123102,shareNumber:3,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213224',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt40 = new Receipt(id:15,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123144',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123103,shareNumber:4,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213225',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt41 = new Receipt(id:16,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123145',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123104,shareNumber:5,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213226',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt42 = new Receipt(id:17,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123146',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123105,shareNumber:6,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213227',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt43 = new Receipt(id:18,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123147',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123106,shareNumber:7,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213228',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt44 = new Receipt(id:19,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123148',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123107,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213229',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt45 = new Receipt(id:20,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123149',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123108,shareNumber:3,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213230',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt46 = new Receipt(id:21,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123150',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123109,shareNumber:4,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213231',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt47 = new Receipt(id:22,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123151',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123110,shareNumber:5,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213232',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt48 = new Receipt(id:23,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123152',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123111,shareNumber:6,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213233',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt49 = new Receipt(id:24,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123153',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123112,shareNumber:7,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213234',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt50 = new Receipt(id:25,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123154',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123113,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213235',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt51 = new Receipt(id:26,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123155',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123114,shareNumber:5,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213236',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def receipt52 = new Receipt(id:27,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123156',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123115,shareNumber:6,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213237',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        
         def salesSite = new SalesSite(saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123132',
             transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,
             shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',
@@ -195,6 +221,37 @@ class BootStrap {
         def salesSite31 = new SalesSite(id:31, saleMl:1L,medio: Medio.findById(1), state:State.findById(4), registerType:RegisterType.findById(1),cardNumber:'123123160',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
         def salesSite32 = new SalesSite(id:32, saleMl:1L,medio: Medio.findById(1), state:State.findById(4), registerType:RegisterType.findById(1),cardNumber:'123123161',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
 
+        def salesSite33 = new SalesSite(id:3, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123132',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite34 = new SalesSite(id:4, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123133',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite35 = new SalesSite(id:5, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123134',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite36 = new SalesSite(id:6, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123135',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite37 = new SalesSite(id:7, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123136',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite38 = new SalesSite(id:8, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123137',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite39 = new SalesSite(id:9, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123138',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite40 = new SalesSite(id:10, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123139',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite41 = new SalesSite(id:11, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123140',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite42 = new SalesSite(id:12, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123141',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite43 = new SalesSite(id:13, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123142',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite44 = new SalesSite(id:14, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123143',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite45 = new SalesSite(id:15, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123144',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite46 = new SalesSite(id:16, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123145',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite47 = new SalesSite(id:17, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123146',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite48 = new SalesSite(id:18, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123147',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite49 = new SalesSite(id:19, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123148',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite50 = new SalesSite(id:20, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123149',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite51 = new SalesSite(id:21, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123150',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite52 = new SalesSite(id:22, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123151',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite53 = new SalesSite(id:23, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123152',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite54 = new SalesSite(id:24, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123153',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite55 = new SalesSite(id:25, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123154',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite56 = new SalesSite(id:26, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123155',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite57 = new SalesSite(id:27, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123156',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite58 = new SalesSite(id:28, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123157',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite59 = new SalesSite(id:29, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123158',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite60 = new SalesSite(id:30, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123159',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite61 = new SalesSite(id:31, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123160',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        def salesSite62 = new SalesSite(id:32, saleMl:1L,medio: Medio.findById(1), state:State.findById(1), registerType:RegisterType.findById(1),cardNumber:'123123161',transactionDate: new Date(),paymentDate: new Date(),amount:500.00, shareAmount:0.0, authorization:123192,shareNumber:2,shareQty:6,liq:'111',customerId:'1111111',documentId:'123121', receiptNumber:'12313213213',tid:1l, nsu:1l, ro:1l, store:1l,cardLot:'20034',uniqueRo:'11111',documentNumber:'20223410313',lot:1L, period:period)
+        
         receipt.id=1
         receipt2.id=2
         receipt3.id=3
@@ -222,6 +279,32 @@ class BootStrap {
         receipt25.id=25
         receipt26.id=26
         receipt27.id=27
+        
+        receipt28.id=28
+        receipt29.id=29
+        receipt30.id=30
+        receipt31.id=31
+        receipt32.id=32
+        receipt33.id=33
+        receipt34.id=34
+        receipt35.id=35
+        receipt36.id=36
+        receipt37.id=37
+        receipt38.id=38
+        receipt39.id=39
+        receipt40.id=40
+        receipt41.id=41
+        receipt42.id=42
+        receipt43.id=43
+        receipt44.id=44
+        receipt45.id=45
+        receipt46.id=46
+        receipt47.id=47
+        receipt48.id=48
+        receipt49.id=49
+        receipt50.id=50
+        receipt51.id=51
+        receipt52.id=52
         
         salesSite.id=1
 		salesSite2.id=2
@@ -256,7 +339,37 @@ class BootStrap {
         salesSite31.id=31
         salesSite32.id=32
 
-		
+        salesSite33.id=33
+        salesSite34.id=34
+        salesSite35.id=35
+        salesSite36.id=36
+        salesSite37.id=37
+        salesSite38.id=38
+        salesSite39.id=39
+        salesSite40.id=40
+        salesSite41.id=41
+        salesSite42.id=42
+        salesSite43.id=43
+        salesSite44.id=44
+        salesSite45.id=45
+        salesSite46.id=46
+        salesSite47.id=47
+        salesSite48.id=48
+        salesSite49.id=49
+        salesSite50.id=50
+        salesSite51.id=51
+        salesSite52.id=52
+        salesSite53.id=53
+        salesSite54.id=54
+        salesSite55.id=55
+        salesSite56.id=56
+        salesSite57.id=57
+        salesSite58.id=58
+        salesSite59.id=59
+        salesSite60.id=60
+        salesSite61.id=61
+        salesSite62.id=62
+
         receipt.save(flush:true)
         receipt2.save(flush:true)
         receipt3.save(flush:true)
@@ -284,7 +397,32 @@ class BootStrap {
         receipt25.save(flush:true)
         receipt26.save(flush:true)
         receipt27.save(flush:true)
-        
+        receipt28.save(flush:true)
+        receipt29.save(flush:true)
+        receipt30.save(flush:true)
+        receipt31.save(flush:true)
+        receipt32.save(flush:true)
+        receipt33.save(flush:true)
+        receipt34.save(flush:true)
+        receipt35.save(flush:true)
+        receipt36.save(flush:true)
+        receipt37.save(flush:true)
+        receipt38.save(flush:true)
+        receipt39.save(flush:true)
+        receipt40.save(flush:true)
+        receipt41.save(flush:true)
+        receipt42.save(flush:true)
+        receipt43.save(flush:true)
+        receipt44.save(flush:true)
+        receipt45.save(flush:true)
+        receipt46.save(flush:true)
+        receipt47.save(flush:true)
+        receipt48.save(flush:true)
+        receipt49.save(flush:true)
+        receipt50.save(flush:true)
+        receipt51.save(flush:true)
+        receipt52.save(flush:true)
+
         salesSite.save(flush:true)
         salesSite2.save(flush:true)
         salesSite3.save(flush:true)
@@ -317,6 +455,36 @@ class BootStrap {
         salesSite30.save(flush:true)
         salesSite31.save(flush:true)
         salesSite32.save(flush:true)
+        salesSite33.save(flush:true)
+        salesSite34.save(flush:true)
+        salesSite35.save(flush:true)
+        salesSite36.save(flush:true)
+        salesSite37.save(flush:true)
+        salesSite38.save(flush:true)
+        salesSite39.save(flush:true)
+        salesSite40.save(flush:true)
+        salesSite41.save(flush:true)
+        salesSite42.save(flush:true)
+        salesSite43.save(flush:true)
+        salesSite44.save(flush:true)
+        salesSite45.save(flush:true)
+        salesSite46.save(flush:true)
+        salesSite47.save(flush:true)
+        salesSite48.save(flush:true)
+        salesSite49.save(flush:true)
+        salesSite50.save(flush:true)
+        salesSite51.save(flush:true)
+        salesSite52.save(flush:true)
+        salesSite53.save(flush:true)
+        salesSite54.save(flush:true)
+        salesSite55.save(flush:true)
+        salesSite56.save(flush:true)
+        salesSite57.save(flush:true)
+        salesSite58.save(flush:true)
+        salesSite59.save(flush:true)
+        salesSite60.save(flush:true)
+        salesSite61.save(flush:true)
+        salesSite62.save(flush:true)
 
         def conciliated1 = new Conciliated(receipt:Receipt.findById(3), sale:SalesSite.findById(3), lot:1L, medio:Medio.findById(1), period:period, registerType:RegisterType.findById(1))   
         def conciliated2 = new Conciliated(receipt:Receipt.findById(4), sale:SalesSite.findById(4), lot:1L, medio:Medio.findById(1), period:period, registerType:RegisterType.findById(1))   

@@ -2,11 +2,16 @@ package com.ml.cmc
 
 class Compensation implements Serializable{
 
-	SalesSite sale
-	Receipt receipt
-	Long lot
-	Medio medio
-	AccountantPeriod period
+	String id
+	String origin
+    String item
+    String lot
+    Medio medio
+    String group
+    AccountantPeriod period
+    String type="MANUAL"
+	Long serial
+
 	
     static constraints = {
 		
@@ -16,14 +21,17 @@ class Compensation implements Serializable{
     }
 	
 	static mapping = {
-		table 'A_COMPENSACIONES_TMP'
+		table 'F_TMP_COMPENSACIONES'
 		version false
 		
-		id composite: ['lot','sale','receipt']
-		sale column: 'CD_VENTA_CUOTA'
-		receipt column: 'CD_RECIBO'
+		id column:'CD_COMPENSACIONES', generator:'assigned'
+		origin column: 'ORIGEN'
+		item column: 'ID_REGISTRO'
 		lot: 'LOTE'
 		medio: 'CD_MEDIO'
+        group: 'GRUPO'
 		period: 'CD_PERIODO'
+        type: 'TX_TIPO'
+        serial: 'SERIAL_JAVA'
 	}
 }
