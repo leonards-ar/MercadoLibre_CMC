@@ -37,6 +37,7 @@ class CompensationController extends SessionInfoController {
 
 		try{
 			securityLockService.lockFunctionality(getUsername(), Constant.FUNC_COMPENSATE, getSessionId(), medio)
+            render(template: "compensationBody")
 		}catch (SecLockException e) {
 		   def error = message(code:"preconciliation.security.error" ,default:"Error",args:[e.invalidObject?.username, medio])
 		   response.setStatus(500)
@@ -47,8 +48,7 @@ class CompensationController extends SessionInfoController {
 			render e.message
 			return
 		}
-		
-		render(template: "compensationBody")
+
 
 	}
 	
@@ -70,6 +70,10 @@ class CompensationController extends SessionInfoController {
 			order(colName, sortDir)
 			eq('medio', medio)
 			eq('state',state1)
+            def ids = params.compReceiptList.split(",")
+            if(ids.length > 0){
+                not{inList('id', ids)}
+            }
 		}
 		
         responseMap.aaData = serializeReceiptData(receiptInstanceList)
