@@ -128,10 +128,10 @@ $(function() {
                         //    createCombos('this');
                         //},
                         "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
-                            var index = jQuery.inArray(aData.DT_RowId, compReceiptList); 
+                            var index = jQuery.inArray(aData.DT_RowId, compSalesList); 
                             if ( index !== -1 ) {
                               $(nRow).hide();
-                            } else if ( jQuery.inArray(aData.DT_RowId, aReceiptSelected) !== -1 ) {
+                            } else if ( jQuery.inArray(aData.DT_RowId, aSalesSelected) !== -1 ) {
                                 $(nRow).addClass('row_selected');
                             }
                         },
@@ -209,24 +209,8 @@ $(function() {
                 receiptBalance = 0;
                 $("#receiptBalance").html('<b>Balance:' + receiptBalance + '</b>');
                 receiptCount++;
-                compReceipts.push(aReceiptSelected);
-                var oTable = $("#receipt_table").dataTable();
-                var selectedRows = oTable.$('tr.row_selected');
-                var compTable = $("#compensated_receipt_table").dataTable();
-                for(var i=0; i < selectedRows.length; i++){
-                    row = selectedRows[i];
-                    var columnVals = []
-                    $(row).find('td').each(function(){
-                        columnVals.push($(this).html());
-                    });
-                    compTable.fnAddData(columnVals);
-                    var nodes = compTable.fnGetNodes();
-                    var lastTr = nodes[nodes.length - 1];
-                    $(lastTr).addClass((receiptCount % 2) == 0? "groupeven":"groupodd");
-                    compReceiptList.push(selectedRows[i].id);
-                }
+                group("#receipt_table","#compensated_receipt_table",receiptCount,compReceiptList,compReceipts);
                 
-                oTable.fnDraw();
             },
             mouseover: function() {
                 $(this).addClass("ui-state-hover");
@@ -245,26 +229,12 @@ $(function() {
                 $dialog.dialog("open");
                 return;
             }
+            
+            salesBalance = 0;
+            $("#salesBalance").html('<b>Balance:' + salesBalance + '</b>');
             salesCount++;
+            group("#sales_table","#compensated_sales_table",salesCount,compSalesList,compSales);
             
-            var rows = [];
-            var oTable = $("#sales_table").dataTable();
-            var selectedRows = oTable.$('tr.row_selected');
-            var tmpIds = [];
-            
-            for(var i=0; i < selectedRows.length; i++){
-                row = selectedRows[i];
-                var columnVals = []
-                $(row).find('td').each(function(){
-                    columnVals.push($(this).html());
-                });
-                rows.push(columnVals);
-                compSalesList.push(selectedRows[i].id);
-                tmpIds.push(selectedRows[i].id);
-            }
-            compReceipts.push(tmpIds);
-            $("#compensated_sales_table").dataTable().fnAddData(rows);
-            oTable.fnDraw();
         },
         mouseover: function() {
             $(this).addClass("ui-state-hover");
@@ -276,7 +246,77 @@ $(function() {
 
     });
     
+    $('#compensateReceiptButton').live({
+        'click': function(){
+            save("#compensated_receipt_table",compReceipts,receiptCount,"F_RECIBOS",saveLink);
+        },
+        mouseover: function() {
+            $(this).addClass("ui-state-hover");
+            $(this).css("cursor","pointer");
+        },
+          mouseout: function() {
+            $(this).removeClass("ui-state-hover");
+        }
+        
+    })
+    
 	
 });
 
+function group(table, compensateTable, count, list, map){
+    var oTable = $(table).dataTable();
+    var selectedRows = oTable.$('tr.row_selected');
+    var oCompTable = $(compensateTable).dataTable();
+    var tmpIds = [];
+    for(var i=0; i < selectedRows.length; i++){
+        row = selectedRows[i];
+        var columnVals = []
+        $(row).find('td').each(function(){
+            columnVals.push($(this).html());
+        });
+        oCompTable.fnAddData(columnVals);
+        var nodes = oCompTable.fnGetNodes();
+        var lastTr = nodes[nodes.length - 1];
+        $(lastTr).addClass((count % 2) == 0? "groupeven":"groupodd");
+        list.push(selectedRows[i].id);
+        tmpIds.push(selectedRows[i].id);
+    }
+    map.push(tmpIds);
+    oTable.fnDraw();
+}
+
+function save(compensateTable, map, count, element, link) {
+    var oTable = $(compensateTable).dataTable();
+    //si todo sale bien... primero hay que serializar el mapa
+    var strdata = "element=" + element
+    var strdata = "&ids=" + map.join(";");
+    
+    $.ajax({
+        type : 'POST',
+        url : saveLink,
+        data : strdata,
+        success : function(data) {
+            var $dialog = getDialog(data);
+            $dialog.dialog('option','title','');
+            $dialog.dialog( "option", "buttons", { 
+                "Ok": function() { 
+                    $(this).dialog("close");
+                    
+                    oTable.fnClearTable();
+                    map = [];
+                    count = 0;
+                } 
+            });
+            $dialog.dialog('open');
+            
+        },
+        error : function(XMLHttpRequest, textStatus,
+                errorThrown) {
+            showError(XMLHttpRequest, textStatus,
+                    errorThrown);
+            $(closestDiv).html("");
+        }
+    })
+
+}
 	

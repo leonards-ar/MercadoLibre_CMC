@@ -5,6 +5,10 @@ import com.ml.cmc.exception.SecLockException
 import grails.converters.JSON
 
 class CompensationController extends SessionInfoController {
+    
+    def securityLockService
+    def lotGeneratorService
+    def sessionFactory
 
     def colNames = ["registerType","cardNumber","transactionDate","amount","shareAmount","authorization",
                     "shareNumber","shareQty","customerId","documentId","tid","nsu","documentNumber"]
@@ -103,6 +107,10 @@ class CompensationController extends SessionInfoController {
 			order(colName, sortDir)
 			 eq('medio', medio)
 			 eq('state',state1)
+             def ids = params.compSalesList.split(",")
+             if(ids.length > 0){
+                 not{inList('id', ids)}
+             }
 		}
 		
         responseMap.aaData = serializeSalesData(salesSiteInstanceList)
@@ -114,6 +122,41 @@ class CompensationController extends SessionInfoController {
         render responseMap as JSON
         
 	}
+    
+    def save = {
+        
+        //def lot = lotGeneratorService.getLotId()
+        
+        println "params: ${params.ids}"
+        def groups = params.ids.split(";")
+
+        Compensation.withTransaction{        
+            groups.each{group ->
+                //def groupId = lotGeneratorService.getGroupId() 
+                def items = group.split(",")
+                items.each{
+                    def item = params.element == 'F_RECIBOS'?Receipt.findById(it):SalesSite.findById(it)                    
+                    def compensation = new Compensation(source:params.element,registerId:item.id,medio: item.medio, group: groupId, period:item.period, serial:lot)
+                    
+                }
+            }
+        }
+        
+        sessionFactory.getCurrentSession().clear();
+    
+        
+        /* call datastage */
+/*        def username = getUsername()
+        def job = ["/datastage/CompManual.sh", username, lot].execute()
+        job.waitFor()
+        if(job.exitValue()){
+            response.setStatus(500)
+            render job.err.text
+        }
+*/        
+        render "Compensated Carajo!!!!!"
+    
+    }
     
     private serializeReceiptData(instanceList) {
         

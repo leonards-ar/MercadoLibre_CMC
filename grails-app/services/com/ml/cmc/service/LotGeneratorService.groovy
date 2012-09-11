@@ -14,4 +14,14 @@ class LotGeneratorService {
         def result = query.list()
         return result[0]
     }
+    
+    def getGroupId() {
+        
+        def sql = "SELECT COMP_GROUP.nextval FROM dual"
+        def session = sessionFactory.getCurrentSession();
+        def query = session.createSQLQuery(sql);
+        def result = query.list()
+        return result[0]
+        
+    }
 }
