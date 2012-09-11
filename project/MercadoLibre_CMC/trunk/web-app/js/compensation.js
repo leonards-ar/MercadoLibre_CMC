@@ -43,7 +43,6 @@ $(function() {
 					errorThrown) {
 				showError(XMLHttpRequest, textStatus,
 						errorThrown);
-				$(closestDiv).html("");
 			}
 		})
 	});
@@ -81,6 +80,7 @@ $(function() {
                     $('#receipt_table').dataTable({
                         "sDom":'l<"receiptBalance">rtip<"receiptGroupButton">',
                         "bPaginate": true,
+                        "sPaginationType": "full_numbers",
                         "bProcessing": true,
                         "bServerSide": true,
                         "sAjaxSource": listReceiptLink,
@@ -114,6 +114,7 @@ $(function() {
                     $('#sales_table').dataTable({
                         "sDom":'l<"salesBalance">rtip<"salesGroupButton">',
                         "bPaginate": true,
+                        "sPaginationType": "full_numbers",
                         "bProcessing": true,
                         "bServerSide": true,
                         "sAjaxSource": listSalesLink,
@@ -142,12 +143,14 @@ $(function() {
                     
                     $('#compensated_receipt_table').dataTable({
                         "bPaginate": true,
+                        "sPaginationType": "full_numbers",
                         "bProcessing": true,
                         "bSort":false
                      });
                     
                     $('#compensated_sales_table').dataTable({
                         "bPaginate": true,
+                        "sPaginationType": "full_numbers",
                         "bProcessing": true,
                         "bSort":false
                      });
@@ -249,6 +252,7 @@ $(function() {
     $('#compensateReceiptButton').live({
         'click': function(){
             save("#compensated_receipt_table",compReceipts,receiptCount,"F_RECIBOS",saveLink);
+            receiptCount = 0;
         },
         mouseover: function() {
             $(this).addClass("ui-state-hover");
@@ -260,7 +264,20 @@ $(function() {
         
     })
     
-	
+    $('#compensateSalesButton').live({
+        'click': function(){
+            save("#compensated_sales_table",compSales,salesCount,"F_VENTAS_SITE",saveLink);
+            salesCount = 0;
+        },
+        mouseover: function() {
+            $(this).addClass("ui-state-hover");
+            $(this).css("cursor","pointer");
+        },
+          mouseout: function() {
+            $(this).removeClass("ui-state-hover");
+        }
+        
+    })	
 });
 
 function group(table, compensateTable, count, list, map){
@@ -288,8 +305,8 @@ function group(table, compensateTable, count, list, map){
 function save(compensateTable, map, count, element, link) {
     var oTable = $(compensateTable).dataTable();
     //si todo sale bien... primero hay que serializar el mapa
-    var strdata = "element=" + element
-    var strdata = "&ids=" + map.join(";");
+    var strdata = "element=" + element;
+    strdata += "&ids=" + map.join(";");
     
     $.ajax({
         type : 'POST',
@@ -314,7 +331,6 @@ function save(compensateTable, map, count, element, link) {
                 errorThrown) {
             showError(XMLHttpRequest, textStatus,
                     errorThrown);
-            $(closestDiv).html("");
         }
     })
 
