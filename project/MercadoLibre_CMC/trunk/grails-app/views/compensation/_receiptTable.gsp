@@ -47,3 +47,6 @@
 
 </div>
 
+<div class="buttons">
+    <span class="button"><input type="button" class="save" id="compensateReceiptButton" value="${message(code:'save', default:'Grabar')}"/></span>
+</div>    

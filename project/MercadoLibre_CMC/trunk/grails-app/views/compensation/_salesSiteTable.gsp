@@ -46,4 +46,6 @@
   </table>  
 
 </div>
-
+<div class="buttons">
+    <span class="button"><input type="button" class="save" id="compensateSalesButton" value="${message(code:'save', default:'Grabar')}"/></span>
+</div>    

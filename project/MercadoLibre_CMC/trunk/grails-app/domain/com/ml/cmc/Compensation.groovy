@@ -3,8 +3,8 @@ package com.ml.cmc
 class Compensation implements Serializable{
 
 	String id
-	String origin
-    String item
+	String source
+    String regsterId
     String lot
     Medio medio
     String group
@@ -24,9 +24,9 @@ class Compensation implements Serializable{
 		table 'F_TMP_COMPENSACIONES'
 		version false
 		
-		id column:'CD_COMPENSACIONES', generator:'assigned'
-		origin column: 'ORIGEN'
-		item column: 'ID_REGISTRO'
+		id composite: ['group','regsterId']
+		source column: 'ORIGEN'
+		regsterId column: 'ID_REGISTRO'
 		lot: 'LOTE'
 		medio: 'CD_MEDIO'
         group: 'GRUPO'
