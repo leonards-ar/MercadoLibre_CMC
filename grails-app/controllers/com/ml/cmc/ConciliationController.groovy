@@ -20,7 +20,8 @@ class ConciliationController extends SessionInfoController{
 			}
 			order("country")
 		}
-		render(view:'index', model:[countryList: countryList])
+        def periodList = AccountantPeriod.findByStatus("ACTIVO")
+		render(view:'index', model:[countryList: countryList, periodList: periodList])
 	}
 	
 	def lock = {
@@ -69,39 +70,59 @@ class ConciliationController extends SessionInfoController{
 
 	}
 
-	def listReceipts = {ConciliationCmd conciliationCmd ->
-	   
+	def listReceipts = {
+        def responseMap = [:]
+        def max = params.iDisplayLength?params.iDisplayLength:10
+        def offset = params.iDisplayStart?params.iDisplayStart:0
+        
 		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site]);
 		def state3 = State.findById(3)
 
-		def receiptInstanceList = Receipt.withCriteria {
-			order(params.sort, params.order)
+        def criteria = Receipt.createCriteria()
+		def receiptInstanceList = criteria.list(max:max, offset:offset){
+
 			 if(medio != null) eq('medio', medio)
 			 eq('state',state3)
-			 if(conciliationCmd.receiptIds.size() >0) {
-				 List<Long> longIds = (conciliationCmd.receiptIds instanceof String)?[conciliationCmd.receiptIds.toLong()]:conciliationCmd.receiptIds.collect{it.toLong()}
-				 not{inList('id', longIds)}
-			 }
+             eq('period', AccountantPeriod.findById(params.period))
+
 		}
+        
+        responseMap.aaData = serializeReceiptData(receiptInstanceList)
+        responseMap.sEcho = params.sEcho
+        responseMap.iTotalRecords = receiptInstanceList.totalCount
+        responseMap.iTotalDisplayRecords = receiptInstanceList.totalCount
 		
-		render(template:"receiptTable", model:[receiptInstanceList: receiptInstanceList])
+		render responseMap as JSON
 		
 	}
 	
-	def listSalesSite = {ConciliationCmd conciliationCmd ->
+	def listSalesSite = {
+        def responseMap = [:]
+        
+        def max = params.iDisplayLength?params.iDisplayLength:10
+        def offset = params.iDisplayStart?params.iDisplayStart:0
+        
 		def medios = Medio.find("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
 		def state = State.findById(3)
-		def salesSiteInstanceList = SalesSite.withCriteria {
-			order(params.sort, params.order)
+        def criteria = SalesSite.createCriteria()
+		def salesSiteInstanceList = criteria.list(max:max, offset:offset) {
+			
 			 if(medios != null) inList('medio', medios)
 			 eq('state',state)
-			 if(conciliationCmd.salesSiteIds.size() >0) {
-				 List<Long> longIds = (conciliationCmd.salesSiteIds instanceof String)?[conciliationCmd.salesSiteIds.toLong()]:conciliationCmd.salesSiteIds.collect{it.toLong()}
+             eq('period', AccountantPeriod.findById(params.period))
+			 if(params.aSalesList && params.aSalesList.size() > 0) {
+				 List<Long> longIds = (params.aSalesList instanceof String)?[params.aSalesList.toLong()]:params.aSalesList.collect{it.toLong()}
 				 not{inList('id', longIds)}
 			 }
 		}
+        
+        responseMap.aaData = serializeReceiptData(salesSiteInstanceList)
+        responseMap.sEcho = params.sEcho
+        responseMap.iTotalRecords = salesSiteInstanceList.totalCount
+        responseMap.iTotalDisplayRecords = salesSiteInstanceList.totalCount
+        
+        render responseMap as JSON
 		
-		render(template:"salesSiteTable", model:[salesSiteInstanceList: salesSiteInstanceList])
 		
 	}
 	
@@ -169,6 +190,33 @@ class ConciliationController extends SessionInfoController{
 		render job.text
 		 
 	}
+    
+    private serializeReceiptData(instanceList) {
+        
+        def data = []
+        
+        instanceList.each(){
+            data << ["DT_RowId":it.id.toString(),
+                     "0":formatDate(date:it?.transactionDate, format:"dd-MM-yyyy"),
+                     "1":it?.amount.toString(),
+                     "2":it?.authorization.toString(),
+                     "3":it?.cardNumber.toString(),
+                     "4":it?.customerId.toString(),
+                     "5":it?.documentNumber.toString(),
+                     "6":it?.documentId.toString(),
+                     "7":it?.id.toString(),
+                     "8":it?.ro.toString(),
+                     "9":it?.tid.toString(),
+                     "10":it?.nsu.toString(),
+                     "11":it?.shareNumber.toString(),
+                     "12":it?.shareQty.toString(),
+                     "13":formatDate(date:it?.paymentDate, format:"dd-MM-yyyy"),
+                     "14":it?.payed
+                     ]
+        }
+        
+        return data
+    }
 	
 }
 

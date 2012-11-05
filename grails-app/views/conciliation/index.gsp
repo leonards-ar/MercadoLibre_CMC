@@ -20,7 +20,10 @@
       var exitLink = '${createLink(action:"exit")}';
       var lockLink = '${createLink(action:"lock")}';
       var index = '${createLink(action:"index")}';
+      var listReceiptLink = '${createLink(action:"listReceipts")}';
+      var listSalesLink = '${createLink(action:"listSalesSite")}';
       
+      var completeFilters = "${message(code:'conciliation.nofilterselection.error', default:'Seleccione todos los filtros')}";
       var conciliationNoselectionError = "${message(code:'conciliation.noselection.error', default:'Seleccione un Recibo y una Venta')}";
       var concliationOnlyoneError = "${message(code:'concliation.onlyone.error', default:'Seleccione solo uno') }";
       var preconciliationBadRelationError = "${message(code:'preconcliation.relationship.error', default:'La relacion entre los Recibos y Ventas no es correcta') }";
@@ -53,6 +56,10 @@
           <g:select name="site" id="site" noSelection="['':'']" />
 
           </td>
+          <td>
+            <div><g:message code="conciliation.period" default="Site"/> </div>
+            <g:select name="period" id="period" optionKey="id" from="${periodList}" noSelection="['':'']" from />
+          </td>          
           <td>
             <span class="button">
               <input type="button" class="save" value="Lock" id="lock"/>
