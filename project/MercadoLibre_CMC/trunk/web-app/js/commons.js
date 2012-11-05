@@ -73,6 +73,8 @@ function createTable(target){
     
 }
 
+
+
 function refreshTable(target){
     $(target).dataTable();
     $(target).find('td:nth-child(1),th:nth-child(1)').hide();

@@ -1,4 +1,13 @@
 $(function() {
+    var aReceiptSelected = [];
+    var aSalesSelected = [];
+    var compReceipts = [];
+    var compReceiptList = [];
+    var compSales = [];
+    var compSalesList = [];
+    var receiptCount = 0;
+    var salesCount = 0;
+    
 	$('#country').chainSelect('#card', cardLink, {
 		nonSelectedValue : '---'
 	});
@@ -22,7 +31,7 @@ $(function() {
 			}
 			var strData = "";
 
-
+			
 		    $('#receipt_table tbody tr:.yellow').each(function(){
 		        if(strData.length > 0){
 		            strData += "&";
@@ -81,40 +90,50 @@ $(function() {
 	});
 
 	$('#receipt_table tbody tr').live('click',function() {
-
+	    var id = this.id
+	    var index = jQuery.inArray(id, aReceiptSelected);
+	    
 	    $(this).toggleClass('yellow');
-    	if ($(this).hasClass('yellow')) {
-    		var monto = parseFloat($(this).find('td:eq(8)').text());
-    		var balanced = parseFloat($('#balance').text());
-    		balanced = isNaN(balanced) ? 0 : balanced;
+	    
+	    var balanced = parseFloat($('#balance').text());
+	    balanced = isNaN(balanced) ? 0 : balanced;
+	    var monto = parseFloat($(this).find('td:eq(8)').text());
+	    
+    	if (index == -1) {
     		balanced += isNaN(monto)? 0 : monto;
-    		$('#balance').html(String(balanced.toFixed(2)));
+    		aReceiptSelected.push(id)
+    		
     	} else {
-    		var monto = parseFloat($(this).find('td:eq(8)').text());
+    	    
     		var balanced = parseFloat($('#balance').text());
-    		if (!(isNaN(balanced))) {
+    		if (balanced != 0) {
     			balanced -= isNaN(monto)? 0 : monto;
-    			$('#balance').html(String(balanced.toFixed(2)));
     		}
+    		aReceiptSelected.splice( index, 1 );
     	}
+    	
+    	$('#balance').html(String(balanced.toFixed(2)));
     });
 
 	$('#sales_table tbody tr').live('click', function() {
+        var id = this.id
+        var index = jQuery.inArray(id, aSalesSelected);
+
+        var monto = parseFloat($(this).find('td:eq(9)').text());
+        var balanced = parseFloat($('#balance').text());
+        balanced = isNaN(balanced) ? 0 : balanced;
+        
 		$(this).toggleClass('yellow');
 		if ($(this).hasClass('yellow')) {
-			var monto = parseFloat($(this).find('td:eq(9)').text());
-			var balanced = parseFloat($('#balance').text());
-			balanced = isNaN(balanced) ? 0 : balanced;
 			balanced -= isNaN(monto) ? 0 : monto;
-			$('#balance').html(String(balanced.toFixed(2)));
+	         aSalesSelected.push(id)
 		} else {
-			var monto = parseFloat($(this).find('td:eq(9)').text());
-			var balanced = parseFloat($('#balance').text());
-			if (!(isNaN(balanced))) {
+		    aSalesSelected.splice( index, 1 );
+			if (balanced != 0) {
 				balanced += isNaN(monto) ? 0 : monto;
-				$('#balance').html(String(balanced.toFixed(2)));
 			}
 		}
+	    $('#balance').html(String(balanced.toFixed(2)));
 	});
 
 	$('#conciliateButton').live('click', function() {
@@ -229,9 +248,19 @@ $(function() {
 	$('#lock').click(function(){
 		
 		if($(this).attr('value') == 'Lock'){
+		    if($('#country').val()== ''  || $('#country').val()== '---' ||
+		        $('#card').val()== '' || $('#card').val()== '---' ||
+		        $('#site').val()== '' || $('#site').val()== '---' ||
+		        $('#period').val()== ''){
+		        var $dialog = getDialog(completeFilters);
+                $dialog.dialog("open");
+                return;
+		    }
+		    
 			var strdata = $('#country').attr('id') + "=" + $('#country').val();
 			strdata += "&" + $('#card').attr('id') + "=" + $('#card').val();
 			strdata += "&" + $('#site').attr('id') + "=" + $('#site').val();
+			strdata += "&" + $('#period').attr('id') + "=" + $('#period').val();
 			
 	        var $processing = getProcessingDialog();
 	        
@@ -249,11 +278,12 @@ $(function() {
 			    	$('#country').attr("disabled", true);
 			    	$('#card').attr("disabled", true);
 			    	$('#site').attr("disabled", true);
+		            $('#period').attr("disabled", true);
 			    	$('#lock').attr("value","Unlock");
 			    	$('#myBody').html(data);
 			    	
-			    	createTable('#receipt_table');
-			    	createTable('#sales_table');
+			    	createTableServer('#receipt_table', listReceiptLink, compReceiptList, aReceiptSelected);
+			    	createTableServer('#sales_table', listSalesLink, compSalesList, aSalesSelected);
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					showError(XMLHttpRequest, textStatus,errorThrown);
@@ -265,5 +295,29 @@ $(function() {
 		}
 	});
 	
-
+	function createTableServer(target, link, compList, selectedList){
+	    $(target).dataTable({
+	        "sDom": 'lrtip',
+	        "sPaginationType": "full_numbers",
+	        "bProcessing": true,
+	        "bServerSide": true,        
+	        "sAjaxSource": link,
+	        "sServerMethod": "POST",
+	        "fnServerParams": function ( aoData ) {
+	            aoData.push( { "name": "country", "value": $('#country').val() } );
+	            aoData.push( { "name": "card", "value": $('#card').val() } );
+	            aoData.push( { "name": "site", "value": $('#site').val() } );
+	            aoData.push( { "name": "period", "value": $('#period').val() } );
+	            aoData.push( { "name": "compReceiptList", "value":compList.join(",") } );
+	        },
+	        "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+	            var index = jQuery.inArray(aData.DT_RowId, compList); 
+	            if ( index !== -1 ) {
+	                $(nRow).hide();
+	            } else if ( jQuery.inArray(aData.DT_RowId, selectdList) !== -1 ) {
+	                $(nRow).addClass('yellow');
+	            }
+	        },    
+	    });
+	};
 });

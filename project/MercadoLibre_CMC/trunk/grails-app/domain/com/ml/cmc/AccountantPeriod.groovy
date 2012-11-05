@@ -1,10 +1,12 @@
 package com.ml.cmc
+import java.text.*
 
 class AccountantPeriod {
 
 	Date startDate
 	Date endDate
 	String status
+    DateFormat formatter = new SimpleDateFormat('dd/MM/yyyy')
 	
     static constraints = {
     }
@@ -20,6 +22,6 @@ class AccountantPeriod {
 	}
 	
 	String toString() {
-		id
+		formatter.format(startDate) + " - " + formatter.format(endDate)
 	}
 }

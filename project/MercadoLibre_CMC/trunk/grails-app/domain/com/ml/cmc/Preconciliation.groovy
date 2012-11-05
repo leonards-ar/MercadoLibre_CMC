@@ -12,7 +12,7 @@ class Preconciliation implements Serializable{
     }
     
     static mapping = {
-        table 'A_PRECONCILIACIONES_TMP'
+        table 'F_TMP_PRECONCILIACIONES'
         version false
         
         id composite: ['lot','sale','receipt']
