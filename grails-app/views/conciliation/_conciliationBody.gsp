@@ -2,7 +2,20 @@
  <table>
  <tr>
    <td>
-    <div style="position:relative"><span class="menuButton"><input type="button" class="filter" id="receiptFilter" value="${message(code:'preconciliation.filtercolumns', default:'Filtrar Columnas')}"/></span></div>
+    <div style="position:relative">
+    <span class="menuButton"><input type="button" class="filter" id="receiptFilter" value="${message(code:'preconciliation.filtercolumns', default:'Filtrar Columnas')}"/></span>
+    </div>
+    <br/>
+    <div style="width:550;height:75;border:1px solid #ccc;position:relative">
+      <div><g:message code="salesSite.transDate" default="Fecha de la Transaccion'"/></div>
+      <g:message code="salesSite.from" default="Desde'"/>: <g:textField name="fromReceiptTransDate" id="fromReceiptTransDate" value="${fromReceiptTransDate}" size="10" />
+      <g:message code="salesSite.to" default="Hasta'"/>: <g:textField name="toReceiptTransDate" id="toReceiptTransDate" value="${toReceiptTransDate}" size="10" />
+      
+      <div><g:message code="salesSite.paymtDate" default="Fecha de Pago'"/></div>
+      <g:message code="salesSite.from" default="Desde'"/>: <g:textField name="fromReceiptPaymtDate" id="fromReceiptPaymtDate" value="${fromReceiptPaymtDate}" size="10" />
+      <g:message code="salesSite.to" default="Hasta'"/>: <g:textField name="toReceiptPaymtDate" id="toReceiptPaymtDate" value="${toReceiptPaymtDate}" size="10" />
+    </div>
+    <br/> 
 	  <div id="filterReceiptColumns" class="receiptfilterColumns">
 	   <h3>${message(code: 'preconciliation.receipts', default: 'Recibos')}</h3>
 	  <table>
@@ -79,7 +92,16 @@
      
    </td>
    <td>
-    <div style="position:relative"><span class="menuButton"><input type="button" class="filter" id="salesSiteFilter" value="${message(code:'preconciliation.filtercolumns', default:'Filtrar Columnas')}"></span></div>
+    <div style="position:relative">
+      <span class="menuButton"><input type="button" class="filter" id="salesSiteFilter" value="${message(code:'preconciliation.filtercolumns', default:'Filtrar Columnas')}"></span>
+    </div>
+    <br/>
+    <div style="width:550;height:75;border:1px solid #ccc;position:relative">
+      <div><g:message code="salesSite.transDate" default="Fecha de la Transaccion'"/></div>
+      <g:message code="salesSite.from" default="Desde'"/>: <g:textField name="fromSalesTransDate" id="fromSalesTransDate" value="${fromSalesTransDate}" size="10" />
+      <g:message code="salesSite.to" default="Hasta'"/>: <g:textField name="toSalesTransDate" id="toSalesTransDate" value="${toSalesTransDate}" size="10" />
+    </div>
+    <br/>     
     <div id="filterSalesColumns" class="salesSitefilterColumns">
     <h3>${message(code: 'preconciliation.salesSite', default: 'Ventas del Sitio')}</h3>
   <table>
@@ -133,7 +155,7 @@
       </tr>                    
   </table>
   </div>       
-   
+ 
      <div id="sales" style="width:550;height:200;overflow:auto;border:1px solid #ccc;position:relative">
        <g:render template="salesSiteTable" model="[salesSiteInstanceList:salesSiteInstanceList]"/>
      </div>

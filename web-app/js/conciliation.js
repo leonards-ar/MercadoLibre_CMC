@@ -1,10 +1,10 @@
 $(function() {
     var aReceiptSelected = [];
     var aSalesSelected = [];
-    var compReceipts = [];
-    var compReceiptList = [];
-    var compSales = [];
-    var compSalesList = [];
+    var receiptList = [];
+    var salesList = [];
+    var conciliateList = [];
+    
     var receiptCount = 0;
     var salesCount = 0;
     
@@ -29,55 +29,18 @@ $(function() {
 		            $dialog.dialog("open");
 		            return;
 			}
-			var strData = "";
-
 			
-		    $('#receipt_table tbody tr:.yellow').each(function(){
-		        if(strData.length > 0){
-		            strData += "&";
-		        }
-		        strData += "receiptId=" + $(this).find('td:eq(0)').find('input:hidden').val();
-		    });
-
-	        $('#sales_table tbody tr:.yellow').each(function(){
-	            if(strData.length > 0){
-	                strData += "&";
-	            }
-	            strData += "salesSiteId=" + $(this).find('td:eq(0)').find('input:hidden').val();
-	        });		
-	    
-	        $('#preconciliate_table input:hidden').each(
-	            function() {
-	                if (strData.length > 0) {
-	                    strData += "&";
-	                }
-	                strData += $(this).attr('id') + "=" + $(this).val();
-	            });
-			    
-
-			$.ajax({
-			    type : 'POST',
-				url : groupLink,
-				data : strData,
-				success : function(data) {
-					$('#conciliado').fadeOut('fast',function() {
-					    $(this).html(data).fadeIn('slow');
-					});
-
-					deleteRows('#receipt_table');
-					deleteRows('#sales_table');
-					
-					createCombos('#receipt_table');
-					createCombos('#sales_table');
-					
-					
-					var balanced = 0;
-					$('#balance').html(String(balanced));
-				},
-				error : function(XMLHttpRequest,textStatus, errorThrown) {
-					showError(XMLHttpRequest,textStatus,errorThrown);
-				}
-			})
+			var receiptTable = $('#receipt_table').dataTable();
+		    var receiptRows = receiptTable.$('tr.yellow');
+		    
+		    var salesTable = $('#sales_table').dataTable();
+		    var salesRows = salesTable.$('tr.yellow');
+			
+		    group(receiptRows, salesRows, $('#conciliado'))
+		    
+		    aReceiptSelected = [];
+		    aSalesSelected = [];
+		    
 		},
 		mouseover: function() {
 			$(this).addClass("ui-state-hover");
@@ -214,6 +177,76 @@ $(function() {
 		}
 		});
 		
+        $('#salesSiteFilterTable').live({
+            click: function(){
+                $('#filterSalesTable').toggle('blind',500);
+                $('#filterSalesTable').draggable();
+            },  
+            mouseover: function() {
+                $(this).addClass("ui-state-hover");
+                $(this).css("cursor","pointer");
+                
+            },
+              mouseout: function() {
+                $(this).removeClass("ui-state-hover");
+            }
+            });
+
+        $('#fromReceiptTransDate').live("focus", function(){
+            $(this).datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                showAnim: 'fadeIn'
+            }).datepicker('show');
+        });
+
+        $('#toReceiptTransDate').live("focus", function(){
+            $(this).datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                showAnim: 'fadeIn'
+            }).datepicker('show');
+        });
+        
+        $('#fromReceiptPaymtDate').live("focus", function(){
+            $(this).datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                showAnim: 'fadeIn'
+            }).datepicker('show');
+        });
+
+        $('#toReceiptPaymtDate').live("focus", function(){
+            $(this).datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                showAnim: 'fadeIn'
+            }).datepicker('show');
+        });
+        
+        $('#fromSalesTransDate').live("focus", function(){
+            $(this).datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                showAnim: 'fadeIn'
+            }).datepicker('show');
+        });
+
+        $('#toSalesTransDate').live("focus", function(){
+            $(this).datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                showAnim: 'fadeIn'
+            }).datepicker('show');
+        });
+        
+		
 		$('.receiptCol').live('click',function(){
 
 			showHideColumn('#receipt_table', $(this).attr('name'), this.checked);
@@ -282,8 +315,15 @@ $(function() {
 			    	$('#lock').attr("value","Unlock");
 			    	$('#myBody').html(data);
 			    	
-			    	createTableServer('#receipt_table', listReceiptLink, compReceiptList, aReceiptSelected);
-			    	createTableServer('#sales_table', listSalesLink, compSalesList, aSalesSelected);
+			    	createTableServer('#receipt_table', listReceiptLink, receiptList, aReceiptSelected);
+			    	createTableServer('#sales_table', listSalesLink, salesList, aSalesSelected);
+			    	
+			    	$('conciliado').dataTable({
+                        "bPaginate": true,
+                        "sPaginationType": "full_numbers",
+                        "bProcessing": true,
+                        "bSort":false
+                     });
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					showError(XMLHttpRequest, textStatus,errorThrown);
@@ -319,5 +359,56 @@ $(function() {
 	            }
 	        },    
 	    });
+	};
+	
+	function group(receiptRows, salesRows, conciliateTable){
+	    var oTable = conciliateTable.dataTable();
+	    if(receiptRows.length > 1) {
+	        
+	        //iterate over receipt rows
+	        for(var i=0; i < receiptRows.length; i++) {
+	            var row = receiptRows[i];
+	            var columnVals = [];
+	            var tmpIds = [];
+	            $(row).find('td').each(function(){
+	                columnVals.push($(this).html());
+	            });
+	            $salesRows.find('td').each(function(){
+	                columnVals.push($(this).html());
+	            });
+	            
+	            oTable.fnAddData(columnVals);
+	            receiptList.push($(row).id);
+	            salesList.push($salesRows.id);
+	            tmpIds.push($(row).id);
+	            tmpIds.push($salesrows.id);
+	            conciliateList.push(tmpIds);
+	        }
+	    } else {
+	        //iterate over sales rows
+	        for(var i=0; i < salesRows; i++){
+	            var row = salesRows[i];
+	            var columnVals = [];
+	            $receiptRows.find('td').each(function(){
+                    columnVals.push($(this).html());
+                });
+                
+                $(row).find('td').each(function(){
+                    columnVals.push($(this).html());
+                });
+                
+                oTable.fnAddData(columnVals);
+                
+                receiptList.push($receiptRows.id);
+                salesList.push($(row).id);
+                tmpIds.push($receiptRows.id);
+                tmpIds.push($(row).id);
+                conciliateList.push(tmpIds);
+	            
+	        }
+	    }
+	    
+	    
+	
 	};
 });
