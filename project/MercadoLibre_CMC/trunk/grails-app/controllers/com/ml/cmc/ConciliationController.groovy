@@ -20,8 +20,8 @@ class ConciliationController extends SessionInfoController{
 			}
 			order("country")
 		}
-        def periodList = AccountantPeriod.findByStatus("ACTIVO")
-		render(view:'index', model:[countryList: countryList, periodList: periodList])
+       
+		render(view:'index', model:[countryList: countryList])
 	}
 	
 	def lock = {
@@ -47,26 +47,7 @@ class ConciliationController extends SessionInfoController{
 			return
 		}
 		
-		def state3 = State.findById(3)
-		def receiptCriteria = Receipt.createCriteria()
-		def receiptInstanceList = receiptCriteria.list() {
-			order(params.sort != null? params.sort:'receiptNumber', params.order != null?params.order:'asc')
-			if(medio != null) eq('medio', medio)
-			eq('state',state3)
-			eq('payed', 'ok', [ignoreCase: true])
-		}
-
-		def medios = Medio.find("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
-		
-		def salesSiteCriteria = SalesSite.createCriteria()
-		def salesSiteInstanceList = salesSiteCriteria.list() {
-			order(params.sort != null? params.sort:'receiptNumber', params.order != null?params.order:'asc')
-			 if(medios != null) inList('medio', medios)
-			 eq('state',state3)
-			 eq('origin',"I")
-		}
-		
-		render(template: "conciliationBody", model:[receiptInstanceList:receiptInstanceList, salesSiteInstanceList:salesSiteInstanceList])
+		render(template: "conciliationBody")
 
 	}
 
@@ -110,10 +91,10 @@ class ConciliationController extends SessionInfoController{
 			 if(medios != null) inList('medio', medios)
 			 eq('state',state)
              eq('period', AccountantPeriod.findById(params.period))
-			 if(params.aSalesList && params.aSalesList.size() > 0) {
-				 List<Long> longIds = (params.aSalesList instanceof String)?[params.aSalesList.toLong()]:params.aSalesList.collect{it.toLong()}
-				 not{inList('id', longIds)}
-			 }
+			 //if(params.aSalesList && params.aSalesList.size() > 0) {
+			//	 List<Long> longIds = (params.aSalesList instanceof String)?[params.aSalesList.toLong()]:params.aSalesList.collect{it.toLong()}
+			//	 not{inList('id', longIds)}
+			// }
 		}
         
         responseMap.aaData = serializeReceiptData(salesSiteInstanceList)
@@ -211,7 +192,7 @@ class ConciliationController extends SessionInfoController{
                      "11":it?.shareNumber.toString(),
                      "12":it?.shareQty.toString(),
                      "13":formatDate(date:it?.paymentDate, format:"dd-MM-yyyy"),
-                     "14":it?.payed
+                     "14":it?.payment
                      ]
         }
         

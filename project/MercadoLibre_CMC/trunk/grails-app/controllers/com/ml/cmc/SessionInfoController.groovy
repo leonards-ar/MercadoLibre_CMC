@@ -63,6 +63,19 @@ class SessionInfoController {
 		}
 		render sitesToSelect as JSON
 	}
+	
+	def periods = {
+		if(params._value == '---' || params.country == null || params.card == null) return
+		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
+		def periodList = AccountantPeriod.findAll("from AccountantPeriod a where a.medio= :medio and a.status= :status ", [medio: medio, status:'ACTIVO'])
+		def periodKey = []
+		periodList.each { item ->
+			periodKey.add([item.id, item.toString()])
+			
+		}
+		render periodKey as JSON
+		
+	}
 		
 	def exit = {
 		securityLockService.unLockFunctionality(getSessionId())
