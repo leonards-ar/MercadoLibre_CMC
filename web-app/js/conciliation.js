@@ -65,7 +65,7 @@ $(function() {
 		    var salesTable = $('#sales_table').dataTable();
 		    var salesRows = salesTable.$('tr.yellow');
 			
-		    group(receiptRows, salesRows, $('#conciliado'))
+		    group(receiptRows, salesRows, $('#conciliate_table'))
 		    
 		    aReceiptSelected = [];
 		    aSalesSelected = [];
@@ -347,7 +347,7 @@ $(function() {
 			    	createTableServer('#receipt_table', listReceiptLink, receiptList, aReceiptSelected);
 			    	createTableServer('#sales_table', listSalesLink, salesList, aSalesSelected);
 			    	
-			    	$('conciliado').dataTable({
+			    	$('conciliate_table').dataTable({
                         "bPaginate": true,
                         "sPaginationType": "full_numbers",
                         "bProcessing": true,
@@ -394,7 +394,6 @@ $(function() {
 	function group(receiptRows, salesRows, conciliateTable){
 	    var oTable = conciliateTable.dataTable();
 	    if(receiptRows.length > 1) {
-	        
 	        //iterate over receipt rows
 	        for(var i=0; i < receiptRows.length; i++) {
 	            var row = receiptRows[i];
