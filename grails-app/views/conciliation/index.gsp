@@ -15,10 +15,12 @@
     <g:javascript>
       var cardLink = '${createLink(action:"cards")}';
       var siteLink = '${createLink(action:"sites")}';
+      var periodLink = '${createLink(action:"periods")}';
       var groupLink = '${createLink(action:"group")}';
       var saveLink = '${createLink(action:"save")}';
       var exitLink = '${createLink(action:"exit")}';
       var lockLink = '${createLink(action:"lock")}';
+
       var index = '${createLink(action:"index")}';
       var listReceiptLink = '${createLink(action:"listReceipts")}';
       var listSalesLink = '${createLink(action:"listSalesSite")}';
@@ -53,12 +55,12 @@
           </td>
           <td>
             <div><g:message code="conciliation.site" default="Site"/> </div>
-          <g:select name="site" id="site" noSelection="['':'']" />
+          <g:select name="site" id="site" noSelection="['':'']"/>
 
           </td>
           <td>
             <div><g:message code="conciliation.period" default="Site"/> </div>
-            <g:select name="period" id="period" optionKey="id" from="${periodList}" noSelection="['':'']" from />
+            <g:select name="period" id="period" optionKey="id" noSelection="['':'']" />
           </td>          
           <td>
             <span class="button">

@@ -28,7 +28,7 @@ class Receipt {
     String cardLot
     String uniqueRo
     String documentNumber
-    //Long payment
+    Long payment
 	AccountantPeriod period
 	String payed;
 
@@ -89,7 +89,7 @@ class Receipt {
         cardLot column:'LOTE_TARJETA'
         uniqueRo column:'NU_UNICO_RO'
         documentNumber column:'DOC_NUMBER'
-        //payment column:'PAYMENT_ID'
+        payment column:'PAYMENT_ID'
 		period column:'CD_PERIODO'
 		payed column:'FL_PAGADO'
     }

@@ -6,8 +6,10 @@ class AccountantPeriod {
 	Date startDate
 	Date endDate
 	String status
+	Medio medio
     DateFormat formatter = new SimpleDateFormat('dd/MM/yyyy')
 	
+	 static transients = ['formatter']
     static constraints = {
     }
 	
@@ -19,6 +21,7 @@ class AccountantPeriod {
 		startDate column:'FC_DESDE'
 		endDate column:'FC_HASTA'
 		status column:'TX_ESTADO'
+		medio column:"CD_MEDIO"
 	}
 	
 	String toString() {

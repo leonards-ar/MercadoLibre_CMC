@@ -16,6 +16,35 @@ $(function() {
 		nonSelectedValue : '---'
 	});
 
+	
+	$('#site').change(function(){
+		var site = $(this).val();
+		if(site == '---') return;
+		var strdata = "site=" + $(this).val();
+		strdata+="&country=" + $('#country').val();
+		strdata +="&card=" + $('#card').val(); 
+		$.ajax({
+			type : 'POST',
+			url : periodLink,
+			data : strdata,
+			success : function(data) {
+				var index = 0;
+				$('#period').html("");//clear old options
+				data = eval(data);//get json array
+				$('#period').get(0).add(new Option('---', '---'), document.all ? 0 : null);
+				index = 1;
+				for (i = 0; i < data.length; i++)//iterate over all options
+				{
+					var item = data[i];
+					
+					$('#period').get(0).add(new Option(item[1],item[0]), document.all ? index++ : null);
+				}
+
+		    } 
+		});
+					
+	});
+
 	$('#agrupar').live({
 		click: function() {
 		$('#sales_table tbody tr:.yellow').length
@@ -60,7 +89,7 @@ $(function() {
 	    
 	    var balanced = parseFloat($('#balance').text());
 	    balanced = isNaN(balanced) ? 0 : balanced;
-	    var monto = parseFloat($(this).find('td:eq(8)').text());
+	    var monto = parseFloat($(this).find('td:eq(1)').text());
 	    
     	if (index == -1) {
     		balanced += isNaN(monto)? 0 : monto;
@@ -82,7 +111,7 @@ $(function() {
         var id = this.id
         var index = jQuery.inArray(id, aSalesSelected);
 
-        var monto = parseFloat($(this).find('td:eq(9)').text());
+        var monto = parseFloat($(this).find('td:eq(1)').text());
         var balanced = parseFloat($('#balance').text());
         balanced = isNaN(balanced) ? 0 : balanced;
         
@@ -349,12 +378,13 @@ $(function() {
 	            aoData.push( { "name": "site", "value": $('#site').val() } );
 	            aoData.push( { "name": "period", "value": $('#period').val() } );
 	            aoData.push( { "name": "compReceiptList", "value":compList.join(",") } );
+	            if()
 	        },
 	        "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
 	            var index = jQuery.inArray(aData.DT_RowId, compList); 
 	            if ( index !== -1 ) {
 	                $(nRow).hide();
-	            } else if ( jQuery.inArray(aData.DT_RowId, selectdList) !== -1 ) {
+	            } else if ( jQuery.inArray(aData.DT_RowId, selectedList) !== -1 ) {
 	                $(nRow).addClass('yellow');
 	            }
 	        },    
@@ -411,4 +441,5 @@ $(function() {
 	    
 	
 	};
+	
 });
