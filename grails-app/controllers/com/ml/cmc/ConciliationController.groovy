@@ -65,6 +65,10 @@ class ConciliationController extends SessionInfoController{
 			 if(medio != null) eq('medio', medio)
 			 eq('state',state3)
              eq('period', AccountantPeriod.findById(params.period))
+			 if(params.selectedList.length() > 0) {
+				 def ids = params.selectedList.split(",")
+				 not{inList('id', ids)}
+			  }
 
 		}
         
@@ -91,10 +95,10 @@ class ConciliationController extends SessionInfoController{
 			 if(medios != null) inList('medio', medios)
 			 eq('state',state)
              eq('period', AccountantPeriod.findById(params.period))
-			 //if(params.aSalesList && params.aSalesList.size() > 0) {
-			//	 List<Long> longIds = (params.aSalesList instanceof String)?[params.aSalesList.toLong()]:params.aSalesList.collect{it.toLong()}
-			//	 not{inList('id', longIds)}
-			// }
+  			 if(params.selectedList.length() > 0) {
+				def ids = params.selectedList.split(",")
+                not{inList('id', ids)}
+             }
 		}
         
         responseMap.aaData = serializeReceiptData(salesSiteInstanceList)

@@ -77,6 +77,16 @@
    </td>
    <td>
       <table style="border:0px">
+    <tr>
+        <td align="center">&nbsp;</td>
+      </tr>
+    <tr>
+        <td align="center">&nbsp;</td>
+      </tr>
+    <tr>
+        <td align="center">&nbsp;</td>
+      </tr>
+      
       <tr>
         <td align="center">
 	<span class="button"><input type="button" class="save" value="agrupar" id="agrupar"/></span>           
@@ -88,8 +98,6 @@
         </td>
       </tr>
       </table>
-     
-     
    </td>
    <td>
     <div style="position:relative">
