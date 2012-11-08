@@ -59,6 +59,8 @@ $(function() {
 		            return;
 			}
 			
+			
+			
 			var receiptTable = $('#receipt_table').dataTable();
 		    var receiptRows = receiptTable.$('tr.yellow');
 		    
@@ -69,6 +71,9 @@ $(function() {
 		    
 		    aReceiptSelected = [];
 		    aSalesSelected = [];
+		    
+		    receiptTable.fnDraw();
+		    salesTable.fnDraw();
 		    
 		},
 		mouseover: function() {
@@ -116,7 +121,8 @@ $(function() {
         balanced = isNaN(balanced) ? 0 : balanced;
         
 		$(this).toggleClass('yellow');
-		if ($(this).hasClass('yellow')) {
+
+		if (index == -1) {
 			balanced -= isNaN(monto) ? 0 : monto;
 	         aSalesSelected.push(id)
 		} else {
@@ -344,10 +350,19 @@ $(function() {
 			    	$('#lock').attr("value","Unlock");
 			    	$('#myBody').html(data);
 			    	
-			    	createTableServer('#receipt_table', listReceiptLink, receiptList, aReceiptSelected);
-			    	createTableServer('#sales_table', listSalesLink, salesList, aSalesSelected);
+			    	var extReceiptParams = {1:{"name":"fromReceiptTransDate", "value":$('#fromReceiptTransDate').val()},
+			    	                        2:{"name":"toReceiptTransDate", "value":$('#toReceiptTransDate').val()},
+			    	                        3:{"name":"fromReceiptPaymtDate", "value":$('#fromReceiptPaymtDate').val()},
+			    							4:{"name":"toReceiptPaymtDate", "value":$('#toReceiptPaymtDate').val()}};
+			    	
+			    	var extSalesParams = {1:{"name":"fromSalesTransDate", "value":$('#fromSalesTransDate').val()},
+			    	                      2:{"name":"toSalesTransDate", "value":$('#toSalesTransDate').val()}};
+			    	
+			    	createTableServer('#receipt_table', listReceiptLink, receiptList, aReceiptSelected, extReceiptParams);
+			    	createTableServer('#sales_table', listSalesLink, salesList, aSalesSelected, extSalesParams);
 			    	
 			    	$('conciliate_table').dataTable({
+			    		"sDom":"rt",
                         "bPaginate": true,
                         "sPaginationType": "full_numbers",
                         "bProcessing": true,
@@ -364,7 +379,7 @@ $(function() {
 		}
 	});
 	
-	function createTableServer(target, link, compList, selectedList){
+	function createTableServer(target, link, compList, selectedList, extraParams){
 	    $(target).dataTable({
 	        "sDom": 'lrtip',
 	        "sPaginationType": "full_numbers",
@@ -377,10 +392,13 @@ $(function() {
 	            aoData.push( { "name": "card", "value": $('#card').val() } );
 	            aoData.push( { "name": "site", "value": $('#site').val() } );
 	            aoData.push( { "name": "period", "value": $('#period').val() } );
-	            aoData.push( { "name": "compReceiptList", "value":compList.join(",") } );
-	            if()
+	            aoData.push( { "name": "selectedList", "value":compList.join(",") } );
+	            for(var i=0; i<extraParams; i++){
+	            	aoData.push({ "name":extraParams[i].name, "value":extraParams[i].value})
+	            }
 	        },
 	        "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+
 	            var index = jQuery.inArray(aData.DT_RowId, compList); 
 	            if ( index !== -1 ) {
 	                $(nRow).hide();
@@ -402,23 +420,27 @@ $(function() {
 	            $(row).find('td').each(function(){
 	                columnVals.push($(this).html());
 	            });
-	            $salesRows.find('td').each(function(){
+	            var saleRow = salesRows[0]; 
+	            $(saleRow).find('td').each(function(){
 	                columnVals.push($(this).html());
 	            });
 	            
 	            oTable.fnAddData(columnVals);
-	            receiptList.push($(row).id);
-	            salesList.push($salesRows.id);
-	            tmpIds.push($(row).id);
-	            tmpIds.push($salesrows.id);
+	            receiptList.push(row.id);
+	            salesList.push(saleRow.id);
+	            tmpIds.push(row.id);
+	            tmpIds.push(saleRow.id);
 	            conciliateList.push(tmpIds);
 	        }
 	    } else {
 	        //iterate over sales rows
-	        for(var i=0; i < salesRows; i++){
+	        for(var i=0; i < salesRows.length; i++){
+
 	            var row = salesRows[i];
 	            var columnVals = [];
-	            $receiptRows.find('td').each(function(){
+	            var tmpIds = [];
+	            var receiptRow = receiptRows[0];
+	            $(receiptRow).find('td').each(function(){
                     columnVals.push($(this).html());
                 });
                 
@@ -427,18 +449,14 @@ $(function() {
                 });
                 
                 oTable.fnAddData(columnVals);
-                
-                receiptList.push($receiptRows.id);
-                salesList.push($(row).id);
-                tmpIds.push($receiptRows.id);
-                tmpIds.push($(row).id);
+                receiptList.push(receiptRow.id);
+                salesList.push(row.id);
+                tmpIds.push(receiptRow.id);
+                tmpIds.push(row.id);
                 conciliateList.push(tmpIds);
 	            
 	        }
 	    }
-	    
-	    
-	
 	};
 	
 });

@@ -359,6 +359,21 @@ table.display tr.odd.row_selected td {
 	background-color: #9FAFD1;
 }
 
+table.display tr.even.yellow td {
+    background: #FCFC06;
+}
+
+table.display tr.odd.yellow td {
+    background: #FCFC06;
+}
+table.display tr.odd.red td{
+    background: #CC0033;
+}
+
+table.display tr.even.red td{
+    background: #CC0033;
+}
+
 
 /*
  * Sorting classes for columns
