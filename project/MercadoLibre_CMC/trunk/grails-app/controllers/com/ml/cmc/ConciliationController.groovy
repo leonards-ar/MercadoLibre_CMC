@@ -69,6 +69,16 @@ class ConciliationController extends SessionInfoController{
 				 def ids = params.selectedList.split(",")
 				 not{inList('id', ids)}
 			  }
+			 if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){
+				 def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromReceiptTransDate)
+				 def toTransDate = new Date().parse("dd/MM/yyyy", params.toReceiptTransDate)
+				 between('transactionDate', fromTransDate, toTransDate)
+			 }
+			 if(params.fromReceiptPaymtDate != null && params.toReceiptPaymtDate != null){
+				 def fromPaymtDate = new Date().parse("dd/MM/yyyy", params.fromReceiptPaymtDate)
+				 def toPaymtDate = new Date().parse("dd/MM/yyyy", params.toReceiptPaymtDate)
+				 between('transactionDate', fromPaymtDate, toPaymtDate)
+			 }
 
 		}
         
@@ -99,6 +109,11 @@ class ConciliationController extends SessionInfoController{
 				def ids = params.selectedList.split(",")
                 not{inList('id', ids)}
              }
+			 if(params.fromSalesTransDate != null && params.toSalesTransDate != null){
+			  def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromSalesTransDate)
+			  def toTransDate = new Date().parse("dd/MM/yyyy", params.toSalesTransDate)
+			  between('transactionDate', fromTransDate, toTransDate)
+			 }
 		}
         
         responseMap.aaData = serializeReceiptData(salesSiteInstanceList)
@@ -146,17 +161,20 @@ class ConciliationController extends SessionInfoController{
 		
 	}
 	
-	def save = { ConciliationCmd conciliationCmd ->
-		
+	def save = { 
 		def lot = lotGeneratorService.getLotId()
 		
-		List salesSiteReceiptList = conciliationCmd.createList()
+		List salesSiteReceiptList = params.ids.split(";")
+		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site]);
 		
 		Conciliation.withTransaction{
+			
 			salesSiteReceiptList.each{ item ->
-				
-				def conciliation = new Conciliation(sale:item.salesSite, receipt:item.receipt,
-					lot:lot, medio:item.receipt?.medio, period:item.receipt?.period, registerType:item.receipt?.registerType)
+				def conciliateIds = item.split(",")
+				def receipt = Receipt.findById(conciliateIds[0])
+				def salesSite = SalesSite.findById(conciliateIds[1])
+				def conciliation = new Conciliation(sale:salesSite, receipt:receipt,
+					lot:lot, medio:medio, period:receipt?.period, registerType:receipt?.registerType)
 				
 				conciliation.save()
 			}
@@ -167,12 +185,8 @@ class ConciliationController extends SessionInfoController{
 		/* call datastage */
 		def username = getUsername()
 		def job = ["/datastage/ConcManual.sh", username, lot].execute()
-		job.waitFor()
-		if(job.exitValue()){
-			response.setStatus(500)
-			render job.err.text
-		}
-		render job.text
+		
+		render message(code:"conciliation.calledProcess", default:"Se ha invocado el proceso", args:[lot, username])
 		 
 	}
     

@@ -72,6 +72,8 @@ $(function() {
 		    aReceiptSelected = [];
 		    aSalesSelected = [];
 		    
+		    $('#balance').html("0.00");
+		    
 		    receiptTable.fnDraw();
 		    salesTable.fnDraw();
 		    
@@ -138,20 +140,17 @@ $(function() {
 		
 		var strdata = "";
 
-		if($('#conciliate_table input:hidden').length == 0) {
+		if(conciliateList.length == 0) {
 			var $dialog = getDialog("No hay elementos para preconciliar");
 			$dialog.dialog('open');
 			
 			return;
 		}
 		
-		$('#conciliate_table input:hidden').each(
-				function() {
-					if (strdata.length > 0) {
-						strdata += "&";
-					}
-					strdata += $(this).attr('id') + "=" + $(this).val();
-				});
+		strdata = "ids=" + conciliateList.join(";")
+		strdata +="&site=" + $('#site').val();
+		strdata +="&country=" + $('#country').val();
+		strdata +="&card=" + $('#card').val(); 
 
         var $processing = getProcessingDialog();
         
@@ -182,6 +181,41 @@ $(function() {
 		});
 
 	});		
+	
+	$('#applyReceiptFilter').live({
+		click: function(){
+			aReceiptSelected = [];
+			oTable = $('#receipt_table').dataTable();
+			
+			oTable.fnDraw();
+		},
+		mouseover: function() {
+			$(this).addClass("ui-state-hover");
+			$(this).css("cursor","pointer");
+		},
+		  mouseout: function() {
+			$(this).removeClass("ui-state-hover");
+		}
+		
+	});
+	
+	$('#applySalesFilter').live({
+		
+		click: function(){
+			aSalesSelected = [];
+			oTable = $('#sales_table').dataTable();
+			oTable.fnDraw();
+		},
+		mouseover: function() {
+			$(this).addClass("ui-state-hover");
+			$(this).css("cursor","pointer");
+		},
+		  mouseout: function() {
+			$(this).removeClass("ui-state-hover");
+		}
+		
+	});
+	
 	
 	$('#receiptFilter').live({
 		click: function(){
@@ -232,7 +266,10 @@ $(function() {
                 dateFormat: "dd/mm/yy",
                 changeMonth: true,
                 changeYear: true,
-                showAnim: 'fadeIn'
+                showAnim: 'fadeIn',
+            	onClose: function( selectedDate ) {
+                    $( "#toReceiptTransDate" ).datepicker( "option", "minDate", selectedDate );
+                }                
             }).datepicker('show');
         });
 
@@ -241,7 +278,10 @@ $(function() {
                 dateFormat: "dd/mm/yy",
                 changeMonth: true,
                 changeYear: true,
-                showAnim: 'fadeIn'
+                showAnim: 'fadeIn',
+                onClose: function( selectedDate ) {
+                	$( "#fromReceiptTransDate" ).datepicker( "option", "maxDate", selectedDate );
+                }                	
             }).datepicker('show');
         });
         
@@ -250,7 +290,11 @@ $(function() {
                 dateFormat: "dd/mm/yy",
                 changeMonth: true,
                 changeYear: true,
-                showAnim: 'fadeIn'
+                showAnim: 'fadeIn',
+            	onClose: function( selectedDate ) {
+                    $( "#toReceiptPaymtDate" ).datepicker( "option", "minDate", selectedDate );
+                }                
+                
             }).datepicker('show');
         });
 
@@ -259,7 +303,10 @@ $(function() {
                 dateFormat: "dd/mm/yy",
                 changeMonth: true,
                 changeYear: true,
-                showAnim: 'fadeIn'
+                showAnim: 'fadeIn',
+	            onClose: function( selectedDate ) {
+	            	$( "#fromReceiptPaymtDate" ).datepicker( "option", "maxDate", selectedDate );
+	            }                	
             }).datepicker('show');
         });
         
@@ -268,7 +315,11 @@ $(function() {
                 dateFormat: "dd/mm/yy",
                 changeMonth: true,
                 changeYear: true,
-                showAnim: 'fadeIn'
+                showAnim: 'fadeIn',
+            	onClose: function( selectedDate ) {
+                    $( "#toSalesTransDate" ).datepicker( "option", "minDate", selectedDate );
+                }                
+                
             }).datepicker('show');
         });
 
@@ -277,7 +328,10 @@ $(function() {
                 dateFormat: "dd/mm/yy",
                 changeMonth: true,
                 changeYear: true,
-                showAnim: 'fadeIn'
+                showAnim: 'fadeIn',
+	            onClose: function( selectedDate ) {
+	            	$( "#fromSalesTransDate" ).datepicker( "option", "maxDate", selectedDate );
+	            }                
             }).datepicker('show');
         });
         
@@ -350,23 +404,72 @@ $(function() {
 			    	$('#lock').attr("value","Unlock");
 			    	$('#myBody').html(data);
 			    	
-			    	var extReceiptParams = {1:{"name":"fromReceiptTransDate", "value":$('#fromReceiptTransDate').val()},
-			    	                        2:{"name":"toReceiptTransDate", "value":$('#toReceiptTransDate').val()},
-			    	                        3:{"name":"fromReceiptPaymtDate", "value":$('#fromReceiptPaymtDate').val()},
-			    							4:{"name":"toReceiptPaymtDate", "value":$('#toReceiptPaymtDate').val()}};
+			    	//createTableServer('#receipt_table', listReceiptLink, receiptList, aReceiptSelected, extReceiptParams);
+			    	//createTableServer('#sales_table', listSalesLink, salesList, aSalesSelected, extSalesParams);
 			    	
-			    	var extSalesParams = {1:{"name":"fromSalesTransDate", "value":$('#fromSalesTransDate').val()},
-			    	                      2:{"name":"toSalesTransDate", "value":$('#toSalesTransDate').val()}};
+				    $('#receipt_table').dataTable({
+				        "sDom": 'lrtip',
+				        "sPaginationType": "full_numbers",
+				        "bProcessing": true,
+				        "bServerSide": true,        
+				        "sAjaxSource": listReceiptLink,
+				        "sServerMethod": "POST",
+				        "fnServerParams": function ( aoData ) {
+				            aoData.push( { "name": "country", "value": $('#country').val() } );
+				            aoData.push( { "name": "card", "value": $('#card').val() } );
+				            aoData.push( { "name": "site", "value": $('#site').val() } );
+				            aoData.push( { "name": "period", "value": $('#period').val() } );
+				            aoData.push( { "name": "selectedList", "value":receiptList.join(",") } );
+				            if($('#fromReceiptTransDate').val() !='') aoData.push( { "name":"fromReceiptTransDate", "value":$('#fromReceiptTransDate').val()} );
+				            if($('#toReceiptTransDate').val() !='') aoData.push( { "name":"toReceiptTransDate", "value":$('#toReceiptTransDate').val()} );
+				            if($('#fromReceiptPaymtDate').val() !='') aoData.push( { "name":"fromReceiptPaymtDate", "value":$('#fromReceiptPaymtDate').val()});
+				            if($('#toReceiptPaymtDate').val() !='') aoData.push( { "name":"toReceiptPaymtDate", "value":$('#toReceiptPaymtDate').val()}); 
+				        },
+				        "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+
+				            var index = jQuery.inArray(aData.DT_RowId, receiptList); 
+				            if ( index !== -1 ) {
+				                $(nRow).hide();
+				            } else if ( jQuery.inArray(aData.DT_RowId, aReceiptSelected) !== -1 ) {
+				                $(nRow).addClass('yellow');
+				            }
+				        },    
+				    });
 			    	
-			    	createTableServer('#receipt_table', listReceiptLink, receiptList, aReceiptSelected, extReceiptParams);
-			    	createTableServer('#sales_table', listSalesLink, salesList, aSalesSelected, extSalesParams);
-			    	
+				    $('#sales_table').dataTable({
+				        "sDom": 'lrtip',
+				        "sPaginationType": "full_numbers",
+				        "bProcessing": true,
+				        "bServerSide": true,        
+				        "sAjaxSource": listSalesLink,
+				        "sServerMethod": "POST",
+				        "fnServerParams": function ( aoData ) {
+				            aoData.push( { "name": "country", "value": $('#country').val() } );
+				            aoData.push( { "name": "card", "value": $('#card').val() } );
+				            aoData.push( { "name": "site", "value": $('#site').val() } );
+				            aoData.push( { "name": "period", "value": $('#period').val() } );
+				            aoData.push( { "name": "selectedList", "value":salesList.join(",") } );
+				            if($('#fromSalesTransDate').val() !='') aoData.push( { "name":"fromSalesTransDate", "value":$('#fromSalesTransDate').val()} );
+				            if($('#toSalesTransDate').val() !='') aoData.push( { "name":"toSalesTransDate", "value":$('#toSalesTransDate').val()} );
+
+				        },
+				        "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+
+				            var index = jQuery.inArray(aData.DT_RowId, salesList); 
+				            if ( index !== -1 ) {
+				                $(nRow).hide();
+				            } else if ( jQuery.inArray(aData.DT_RowId, aSalesSelected) !== -1 ) {
+				                $(nRow).addClass('yellow');
+				            }
+				        },    
+				    });
+				    
 			    	$('conciliate_table').dataTable({
-			    		"sDom":"rt",
-                        "bPaginate": true,
-                        "sPaginationType": "full_numbers",
-                        "bProcessing": true,
-                        "bSort":false
+			            "bPaginate":false,
+			            "bInfo":false,
+			            "bDestroy":true,
+			            "sDom": 'rt',
+			            "bAutoWidth":false
                      });
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -379,38 +482,13 @@ $(function() {
 		}
 	});
 	
-	function createTableServer(target, link, compList, selectedList, extraParams){
-	    $(target).dataTable({
-	        "sDom": 'lrtip',
-	        "sPaginationType": "full_numbers",
-	        "bProcessing": true,
-	        "bServerSide": true,        
-	        "sAjaxSource": link,
-	        "sServerMethod": "POST",
-	        "fnServerParams": function ( aoData ) {
-	            aoData.push( { "name": "country", "value": $('#country').val() } );
-	            aoData.push( { "name": "card", "value": $('#card').val() } );
-	            aoData.push( { "name": "site", "value": $('#site').val() } );
-	            aoData.push( { "name": "period", "value": $('#period').val() } );
-	            aoData.push( { "name": "selectedList", "value":compList.join(",") } );
-	            for(var i=0; i<extraParams; i++){
-	            	aoData.push({ "name":extraParams[i].name, "value":extraParams[i].value})
-	            }
-	        },
-	        "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
-
-	            var index = jQuery.inArray(aData.DT_RowId, compList); 
-	            if ( index !== -1 ) {
-	                $(nRow).hide();
-	            } else if ( jQuery.inArray(aData.DT_RowId, selectedList) !== -1 ) {
-	                $(nRow).addClass('yellow');
-	            }
-	        },    
-	    });
-	};
-	
 	function group(receiptRows, salesRows, conciliateTable){
-	    var oTable = conciliateTable.dataTable();
+	    var oTable = conciliateTable.dataTable({	    		
+	    		"bPaginate":false,
+	            "bInfo":false,
+	            "bDestroy":true,
+	            "sDom": 'rt',
+	            "bAutoWidth":false});
 	    if(receiptRows.length > 1) {
 	        //iterate over receipt rows
 	        for(var i=0; i < receiptRows.length; i++) {
