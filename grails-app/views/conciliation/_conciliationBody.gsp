@@ -7,6 +7,8 @@
     </div>
     <br/>
     <div style="width:550;height:75;border:1px solid #ccc;position:relative">
+ 
+    <div class="filterFields">
       <div><g:message code="salesSite.transDate" default="Fecha de la Transaccion'"/></div>
       <g:message code="salesSite.from" default="Desde'"/>: <g:textField name="fromReceiptTransDate" id="fromReceiptTransDate" value="${fromReceiptTransDate}" size="10" />
       <g:message code="salesSite.to" default="Hasta'"/>: <g:textField name="toReceiptTransDate" id="toReceiptTransDate" value="${toReceiptTransDate}" size="10" />
@@ -15,12 +17,19 @@
       <g:message code="salesSite.from" default="Desde'"/>: <g:textField name="fromReceiptPaymtDate" id="fromReceiptPaymtDate" value="${fromReceiptPaymtDate}" size="10" />
       <g:message code="salesSite.to" default="Hasta'"/>: <g:textField name="toReceiptPaymtDate" id="toReceiptPaymtDate" value="${toReceiptPaymtDate}" size="10" />
     </div>
+      <div class="filterButton">
+        <span class="button">
+          <input type="button" class="save" value="Filtrar" id="applyReceiptFilter"/>
+        </span>        
+      </div>
+      
+    </div>
     <br/> 
 	  <div id="filterReceiptColumns" class="receiptfilterColumns">
 	   <h3>${message(code: 'preconciliation.receipts', default: 'Recibos')}</h3>
 	  <table>
 	    <tr>
-	     <td><g:checkBox id='receiptColAll' value="${true}" /></td>
+	     <td><g:checkBox name="receiptColAll" id='receiptColAll' value="${true}" /></td>
 	     <td>${message(code: 'salesSite.unselect', default: 'Seleccionar Todo')}</td>
 	     <td>&nbsp;</td>
 	     <td>&nbsp;</td>
@@ -105,16 +114,24 @@
     </div>
     <br/>
     <div style="width:550;height:75;border:1px solid #ccc;position:relative">
-      <div><g:message code="salesSite.transDate" default="Fecha de la Transaccion'"/></div>
-      <g:message code="salesSite.from" default="Desde'"/>: <g:textField name="fromSalesTransDate" id="fromSalesTransDate" value="${fromSalesTransDate}" size="10" />
-      <g:message code="salesSite.to" default="Hasta'"/>: <g:textField name="toSalesTransDate" id="toSalesTransDate" value="${toSalesTransDate}" size="10" />
+      <div class="filterFields">
+	      <div><g:message code="salesSite.transDate" default="Fecha de la Transaccion'"/></div>
+	      <g:message code="salesSite.from" default="Desde'"/>: <g:textField name="fromSalesTransDate" id="fromSalesTransDate" value="${fromSalesTransDate}" size="10" />
+	      <g:message code="salesSite.to" default="Hasta'"/>: <g:textField name="toSalesTransDate" id="toSalesTransDate" value="${toSalesTransDate}" size="10" />
+      </div>
+           <div class="filterButton">
+        <span class="button">
+          <input type="button" class="save" value="Filtrar" id="applySalesFilter"/>
+        </span>        
+      </div>
+      </div>
     </div>
     <br/>     
     <div id="filterSalesColumns" class="salesSitefilterColumns">
     <h3>${message(code: 'preconciliation.salesSite', default: 'Ventas del Sitio')}</h3>
   <table>
     <tr>
-     <td><g:checkBox id='salesColAll' value="${true}" /></td>
+     <td><g:checkBox name="salesColAll" id='salesColAll' value="${true}" /></td>
      <td>${message(code: 'salesSite.unselect', default: 'Seleccionar Todo')}</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
