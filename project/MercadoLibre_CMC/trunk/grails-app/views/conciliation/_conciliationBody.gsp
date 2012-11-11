@@ -75,7 +75,7 @@
         <td><g:checkBox class='receiptCol' name="14" value="true"/></td>
         <td>${message(code: 'salesSite.paymentDate', default: 'Fecha de Pago')}</td>
         <td><g:checkBox class='receiptCol' name="15" value="true"/></td>
-        <td>${message(code: 'salesSite.payed', default: 'Pagado')}</td>
+        <td>${message(code: 'salesSite.payment', default: 'Ref. de Pago')}</td>
 	    </tr>                    
 	  </table>
 	  </div>       
@@ -123,7 +123,6 @@
         <span class="button">
           <input type="button" class="save" value="Filtrar" id="applySalesFilter"/>
         </span>        
-      </div>
       </div>
     </div>
     <br/>     
@@ -176,7 +175,7 @@
         <td><g:checkBox class='salesSiteCol' name="14" value="true"/></td>
         <td>${message(code: 'salesSite.paymentDate', default: 'Fecha de Pago')}</td>
         <td><g:checkBox class='salesSiteCol' name="15" value="true"/></td>
-        <td>${message(code: 'salesSite.payed', default: 'Pagado')}</td>
+        <td>${message(code: 'salesSite.payment', default: 'Pagado')}</td>
       </tr>                    
   </table>
   </div>       

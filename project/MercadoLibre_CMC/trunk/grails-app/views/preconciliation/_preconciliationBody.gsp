@@ -176,7 +176,7 @@
         <td><g:checkBox class='salesSiteCol' name="14" value="true"/></td>
         <td>${message(code: 'salesSite.paymentDate', default: 'Fecha de Pago')}</td>
         <td><g:checkBox class='salesSiteCol' name="15" value="true"/></td>
-        <td>${message(code: 'salesSite.payed', default: 'Pagado')}</td>
+        <td>${message(code: 'salesSite.payment', default: 'Pagado')}</td>
       </tr>                    
   </table>
   </div>       

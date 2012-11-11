@@ -5,9 +5,6 @@ $(function() {
     var salesList = [];
     var conciliateList = [];
     
-    var receiptCount = 0;
-    var salesCount = 0;
-    
 	$('#country').chainSelect('#card', cardLink, {
 		nonSelectedValue : '---'
 	});
@@ -404,9 +401,6 @@ $(function() {
 			    	$('#lock').attr("value","Unlock");
 			    	$('#myBody').html(data);
 			    	
-			    	//createTableServer('#receipt_table', listReceiptLink, receiptList, aReceiptSelected, extReceiptParams);
-			    	//createTableServer('#sales_table', listSalesLink, salesList, aSalesSelected, extSalesParams);
-			    	
 				    $('#receipt_table').dataTable({
 				        "sDom": 'lrtip',
 				        "sPaginationType": "full_numbers",
@@ -433,7 +427,7 @@ $(function() {
 				            } else if ( jQuery.inArray(aData.DT_RowId, aReceiptSelected) !== -1 ) {
 				                $(nRow).addClass('yellow');
 				            }
-				        },    
+				        }    
 				    });
 			    	
 				    $('#sales_table').dataTable({
@@ -461,7 +455,7 @@ $(function() {
 				            } else if ( jQuery.inArray(aData.DT_RowId, aSalesSelected) !== -1 ) {
 				                $(nRow).addClass('yellow');
 				            }
-				        },    
+				        }    
 				    });
 				    
 			    	$('conciliate_table').dataTable({
