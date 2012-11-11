@@ -15,7 +15,7 @@
       <th>${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}</th>          
       <th>${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}</th>
       <th>${message(code: 'salesSite.paymentDate', default: 'Fecha de Pago')}</th>
-      <th>${message(code: 'salesSite.payed', default: 'Pagado')}</th>
+      <th>${message(code: 'salesSite.payment', default: 'Ref de Pago')}</th>
     </tr>
     </thead>
     <tbody>

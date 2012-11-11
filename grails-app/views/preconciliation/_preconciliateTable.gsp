@@ -15,7 +15,7 @@
     <th>R${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}</th>
     <th>R${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}</th>
     <th>R${message(code: 'salesSite.paymentDate', default: 'Fecha de Pago')}</th>
-    <th>R${message(code: 'salesSite.payed', default: 'Ref de Pago')}</th>
+    <th>R${message(code: 'salesSite.payment', default: 'Ref de Pago')}</th>
     <th>S${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}</th>
     <th>S${message(code: 'salesSite.amount', default: 'Monto')}</th>
     <th>S${message(code: 'salesSite.authorization', default: 'Autorizacion')}</th>
@@ -30,7 +30,7 @@
     <th>S${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}</th>
     <th>S${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}</th>
     <th>S${message(code: 'salesSite.paymentDate', default: 'Fecha de Pago')}</th>
-    <th>S${message(code: 'salesSite.payed', default: 'Ref de Pago')}</th>
+    <th>S${message(code: 'salesSite.payment', default: 'Ref de Pago')}</th>
 
   </tr>
   </thead>
