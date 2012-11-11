@@ -114,7 +114,7 @@
     </div>
     <br/>
     <div style="width:550;height:75;border:1px solid #ccc;position:relative">
-      <div class="filterFields">
+      <div class="prefilterFields">
 	      <div><g:message code="salesSite.transDate" default="Fecha de la Transaccion'"/></div>
 	      <g:message code="salesSite.from" default="Desde'"/>: <g:textField name="fromSalesTransDate" id="fromSalesTransDate" value="${fromSalesTransDate}" size="10" />
 	      <g:message code="salesSite.to" default="Hasta'"/>: <g:textField name="toSalesTransDate" id="toSalesTransDate" value="${toSalesTransDate}" size="10" />

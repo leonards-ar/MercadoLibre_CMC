@@ -10,15 +10,16 @@ class CompensationController extends SessionInfoController {
     def lotGeneratorService
     def sessionFactory
 
-    def colNames = ["registerType","cardNumber","transactionDate","amount","shareAmount","authorization",
-                    "shareNumber","shareQty","customerId","documentId","tid","nsu","documentNumber"]
-    
+	def colNames = ["transactionDate","amount","authorization","cardNumber","customerId","documentNumber",
+		"documentId","id","ro","tid","nsu","shareNumber","shareQty","paymentDate","payment"]
+	
     def index = {
 		securityLockService.unLockFunctionality(getSessionId())
 		def countryList = Medio.withCriteria{
 			projections{
 				distinct "country"
 			}
+			order("country")
 		}
 		render(view:'index', model:[countryList: countryList])
 	}
@@ -74,10 +75,21 @@ class CompensationController extends SessionInfoController {
 			order(colName, sortDir)
 			eq('medio', medio)
 			eq('state',state1)
+			eq('period', AccountantPeriod.findById(params.period))
 			if(params.compReceiptList.length() > 0) {
 				def ids = params.compReceiptList.split(",")
                 not{inList('id', ids)}
             }
+			if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){
+				def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromReceiptTransDate)
+				def toTransDate = new Date().parse("dd/MM/yyyy", params.toReceiptTransDate)
+				between('transactionDate', fromTransDate, toTransDate)
+			}
+			if(params.fromReceiptPaymtDate != null && params.toReceiptPaymtDate != null){
+				def fromPaymtDate = new Date().parse("dd/MM/yyyy", params.fromReceiptPaymtDate)
+				def toPaymtDate = new Date().parse("dd/MM/yyyy", params.toReceiptPaymtDate)
+				between('transactionDate', fromPaymtDate, toPaymtDate)
+			}
 		}
 		
         responseMap.aaData = serializeReceiptData(receiptInstanceList)
@@ -107,13 +119,20 @@ class CompensationController extends SessionInfoController {
 			order(colName, sortDir)
 			 eq('medio', medio)
 			 eq('state',state1)
+			 eq('period', AccountantPeriod.findById(params.period))
              def ids = params.compSalesList.split(",")
              if(ids.length > 0){
                  not{inList('id', ids)}
              }
+			 if(params.fromSalesTransDate != null  && params.toSalesTransDate != null){
+				 def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromSalesTransDate)
+				 def toTransDate = new Date().parse("dd/MM/yyyy", params.toSalesTransDate)
+				 between('transactionDate', fromTransDate, toTransDate)
+		 	 }
+
 		}
 		
-        responseMap.aaData = serializeSalesData(salesSiteInstanceList)
+        responseMap.aaData = serializeReceiptData(salesSiteInstanceList)
         
         responseMap.sEcho = params.sEcho
         responseMap.iTotalRecords = salesSiteInstanceList.totalCount
@@ -150,59 +169,9 @@ class CompensationController extends SessionInfoController {
         def username = getUsername()
 		def jobName = params.element == "F_RECIBOS"?"/datastage/CompManual_Recibos.sh":"/datastage/CompManual_Ventas.sh"
         def job = [jobName, username, lot].execute()
-        job.waitFor()
-        if(job.exitValue()){
-            response.setStatus(500)
-            render job.err.text
-        }
         
-        render job.text
+        render message(code:"compensation.calledProcess", default:"Se ha invocado el proceso", args:[lot, username])
     
     }
     
-    private serializeReceiptData(instanceList) {
-        
-        def data = []
-        
-        instanceList.each(){
-            data << ["DT_RowId":it.id.toString(),
-                     "0":it?.registerType.toString(),
-                     "1":it?.cardNumber.toString(),
-                     "2":formatDate(date:it?.transactionDate, format:"dd-MM-yyyy"),
-                     "3":it?.amount.toString(),
-                     "4":it?.shareAmount.toString(),
-                     "5":it?.authorization.toString(),
-                     "6":it?.shareNumber.toString(),
-                     "7":it?.shareQty.toString(),
-                     "8":it?.tid.toString(),
-                     "9":it?.nsu.toString(),
-                     "10":it?.documentNumber.toString()]
-        }
-        
-        return data
-    }
-    
-    private serializeSalesData(instanceList) {
-        
-        def data = []
-        
-        instanceList.each(){
-            data << ["DT_RowId":it.id.toString(),
-                     "0":it?.registerType.toString(),
-                     "1":it?.cardNumber.toString(),
-                     "2":formatDate(date:it?.transactionDate,format:"dd-MM-yyyy"),
-                     "3":it?.amount.toString(),
-                     "4":it?.shareAmount.toString(),
-                     "5":it?.authorization.toString(),
-                     "6":it?.shareNumber.toString(),
-                     "7":it?.shareQty.toString(),
-                     "8":it?.tid.toString(),
-                     "9":it?.nsu.toString(),
-                     "10":it?.documentNumber.toString()]
-        }
-        
-        return data
-    }
-
-		 
 }

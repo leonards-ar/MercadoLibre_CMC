@@ -16,13 +16,15 @@
     <g:javascript>
       var cardLink = '${createLink(action:"cards")}';
       var siteLink = '${createLink(action:"sites")}';
-      var groupLink = '${createLink(action:"group")}';
+      var periodLink = '${createLink(action:"periods")}';
       var saveLink = '${createLink(action:"save")}';
       var exitLink = '${createLink(action:"exit")}';
       var lockLink = '${createLink(action:"lock")}';
       var listReceiptLink = '${createLink(action:"listReceipts")}';
       var listSalesLink = '${createLink(action:"listSalesSite")}';
       var index = '${createLink(action:"index")}';
+      
+      var completeFilters = "${message(code:'conciliation.nofilterselection.error', default:'Seleccione todos los filtros')}";
       var compensationNoselectionError = "${message(code:'compensation.noselection.error', default:'Seleccione mas de un elemento')}";
       var $loading = getProcessingDialog();
     </g:javascript>
@@ -47,13 +49,15 @@
           <td>
             <div><g:message code="compensation.card" default="Tarjeta"/> </div>
           <g:select name="card" id="card" noSelection="['':'']"/>
-
           </td>
           <td>
             <div><g:message code="compensation.site" default="Site"/> </div>
           <g:select name="site" id="site" noSelection="['':'']"/>
-
           </td>
+          <td>
+            <div><g:message code="conciliation.period" default="Site"/> </div>
+            <g:select name="period" id="period" optionKey="id" noSelection="['':'']" />
+          </td>                    
           <td>
             <span class="button">
               <input type="button" class="save" value="Lock" id="lock"/>
