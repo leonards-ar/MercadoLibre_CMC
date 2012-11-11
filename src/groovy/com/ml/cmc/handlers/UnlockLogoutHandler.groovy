@@ -35,10 +35,7 @@ class UnlockLogoutHandler implements LogoutHandler, HttpSessionListener{
     
     private removeLocker(String sessionId) {
 
-        Lock locker = Lock.findBySessionId(sessionId)
-        if(locker != null){
-            locker.delete(flush:true)
-        }
-        
+		Lock.executeUpdate("delete Lock l where l.sessionId = :sessionId", [sessionId:sessionId])
+
     }
 }

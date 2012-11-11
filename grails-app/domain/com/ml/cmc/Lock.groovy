@@ -1,6 +1,6 @@
 package com.ml.cmc
 
-class Lock {
+class Lock implements Serializable{
 
     String sessionId
     String username
@@ -15,7 +15,7 @@ class Lock {
         table 'A_LOCK_FUNCTIONALITY'
 		version false
 		
-        id generator: 'assigned', name:'sessionId', type:'string'
+        id composite:['sessionId', 'medio']
         sessionId column:'session_id'
         medio column:'cd_medio'
         function column:'funcionalidad'

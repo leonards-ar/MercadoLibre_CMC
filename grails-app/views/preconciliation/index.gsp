@@ -15,17 +15,20 @@
     <g:javascript>
       var cardLink = '${createLink(action:"cards")}';
       var siteLink = '${createLink(action:"sites")}';
+      var periodLink = '${createLink(action:"periods")}';
       var groupLink = '${createLink(action:"group")}';
       var saveLink = '${createLink(action:"save")}';
       var exitLink = '${createLink(action:"exit")}';
       var lockLink = '${createLink(action:"lock")}';
-      var listReceiptsLink = '${createLink(action:"listReceipts")}';
+      
+      var listReceiptLink = '${createLink(action:"listReceipts")}';
       var listSalesLink = '${createLink(action:"listSalesSite")}';
       var index = '${createLink(action:"index")}';
+      
       var preconciliationNoselectionError = "${message(code:'preconciliation.noselection.error', default:'Seleccione un Recibo y una Venta')}";
       var preconcliationOnlyoneError = "${message(code:'preconcliation.onlyone.error', default:'Seleccione solo uno') }";
       var preconciliationBadRelationError = "${message(code:'preconcliation.relationship.error', default:'La relacion entre los Recibos y Ventas no es correcta') }";
-
+      var completeFilters = "${message(code:'conciliation.nofilterselection.error', default:'Seleccione todos los filtros')}";
     </g:javascript>
   
   </head>
@@ -52,9 +55,12 @@
           </td>
           <td>
             <div><g:message code="preconciliation.site" default="Site"/> </div>
-          <g:select name="site" id="site" noSelection="['':'']"/>
-
+            <g:select name="site" id="site" noSelection="['':'']"/>
           </td>
+          <td>
+            <div><g:message code="conciliation.period" default="Site"/> </div>
+            <g:select name="period" id="period" optionKey="id" noSelection="['':'']" />
+          </td>          
           <td>
             <span class="button">
               <input type="button" class="save" value="Lock" id="lock"/>            

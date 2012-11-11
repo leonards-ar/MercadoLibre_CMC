@@ -10,6 +10,9 @@ class PreconciliationController extends SessionInfoController{
     def securityLockService
     def lotGeneratorService
 	def sessionFactory
+	
+	def colNames = ["transactionDate","amount","authorization","cardNumber","customerId","documentNumber",
+		"documentId","id","ro","tid","nsu","shareNumber","shareQty","paymentDate","payment"]
     
     def index = {
         securityLockService.unLockFunctionality(getSessionId())
@@ -33,9 +36,9 @@ class PreconciliationController extends SessionInfoController{
         }
 
         try{
-            securityLockService.lockFunctionality(getUsername(), Constant.FUNC_PRECONCILIATE, getSessionId(), medio)
+            securityLockService.lockFunctionalityByCountry(getUsername(), Constant.FUNC_PRECONCILIATE, getSessionId(), params.country)
         }catch (SecLockException e) {
-           def error = message(code:"preconciliation.security.error" ,default:"Error",args:[e.invalidObject?.username, medio])           
+           def error = message(code:"preconciliation.security.country.error" ,default:"Error",args:[e.invalidObject?.username, medio.country])           
            response.setStatus(500)
            render error
            return
@@ -45,125 +48,125 @@ class PreconciliationController extends SessionInfoController{
             return
         }
         
-        def receiptInstanceList = getReceiptsForSales(medio, null, null, null)
-
-		def medios = Medio.find("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
-		
-		if(medios instanceof Medio){
-			medios = [medios]
-		} 
-
-		def salesSiteInstanceList = getSalesForSales(medios, null, null, null)
-        
-        render(template: "preconciliationBody", model:[receiptInstanceList:receiptInstanceList, salesSiteInstanceList:salesSiteInstanceList, filterType:"salesFilter"])
+        render(template: "preconciliationBody", model:[filterType:'salesFilter'])
 
     }
 
-    def listReceipts = {PreconciliationCmd preconciliationCmd ->
-       
+    def listReceipts = {
+		
+		def responseMap = [:]
+		def max = params.iDisplayLength?params.iDisplayLength:10
+		def offset = params.iDisplayStart?params.iDisplayStart:0
+		
+		def colIdx = params.iSortCol? Integer.parseInt(params.iSortCol_0):0
+		def colName = colNames[colIdx]
+		def sortDir = params.sSortDir_0? params.sSortDir_0:'asc'
+
         def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site]);
         def receiptInstanceList = []
+		
+        def selectedList = null
+		if(params.selectedList.length() > 0) selectedList = params.selectedList.split(",")
         
         if(params.filterType == 'salesFilter') {
-            receiptInstanceList = getReceiptsForSales(medio, params.sort, params.order, preconciliationCmd?.receiptIds)
+            receiptInstanceList = getReceiptsForSales(medio, colName, sortDir, max, offset, selectedList)
         } else {
-            receiptInstanceList = getReceiptsForDisable(medio, params.sort, params.order, preconciliationCmd?.receiptIds)
+            receiptInstanceList = getReceiptsForDisable(medio, colName, sortDir, max, offset, selectedList)
         }
         
+        responseMap.aaData = serializeReceiptData(receiptInstanceList)
+        responseMap.sEcho = params.sEcho
+        responseMap.iTotalRecords = receiptInstanceList.totalCount
+        responseMap.iTotalDisplayRecords = receiptInstanceList.totalCount
         
-        render(template:"receiptTable", model:[receiptInstanceList: receiptInstanceList])
-        
+		render responseMap as JSON
     }
     
-    def listSalesSite = {PreconciliationCmd preconciliationCmd ->
+    def listSalesSite = {
+		def responseMap = [:]
+		def max = params.iDisplayLength?params.iDisplayLength:10
+		def offset = params.iDisplayStart?params.iDisplayStart:0
 		
-        def medios = Medio.find("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
+		def colIdx = params.iSortCol? Integer.parseInt(params.iSortCol_0):0
+		def colName = colNames[colIdx]
+		def sortDir = params.sSortDir_0? params.sSortDir_0:'asc'
+
+        def medios = Medio.findAll("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
 		if(medios instanceof Medio){
 			medios = [medios]
 		}
+		
+        def selectedList = null
+		if(params.selectedList.length() > 0) selectedList = params.selectedList.split(",")
 
 		def salesSiteInstanceList = []
 		
 		if(params.filterType == 'salesFilter') {
-			salesSiteInstanceList = getSalesForSales(medios, params.sort, params.order, preconciliationCmd?.salesSiteIds)
+			salesSiteInstanceList = getSalesForSales(medios, colName, sortDir, max, offset, selectedList )
 		} else {
-			salesSiteInstanceList = getSalesForDisable(medios, params.sort, params.order, preconciliationCmd?.salesSiteIds)
+			salesSiteInstanceList = getSalesForDisable(medios, colName, sortDir, max, offset, selectedList)
 		}
 		
-        render(template:"salesSiteTable", model:[salesSiteInstanceList: salesSiteInstanceList])
+        responseMap.aaData = serializeReceiptData(salesSiteInstanceList)
+        responseMap.sEcho = params.sEcho
+        responseMap.iTotalRecords = salesSiteInstanceList.totalCount
+        responseMap.iTotalDisplayRecords = salesSiteInstanceList.totalCount
+        
+		render responseMap as JSON
         
     }
     
-    def group = { PreconciliationCmd preconciliationCmd ->
-        if(params.salesSiteId.size() > 1 && params.receiptId.size() > 1){
-            response.setStatus(500)
-            render message(code:"preconcliation.relationship.error", default:"La relacion entre los Recibos y Ventas no es correcta")
-            return
-        }
-
-        LinkedList preconciliation = (LinkedList)preconciliationCmd.createList() 
-                
-        if(params.salesSiteId.size() > 1){
-            def receiptInstance = Receipt.findById(params.receiptId)
-            params.salesSiteId.each{ saleId ->
-                def salesSiteInstance = SalesSite.findById(saleId)
-                preconciliation.addFirst(new PreSalesSiteReceiptCmd(salesSite: salesSiteInstance, receipt:receiptInstance ))
-            }
-        } else {
-            def salesSiteInstance = SalesSite.findById(params.salesSiteId)
-            params.receiptId.each{ receipt ->
-                def receiptInstance = Receipt.findById(receipt)
-                preconciliation.addFirst(new PreSalesSiteReceiptCmd(salesSite: salesSiteInstance, receipt:receiptInstance ))
-            } 
-        }
-        
-        render(template:"preconciliateTable", model:[preconciliationInstancelist: preconciliation])
-        
-    }
-    
-    def save = { PreconciliationCmd preconciliationCmd ->
+    def save = { 
         
         def lot = lotGeneratorService.getLotId()
         
-        List salesSiteReceiptList = preconciliationCmd.createList()
+		List salesSiteReceiptList = params.ids.split(";")
+		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site]);
         
 		Preconciliation.withTransaction{
 	        salesSiteReceiptList.each{ item ->
+				def preconciliateIds = item.split(",")
+				def receipt = Receipt.findById(preconciliateIds[0])
+				def salesSite = SalesSite.findById(preconciliateIds[1])
+	            def preConciliation = new Preconciliation(sale:salesSite, receipt:receipt, 
+	                lot:lot, medio:medio, period: salesSite?.period)
 	            
-	            def conciliation = new Conciliation(sale:item.salesSite, receipt:item.receipt, 
-	                lot:lot, medio:item.receipt?.medio, period: item.salesSite?.period)
-	            
-	            conciliation.save()
+	            preConciliation.save()
 	        }
         }
         
         sessionFactory.getCurrentSession().clear();
         
         /* call datastage */
-        def job = "echo El proceso se ejecuto satisfactoriamente.".execute()
-        job.waitFor()
-        if(job.exitValue()){    
-            response.setStatus(500)
-            render job.err.text
-        }
-        render job.text
+       	def username = getUsername()
+		def job = ["/datastage/ConcManual.sh", username, lot].execute()
+		
+        render message(code:"preconciliation.calledProcess", default:"Se ha invocado el proceso", args:[lot, username])
          
     }
 	
-	private getReceiptsForSales(Medio medio, String sortType, String orderType, List ids) {
+	private getReceiptsForSales(Medio medio,String sortType, String orderType, String max, String offset, String[] ids) {
 		
 		def state1 = State.findById(1)
 		
-		def registerType1 = RegisterType.findById(1);
-		def registerType2 = RegisterType.findById(2);
-		def registerType5 = RegisterType.findById(5);
+		def registerTypes = RegisterType.findAllByIdInList([1L,2L,5L])
+		//def registerType1 = RegisterType.findById(1);
+		//def registerType2 = RegisterType.findById(2);
+		//def registerType5 = RegisterType.findById(5);
 
-		def receiptInstanceList = Receipt.withCriteria {
-			order(sortType != null? sortType:'receiptNumber', orderType != null?orderType:'asc')
+		def criteria = Receipt.createCriteria()
+		def receiptInstanceList = criteria.list(max:max, offset:offset) {
+			order(sortType, orderType)
 			if(medio != null) eq('medio', medio)
 			eq('state',state1)
-			inList('registerType',[registerType1, registerType2, registerType5])
-            if(ids != null && ids.size() > 0) {
+			eq('period', AccountantPeriod.findById(params.period))
+			inList('registerType',registerTypes)
+			if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){
+				def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromReceiptTransDate)
+				def toTransDate = new Date().parse("dd/MM/yyyy", params.toReceiptTransDate)
+				between('transactionDate', fromTransDate, toTransDate)
+			}
+            if(ids != null && ids.length > 0) {
                 not{inList('id', ids)}
             }
 		}
@@ -172,39 +175,56 @@ class PreconciliationController extends SessionInfoController{
 		
 	}
 	
-	private getSalesForSales(List medios,String sortType, String orderType, List ids ) {
+	private getSalesForSales(List medios,String sortType, String orderType, String max, String offset, String[] ids ) {
 
-		def state1 = State.findById(1)
-		def state2 = State.findById(2)
-		def registerType1 = RegisterType.findById(1);
-		def registerType5 = RegisterType.findById(5);
+		def states = State.findAllByIdInList([1L,2L])
+		//def state1 = State.findById(1)
+		//def state2 = State.findById(2)
+		def registerTypes = RegisterType.findAllByIdInList([1L,2L,5L])
+		//def registerType1 = RegisterType.findById(1);
+		//def registerType5 = RegisterType.findById(5);
 
+		def criteria = SalesSite.createCriteria()
 		
-		def salesSiteInstanceList = SalesSite.withCriteria {
-			order(sortType != null? sortType:'receiptNumber', orderType != null?orderType:'asc')
+		def salesSiteInstanceList = criteria.list(max:max, offset:offset) {
+			order(sortType, orderType)
 			 if(medios != null) inList('medio', medios)
-			 inList('state',[state1, state2])
-			 inList('registerType',[registerType1, registerType5])
+			 inList('state',states)
+			 inList('registerType',registerTypes)
+			 eq('period', AccountantPeriod.findById(params.period))
+			 if(params.fromSalesTransDate != null && params.toSalesTransDate != null){
+				 def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromSalesTransDate)
+				 def toTransDate = new Date().parse("dd/MM/yyyy", params.toSalesTransDate)
+				 between('transactionDate', fromTransDate, toTransDate)
+			 }
              if(ids != null && ids.size() > 0) {
                  not{inList('id', ids)}
              }
 		}
+		
+		return salesSiteInstanceList
 
 		
 	}
 	
-	private getReceiptsForDisable(Medio medio, String sortType, String orderType, List ids) {
+	private getReceiptsForDisable(Medio medio,String sortType, String orderType, String max, String offset, String[] ids) {
 		
 		def state1 = State.findById(1)
 		
 		def registerType3 = RegisterType.findById(3);
 
-
-		def receiptInstanceList = Receipt.withCriteria {
-			order(sortType != null? sortType:'receiptNumber', orderType != null?orderType:'asc')
+		def criteria = Receipt.createCriteria()
+		def receiptInstanceList = criteria.list(max:max, offset:offset) {
+			order(sortType, orderType)
 			if(medio != null) eq('medio', medio)
 			eq('state',state1)
 			eq('registerType',registerType3)
+			eq('period', AccountantPeriod.findById(params.period))
+			if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){
+				def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromReceiptTransDate)
+				def toTransDate = new Date().parse("dd/MM/yyyy", params.toReceiptTransDate)
+				between('transactionDate', fromTransDate, toTransDate)
+			}
             if(ids != null && ids.size() > 0) {
                 not{inList('id', ids)}
             }
@@ -214,23 +234,58 @@ class PreconciliationController extends SessionInfoController{
 		
 	}
 	
-	private getSalesForDisable(List medios,String sortType, String orderType, List ids ) {
+	private getSalesForDisable(List medios,String sortType, String orderType, String max, String offset, String[] ids ) {
 
-		def state1 = State.findById(1)
-		def state2 = State.findById(2)
+		def states = State.findAllByIdInList([1L,2L])
+		//def state1 = State.findById(1)
+		//def state2 = State.findById(2)
 		
 		def registerType3 = RegisterType.findById(3);
 		
-		def salesSiteInstanceList = SalesSite.withCriteria {
+		def criteria = SalesSite.createCriteria()
+		def salesSiteInstanceList = criteria.list(max:max, offset:offset) {
 			order(sortType != null? sortType:'receiptNumber', orderType != null?orderType:'asc')
 			 if(medios != null) inList('medio', medios)
-			 inList('state',[state1, state2])
+			 inList('state',states)
 			 eq('registerType',registerType3)
+			 eq('period', AccountantPeriod.findById(params.period))
+			 if(params.fromSalesTransDate != null && params.toSalesTransDate != null){
+				 def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromSalesTransDate)
+				 def toTransDate = new Date().parse("dd/MM/yyyy", params.toSalesTransDate)
+				 between('transactionDate', fromTransDate, toTransDate)
+			 }
              if(ids != null && ids.size() > 0) {
                  not{inList('id', ids)}
              }
 		}
 
+	}
+	
+	private serializeReceiptData(instanceList) {
+		
+		def data = []
+		
+		instanceList.each(){
+			data << ["DT_RowId":it.id.toString(),
+					 "0":formatDate(date:it?.transactionDate, format:"dd-MM-yyyy"),
+					 "1":it?.amount.toString(),
+					 "2":it?.authorization.toString(),
+					 "3":it?.cardNumber.toString(),
+					 "4":it?.customerId.toString(),
+					 "5":it?.documentNumber.toString(),
+					 "6":it?.documentId.toString(),
+					 "7":it?.id.toString(),
+					 "8":it?.ro.toString(),
+					 "9":it?.tid.toString(),
+					 "10":it?.nsu.toString(),
+					 "11":it?.shareNumber.toString(),
+					 "12":it?.shareQty.toString(),
+					 "13":formatDate(date:it?.paymentDate, format:"dd-MM-yyyy"),
+					 "14":it?.payment
+					 ]
+		}
+		
+		return data
 	}
 
 }
