@@ -10,10 +10,10 @@ class ConciliationController extends SessionInfoController{
 	def securityLockService
 	def lotGeneratorService
 	def sessionFactory
-	
+
 	def colNames = ["transactionDate","amount","authorization","cardNumber","customerId","documentNumber",
 		"documentId","id","ro","tid","nsu","shareNumber","shareQty","paymentDate","payment"]
-	
+
 	def index = {
 		securityLockService.unLockFunctionality(getSessionId())
 		def countryList = Medio.withCriteria{
@@ -165,31 +165,6 @@ class ConciliationController extends SessionInfoController{
 		 
 	}
     
-    private serializeReceiptData(instanceList) {
-        
-        def data = []
-        
-        instanceList.each(){
-            data << ["DT_RowId":it.id.toString(),
-                     "0":formatDate(date:it?.transactionDate, format:"dd-MM-yyyy"),
-                     "1":it?.amount.toString(),
-                     "2":it?.authorization.toString(),
-                     "3":it?.cardNumber.toString(),
-                     "4":it?.customerId.toString(),
-                     "5":it?.documentNumber.toString(),
-                     "6":it?.documentId.toString(),
-                     "7":it?.id.toString(),
-                     "8":it?.ro.toString(),
-                     "9":it?.tid.toString(),
-                     "10":it?.nsu.toString(),
-                     "11":it?.shareNumber.toString(),
-                     "12":it?.shareQty.toString(),
-                     "13":formatDate(date:it?.paymentDate, format:"dd-MM-yyyy"),
-                     "14":it?.payment
-                     ]
-        }
-        
-        return data
-    }
+
 	
 }
