@@ -19,6 +19,35 @@ $(function() {
 		nonSelectedValue : '---'
 	});
 	
+	$('#site').change(function(){
+		var site = $(this).val();
+		if(site == '---') return;
+		var strdata = "site=" + $(this).val();
+		strdata+="&country=" + $('#country').val();
+		strdata +="&card=" + $('#card').val(); 
+		$.ajax({
+			type : 'POST',
+			url : periodLink,
+			data : strdata,
+			success : function(data) {
+				var index = 0;
+				$('#period').html("");//clear old options
+				data = eval(data);//get json array
+				$('#period').get(0).add(new Option('---', '---'), document.all ? 0 : null);
+				index = 1;
+				for (i = 0; i < data.length; i++)//iterate over all options
+				{
+					var item = data[i];
+					
+					$('#period').get(0).add(new Option(item[1],item[0]), document.all ? index++ : null);
+				}
+
+		    } 
+		});
+					
+	});
+	
+	
 	$('.filtered').find(".paginateButtons a, th.sortable a").live('click',function(event) {
 		event.preventDefault();
 		var url = $(this).attr('href');
@@ -49,6 +78,15 @@ $(function() {
 	
 	$('#lock').click(function(){
 		
+	    if($('#country').val()== ''  || $('#country').val()== '---' ||
+		        $('#card').val()== '' || $('#card').val()== '---' ||
+		        $('#site').val()== '' || $('#site').val()== '---' ||
+		        $('#period').val()== '' ||  $('#period').val()== '---'){
+		        var $dialog = getDialog(completeFilters);
+                $dialog.dialog("open");
+                return;
+		    }
+
 	    receiptBalance = 0;
 	    salesBalance = 0;
 	    
@@ -90,14 +128,16 @@ $(function() {
                             aoData.push( { "name": "country", "value": $('#country').val() } );
                             aoData.push( { "name": "card", "value": $('#card').val() } );
                             aoData.push( { "name": "site", "value": $('#site').val() } );
-                            aoData.push( { "name": "compReceiptList", "value":compReceiptList.join(",") } );                                                                                                       
+                            aoData.push( { "name": "period", "value": $('#period').val() } );
+                            aoData.push( { "name": "compReceiptList", "value":compReceiptList.join(",") } );
+				            if($('#fromReceiptTransDate').val() !='' && jQuery.type(('#fromReceiptTransDate').val()) !='undefined') aoData.push( { "name":"fromReceiptTransDate", "value":$('#fromReceiptTransDate').val()} );
+				            if($('#toReceiptTransDate').val() !='' && jQuery.type($('#toReceiptTransDate').val()) !='undefined') aoData.push( { "name":"toReceiptTransDate", "value":$('#toReceiptTransDate').val()} );
+				            if($('#fromReceiptPaymtDate').val() !='' && jQuery.type($('#fromReceiptPaymtDate').val()) !='undefined') aoData.push( { "name":"fromReceiptPaymtDate", "value":$('#fromReceiptPaymtDate').val()});
+				            if($('#toReceiptPaymtDate').val() !='' && jQuery.type($('#toReceiptPaymtDate').val()) !='undefined') aoData.push( { "name":"toReceiptPaymtDate", "value":$('#toReceiptPaymtDate').val()}); 
+
 
                         },
-                        //"fnInitComplete": function(oSettings, json) {
-                        //    createCombos('this');
-                        //},
                         "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
-                            
                             var index = jQuery.inArray(aData.DT_RowId, compReceiptList); 
                             if ( index !== -1 ) {
                               $(nRow).hide();
@@ -123,11 +163,11 @@ $(function() {
                             aoData.push( { "name": "country", "value": $('#country').val() } );
                             aoData.push( { "name": "card", "value": $('#card').val() } );
                             aoData.push( { "name": "site", "value": $('#site').val() } );
-                            aoData.push( { "name": "compSalesList", "value":compSalesList.join(",") } );                            
+                            aoData.push( { "name": "period", "value": $('#period').val() } );
+                            aoData.push( { "name": "compSalesList", "value":compSalesList.join(",") } );       
+				            if($('#fromSalesTransDate').val() !='' && jQuery.type($('#fromSalesTransDate').val()) !='undefined') aoData.push( { "name":"fromSalesTransDate", "value":$('#fromSalesTransDate').val()} );
+				            if($('#toSalesTransDate').val() !='' && jQuery.type($('#toSalesTransDate').val()) !='undefined') aoData.push( { "name":"toSalesTransDate", "value":$('#toSalesTransDate').val()} );                            
                         },
-                        //"fnInitComplete": function(oSettings, json) {
-                        //    createCombos('this');
-                        //},
                         "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
                             var index = jQuery.inArray(aData.DT_RowId, compSalesList); 
                             if ( index !== -1 ) {
@@ -277,7 +317,117 @@ $(function() {
             $(this).removeClass("ui-state-hover");
         }
         
-    })	
+    });
+    
+    $('#fromReceiptTransDate').live("focus", function(){
+        $(this).datepicker({
+            dateFormat: "dd/mm/yy",
+            changeMonth: true,
+            changeYear: true,
+            showAnim: 'fadeIn',
+        	onClose: function( selectedDate ) {
+                $( "#toReceiptTransDate" ).datepicker( "option", "minDate", selectedDate );
+            }                
+        }).datepicker('show');
+    });
+
+    $('#toReceiptTransDate').live("focus", function(){
+        $(this).datepicker({
+            dateFormat: "dd/mm/yy",
+            changeMonth: true,
+            changeYear: true,
+            showAnim: 'fadeIn',
+            onClose: function( selectedDate ) {
+            	$( "#fromReceiptTransDate" ).datepicker( "option", "maxDate", selectedDate );
+            }                	
+        }).datepicker('show');
+    });
+    
+    $('#fromReceiptPaymtDate').live("focus", function(){
+        $(this).datepicker({
+            dateFormat: "dd/mm/yy",
+            changeMonth: true,
+            changeYear: true,
+            showAnim: 'fadeIn',
+        	onClose: function( selectedDate ) {
+                $( "#toReceiptPaymtDate" ).datepicker( "option", "minDate", selectedDate );
+            }                
+            
+        }).datepicker('show');
+    });
+
+    $('#toReceiptPaymtDate').live("focus", function(){
+        $(this).datepicker({
+            dateFormat: "dd/mm/yy",
+            changeMonth: true,
+            changeYear: true,
+            showAnim: 'fadeIn',
+            onClose: function( selectedDate ) {
+            	$( "#fromReceiptPaymtDate" ).datepicker( "option", "maxDate", selectedDate );
+            }                	
+        }).datepicker('show');
+    });
+    
+    $('#fromSalesTransDate').live("focus", function(){
+        $(this).datepicker({
+            dateFormat: "dd/mm/yy",
+            changeMonth: true,
+            changeYear: true,
+            showAnim: 'fadeIn',
+        	onClose: function( selectedDate ) {
+                $( "#toSalesTransDate" ).datepicker( "option", "minDate", selectedDate );
+            }                
+            
+        }).datepicker('show');
+    });
+
+    $('#toSalesTransDate').live("focus", function(){
+        $(this).datepicker({
+            dateFormat: "dd/mm/yy",
+            changeMonth: true,
+            changeYear: true,
+            showAnim: 'fadeIn',
+            onClose: function( selectedDate ) {
+            	$( "#fromSalesTransDate" ).datepicker( "option", "maxDate", selectedDate );
+            }                
+        }).datepicker('show');
+    });
+    
+	$('#applyReceiptFilter').live({
+		click: function(){
+			aReceiptSelected = [];
+			oTable = $('#receipt_table').dataTable();
+			
+			oTable.fnDraw();
+		},
+		mouseover: function() {
+			$(this).addClass("ui-state-hover");
+			$(this).css("cursor","pointer");
+		},
+		  mouseout: function() {
+			$(this).removeClass("ui-state-hover");
+		}
+		
+	});
+	
+	$('#applySalesFilter').live({
+		
+		click: function(){
+			aSalesSelected = [];
+			oTable = $('#sales_table').dataTable();
+			oTable.fnDraw();
+		},
+		mouseover: function() {
+			$(this).addClass("ui-state-hover");
+			$(this).css("cursor","pointer");
+		},
+		  mouseout: function() {
+			$(this).removeClass("ui-state-hover");
+		}
+		
+	});
+    
+    
 });
 
 function group(table, compensateTable, count, list, map){

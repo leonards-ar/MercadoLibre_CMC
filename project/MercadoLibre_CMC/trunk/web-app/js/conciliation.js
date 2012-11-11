@@ -370,7 +370,7 @@ $(function() {
 		    if($('#country').val()== ''  || $('#country').val()== '---' ||
 		        $('#card').val()== '' || $('#card').val()== '---' ||
 		        $('#site').val()== '' || $('#site').val()== '---' ||
-		        $('#period').val()== ''){
+		        $('#period').val()== '' || $('#period').val()== '---'){
 		        var $dialog = getDialog(completeFilters);
                 $dialog.dialog("open");
                 return;
