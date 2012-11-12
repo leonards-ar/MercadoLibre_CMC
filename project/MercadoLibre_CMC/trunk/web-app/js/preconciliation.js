@@ -219,6 +219,9 @@ $(function() {
 	$('.receiptCol').live('click',function(){
 
 		showHideColumn('#receipt_table', $(this).attr('name'), this.checked);
+        if(!this.checked){
+            $('#receiptColAll').attr('checked', false);
+        }		
 		
 	});	
 	
@@ -235,6 +238,9 @@ $(function() {
 	$('.salesSiteCol').live('click',function(){
 
 		showHideColumn('#sales_table', $(this).attr('name'), this.checked);
+        if(!this.checked){
+            $('#salesColAll').attr('checked', false);
+        }			
 		
 	});
 	
@@ -394,7 +400,13 @@ $(function() {
 				            } else if ( jQuery.inArray(aData.DT_RowId, aReceiptSelected) !== -1 ) {
 				                $(nRow).addClass('yellow');
 				            }
-				        }    
+				        },
+                        "fnDrawCallback": function (oSettings){
+                            //show hide selected columns
+                            $('.receiptCol').each(function() {
+                                showHideColumn('#receipt_table', $(this).attr('name'), this.checked);
+                            });                            
+                        }    
 				    });
 			    	
 				    $('#sales_table').dataTable({
@@ -423,7 +435,13 @@ $(function() {
 				            } else if ( jQuery.inArray(aData.DT_RowId, aSalesSelected) !== -1 ) {
 				                $(nRow).addClass('yellow');
 				            }
-				        }    
+				        },
+                        "fnDrawCallback": function (oSettings){
+                            //show hide selected columns
+                            $('.receiptCol').each(function() {
+                                showHideColumn('#sales_table', $(this).attr('name'), this.checked);
+                            });
+                        }
 				    });
 			    	
 			    	$('#preconciliate_table').dataTable({
