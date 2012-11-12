@@ -58,7 +58,7 @@ class DesconciliationController extends SessionInfoController {
         
         def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
         def state4 = State.findById(4)
-        //def conciliationInstanceList = Conciliated.list();
+        
         def conciliatedCriteria = Conciliated.createCriteria()
         def max = params.iDisplayLength?params.iDisplayLength:10
         def offset = params.iDisplayStart?params.iDisplayStart:0
@@ -68,6 +68,7 @@ class DesconciliationController extends SessionInfoController {
 
         def conciliationInstanceList = conciliatedCriteria.list(max:max, offset:offset) {
             
+			eq('period', params.period)
             receipt{
                 if(medio != null) eq('medio', medio)
                 //eq('transactionDate', new Date().parse('dd/MM/yyyy', params.datepicker))
@@ -124,15 +125,9 @@ class DesconciliationController extends SessionInfoController {
         
         sessionFactory.getCurrentSession().clear();
         
-//        def job = ["/datastage/ConcManual.sh", username, lot].execute()
-//        job.waitFor()
-//        if(job.exitValue()){
-//            response.setStatus(500)
-//            render job.err.text
-//        }
-//        render job.text
+        def job = ["/datastage/DesConcManual.sh", username, lot].execute()
 
-        render "job needs to be defined"
+        render message(code:"desconciliation.calledProcess", default:"Se ha invocado el proceso", args:[lot, username])
         
     }
     
@@ -142,34 +137,36 @@ class DesconciliationController extends SessionInfoController {
         
         conciliationInstanceList.each(){
             data << ["DT_RowId":it.id.toString(),
-                     "0":it.receipt?.registerType.toString(),
-                     "1":it.receipt?.cardNumber.toString(),
-                     "2":it.receipt?.transactionDate.toString(),
-                     "3":it.receipt?.amount.toString(),
-                     "4":it.receipt?.shareAmount.toString(),
-                     "5":it.receipt?.authorization.toString(),
-                     "6":it.receipt?.shareNumber.toString(),
-                     "7":it.receipt?.shareQty.toString(),
-                     "8":it.receipt?.customerId.toString(),
-                     "9":it.receipt?.documentId.toString(),
-                     "10":it.receipt?.tid.toString(),
-                     "11":it.receipt?.nsu.toString(),
-                     "12":it.receipt?.documentNumber.toString(),
-                     "13":it.sale?.medio?.id.toString(),
-                     "14":it.sale?.registerType.toString(),
-                     "15":it.sale?.cardNumber.toString(),
-                     "16":it.sale?.transactionDate.toString(),
-                     "17":it.sale?.amount.toString(),
-                     "18":it.sale?.shareAmount.toString(),
-                     "19":it.sale?.authorization.toString(),
-                     "20":it.sale?.shareNumber.toString(),
-                     "21":it.sale?.shareQty.toString(),
-                     "22":it.sale?.customerId.toString(),
-                     "23":it.sale?.documentId.toString(),
+                     "0":formatDate(date:it.receipt?.transactionDate, format:"dd-MM-yyyy"),
+                     "1":it.receipt?.amount.toString(),
+                     "2":it.receipt?.authorization.toString(),
+                     "3":it.receipt?.cardNumber.toString(),
+                     "4":it.receipt?.customerId.toString(),
+                     "5":it.receipt?.documentNumber.toString(),
+                     "6":it.receipt?.documentId.toString(),
+                     "7":it.receipt?.id.toString(),
+                     "8":it.receipt?.ro.toString(),
+                     "9":it.receipt?.tid.toString(),
+                     "10":it.receipt?.nsu.toString(),
+                     "11":it.receipt?.shareNumber.toString(),
+                     "12":it.receipt?.shareQty.toString(),
+                     "13":formatDate(date:it.receipt?.paymentDate, format:"dd-MM-yyyy"),
+                     "14":it.receipt?.payment.toString(),
+                     "15":formatDate(date:it.sale?.transactionDate, format:"dd-MM-yyyy"),
+                     "16":it.sale?.amount.toString(),
+                     "17":it.sale?.authorization.toString(),
+                     "18":it.sale?.cardNumber.toString(),
+                     "19":it.sale?.customerId.toString(),
+                     "20":it.sale?.documentNumber.toString(),
+                     "21":it.sale?.documentId.toString(),
+                     "22":it.sale?.id.toString(),
+                     "23":it.sale?.ro.toString(),
                      "24":it.sale?.tid.toString(),
                      "25":it.sale?.nsu.toString(),
-                     "26":it.sale?.documentNumber.toString()]
-         
+                     "26":it.sale?.shareNumber.toString(),
+                     "27":it.sale?.shareQty.toString(),
+                     "28":formatDate(date:it.sale?.paymentDate, format:"dd-MM-yyyy"),
+                     "29":it.sale?.payment.toString()]         
         }
         
         return data
