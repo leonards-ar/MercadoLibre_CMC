@@ -9,12 +9,34 @@ $(function() {
         nonSelectedValue : '---'
     });
     
-    $('#datepicker').datepicker({
-        dateFormat: "dd/mm/yy",
-        changeMonth: true,
-        changeYear: true,
-        showAnim: 'fadeIn'
-    });
+	$('#site').change(function(){
+		var site = $(this).val();
+		if(site == '---') return;
+		var strdata = "site=" + $(this).val();
+		strdata+="&country=" + $('#country').val();
+		strdata +="&card=" + $('#card').val(); 
+		$.ajax({
+			type : 'POST',
+			url : periodLink,
+			data : strdata,
+			success : function(data) {
+				var index = 0;
+				$('#period').html("");//clear old options
+				data = eval(data);//get json array
+				$('#period').get(0).add(new Option('---', '---'), document.all ? 0 : null);
+				index = 1;
+				for (i = 0; i < data.length; i++)//iterate over all options
+				{
+					var item = data[i];
+					
+					$('#period').get(0).add(new Option(item[1],item[0]), document.all ? index++ : null);
+				}
+
+		    } 
+		});
+					
+	});
+
     
     $('#lock').click(function(){
         
@@ -22,7 +44,7 @@ $(function() {
             var strdata = $('#country').attr('id') + "=" + $('#country').val();
             strdata += "&" + $('#card').attr('id') + "=" + $('#card').val();
             strdata += "&" + $('#site').attr('id') + "=" + $('#site').val();
-            strdata += "&" + $('#datepicker').attr('id') + "=" + $('#datepicker').val();
+            strdata += "&" + $('#period').attr('id') + "=" + $('#period').val();
             
             var $processing = getProcessingDialog();
             
@@ -40,6 +62,7 @@ $(function() {
                     $('#country').attr("disabled", true);
                     $('#card').attr("disabled", true);
                     $('#site').attr("disabled", true);
+                    $('#period').attr("disabled", true);
                     $('#lock').attr("value","Unlock");
                     $('#myBody').html(data);
                     
@@ -54,11 +77,8 @@ $(function() {
                             aoData.push( { "name": "country", "value": $('#country').val() } );
                             aoData.push( { "name": "card", "value": $('#card').val() } );
                             aoData.push( { "name": "site", "value": $('#site').val() } );
-                            aoData.push( { "name": "datepicker", "value": $('#datepicker').val() } );
+                            aoData.push( { "name": "period", "value": $('#period').val() } );
                         },
-                        //"fnInitComplete": function(oSettings, json) {
-                        //    createCombos('this');
-                        //},
                         "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
                             if ( jQuery.inArray(aData.DT_RowId, aSelected) !== -1 ) {
                                 $(nRow).addClass('row_selected');
@@ -69,8 +89,8 @@ $(function() {
                             $('.desconciliationCol').each(function() {
                                 showHideColumn('#conciliate_table', $(this).attr('name'), this.checked);
                             });                            
-                            
-                        },
+                        }
+                        
                      });
                     
                 },

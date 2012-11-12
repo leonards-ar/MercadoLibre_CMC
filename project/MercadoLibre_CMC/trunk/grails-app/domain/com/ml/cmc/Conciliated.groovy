@@ -2,13 +2,13 @@ package com.ml.cmc
 
 class Conciliated {
 
-    String id
 	SalesSite sale
 	Receipt receipt
 	Long lot
 	Medio medio
 	AccountantPeriod period
-	RegisterType registerType
+	String registerType
+	Date accountDate
 	
     static constraints = {
 		
@@ -25,5 +25,6 @@ class Conciliated {
 		medio column: 'CD_MEDIO'
 		period column: 'CD_PERIODO'
 		registerType column:'CD_TIPO_CONC'
+		accountDate column:'FECHA_CONTABLE'
 	}
 }
