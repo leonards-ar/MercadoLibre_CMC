@@ -68,18 +68,31 @@ class DesconciliationController extends SessionInfoController {
 
         def conciliationInstanceList = conciliatedCriteria.list(max:max, offset:offset) {
             
-			eq('period', params.period)
+			eq('period', AccountantPeriod.findById(params.period))
             receipt{
                 if(medio != null) eq('medio', medio)
-                //eq('transactionDate', new Date().parse('dd/MM/yyyy', params.datepicker))
                 eq('state',state4)
+				if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){
+					def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromReceiptTransDate)
+					def toTransDate = new Date().parse("dd/MM/yyyy", params.toReceiptTransDate)
+					between('transactionDate', fromTransDate, toTransDate)
+				}
+				if(params.fromReceiptPaymtDate != null && params.toReceiptPaymtDate != null){
+					def fromPaymtDate = new Date().parse("dd/MM/yyyy", params.fromReceiptPaymtDate)
+					def toPaymtDate = new Date().parse("dd/MM/yyyy", params.toReceiptPaymtDate)
+					between('transactionDate', fromPaymtDate, toPaymtDate)
+				}
                 if(colIdx < 13)
                 order(colName, params.sSortDir_0)
             }
             
-            if(colIdx > 12) {
-                
-                sale {
+			sale {
+				if(params.fromSalesTransDate != null && params.toSalesTransDate != null){
+					def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromSalesTransDate)
+					def toTransDate = new Date().parse("dd/MM/yyyy", params.toSalesTransDate)
+					between('transactionDate', fromTransDate, toTransDate)
+				}
+				if(colIdx > 12) {
                     order(colName, params.sSortDir_0)
                 }
             }

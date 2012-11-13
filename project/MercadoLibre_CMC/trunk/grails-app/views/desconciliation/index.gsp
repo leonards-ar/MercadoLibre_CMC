@@ -34,7 +34,7 @@
 		  <span class="menuButton"><a class="home" href="${createLink(action: 'exit')}"><g:message code="home" default="Home"/></a></span>
 		</div>
 		
-		<h1><g:message code="conciliation.manual" default="Preconciliacion Manual"/></h1>  
+		<h1><g:message code="desconciliation.manual" default="Preconciliacion Manual"/></h1>  
 		
     <div id="lockBox">
         <table>
@@ -63,8 +63,9 @@
 
           </tr>
         </table>
-
-    <br/>
-    <div id="myBody"/>
+      </div>
+      <br/>
+    
+    <div id="myBody"></div>
   </body>
 </html>

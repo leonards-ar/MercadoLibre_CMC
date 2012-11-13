@@ -16,8 +16,8 @@
  
     <div class="prefilterFields">
       <div><g:message code="salesSite.transDate" default="Fecha de la Transaccion'"/></div>
-      <g:message code="salesSite.from" default="Desde'"/>: <g:textField name="fromReceiptTransDate" id="fromReceiptTransDate" value="${fromReceiptTransDate}" size="10" />
-      <g:message code="salesSite.to" default="Hasta'"/>: <g:textField name="toReceiptTransDate" id="toReceiptTransDate" value="${toReceiptTransDate}" size="10" />
+      <g:message code="salesSite.from" default="Desde"/>: <g:textField name="fromReceiptTransDate" id="fromReceiptTransDate" value="${fromReceiptTransDate}" size="10" />
+      <g:message code="salesSite.to" default="Hasta"/>: <g:textField name="toReceiptTransDate" id="toReceiptTransDate" value="${toReceiptTransDate}" size="10" />
     </div>
       <div class="filterButton">
         <span class="button">
