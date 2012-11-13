@@ -67,17 +67,23 @@ $(function() {
                     $('#myBody').html(data);
                     
                     $('#conciliate_table').dataTable({
-                        "bPaginate": true,
-                        "bProcessing": true,
-                        "bServerSide": true,
-                        "sAjaxSource": listLink,
-                        
-                        "sServerMethod": "POST",
-                        "fnServerParams": function ( aoData ) {
+				        "sDom": 'lrtip',
+				        "sPaginationType": "full_numbers",
+				        "bProcessing": true,
+				        "bServerSide": true,        
+				        "sAjaxSource": listLink,
+				        "sServerMethod": "POST",
+				        "fnServerParams": function ( aoData ) {
                             aoData.push( { "name": "country", "value": $('#country').val() } );
                             aoData.push( { "name": "card", "value": $('#card').val() } );
                             aoData.push( { "name": "site", "value": $('#site').val() } );
                             aoData.push( { "name": "period", "value": $('#period').val() } );
+				            if($('#fromReceiptTransDate').val() !='') aoData.push( { "name":"fromReceiptTransDate", "value":$('#fromReceiptTransDate').val()} );
+				            if($('#toReceiptTransDate').val() !='') aoData.push( { "name":"toReceiptTransDate", "value":$('#toReceiptTransDate').val()} );
+				            if($('#fromReceiptPaymtDate').val() !='') aoData.push( { "name":"fromReceiptPaymtDate", "value":$('#fromReceiptPaymtDate').val()});
+				            if($('#toReceiptPaymtDate').val() !='') aoData.push( { "name":"toReceiptPaymtDate", "value":$('#toReceiptPaymtDate').val()}); 
+				            if($('#fromSalesTransDate').val() !='') aoData.push( { "name":"fromSalesTransDate", "value":$('#fromSalesTransDate').val()} );
+				            if($('#toSalesTransDate').val() !='') aoData.push( { "name":"toSalesTransDate", "value":$('#toSalesTransDate').val()} );
                         },
                         "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
                             if ( jQuery.inArray(aData.DT_RowId, aSelected) !== -1 ) {
@@ -153,6 +159,97 @@ $(function() {
             $(this).toggleClass('row_selected');
         });
         
+        $('#fromReceiptTransDate').live("focus", function(){
+            $(this).datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                showAnim: 'fadeIn',
+            	onClose: function( selectedDate ) {
+                    $( "#toReceiptTransDate" ).datepicker( "option", "minDate", selectedDate );
+                }                
+            }).datepicker('show');
+        });
+
+        $('#toReceiptTransDate').live("focus", function(){
+            $(this).datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                showAnim: 'fadeIn',
+                onClose: function( selectedDate ) {
+                	$( "#fromReceiptTransDate" ).datepicker( "option", "maxDate", selectedDate );
+                }                	
+            }).datepicker('show');
+        });
+        
+        $('#fromReceiptPaymtDate').live("focus", function(){
+            $(this).datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                showAnim: 'fadeIn',
+            	onClose: function( selectedDate ) {
+                    $( "#toReceiptPaymtDate" ).datepicker( "option", "minDate", selectedDate );
+                }                
+                
+            }).datepicker('show');
+        });
+
+        $('#toReceiptPaymtDate').live("focus", function(){
+            $(this).datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                showAnim: 'fadeIn',
+	            onClose: function( selectedDate ) {
+	            	$( "#fromReceiptPaymtDate" ).datepicker( "option", "maxDate", selectedDate );
+	            }                	
+            }).datepicker('show');
+        });
+        
+        $('#fromSalesTransDate').live("focus", function(){
+            $(this).datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                showAnim: 'fadeIn',
+            	onClose: function( selectedDate ) {
+                    $( "#toSalesTransDate" ).datepicker( "option", "minDate", selectedDate );
+                }                
+                
+            }).datepicker('show');
+        });
+
+        $('#toSalesTransDate').live("focus", function(){
+            $(this).datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                showAnim: 'fadeIn',
+	            onClose: function( selectedDate ) {
+	            	$( "#fromSalesTransDate" ).datepicker( "option", "maxDate", selectedDate );
+	            }                
+            }).datepicker('show');
+        });
+        
+    	$('#applyReceiptFilter').live({
+    		click: function(){
+    			aSelected = [];
+    			oTable = $('#conciliate_table').dataTable();
+    			
+    			oTable.fnDraw();
+    		},
+    		mouseover: function() {
+    			$(this).addClass("ui-state-hover");
+    			$(this).css("cursor","pointer");
+    		},
+    		  mouseout: function() {
+    			$(this).removeClass("ui-state-hover");
+    		}
+    		
+    	});
+
         $('#desconciliateButton').live('click', function() {
             
             var strdata = "";

@@ -170,3 +170,52 @@ h3 {
     font-size: 14px;
     margin: .3em 0 .3em 0;
 }
+
+.title_box { 
+    border: #3c5a86 1px solid; 
+}
+
+.receiptFilter {
+	  position: absolute;
+	  top: 3;
+	  left: 5;
+	  width:400px;
+	  height:80px;
+	  right: 5;
+}
+
+.salesFilter {
+    position: absolute;
+    top: 3;
+    right: 5;
+    left: 500px;
+    width:400px;
+    height:80px;
+}
+
+.title_box #title { 
+    position: relative; 
+    top : -0.5em;
+    margin-left: 1em;
+    display: inline; 
+    background-color: white;
+    color: #48802c;
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.title_box #receiptContent {
+	  left:10;
+	  top:3;
+}
+
+.title_box #salesContent {
+    left:10;
+    top:35;
+}
+
+.desconciliationBox {
+	  position: relative;
+    width:1200px;
+    height:90;
+}
