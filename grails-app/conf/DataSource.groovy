@@ -20,15 +20,26 @@ environments {
     }
 	mercadolibre {
 		hibernate {
-			show_sql=true
+			show_sql=false
 		}
 		dataSource {
 			//dbCreate = "create-drop" // one of 'create', 'create-drop','update'
+			pooled = true
 			dialect = "org.hibernate.dialect.OracleDialect"
 			url = "jdbc:oracle:thin:@10.3.207.108:1521:ORCL "
 			driverClassName = "oracle.jdbc.driver.OracleDriver"
 			username = "ORCL_W01"
 			password = "ora_desa"
+			properties {
+				maxActive = 50
+				maxIdle = 25
+				minIdle = 5
+				initialSize = 5
+				minEvictableIdleTimeMillis = 60000
+				timeBetweenEvictionRunsMillis = 60000
+				maxWait = 10000
+				validationQuery = "select 1 from dual"
+			}
 		}
 	}
     test {

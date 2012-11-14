@@ -159,9 +159,15 @@ class ConciliationController extends SessionInfoController{
 		
 		/* call datastage */
 		def username = getUsername()
-		def job = ["/datastage/ConcManual.sh", username, lot].execute()
+		def strLot = formatNumber(number:lot, format:"000")
+		def job = ["/datastage/ConcManual.sh", username, strLot].execute()
+		job.waitFor()
+		if(job.exitValue()){
+			response.setStatus(500)
+			render job.err.text
+		}
 		
-		render message(code:"conciliation.calledProcess", default:"Se ha invocado el proceso", args:[lot, username])
+		render message(code:"conciliation.calledProcess", default:"Se ha invocado el proceso", args:[username])
 		 
 	}
     

@@ -168,9 +168,10 @@ class CompensationController extends SessionInfoController {
         /* call datastage */
         def username = getUsername()
 		def jobName = params.element == "F_RECIBOS"?"/datastage/CompManual_Recibos.sh":"/datastage/CompManual_Ventas.sh"
-        def job = [jobName, username, lot].execute()
+		def strLot = formatNumber(number:lot, format:"000")
+        def job = [jobName, username, strLot].execute()
         
-        render message(code:"compensation.calledProcess", default:"Se ha invocado el proceso", args:[lot, username])
+        render message(code:"compensation.calledProcess", default:"Se ha invocado el proceso", args:[strLot, username])
     
     }
     
