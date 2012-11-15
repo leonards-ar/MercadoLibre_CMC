@@ -1,11 +1,15 @@
 package com.ml.cmc
 
-import com.ml.cmc.constants.Constant
-import com.ml.cmc.exception.SecLockException
 import grails.converters.JSON
 
-class DesconciliationController extends SessionInfoController {
+import org.apache.commons.logging.LogFactory
 
+import com.ml.cmc.constants.Constant
+import com.ml.cmc.exception.SecLockException
+
+class DesconciliationController extends SessionInfoController {
+	private static final log = LogFactory.getLog(this)
+	
     def securityLockService
     def lotGeneratorService
     def sessionFactory
@@ -137,8 +141,11 @@ class DesconciliationController extends SessionInfoController {
         }
         
         sessionFactory.getCurrentSession().clear();
-        
-        def job = ["/datastage/DesConcManual.sh", username, lot].execute()
+		
+		def username = getUsername()
+		def strLot = formatNumber(number:lot, format:"000")
+
+        executeCommand("/datastage/DesConcManual.sh ${username} ${strLot}")
 
         render message(code:"desconciliation.calledProcess", default:"Se ha invocado el proceso", args:[lot, username])
         

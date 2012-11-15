@@ -1,11 +1,15 @@
 package com.ml.cmc
 
-import com.ml.cmc.constants.Constant 
-import com.ml.cmc.exception.SecLockException
 import grails.converters.JSON
 
+import org.apache.commons.logging.LogFactory
+
+import com.ml.cmc.constants.Constant
+import com.ml.cmc.exception.SecLockException
+
 class CompensationController extends SessionInfoController {
-    
+	private static final log = LogFactory.getLog(this)
+	
     def securityLockService
     def lotGeneratorService
     def sessionFactory
@@ -169,7 +173,8 @@ class CompensationController extends SessionInfoController {
         def username = getUsername()
 		def jobName = params.element == "F_RECIBOS"?"/datastage/CompManual_Recibos.sh":"/datastage/CompManual_Ventas.sh"
 		def strLot = formatNumber(number:lot, format:"000")
-        def job = [jobName, username, strLot].execute()
+		
+		exceuteCommand("${jobName} ${username} ${strLot}")
         
         render message(code:"compensation.calledProcess", default:"Se ha invocado el proceso", args:[strLot, username])
     
