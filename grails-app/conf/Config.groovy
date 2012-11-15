@@ -1,3 +1,5 @@
+import org.apache.log4j.DailyRollingFileAppender
+
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
 
@@ -70,9 +72,20 @@ log4j = {
     // Example of changing the log pattern for the default console
     // appender:
     //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+    appenders {
+        console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+		environments {
+			mercadolibre {
+				appender new DailyRollingFileAppender(
+					name:'dailycmcAppender',
+					datePattern: "'.'yyyy-MM-dd",
+					//file:'C:/workspace/cmc.log',
+					file:'/usr/java/logs/cmc.log',
+					layout:pattern(conversionPattern: '%d [%t] %-5p %c{2} %x - %m%n')
+				)
+			}
+		}
+    }
 
     error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
            'org.codehaus.groovy.grails.web.pages', //  GSP
@@ -87,6 +100,16 @@ log4j = {
            'net.sf.ehcache.hibernate'
 
     warn   'org.mortbay.log'
+	
+	info   'grails.app'
+	environments {
+		mercadolibre {
+			info dailycmcAppender: 'grails.app'
+		}
+	}
+	
+	
+	
 }
 
 // Added by the Spring Security Core plugin:
