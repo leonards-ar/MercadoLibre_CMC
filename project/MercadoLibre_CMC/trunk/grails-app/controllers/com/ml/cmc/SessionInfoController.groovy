@@ -1,10 +1,13 @@
 package com.ml.cmc
-import java.security.Principal
-import org.springframework.security.core.session.SessionInformation
 import grails.converters.JSON
 
-class SessionInfoController {
+import java.security.Principal
 
+import org.apache.commons.logging.LogFactory
+
+class SessionInfoController {
+	//private static final myLog = LogFactory.getLog(this)
+	
     def sessionRegistry
     def springSecurityService
 	def securityLockService
@@ -107,6 +110,29 @@ class SessionInfoController {
 		}
 		
 		return data
+	}
+	
+	protected Integer exceuteCommand(String command) {
+		
+		StringWriter stringWriterOutput = new StringWriter()
+		StringWriter stringWriterError = new StringWriter()
+
+		def batchProcess = "${command}"
+		log.info("Callling batch process ${batchProcess}")
+
+		Process job = command.execute()
+		
+		stringWriterOutput << job.in
+		stringWriterError << job.err
+		
+		job.waitFor()
+		
+		log.info("Process \"${batchProcess}\" returned: ${job.exitValue()}")
+		log.info("Process \"${batchProcess}\" stdout: ${stringWriterOutput.toString()}")
+		log.info("Process \"${batchProcess}\" stderr: ${stringWriterError.toString()}")
+		
+		return job.exitValue()
+		
 	}
     
 }

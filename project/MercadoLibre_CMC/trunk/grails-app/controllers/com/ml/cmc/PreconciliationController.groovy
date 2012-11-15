@@ -1,12 +1,14 @@
 package com.ml.cmc
 import grails.converters.JSON
-import com.ml.cmc.service.SecurityLockService
-import com.ml.cmc.service.LotGeneratorService
+
+import org.apache.commons.logging.LogFactory
+
 import com.ml.cmc.constants.Constant
 import com.ml.cmc.exception.SecLockException
 
 class PreconciliationController extends SessionInfoController{
-
+	private static final log = LogFactory.getLog(this)
+	
     def securityLockService
     def lotGeneratorService
 	def sessionFactory
@@ -140,6 +142,7 @@ class PreconciliationController extends SessionInfoController{
         /* call datastage */
        	def username = getUsername()
 		def strLot = formatNumber(number:lot, format:"000")
+		
 		def job = ["/datastage/PreConcManual.sh", username, strLot].execute()
 		
         render message(code:"preconciliation.calledProcess", default:"Se ha invocado el proceso", args:[strLot, username])
