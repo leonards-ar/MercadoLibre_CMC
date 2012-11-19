@@ -25,7 +25,7 @@ class Desconciliation implements Serializable{
 		lot column: 'LOTE_CONCILIACION'
 		medio column: 'CD_MEDIO'
 		period column: 'CD_PERIODO'
-		registerType column:'CD_TIPO_CONC'
+		username column:'usuario'
 	}
 	
 }

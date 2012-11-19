@@ -114,11 +114,13 @@ class DesconciliationController extends SessionInfoController {
     }
     
     def save = {
+		
+		def lot = lotGeneratorService.getLotId()
 
         def conciliatedIds = params.ids.split(",")
-        
-        def desconciliations = []
-        
+
+		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site]);
+		
         Desconciliation.withTransaction {
             
             conciliatedIds.each {id ->
@@ -127,10 +129,10 @@ class DesconciliationController extends SessionInfoController {
                 
                 def desconciliation = new Desconciliation(sale:conciliated?.sale,
                     receipt:conciliated?.receipt,
-                    lot:conciliated?.lot,
+                    lot:lot,
                     conciliated: conciliated,
                     username:getUsername(),
-                    medio: conciliated.medio,
+                    medio: medio,
                     period: conciliated.period
                 )
                 
@@ -147,7 +149,7 @@ class DesconciliationController extends SessionInfoController {
 
         executeCommand("/datastage/DesConcManual.sh ${username} ${strLot}")
 
-        render message(code:"desconciliation.calledProcess", default:"Se ha invocado el proceso", args:[lot, username])
+        render message(code:"desconciliation.calledProcess", default:"Se ha invocado el proceso", args:[username])
         
     }
     

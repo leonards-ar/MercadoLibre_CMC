@@ -261,18 +261,17 @@ $(function() {
                 return;
             }
             
-            $.each(aSelected, function(index, value){
-                if(strdata.length > 0) strdata +=",";
-                
-                strdata+= value;
-            });
-            
+            strdata +="ids=" + aSelected.join(",")
+        	strdata +="&site=" + $('#site').val();
+        	strdata +="&country=" + $('#country').val();
+        	strdata +="&card=" + $('#card').val(); 
+
             var $processing = getProcessingDialog();
             
             $.ajax({
                 type : 'POST',
                 url : saveLink,
-                data : "ids=" + strdata,
+                data : strdata,
                 beforeSend: function() {
                     $processing.dialog('open');
                 },
