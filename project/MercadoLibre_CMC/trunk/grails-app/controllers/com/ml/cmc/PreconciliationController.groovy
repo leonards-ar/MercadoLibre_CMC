@@ -131,7 +131,8 @@ class PreconciliationController extends SessionInfoController{
 				def receipt = Receipt.findById(preconciliateIds[0])
 				def salesSite = SalesSite.findById(preconciliateIds[1])
 	            def preConciliation = new Preconciliation(sale:salesSite, receipt:receipt, 
-	                lot:lot, medio:medio, period: salesSite?.period)
+	                lot:lot, medio:medio, period: receipt?.period, registerType:receipt?.registerType,
+					saleStatus: 'TBD', origin:salesSite?.origin)
 	            
 	            preConciliation.save()
 	        }
@@ -155,9 +156,6 @@ class PreconciliationController extends SessionInfoController{
 		def state1 = State.findById(1)
 		
 		def registerTypes = RegisterType.findAllByIdInList([1L,2L,5L])
-		//def registerType1 = RegisterType.findById(1);
-		//def registerType2 = RegisterType.findById(2);
-		//def registerType5 = RegisterType.findById(5);
 
 		def criteria = Receipt.createCriteria()
 		def receiptInstanceList = criteria.list(max:max, offset:offset) {

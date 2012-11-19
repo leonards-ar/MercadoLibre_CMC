@@ -177,7 +177,7 @@ class CompensationController extends SessionInfoController {
 		
 		exceuteCommand("${jobName} ${username} ${strLot}")
         
-        render message(code:"compensation.calledProcess", default:"Se ha invocado el proceso", args:[strLot, username])
+        render message(code:"compensation.calledProcess", default:"Se ha invocado el proceso", args:[username])
     
     }
     
