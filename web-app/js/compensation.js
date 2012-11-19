@@ -264,6 +264,13 @@ $(function() {
     
     $('#compensateReceiptButton').live({
         'click': function(){
+        	if(receiptCount == 0){
+    			var $dialog = getDialog("compensation.noselection.error");
+    			$dialog.dialog('open');
+    			
+    			return;
+
+        	}
             save("#compensated_receipt_table",compReceipts,receiptCount,"F_RECIBOS",saveLink);
             receiptCount = 0;
         },
@@ -279,6 +286,14 @@ $(function() {
     
     $('#compensateSalesButton').live({
         'click': function(){
+        	if(salesCount == 0){
+    			var $dialog = getDialog("compensation.noselection.error");
+    			$dialog.dialog('open');
+    			
+    			return;
+
+        	}
+
             save("#compensated_sales_table",compSales,salesCount,"F_VENTAS_SITE",saveLink);
             salesCount = 0;
         },
