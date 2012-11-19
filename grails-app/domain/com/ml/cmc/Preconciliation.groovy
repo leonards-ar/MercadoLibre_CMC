@@ -6,8 +6,11 @@ class Preconciliation implements Serializable{
     Receipt receipt
     Long lot
     Medio medio
+	String saleStatus
     AccountantPeriod period
-    
+    RegisterType registerType
+	String origin
+	
     static constraints = {
     }
     
@@ -18,9 +21,13 @@ class Preconciliation implements Serializable{
         id composite: ['lot','sale','receipt']
         sale column:'CD_VENTA_CUOTA'
         receipt column:'CD_RECIBO'
-        lot column:'LOTE_JAVA'
+        lot column:'SERIAL_JAVA'
         medio column:'CD_MEDIO'
 		period column:'CD_PERIODO'
+		saleStatus column:'ESTADO_VENTA'
+		registerType column:'TIPO_REGISTRO_RECIBOS'
+		origin column:'FL_ORIGEN'
+		
         
         
     }
