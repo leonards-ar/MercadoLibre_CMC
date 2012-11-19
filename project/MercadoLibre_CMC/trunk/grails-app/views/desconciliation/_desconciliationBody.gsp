@@ -20,75 +20,75 @@
 	    </tr>	  
 	    <tr>
       <tr>
-        <td><g:checkBox class='receiptCol' name="1" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="1" value="${true}" /></td>
         <td>R${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}</td>
-        <td><g:checkBox class='receiptCol' name="2" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="2" value="${true}" /></td>
         <td>R${message(code: 'salesSite.amount', default: 'Monto')}</td>
-        <td><g:checkBox class='receiptCol' name="3" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="3" value="${true}" /></td>
         <td>R${message(code: 'salesSite.authorization', default: 'Autorizacion')}</td>
-        <td><g:checkBox class='receiptCol' name="4" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="4" value="${true}" /></td>
         <td>R${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}</td>
-        <td><g:checkBox class='receiptCol' name="5" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="5" value="${true}" /></td>
         <td>R${message(code: 'salesSite.customerId', default: 'Cliente')}</td>
       </tr>
       <tr>
-        <td><g:checkBox class='receiptCol' name="6" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="6" value="${true}" /></td>
         <td>R${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</td>
-        <td><g:checkBox class='receiptCol' name="7" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="7" value="${true}" /></td>
         <td>R${message(code: 'salesSite.documentId', default: 'DNI')}</td>
-        <td><g:checkBox class='receiptCol' name="8" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="8" value="${true}" /></td>
         <td>R${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</td>
-        <td><g:checkBox class='receiptCol' name="9" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="9" value="${true}" /></td>
         <td>R${message(code: 'salesSite.ro', default: 'RO')}</td>
-        <td><g:checkBox class='receiptCol' name="10" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="10" value="${true}" /></td>
         <td>R${message(code: 'salesSite.tid', default: 'TID')}</td>
        </tr>
        <tr>      
-        <td><g:checkBox class='receiptCol' name="11" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="11" value="${true}" /></td>
         <td>R${message(code: 'salesSite.nsu', default: 'NSU')}</td>
-        <td><g:checkBox class='receiptCol' name="12" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="12" value="${true}" /></td>
         <td>R${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}</td>
-        <td><g:checkBox class='receiptCol' name="13" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="13" value="${true}" /></td>
         <td>R${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}</td>
-        <td><g:checkBox class='receiptCol' name="14" value="true"/></td>
+        <td><g:checkBox class='desconciliationCol' name="14" value="true"/></td>
         <td>R${message(code: 'salesSite.paymentDate', default: 'Fecha de Pago')}</td>
-        <td><g:checkBox class='receiptCol' name="15" value="true"/></td>
+        <td><g:checkBox class='desconciliationCol' name="15" value="true"/></td>
         <td>R${message(code: 'salesSite.payment', default: 'Ref. de Pago')}</td>
       </tr>                    
       <tr>
-        <td><g:checkBox class='receiptCol' name="16" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="16" value="${true}" /></td>
         <td>S${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}</td>
-        <td><g:checkBox class='receiptCol' name="17" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="17" value="${true}" /></td>
         <td>S${message(code: 'salesSite.amount', default: 'Monto')}</td>
-        <td><g:checkBox class='receiptCol' name="18" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="18" value="${true}" /></td>
         <td>S${message(code: 'salesSite.authorization', default: 'Autorizacion')}</td>
-        <td><g:checkBox class='receiptCol' name="19" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="19" value="${true}" /></td>
         <td>S${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}</td>
-        <td><g:checkBox class='receiptCol' name="20" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="20" value="${true}" /></td>
         <td>S${message(code: 'salesSite.customerId', default: 'Cliente')}</td>
       </tr>
       <tr>
-        <td><g:checkBox class='receiptCol' name="21" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="21" value="${true}" /></td>
         <td>S${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</td>
-        <td><g:checkBox class='receiptCol' name="22" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="22" value="${true}" /></td>
         <td>S${message(code: 'salesSite.documentId', default: 'DNI')}</td>
-        <td><g:checkBox class='receiptCol' name="23" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="23" value="${true}" /></td>
         <td>S${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</td>
-        <td><g:checkBox class='receiptCol' name="24" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="24" value="${true}" /></td>
         <td>S${message(code: 'salesSite.ro', default: 'RO')}</td>
-        <td><g:checkBox class='receiptCol' name="25" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="25" value="${true}" /></td>
         <td>S${message(code: 'salesSite.tid', default: 'TID')}</td>
        </tr>
        <tr>      
-        <td><g:checkBox class='receiptCol' name="26" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="26" value="${true}" /></td>
         <td>S${message(code: 'salesSite.nsu', default: 'NSU')}</td>
-        <td><g:checkBox class='receiptCol' name="27" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="27" value="${true}" /></td>
         <td>S${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}</td>
-        <td><g:checkBox class='receiptCol' name="28" value="${true}" /></td>
+        <td><g:checkBox class='desconciliationCol' name="28" value="${true}" /></td>
         <td>S${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}</td>
-        <td><g:checkBox class='receiptCol' name="29" value="true"/></td>
+        <td><g:checkBox class='desconciliationCol' name="29" value="true"/></td>
         <td>S${message(code: 'salesSite.paymentDate', default: 'Fecha de Pago')}</td>
-        <td><g:checkBox class='receiptCol' name="30" value="true"/></td>
+        <td><g:checkBox class='desconciliationCol' name="30" value="true"/></td>
         <td>S${message(code: 'salesSite.payment', default: 'Ref. de Pago')}</td>
       </tr>                    
 	  </table>
