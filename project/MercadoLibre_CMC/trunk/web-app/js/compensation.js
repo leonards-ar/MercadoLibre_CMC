@@ -48,33 +48,6 @@ $(function() {
 	});
 	
 	
-	$('.filtered').find(".paginateButtons a, th.sortable a").live('click',function(event) {
-		event.preventDefault();
-		var url = $(this).attr('href');
-
-		var divTab = $(this).closest('div');
-
-		var strdata = $('#country').attr('id') + "=" + $('#country').val();
-		strdata += "&" + $('#card').attr('id') + "=" + $('#card').val();
-		strdata += "&" + $('#site').attr('id') + "=" + $('#site').val();
-
-		
-		$.ajax({
-			type : 'POST',
-			url : url,
-			data : strdata,
-			success : function(data) {
-				$(divTab).fadeOut('fast', function() {
-					$(this).html(data).fadeIn('slow');
-				});
-			},
-			error : function(XMLHttpRequest, textStatus,
-					errorThrown) {
-				showError(XMLHttpRequest, textStatus,
-						errorThrown);
-			}
-		})
-	});
 	
 	$('#lock').click(function(){
 		
