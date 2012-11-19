@@ -132,7 +132,7 @@ class PreconciliationController extends SessionInfoController{
 				def salesSite = SalesSite.findById(preconciliateIds[1])
 	            def preConciliation = new Preconciliation(sale:salesSite, receipt:receipt, 
 	                lot:lot, medio:medio, period: receipt?.period, registerType:receipt?.registerType,
-					saleStatus: 'TBD', origin:salesSite?.origin)
+					saleStatus: salesSite.state, origin:salesSite?.origin)
 	            
 	            preConciliation.save()
 	        }
