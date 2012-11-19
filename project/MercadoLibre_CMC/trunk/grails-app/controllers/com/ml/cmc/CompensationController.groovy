@@ -124,8 +124,9 @@ class CompensationController extends SessionInfoController {
 			 eq('medio', medio)
 			 eq('state',state1)
 			 eq('period', AccountantPeriod.findById(params.period))
-             def ids = params.compSalesList.split(",")
-             if(ids.length > 0){
+             
+             if(params.compSalesList.length() > 0){
+				 def ids = params.compSalesList.split(",")
                  not{inList('id', ids)}
              }
 			 if(params.fromSalesTransDate != null  && params.toSalesTransDate != null){
@@ -151,14 +152,14 @@ class CompensationController extends SessionInfoController {
         def lot = lotGeneratorService.getLotId()
         
         def groups = params.ids.split(";")
-
+		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site]);
         Compensation.withTransaction{        
             groups.each{group ->
                 def groupId = lotGeneratorService.getGroupId() 
                 def items = group.split(",")
                 items.each{
                     def item = params.element == 'F_RECIBOS'?Receipt.findById(it):SalesSite.findById(it)                    
-                    def compensation = new Compensation(source:params.element, registerId:item?.id,medio: item?.medio, group:groupId, period:item?.period, serial:lot)
+                    def compensation = new Compensation(source:params.element, registerId:item?.id,medio: medio, group:groupId, period:item?.period, serial:lot)
 
                     compensation.save()
 					
