@@ -147,7 +147,7 @@ class DesconciliationController extends SessionInfoController {
 		def username = getUsername()
 		def strLot = formatNumber(number:lot, format:"000")
 
-        executeCommand("/datastage/DesConcManual.sh ${username} ${strLot}")
+        exceuteCommand("/datastage/DesConcManual.sh ${username} ${strLot}")
 
         render message(code:"desconciliation.calledProcess", default:"Se ha invocado el proceso", args:[username])
         
