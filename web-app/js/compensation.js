@@ -130,10 +130,10 @@ $(function() {
                             aoData.push( { "name": "site", "value": $('#site').val() } );
                             aoData.push( { "name": "period", "value": $('#period').val() } );
                             aoData.push( { "name": "compReceiptList", "value":compReceiptList.join(",") } );
-				            if($('#fromReceiptTransDate').val() !='' && jQuery.type(('#fromReceiptTransDate').val()) !='undefined') aoData.push( { "name":"fromReceiptTransDate", "value":$('#fromReceiptTransDate').val()} );
-				            if($('#toReceiptTransDate').val() !='' && jQuery.type($('#toReceiptTransDate').val()) !='undefined') aoData.push( { "name":"toReceiptTransDate", "value":$('#toReceiptTransDate').val()} );
-				            if($('#fromReceiptPaymtDate').val() !='' && jQuery.type($('#fromReceiptPaymtDate').val()) !='undefined') aoData.push( { "name":"fromReceiptPaymtDate", "value":$('#fromReceiptPaymtDate').val()});
-				            if($('#toReceiptPaymtDate').val() !='' && jQuery.type($('#toReceiptPaymtDate').val()) !='undefined') aoData.push( { "name":"toReceiptPaymtDate", "value":$('#toReceiptPaymtDate').val()}); 
+				            if($('#fromReceiptTransDate').val() !='') aoData.push( { "name":"fromReceiptTransDate", "value":$('#fromReceiptTransDate').val()} );
+				            if($('#toReceiptTransDate').val() !='') aoData.push( { "name":"toReceiptTransDate", "value":$('#toReceiptTransDate').val()} );
+				            if($('#fromReceiptPaymtDate').val() !='') aoData.push( { "name":"fromReceiptPaymtDate", "value":$('#fromReceiptPaymtDate').val()});
+				            if($('#toReceiptPaymtDate').val() !='') aoData.push( { "name":"toReceiptPaymtDate", "value":$('#toReceiptPaymtDate').val()}); 
 
 
                         },
@@ -210,7 +210,7 @@ $(function() {
         var id = this.id;
         var index = jQuery.inArray(id, aReceiptSelected);
         
-        var monto = parseFloat($(this).find('td:eq(3)').text());
+        var monto = parseFloat($(this).find('td:eq(1)').text());
         
         if ( index == -1 ) {
             aReceiptSelected.push( id );
@@ -228,7 +228,7 @@ $(function() {
         var id = this.id;
         var index = jQuery.inArray(id, aSalesSelected);
         
-        var monto = parseFloat($(this).find('td:eq(3)').text());
+        var monto = parseFloat($(this).find('td:eq(1)').text());
         if ( index == -1 ) {
             aSalesSelected.push( id );
             salesBalance+= isNaN(monto)? 0 : monto;
@@ -457,6 +457,9 @@ function save(compensateTable, map, count, element, link) {
     //si todo sale bien... primero hay que serializar el mapa
     var strdata = "element=" + element;
     strdata += "&ids=" + map.join(";");
+	strdata +="&site=" + $('#site').val();
+	strdata +="&country=" + $('#country').val();
+	strdata +="&card=" + $('#card').val(); 
     
     $.ajax({
         type : 'POST',
