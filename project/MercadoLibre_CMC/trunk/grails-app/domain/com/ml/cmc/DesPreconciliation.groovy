@@ -1,0 +1,31 @@
+package com.ml.cmc
+
+class DesPreconciliation {
+
+	SalesSite sale
+	Receipt receipt
+	Long lot
+	Conciliated conciliated
+	String username
+	Medio medio
+	AccountantPeriod period
+	
+	static constraints = {
+		
+	}
+	
+	static mapping = {
+		table ' F_ROLLBACK_DESPRECONCILIAR'
+		version false
+		
+		id composite:['conciliated']
+		conciliated column: 'CD_CONCILIACION'
+		sale column: 'CD_VENTA_CUOTA'
+		receipt column: 'CD_RECIBO'
+		lot column: 'LOTE_CONCILIACION'
+		medio column: 'CD_MEDIO'
+		period column: 'PERIODO'
+		username column:'USUARIO'
+	}
+
+}
