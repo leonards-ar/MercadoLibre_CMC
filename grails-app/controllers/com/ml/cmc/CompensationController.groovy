@@ -175,7 +175,9 @@ class CompensationController extends SessionInfoController {
 		def jobName = params.element == "F_RECIBOS"?"/datastage/CompManual_Recibos.sh":"/datastage/CompManual_Ventas.sh"
 		def strLot = formatNumber(number:lot, format:"000")
 		
-		exceuteCommand("${jobName} ${username} ${strLot}")
+		Thread.start{
+			executeCommand("${jobName} ${username} ${strLot}")
+        }
         
         render message(code:"compensation.calledProcess", default:"Se ha invocado el proceso", args:[username])
     

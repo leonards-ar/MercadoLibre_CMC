@@ -146,7 +146,9 @@ class PreconciliationController extends SessionInfoController{
        	def username = getUsername()
 		def strLot = formatNumber(number:lot, format:"000")
 
-		exceuteCommand("/datastage/PreConcManual.sh ${username} ${strLot} ${period.startDateStr}" )
+		Thread.start{
+			executeCommand("/datastage/PreConcManual.sh ${username} ${strLot} ${period.startDateStr}" )
+       	}
 		
         render message(code:"preconciliation.calledProcess", default:"Se ha invocado el proceso", args:[strLot, username])
          

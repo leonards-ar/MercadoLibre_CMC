@@ -112,7 +112,7 @@ class SessionInfoController {
 		return data
 	}
 	
-	protected Integer exceuteCommand(String command) {
+	protected Integer executeCommand(String command) {
 		
 		StringWriter stringWriterOutput = new StringWriter()
 		StringWriter stringWriterError = new StringWriter()
