@@ -7,9 +7,11 @@ class AccountantPeriod {
 	Date endDate
 	String status
 	Medio medio
-    DateFormat formatter = new SimpleDateFormat('dd/MM/yyyy')
+    private DateFormat formatter = new SimpleDateFormat('dd/MM/yyyy')
+	private DateFormat dateformatter = new SimpleDateFormat('yyyy-MM_dd')
 	
-	 static transients = ['formatter']
+	static transients = ['formatter', 'dateformatter','startDateStr','endDateStr']
+	
     static constraints = {
     }
 	
@@ -26,5 +28,13 @@ class AccountantPeriod {
 	
 	String toString() {
 		formatter.format(startDate) + " - " + formatter.format(endDate)
+	}
+	
+	public String getStartDateStr(){
+		return dateformatter.format(startDate)
+	}
+	
+	public String getEndDateStr(){
+		return dateformatter.format(endDate)
 	}
 }
