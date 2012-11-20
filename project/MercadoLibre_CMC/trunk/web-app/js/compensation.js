@@ -449,10 +449,18 @@ function save(compensateTable, map, count, element, link) {
 	strdata +="&country=" + $('#country').val();
 	strdata +="&card=" + $('#card').val(); 
     
+	var $processing = getProcessingDialog();
+	
     $.ajax({
         type : 'POST',
         url : saveLink,
         data : strdata,
+		beforeSend: function() {
+		    $processing.dialog('open');
+		},
+		complete: function(){
+		    $processing.dialog('close');
+	    },
         success : function(data) {
             var $dialog = getDialog(data);
             $dialog.dialog('option','title','');
