@@ -121,15 +121,16 @@ class DesPreconciliationController extends SessionInfoController {
             
             preconciliatedIds.each {id ->
                 
-                def conciliated = PrecConciliated.findById(id)
+                def preconciliated = PrecConciliated.findById(id)
                 
-                def desconciliation = new DesPreconciliation(sale:conciliated?.sale,
-                    receipt:conciliated?.receipt,
+                def despreconciliation = new DesPreconciliation(sale:preconciliated?.sale,
+                    receipt:preconciliated?.receipt,
                     lot:lot,
-                    conciliated: conciliated,
+                    preconciliated: preconciliated,
                     username:getUsername(),
                     medio: medio,
-                    period: conciliated.period
+                    period: preconciliated.period,
+					status: preconciliated?.sale?.state
                 )
                 
                 despreconciliation.save();
