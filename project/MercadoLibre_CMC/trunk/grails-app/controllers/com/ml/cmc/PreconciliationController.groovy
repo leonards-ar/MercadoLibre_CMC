@@ -121,7 +121,8 @@ class PreconciliationController extends SessionInfoController{
     def save = { 
         
         def lot = lotGeneratorService.getLotId()
-        
+        def period = AccountantPeriod.findById(params.period)
+		
 		List salesSiteReceiptList = params.ids.split(";")
 		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site]);
         
@@ -145,7 +146,7 @@ class PreconciliationController extends SessionInfoController{
        	def username = getUsername()
 		def strLot = formatNumber(number:lot, format:"000")
 
-		exceuteCommand("/datastage/PreConcManual.sh ${username} ${strLot}" )
+		exceuteCommand("/datastage/PreConcManual.sh ${username} ${strLot} ${period.startDateStr}" )
 		
         render message(code:"preconciliation.calledProcess", default:"Se ha invocado el proceso", args:[strLot, username])
          

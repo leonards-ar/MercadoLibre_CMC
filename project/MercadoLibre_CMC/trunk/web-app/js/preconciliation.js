@@ -156,7 +156,8 @@ $(function() {
 		strdata = "ids=" + conciliateList.join(";")
 		strdata +="&site=" + $('#site').val();
 		strdata +="&country=" + $('#country').val();
-		strdata +="&card=" + $('#card').val(); 
+		strdata +="&card=" + $('#card').val();
+		strdata += "&period=" + $('#period').val();
 
         var $processing = getProcessingDialog();
         
