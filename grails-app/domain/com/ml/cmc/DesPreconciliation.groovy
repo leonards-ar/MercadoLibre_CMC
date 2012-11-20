@@ -11,6 +11,7 @@ class DesPreconciliation implements Serializable{
 	String username
 	Medio medio
 	AccountantPeriod period
+	String status
 	
 	static constraints = {
 		
@@ -20,14 +21,15 @@ class DesPreconciliation implements Serializable{
 		table ' F_ROLLBACK_DESPRECONCILIAR'
 		version false
 		
-		id composite:['conciliated']
-		conciliated column: 'CD_CONCILIACION'
+		id composite:['preconciliated']
+		preconciliated column: 'CD_PRECONCILIACION'
 		sale column: 'CD_VENTA_CUOTA'
 		receipt column: 'CD_RECIBO'
 		lot column: 'LOTE_CONCILIACION'
 		medio column: 'CD_MEDIO'
 		period column: 'PERIODO'
 		username column:'USUARIO'
+		status column:'CD_CAMBIO_ESTADO'
 	}
 
 }
