@@ -1,6 +1,8 @@
 package com.ml.cmc
 
-class DesPreconciliation {
+import java.io.Serializable;
+
+class DesPreconciliation implements Serializable{
 
 	SalesSite sale
 	Receipt receipt
