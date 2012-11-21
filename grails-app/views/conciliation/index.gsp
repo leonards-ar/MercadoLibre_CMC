@@ -58,8 +58,8 @@
 
           </td>
           <td>
-            <div><g:message code="conciliation.period" default="Site"/> </div>
-            <g:select name="period" id="period" optionKey="id" noSelection="['':'']" />
+            <div><g:message code="conciliation.accountDate" default="Period"/> </div>
+            <g:textField name="period" id="period" disabled />
           </td>          
           <td>
             <span class="button">

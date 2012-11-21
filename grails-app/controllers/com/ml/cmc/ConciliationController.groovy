@@ -28,6 +28,16 @@ class ConciliationController extends SessionInfoController{
 		render(view:'index', model:[countryList: countryList])
 	}
 	
+	def periods = {
+		if(params._value == '---' || params.country == null || params.card == null) return
+		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
+		def period = AccountantPeriod.find("from AccountantPeriod a where a.medio= :medio and a.status= :status ", [medio: medio, status:'ACTIVO'])
+		
+		def data = [minDate:period?.startDate, maxDate:period?.endDate] 
+		render data as JSON
+		
+	}
+	
 	def lock = {
 		
 		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
@@ -67,12 +77,17 @@ class ConciliationController extends SessionInfoController{
 		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site]);
 		def state3 = State.findById(3)
 
+		def accountDate = new Date().parse("dd/MM/yyyy",params.period)
+		
+		def period = AccountantPeriod.find("from AccountantPeriod a where a.medio= :medio and a.status= :status", [medio: medio, status:'ACTIVO'])
+
         def criteria = Receipt.createCriteria()
 		def receiptInstanceList = criteria.list(max:max, offset:offset){
 			 order(colName, sortDir)
 			 if(medio != null) eq('medio', medio)
 			 eq('state',state3)
-             eq('period', AccountantPeriod.findById(params.period))
+			 eq('period',period)
+             le('transactionDate', accountDate)
 			 if(params.selectedList.length() > 0) {
 				 def ids = params.selectedList.split(",")
 				 not{inList('id', ids)}
@@ -108,15 +123,21 @@ class ConciliationController extends SessionInfoController{
 		def colName = colNames[colIdx]
 		def sortDir = params.sSortDir_0? params.sSortDir_0:'asc'
 
-		def medios = Medio.find("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
+		def medio = Medio.find("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
 		def state = State.findById(3)
+		
+		def accountDate = new Date().parse("dd/MM/yyyy",params.period)
+		
+		def period = AccountantPeriod.find("from AccountantPeriod a where a.medio= :medio and a.status= :status", [medio: medio, status:'ACTIVO'])
+		
         def criteria = SalesSite.createCriteria()
 		def salesSiteInstanceList = criteria.list(max:max, offset:offset) {
 			order(colName, sortDir)
 			
-			 if(medios != null) inList('medio', medios)
+			 if(medio != null) inList('medio', medio)
 			 eq('state',state)
-             eq('period', AccountantPeriod.findById(params.period))
+			 eq('period',period)
+             le('transactionDate', accountDate)
   			 if(params.selectedList.length() > 0) {
 				def ids = params.selectedList.split(",")
                 not{inList('id', ids)}
@@ -141,8 +162,6 @@ class ConciliationController extends SessionInfoController{
 	def save = { 
 		def lot = lotGeneratorService.getLotId()
 		
-		def period = AccountantPeriod.findById(params.period)
-		
 		List salesSiteReceiptList = params.ids.split(";")
 		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site]);
 		
@@ -165,9 +184,9 @@ class ConciliationController extends SessionInfoController{
 		/* call datastage */
 		def username = getUsername()
 		def strLot = formatNumber(number:lot, format:"000")
-		
+		def accountDate = new Date().parse("'yyyy-MM_dd'",params.period)
 		Thread.start{
-			executeCommand("/datastage/ConcManual.sh ${username} ${strLot} ${period.startDateStr}")
+			executeCommand("/datastage/ConcManual.sh ${username} ${strLot} ${accountDate}")
 			
 		}
 		
