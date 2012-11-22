@@ -77,17 +77,14 @@ class ConciliationController extends SessionInfoController{
 		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site]);
 		def state3 = State.findById(3)
 
-		def accountDate = new Date().parse("dd/MM/yyyy",params.period)
+		def accountDate = new Date().parse("yyyy-MM-dd",params.period)
 		
-		def period = AccountantPeriod.find("from AccountantPeriod a where a.medio= :medio and a.status= :status", [medio: medio, status:'ACTIVO'])
-
         def criteria = Receipt.createCriteria()
 		def receiptInstanceList = criteria.list(max:max, offset:offset){
 			 order(colName, sortDir)
 			 if(medio != null) eq('medio', medio)
 			 eq('state',state3)
-			 eq('period',period)
-             le('transactionDate', accountDate)
+
 			 if(params.selectedList.length() > 0) {
 				 def ids = params.selectedList.split(",")
 				 not{inList('id', ids)}
@@ -96,11 +93,15 @@ class ConciliationController extends SessionInfoController{
 				 def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromReceiptTransDate)
 				 def toTransDate = new Date().parse("dd/MM/yyyy", params.toReceiptTransDate)
 				 between('transactionDate', fromTransDate, toTransDate)
+			 } else {
+			 	le('transactionDate', accountDate)
 			 }
 			 if(params.fromReceiptPaymtDate != null && params.toReceiptPaymtDate != null){
 				 def fromPaymtDate = new Date().parse("dd/MM/yyyy", params.fromReceiptPaymtDate)
 				 def toPaymtDate = new Date().parse("dd/MM/yyyy", params.toReceiptPaymtDate)
-				 between('transactionDate', fromPaymtDate, toPaymtDate)
+				 between('paymentDate', fromPaymtDate, toPaymtDate)
+			 } else {
+			 	le('paymentDate', accountDate)
 			 }
 
 		}
@@ -126,9 +127,7 @@ class ConciliationController extends SessionInfoController{
 		def medio = Medio.find("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
 		def state = State.findById(3)
 		
-		def accountDate = new Date().parse("dd/MM/yyyy",params.period)
-		
-		def period = AccountantPeriod.find("from AccountantPeriod a where a.medio= :medio and a.status= :status", [medio: medio, status:'ACTIVO'])
+		def accountDate = new Date().parse("yyyy-MM-dd",params.period)
 		
         def criteria = SalesSite.createCriteria()
 		def salesSiteInstanceList = criteria.list(max:max, offset:offset) {
@@ -136,8 +135,7 @@ class ConciliationController extends SessionInfoController{
 			
 			 if(medio != null) inList('medio', medio)
 			 eq('state',state)
-			 eq('period',period)
-             le('transactionDate', accountDate)
+
   			 if(params.selectedList.length() > 0) {
 				def ids = params.selectedList.split(",")
                 not{inList('id', ids)}
@@ -146,6 +144,8 @@ class ConciliationController extends SessionInfoController{
 			  def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromSalesTransDate)
 			  def toTransDate = new Date().parse("dd/MM/yyyy", params.toSalesTransDate)
 			  between('transactionDate', fromTransDate, toTransDate)
+			 } else {
+			 	le('transactionDate', accountDate)
 			 }
 		}
         
