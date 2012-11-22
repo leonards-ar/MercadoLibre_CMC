@@ -55,8 +55,8 @@
           <g:select name="site" id="site" noSelection="['':'']"/>
           </td>
           <td>
-            <div><g:message code="conciliation.period" default="Site"/> </div>
-            <g:select name="period" id="period" optionKey="id" noSelection="['':'']" />
+            <div><g:message code="conciliation.accountDate" default="Fecha Contable"/> </div>
+            <g:textField name="period" id="period" size="10" />
           </td>                    
           <td>
             <span class="button">

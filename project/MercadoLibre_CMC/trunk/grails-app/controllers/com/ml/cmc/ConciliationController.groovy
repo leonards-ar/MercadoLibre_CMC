@@ -90,15 +90,15 @@ class ConciliationController extends SessionInfoController{
 				 not{inList('id', ids)}
 			  }
 			 if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){
-				 def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromReceiptTransDate)
-				 def toTransDate = new Date().parse("dd/MM/yyyy", params.toReceiptTransDate)
+				 def fromTransDate = new Date().parse("yyyy-MM-dd", params.fromReceiptTransDate)
+				 def toTransDate = new Date().parse("yyyy-MM-dd", params.toReceiptTransDate)
 				 between('transactionDate', fromTransDate, toTransDate)
 			 } else {
 			 	le('transactionDate', accountDate)
 			 }
 			 if(params.fromReceiptPaymtDate != null && params.toReceiptPaymtDate != null){
-				 def fromPaymtDate = new Date().parse("dd/MM/yyyy", params.fromReceiptPaymtDate)
-				 def toPaymtDate = new Date().parse("dd/MM/yyyy", params.toReceiptPaymtDate)
+				 def fromPaymtDate = new Date().parse("yyyy-MM-dd", params.fromReceiptPaymtDate)
+				 def toPaymtDate = new Date().parse("yyyy-MM-dd", params.toReceiptPaymtDate)
 				 between('paymentDate', fromPaymtDate, toPaymtDate)
 			 } else {
 			 	le('paymentDate', accountDate)
@@ -141,8 +141,8 @@ class ConciliationController extends SessionInfoController{
                 not{inList('id', ids)}
              }
 			 if(params.fromSalesTransDate != null && params.toSalesTransDate != null){
-			  def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromSalesTransDate)
-			  def toTransDate = new Date().parse("dd/MM/yyyy", params.toSalesTransDate)
+			  def fromTransDate = new Date().parse("yyyy-MM-dd", params.fromSalesTransDate)
+			  def toTransDate = new Date().parse("yyyy-MM-dd", params.toSalesTransDate)
 			  between('transactionDate', fromTransDate, toTransDate)
 			 } else {
 			 	le('transactionDate', accountDate)
