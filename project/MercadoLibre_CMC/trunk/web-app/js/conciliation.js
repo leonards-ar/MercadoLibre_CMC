@@ -4,6 +4,7 @@ $(function() {
     var receiptList = [];
     var salesList = [];
     var conciliateList = [];
+    var dateformatter = "yy-mm-dd";
     
 	$('#country').chainSelect('#card', cardLink, {
 		nonSelectedValue : '---'
@@ -13,31 +14,14 @@ $(function() {
 		nonSelectedValue : '---'
 	});
 
-	
-	$('#site').change(function(){
-		var site = $(this).val();
-		if(site == '---') return;
-		var strdata = "site=" + $(this).val();
-		strdata+="&country=" + $('#country').val();
-		strdata +="&card=" + $('#card').val(); 
-		$.ajax({
-			type : 'POST',
-			url : periodLink,
-			data : strdata,
-			success : function(data) {
-				var index = 0;
-				$('#period').removeAttr('disabled');
-				$('#period').datepicker({
-					changeMonth: true,
-					dateFormat: "dd/mm/yy",
-					minDate: new Date(data.minDate),
-					maxDate: new Date(data.maxDate)
-				});
-				
-			}
-		});
-					
+
+	$('#period').datepicker({
+		changeMonth: true,
+		dateFormat: dateformatter,
+        changeYear: true,
+        showAnim: 'fadeIn'
 	});
+	
 
 	$('#agrupar').live({
 		click: function() {
@@ -312,6 +296,10 @@ $(function() {
 			strdata += "&" + $('#period').attr('id') + "=" + $('#period').val();
 			
 			var period = $('#period').val();
+			var tmpPeriod = new Date(period)
+			tmpPeriod.setDate(tmpPeriod.getDate()-7);
+			
+			var startPeriod = $.datepicker.formatDate(dateformatter, tmpPeriod);
 	        var $processing = getProcessingDialog();
 	        
 			$.ajax({
@@ -409,8 +397,10 @@ $(function() {
 			            "bAutoWidth":false
                      });
 			    	
-			        $('#fromReceiptTransDate').datepicker({
-			                dateFormat: "dd/mm/yy",
+			        $('#fromReceiptTransDate').datepicker({ 
+			                dateFormat: dateformatter,
+			                defaultDate: startPeriod,
+			                maxDate: period,
 			                changeMonth: true,
 			                changeYear: true,
 			                showAnim: 'fadeIn',
@@ -420,18 +410,20 @@ $(function() {
 			        });
 
 			        $('#toReceiptTransDate').datepicker({
-			                dateFormat: "dd/mm/yy",
+			        		dateFormat: dateformatter,
 			                changeMonth: true,
 			                changeYear: true,
 			                showAnim: 'fadeIn',
-			                maxDate: new Date(period),
+			                maxDate: period,
 			                onClose: function( selectedDate ) {
 			                	$( "#fromReceiptTransDate" ).datepicker( "option", "maxDate", selectedDate );
 			                }                	
 			        });
 			        
 			        $('#fromReceiptPaymtDate').datepicker({
-			                dateFormat: "dd/mm/yy",
+			        		dateFormat: dateformatter,
+			        		defaultDate: startPeriod,
+			        		maxDate: period,
 			                changeMonth: true,
 			                changeYear: true,
 			                showAnim: 'fadeIn',
@@ -441,17 +433,20 @@ $(function() {
 			        });
 
 			        $('#toReceiptPaymtDate').datepicker({
-			                dateFormat: "dd/mm/yy",
+			        		dateFormat: dateformatter,
 			                changeMonth: true,
 			                changeYear: true,
 			                showAnim: 'fadeIn',
+			                maxDate: period,
 				            onClose: function( selectedDate ) {
 				            	$( "#fromReceiptPaymtDate" ).datepicker( "option", "maxDate", selectedDate );
 				            }                	
 			        });
 			        
 			        $('#fromSalesTransDate').datepicker({
-			                dateFormat: "dd/mm/yy",
+			        		dateFormat: dateformatter,
+			        		defaultDate: startPeriod,
+			        		maxDate: period,
 			                changeMonth: true,
 			                changeYear: true,
 			                showAnim: 'fadeIn',
@@ -462,11 +457,11 @@ $(function() {
 			        });
 
 			        $('#toSalesTransDate').datepicker({
-			                dateFormat: "dd/mm/yy",
+			        		dateFormat: dateformatter,
 			                changeMonth: true,
 			                changeYear: true,
 			                showAnim: 'fadeIn',
-			                maxDate: new Date(period),
+			                maxDate: period,
 				            onClose: function( selectedDate ) {
 				            	$( "#fromSalesTransDate" ).datepicker( "option", "maxDate", selectedDate );
 				            }                

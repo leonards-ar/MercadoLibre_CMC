@@ -58,8 +58,8 @@
 
           </td>
           <td>
-            <div><g:message code="conciliation.accountDate" default="Period"/> </div>
-            <g:textField name="period" id="period" disabled />
+            <div><g:message code="conciliation.accountDate" default="Fecha Contable"/> </div>
+            <g:textField name="period" id="period" />
           </td>          
           <td>
             <span class="button">
