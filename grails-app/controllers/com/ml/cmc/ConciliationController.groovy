@@ -184,7 +184,7 @@ class ConciliationController extends SessionInfoController{
 		/* call datastage */
 		def username = getUsername()
 		def strLot = formatNumber(number:lot, format:"000")
-		def accountDate = new Date().parse("'yyyy-MM_dd'",params.period)
+		def accountDate = formatDate(date:new Date().parse('yyyy-MM-dd',params.period),format:'yyyy-MM_dd')
 		Thread.start{
 			executeCommand("/datastage/ConcManual.sh ${username} ${strLot} ${accountDate}")
 			
