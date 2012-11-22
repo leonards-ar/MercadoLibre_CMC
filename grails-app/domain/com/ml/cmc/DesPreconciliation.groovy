@@ -7,7 +7,7 @@ class DesPreconciliation implements Serializable{
 	SalesSite sale
 	Receipt receipt
 	Long lot
-	Conciliated conciliated
+	Preconciliated preconciliated
 	String username
 	Medio medio
 	AccountantPeriod period

@@ -16,17 +16,17 @@ class Preconciliated {
 	}
 	
 	static mapping = {
-		table 'F_TMP_PRECONCILIACIONES'
+		table 'F_PRECONCILIACIONES'
 		version false
 		
 		id column:'CD_PRECONCILIACION', generator:'assigned'
 		sale column:'CD_VENTA_CUOTA'
 		receipt column:'CD_RECIBO'
-		lot column:'SERIAL_JAVA'
+		lot column:'LOTE'
 		medio column:'CD_MEDIO'
 		period column:'CD_PERIODO'
-		saleStatus column:'ESTADO_VENTA'
-		registerType column:'TIPO_REGISTRO_RECIBOS'
+		saleStatus column:'CD_CAMBIO_ESTADO'
+		registerType column:'CD_TIPO_PRECONC'
 		origin column:'FL_ORIGEN'
 	}
 
