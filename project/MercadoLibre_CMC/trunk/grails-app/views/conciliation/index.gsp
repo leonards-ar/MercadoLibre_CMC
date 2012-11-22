@@ -59,7 +59,7 @@
           </td>
           <td>
             <div><g:message code="conciliation.accountDate" default="Fecha Contable"/> </div>
-            <g:textField name="period" id="period" />
+            <g:textField name="period" id="period" size="10" />
           </td>          
           <td>
             <span class="button">
