@@ -298,7 +298,6 @@ $(function() {
 			var period = $('#period').val();
 			var tmpPeriod = new Date(period)
 			tmpPeriod.setDate(tmpPeriod.getDate()-7);
-			
 			var startPeriod = $.datepicker.formatDate(dateformatter, tmpPeriod);
 	        var $processing = getProcessingDialog();
 	        

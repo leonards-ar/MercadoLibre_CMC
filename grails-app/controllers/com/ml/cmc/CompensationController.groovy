@@ -75,24 +75,29 @@ class CompensationController extends SessionInfoController {
         def colName = colNames[colIdx]
         def sortDir = params.sSortDir_0? params.sSortDir_0:'asc'
         
+		def accountDate = new Date().parse("yyyy-MM-dd",params.period)
+		
 		def receiptInstanceList = receiptCriteria.list(max:max, offset:offset) {
 			order(colName, sortDir)
 			eq('medio', medio)
 			eq('state',state1)
-			eq('period', AccountantPeriod.findById(params.period))
 			if(params.compReceiptList.length() > 0) {
 				def ids = params.compReceiptList.split(",")
                 not{inList('id', ids)}
             }
 			if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){
-				def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromReceiptTransDate)
-				def toTransDate = new Date().parse("dd/MM/yyyy", params.toReceiptTransDate)
+				def fromTransDate = new Date().parse("yyyy-MM-dd", params.fromReceiptTransDate)
+				def toTransDate = new Date().parse("yyyy-MM-dd", params.toReceiptTransDate)
 				between('transactionDate', fromTransDate, toTransDate)
+			} else {
+				le('transactionDate', accountDate)
 			}
 			if(params.fromReceiptPaymtDate != null && params.toReceiptPaymtDate != null){
-				def fromPaymtDate = new Date().parse("dd/MM/yyyy", params.fromReceiptPaymtDate)
-				def toPaymtDate = new Date().parse("dd/MM/yyyy", params.toReceiptPaymtDate)
+				def fromPaymtDate = new Date().parse("yyyy-MM-dd", params.fromReceiptPaymtDate)
+				def toPaymtDate = new Date().parse("yyyy-MM-dd", params.toReceiptPaymtDate)
 				between('transactionDate', fromPaymtDate, toPaymtDate)
+			} else {
+				le('paymentDate', accountDate)
 			}
 		}
 		
@@ -119,20 +124,24 @@ class CompensationController extends SessionInfoController {
         def colIdx = params.iSortCol? Integer.parseInt(params.iSortCol_0):0
         def colName = colNames[colIdx]
         def sortDir = params.sSortDir_0? params.sSortDir_0:'asc'
+		
+		def accountDate = new Date().parse("yyyy-MM-dd",params.period)
+		
 		def salesSiteInstanceList = salesCriteria.list(max:max, offset:offset) {
 			order(colName, sortDir)
 			 eq('medio', medio)
 			 eq('state',state1)
-			 eq('period', AccountantPeriod.findById(params.period))
              
              if(params.compSalesList.length() > 0){
 				 def ids = params.compSalesList.split(",")
                  not{inList('id', ids)}
              }
 			 if(params.fromSalesTransDate != null  && params.toSalesTransDate != null){
-				 def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromSalesTransDate)
-				 def toTransDate = new Date().parse("dd/MM/yyyy", params.toSalesTransDate)
+				 def fromTransDate = new Date().parse("yyyy-MM-dd", params.fromSalesTransDate)
+				 def toTransDate = new Date().parse("yyyy-MM-dd", params.toSalesTransDate)
 				 between('transactionDate', fromTransDate, toTransDate)
+		 	 } else {
+			  	le('transactionDate', accountDate)
 		 	 }
 
 		}
@@ -174,9 +183,9 @@ class CompensationController extends SessionInfoController {
         def username = getUsername()
 		def jobName = params.element == "F_RECIBOS"?"/datastage/CompManual_Recibos.sh":"/datastage/CompManual_Ventas.sh"
 		def strLot = formatNumber(number:lot, format:"000")
-		
+		def accountDate = formatDate(date:new Date().parse('yyyy-MM-dd',params.period),format:'yyyy-MM_dd')
 		Thread.start{
-			executeCommand("${jobName} ${username} ${strLot}")
+			executeCommand("${jobName} ${username} ${strLot} ${accountDate}")
         }
         
         render message(code:"compensation.calledProcess", default:"Se ha invocado el proceso", args:[username])

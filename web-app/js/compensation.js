@@ -7,7 +7,7 @@ $(function() {
     var compSalesList = [];
     var receiptCount = 0;
     var salesCount = 0;
-    
+    var dateformatter = "yy-mm-dd";
     var receiptBalance;
     var salesBalance;
     
@@ -19,32 +19,11 @@ $(function() {
 		nonSelectedValue : '---'
 	});
 	
-	$('#site').change(function(){
-		var site = $(this).val();
-		if(site == '---') return;
-		var strdata = "site=" + $(this).val();
-		strdata+="&country=" + $('#country').val();
-		strdata +="&card=" + $('#card').val(); 
-		$.ajax({
-			type : 'POST',
-			url : periodLink,
-			data : strdata,
-			success : function(data) {
-				var index = 0;
-				$('#period').html("");//clear old options
-				data = eval(data);//get json array
-				$('#period').get(0).add(new Option('---', '---'), document.all ? 0 : null);
-				index = 1;
-				for (i = 0; i < data.length; i++)//iterate over all options
-				{
-					var item = data[i];
-					
-					$('#period').get(0).add(new Option(item[1],item[0]), document.all ? index++ : null);
-				}
-
-		    } 
-		});
-					
+	$('#period').datepicker({
+		changeMonth: true,
+		dateFormat: dateformatter,
+        changeYear: true,
+        showAnim: 'fadeIn'
 	});
 	
 	
@@ -68,6 +47,10 @@ $(function() {
 			strdata += "&" + $('#card').attr('id') + "=" + $('#card').val();
 			strdata += "&" + $('#site').attr('id') + "=" + $('#site').val();
 			
+			var period = $('#period').val();
+			var tmpPeriod = new Date(period)
+			tmpPeriod.setDate(tmpPeriod.getDate()-7);
+			var startPeriod = $.datepicker.formatDate(dateformatter, tmpPeriod);
 	        var $processing = getProcessingDialog();
 	        
 			$.ajax({
@@ -167,6 +150,76 @@ $(function() {
                         "bProcessing": true,
                         "bSort":false
                      });
+                    
+			        $('#fromReceiptTransDate').datepicker({ 
+		                dateFormat: dateformatter,
+		                defaultDate: startPeriod,
+		                maxDate: period,
+		                changeMonth: true,
+		                changeYear: true,
+		                showAnim: 'fadeIn',
+		            	onClose: function( selectedDate ) {
+		                    $( "#toReceiptTransDate" ).datepicker( "option", "minDate", selectedDate );
+		                }                
+			        });
+	
+			        $('#toReceiptTransDate').datepicker({
+			        		dateFormat: dateformatter,
+			                changeMonth: true,
+			                changeYear: true,
+			                showAnim: 'fadeIn',
+			                maxDate: period,
+			                onClose: function( selectedDate ) {
+			                	$( "#fromReceiptTransDate" ).datepicker( "option", "maxDate", selectedDate );
+			                }                	
+			        });
+			        
+			        $('#fromReceiptPaymtDate').datepicker({
+			        		dateFormat: dateformatter,
+			        		defaultDate: startPeriod,
+			        		maxDate: period,
+			                changeMonth: true,
+			                changeYear: true,
+			                showAnim: 'fadeIn',
+			            	onClose: function( selectedDate ) {
+			                    $( "#toReceiptPaymtDate" ).datepicker( "option", "minDate", selectedDate );
+			                }                
+			        });
+	
+			        $('#toReceiptPaymtDate').datepicker({
+			        		dateFormat: dateformatter,
+			                changeMonth: true,
+			                changeYear: true,
+			                showAnim: 'fadeIn',
+			                maxDate: period,
+				            onClose: function( selectedDate ) {
+				            	$( "#fromReceiptPaymtDate" ).datepicker( "option", "maxDate", selectedDate );
+				            }                	
+			        });
+			        
+			        $('#fromSalesTransDate').datepicker({
+			        		dateFormat: dateformatter,
+			        		defaultDate: startPeriod,
+			        		maxDate: period,
+			                changeMonth: true,
+			                changeYear: true,
+			                showAnim: 'fadeIn',
+			            	onClose: function( selectedDate ) {
+			                    $( "#toSalesTransDate" ).datepicker( "option", "minDate", selectedDate );
+			                }                
+			                
+			        });
+	
+			        $('#toSalesTransDate').datepicker({
+			        		dateFormat: dateformatter,
+			                changeMonth: true,
+			                changeYear: true,
+			                showAnim: 'fadeIn',
+			                maxDate: period,
+				            onClose: function( selectedDate ) {
+				            	$( "#fromSalesTransDate" ).datepicker( "option", "maxDate", selectedDate );
+				            }                
+			        });
                     
                     	    	
 				},
@@ -307,79 +360,6 @@ $(function() {
         
     });
     
-    $('#fromReceiptTransDate').live("focus", function(){
-        $(this).datepicker({
-            dateFormat: "dd/mm/yy",
-            changeMonth: true,
-            changeYear: true,
-            showAnim: 'fadeIn',
-        	onClose: function( selectedDate ) {
-                $( "#toReceiptTransDate" ).datepicker( "option", "minDate", selectedDate );
-            }                
-        }).datepicker('show');
-    });
-
-    $('#toReceiptTransDate').live("focus", function(){
-        $(this).datepicker({
-            dateFormat: "dd/mm/yy",
-            changeMonth: true,
-            changeYear: true,
-            showAnim: 'fadeIn',
-            onClose: function( selectedDate ) {
-            	$( "#fromReceiptTransDate" ).datepicker( "option", "maxDate", selectedDate );
-            }                	
-        }).datepicker('show');
-    });
-    
-    $('#fromReceiptPaymtDate').live("focus", function(){
-        $(this).datepicker({
-            dateFormat: "dd/mm/yy",
-            changeMonth: true,
-            changeYear: true,
-            showAnim: 'fadeIn',
-        	onClose: function( selectedDate ) {
-                $( "#toReceiptPaymtDate" ).datepicker( "option", "minDate", selectedDate );
-            }                
-            
-        }).datepicker('show');
-    });
-
-    $('#toReceiptPaymtDate').live("focus", function(){
-        $(this).datepicker({
-            dateFormat: "dd/mm/yy",
-            changeMonth: true,
-            changeYear: true,
-            showAnim: 'fadeIn',
-            onClose: function( selectedDate ) {
-            	$( "#fromReceiptPaymtDate" ).datepicker( "option", "maxDate", selectedDate );
-            }                	
-        }).datepicker('show');
-    });
-    
-    $('#fromSalesTransDate').live("focus", function(){
-        $(this).datepicker({
-            dateFormat: "dd/mm/yy",
-            changeMonth: true,
-            changeYear: true,
-            showAnim: 'fadeIn',
-        	onClose: function( selectedDate ) {
-                $( "#toSalesTransDate" ).datepicker( "option", "minDate", selectedDate );
-            }                
-            
-        }).datepicker('show');
-    });
-
-    $('#toSalesTransDate').live("focus", function(){
-        $(this).datepicker({
-            dateFormat: "dd/mm/yy",
-            changeMonth: true,
-            changeYear: true,
-            showAnim: 'fadeIn',
-            onClose: function( selectedDate ) {
-            	$( "#fromSalesTransDate" ).datepicker( "option", "maxDate", selectedDate );
-            }                
-        }).datepicker('show');
-    });
     
 	$('#applyReceiptFilter').live({
 		click: function(){
