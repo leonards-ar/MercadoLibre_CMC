@@ -7,7 +7,7 @@ import org.apache.commons.logging.LogFactory
 import com.ml.cmc.constants.Constant
 import com.ml.cmc.exception.SecLockException
 
-class DesPreconciliationController extends SessionInfoController {
+class DespreconciliationController extends SessionInfoController {
 	private static final log = LogFactory.getLog(this)
 	
     def securityLockService
@@ -40,7 +40,7 @@ class DesPreconciliationController extends SessionInfoController {
         }
 
         try{
-            securityLockService.locklockFunctionalityByCountry(getUsername(), Constant.FUNC_DESPRECONCILIATE, getSessionId(), params.country)
+            securityLockService.lockFunctionalityByCountry(getUsername(), Constant.FUNC_DESPRECONCILIATE, getSessionId(), params.country)
             render(template: "despreconciliationBody")
 
         }catch (SecLockException e) {
@@ -61,9 +61,9 @@ class DesPreconciliationController extends SessionInfoController {
         def responseMap = [:]
         
         def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
-        def state4 = State.findById(4)
+        def state3 = State.findById(3)
         
-        def preconciliatedCriteria = Preonciliated.createCriteria()
+        def preconciliatedCriteria = Preconciliated.createCriteria()
         def max = params.iDisplayLength?params.iDisplayLength:10
         def offset = params.iDisplayStart?params.iDisplayStart:0
 
@@ -74,7 +74,6 @@ class DesPreconciliationController extends SessionInfoController {
 		
         def preconciliationInstanceList = preconciliatedCriteria.list(max:max, offset:offset) {
             
-			
 			eq('period',AccountantPeriod.findById(params.period))
 			if(medio != null) eq('medio', medio)
             receipt{
