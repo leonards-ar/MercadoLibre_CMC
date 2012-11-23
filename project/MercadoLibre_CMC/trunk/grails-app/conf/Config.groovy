@@ -125,6 +125,7 @@ grails.plugins.springsecurity.interceptUrlMap = [
 	'/compensation/**':    ['ROLE_USER'],
 	'/conciliation/**':    ['ROLE_USER'],
     '/desconciliation/**':    ['ROLE_USER'],
+	'/despreconciliation/**':    ['ROLE_USER'],
 	'/auditLog/**':    ['ROLE_USER'],
     '/index.gsp':  ['IS_AUTHENTICATED_ANONYMOUSLY'],
     '/login/**':     ['IS_AUTHENTICATED_ANONYMOUSLY'],

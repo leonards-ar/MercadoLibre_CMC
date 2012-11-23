@@ -20,7 +20,7 @@ environments {
     }
 	mercadolibre {
 		hibernate {
-			show_sql=false
+			show_sql=true
 		}
 		dataSource {
 			//dbCreate = "create-drop" // one of 'create', 'create-drop','update'
