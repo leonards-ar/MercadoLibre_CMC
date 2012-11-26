@@ -1,6 +1,7 @@
 package com.ml.cmc
 
 import grails.converters.JSON
+import grails.util.GrailsUtil
 
 import org.apache.commons.logging.LogFactory
 
@@ -124,7 +125,7 @@ class DespreconciliationController extends SessionInfoController {
             
             preconciliatedIds.each {id ->
                 
-                def preconciliated = PrecConciliated.findById(id)
+                def preconciliated = Preconciliated.findById(id)
                 
                 def despreconciliation = new DesPreconciliation(sale:preconciliated?.sale,
                     receipt:preconciliated?.receipt,
@@ -146,9 +147,9 @@ class DespreconciliationController extends SessionInfoController {
 		
 		def username = getUsername()
 		def strLot = formatNumber(number:lot, format:"000")
-
+		def command = "/datastage/DesPreConcManual.sh" + (GrailsUtil.getEnvironment().equals('mercadolibre') ? "_PROD":"")
 		Thread.start{
-			executeCommand("/datastage/DesPreConcManual.sh ${username} ${strLot}")
+			executeCommand("${command} ${username} ${strLot}")
 		}
 
         render message(code:"desconciliation.calledProcess", default:"Se ha invocado el proceso", args:[username])

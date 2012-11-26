@@ -36,7 +36,7 @@ class BootStrap {
 			}
 			
 		}
-		if(!GrailsUtil.getEnvironment().equals('mercadolibre') ){
+		if(!GrailsUtil.getEnvironment().equals('mercadolibre') && !GrailsUtil.getEnvironment().equals('mercadolibreDev')){
         // Temporary Users
         def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
 

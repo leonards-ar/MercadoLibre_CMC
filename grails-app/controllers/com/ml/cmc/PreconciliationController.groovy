@@ -1,5 +1,6 @@
 package com.ml.cmc
 import grails.converters.JSON
+import grails.util.GrailsUtil
 
 import org.apache.commons.logging.LogFactory
 
@@ -145,12 +146,12 @@ class PreconciliationController extends SessionInfoController{
 
        	def username = getUsername()
 		def strLot = formatNumber(number:lot, format:"000")
-
+		def command = "/datastage/PreConcManual.sh" + (GrailsUtil.getEnvironment().equals('mercadolibre') ? "_PROD":"")
 		Thread.start{
-			executeCommand("/datastage/PreConcManual.sh ${username} ${strLot} ${period.startDateStr}" )
+			executeCommand("${command} ${username} ${strLot}" )
        	}
 		
-        render message(code:"preconciliation.calledProcess", default:"Se ha invocado el proceso", args:[strLot, username])
+        render message(code:"preconciliation.calledProcess", default:"Se ha invocado el proceso", args:[username])
          
     }
 	
@@ -184,11 +185,8 @@ class PreconciliationController extends SessionInfoController{
 	private getSalesForSales(List medios,String sortType, String orderType, String max, String offset, String[] ids ) {
 
 		def states = State.findAllByIdInList([1L,2L])
-		//def state1 = State.findById(1)
-		//def state2 = State.findById(2)
+
 		def registerTypes = RegisterType.findAllByIdInList([1L,2L,5L])
-		//def registerType1 = RegisterType.findById(1);
-		//def registerType5 = RegisterType.findById(5);
 
 		def criteria = SalesSite.createCriteria()
 		
@@ -243,8 +241,7 @@ class PreconciliationController extends SessionInfoController{
 	private getSalesForDisable(List medios,String sortType, String orderType, String max, String offset, String[] ids ) {
 
 		def states = State.findAllByIdInList([1L,2L])
-		//def state1 = State.findById(1)
-		//def state2 = State.findById(2)
+
 		
 		def registerType3 = RegisterType.findById(3);
 		

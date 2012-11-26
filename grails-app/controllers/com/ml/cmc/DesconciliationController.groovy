@@ -146,9 +146,9 @@ class DesconciliationController extends SessionInfoController {
 		
 		def username = getUsername()
 		def strLot = formatNumber(number:lot, format:"000")
-
+		def command = "/datastage/DesConcManual.sh" + (GrailsUtil.getEnvironment().equals('mercadolibre') ? "_PROD":"")
 		Thread.start{
-			executeCommand("/datastage/DesConcManual.sh ${username} ${strLot}")
+			executeCommand(" ${command} ${username} ${strLot}")
 		}
 
         render message(code:"desconciliation.calledProcess", default:"Se ha invocado el proceso", args:[username])
