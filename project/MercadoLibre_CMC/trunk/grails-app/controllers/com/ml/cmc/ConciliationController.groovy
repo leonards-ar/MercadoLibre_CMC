@@ -1,5 +1,6 @@
 package com.ml.cmc
 import grails.converters.JSON
+import grails.util.GrailsUtil
 
 import org.apache.commons.logging.LogFactory
 
@@ -124,7 +125,7 @@ class ConciliationController extends SessionInfoController{
 		def colName = colNames[colIdx]
 		def sortDir = params.sSortDir_0? params.sSortDir_0:'asc'
 
-		def medio = Medio.find("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
+		def medio = Medio.findAll("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
 		def state = State.findById(3)
 		
 		def accountDate = new Date().parse("yyyy-MM-dd",params.period)
@@ -185,9 +186,9 @@ class ConciliationController extends SessionInfoController{
 		def username = getUsername()
 		def strLot = formatNumber(number:lot, format:"000")
 		def accountDate = formatDate(date:new Date().parse('yyyy-MM-dd',params.period),format:'yyyy-MM_dd')
+		def command = "/datastage/ConcManual.sh" + (GrailsUtil.getEnvironment().equals('mercadolibre') ? "_PROD":"") 
 		Thread.start{
-			executeCommand("/datastage/ConcManual.sh ${username} ${strLot} ${accountDate}")
-			
+				executeCommand("${command} ${username} ${strLot} ${accountDate}")
 		}
 		
 		

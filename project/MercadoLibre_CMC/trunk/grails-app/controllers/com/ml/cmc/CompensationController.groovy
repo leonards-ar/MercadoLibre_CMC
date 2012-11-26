@@ -1,6 +1,7 @@
 package com.ml.cmc
 
 import grails.converters.JSON
+import grails.util.GrailsUtil
 
 import org.apache.commons.logging.LogFactory
 
@@ -184,8 +185,9 @@ class CompensationController extends SessionInfoController {
 		def jobName = params.element == "F_RECIBOS"?"/datastage/CompManual_Recibos.sh":"/datastage/CompManual_Ventas.sh"
 		def strLot = formatNumber(number:lot, format:"000")
 		def accountDate = formatDate(date:new Date().parse('yyyy-MM-dd',params.period),format:'yyyy-MM_dd')
+		def command = "${jobName}" + (GrailsUtil.getEnvironment().equals('mercadolibre') ? "_PROD":"")
 		Thread.start{
-			executeCommand("${jobName} ${username} ${strLot} ${accountDate}")
+			executeCommand("${command} ${username} ${strLot} ${accountDate}")
         }
         
         render message(code:"compensation.calledProcess", default:"Se ha invocado el proceso", args:[username])

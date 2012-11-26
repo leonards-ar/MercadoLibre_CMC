@@ -33,7 +33,7 @@ grails.mime.types = [ html: ['text/html','application/xhtml+xml'],
 //grails.urlmapping.cache.maxsize = 1000
 
 // The default codec used to encode data with ${}
-grails.views.default.codec = "none" // none, html, base64
+grails.views.default.codec = "html" // none, html, base64
 grails.views.gsp.encoding = "UTF-8"
 grails.converters.encoding = "UTF-8"
 // enable Sitemesh preprocessing of GSP pages
@@ -64,6 +64,13 @@ environments {
     test {
         grails.serverURL = "http://localhost:8080/${appName}"
     }
+	mercadolibreDev {
+		grails.serverURL = "http://localhost:8080/${appName}DEV"
+		grails.app.context = "/cmcDev"
+	}
+	mercadolibre {
+		grails.serverURL = "http://localhost:8080/${appName}"
+	}
 
 }
 
@@ -75,6 +82,15 @@ log4j = {
     appenders {
         console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
 		environments {
+			mercadolibreDev {
+				appender new DailyRollingFileAppender(
+					name:'dailycmcAppender',
+					datePattern: "'.'yyyy-MM-dd",
+					//file:'C:/workspace/cmc.log',
+					file:'/usr/java/logs/cmcDev.log',
+					layout:pattern(conversionPattern: '%d [%t] %-5p %c{2} %x - %m%n')
+				)
+			}
 			mercadolibre {
 				appender new DailyRollingFileAppender(
 					name:'dailycmcAppender',
@@ -104,6 +120,10 @@ log4j = {
 	info   'grails.app'
 	environments {
 		mercadolibre {
+			info dailycmcAppender: 'grails.app'
+		}
+		
+		mercadolibreDev {
 			info dailycmcAppender: 'grails.app'
 		}
 	}
