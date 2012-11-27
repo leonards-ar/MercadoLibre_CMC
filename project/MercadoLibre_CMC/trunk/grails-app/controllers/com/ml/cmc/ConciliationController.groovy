@@ -136,7 +136,7 @@ class ConciliationController extends SessionInfoController{
 			
 			 if(medio != null) inList('medio', medio)
 			 eq('state',state)
-
+			 eq('origen','I')
   			 if(params.selectedList.length() > 0) {
 				def ids = params.selectedList.split(",")
                 not{inList('id', ids)}
