@@ -11,6 +11,8 @@ class SessionInfoController {
     def sessionRegistry
     def springSecurityService
 	def securityLockService
+	
+	def dateFormat = 'yyyy-MM-dd'
 
     protected String getSessionId() {
         

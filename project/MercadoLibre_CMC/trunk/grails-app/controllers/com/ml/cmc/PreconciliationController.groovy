@@ -169,8 +169,8 @@ class PreconciliationController extends SessionInfoController{
 			eq('period', AccountantPeriod.findById(params.period))
 			inList('registerType',registerTypes)
 			if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){
-				def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromReceiptTransDate)
-				def toTransDate = new Date().parse("dd/MM/yyyy", params.toReceiptTransDate)
+				def fromTransDate = new Date().parse(dateFormat, params.fromReceiptTransDate)
+				def toTransDate = new Date().parse(dateFormat, params.toReceiptTransDate)
 				between('transactionDate', fromTransDate, toTransDate)
 			}
             if(ids != null && ids.length > 0) {
@@ -197,8 +197,8 @@ class PreconciliationController extends SessionInfoController{
 			 inList('registerType',registerTypes)
 			 eq('period', AccountantPeriod.findById(params.period))
 			 if(params.fromSalesTransDate != null && params.toSalesTransDate != null){
-				 def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromSalesTransDate)
-				 def toTransDate = new Date().parse("dd/MM/yyyy", params.toSalesTransDate)
+				 def fromTransDate = new Date().parse(dateFormat, params.fromSalesTransDate)
+				 def toTransDate = new Date().parse(dateFormat, params.toSalesTransDate)
 				 between('transactionDate', fromTransDate, toTransDate)
 			 }
              if(ids != null && ids.size() > 0) {
@@ -225,8 +225,8 @@ class PreconciliationController extends SessionInfoController{
 			eq('registerType',registerType3)
 			eq('period', AccountantPeriod.findById(params.period))
 			if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){
-				def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromReceiptTransDate)
-				def toTransDate = new Date().parse("dd/MM/yyyy", params.toReceiptTransDate)
+				def fromTransDate = new Date().parse(dateFormat, params.fromReceiptTransDate)
+				def toTransDate = new Date().parse(dateFormat, params.toReceiptTransDate)
 				between('transactionDate', fromTransDate, toTransDate)
 			}
             if(ids != null && ids.size() > 0) {
@@ -253,8 +253,8 @@ class PreconciliationController extends SessionInfoController{
 			 eq('registerType',registerType3)
 			 eq('period', AccountantPeriod.findById(params.period))
 			 if(params.fromSalesTransDate != null && params.toSalesTransDate != null){
-				 def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromSalesTransDate)
-				 def toTransDate = new Date().parse("dd/MM/yyyy", params.toSalesTransDate)
+				 def fromTransDate = new Date().parse(dateFormat, params.fromSalesTransDate)
+				 def toTransDate = new Date().parse(dateFormat, params.toSalesTransDate)
 				 between('transactionDate', fromTransDate, toTransDate)
 			 }
              if(ids != null && ids.size() > 0) {

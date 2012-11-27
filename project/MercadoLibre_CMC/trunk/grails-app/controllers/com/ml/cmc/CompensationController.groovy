@@ -76,7 +76,7 @@ class CompensationController extends SessionInfoController {
         def colName = colNames[colIdx]
         def sortDir = params.sSortDir_0? params.sSortDir_0:'asc'
         
-		def accountDate = new Date().parse("yyyy-MM-dd",params.period)
+		def accountDate = new Date().parse(dateFormat,params.period)
 		
 		def receiptInstanceList = receiptCriteria.list(max:max, offset:offset) {
 			order(colName, sortDir)
@@ -87,15 +87,15 @@ class CompensationController extends SessionInfoController {
                 not{inList('id', ids)}
             }
 			if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){
-				def fromTransDate = new Date().parse("yyyy-MM-dd", params.fromReceiptTransDate)
-				def toTransDate = new Date().parse("yyyy-MM-dd", params.toReceiptTransDate)
+				def fromTransDate = new Date().parse(dateFormat, params.fromReceiptTransDate)
+				def toTransDate = new Date().parse(dateFormat, params.toReceiptTransDate)
 				between('transactionDate', fromTransDate, toTransDate)
 			} else {
 				le('transactionDate', accountDate)
 			}
 			if(params.fromReceiptPaymtDate != null && params.toReceiptPaymtDate != null){
-				def fromPaymtDate = new Date().parse("yyyy-MM-dd", params.fromReceiptPaymtDate)
-				def toPaymtDate = new Date().parse("yyyy-MM-dd", params.toReceiptPaymtDate)
+				def fromPaymtDate = new Date().parse(dateFormat, params.fromReceiptPaymtDate)
+				def toPaymtDate = new Date().parse(dateFormat, params.toReceiptPaymtDate)
 				between('transactionDate', fromPaymtDate, toPaymtDate)
 			} else {
 				le('paymentDate', accountDate)
@@ -126,7 +126,7 @@ class CompensationController extends SessionInfoController {
         def colName = colNames[colIdx]
         def sortDir = params.sSortDir_0? params.sSortDir_0:'asc'
 		
-		def accountDate = new Date().parse("yyyy-MM-dd",params.period)
+		def accountDate = new Date().parse(dateFormat,params.period)
 		
 		def salesSiteInstanceList = salesCriteria.list(max:max, offset:offset) {
 			order(colName, sortDir)
@@ -138,8 +138,8 @@ class CompensationController extends SessionInfoController {
                  not{inList('id', ids)}
              }
 			 if(params.fromSalesTransDate != null  && params.toSalesTransDate != null){
-				 def fromTransDate = new Date().parse("yyyy-MM-dd", params.fromSalesTransDate)
-				 def toTransDate = new Date().parse("yyyy-MM-dd", params.toSalesTransDate)
+				 def fromTransDate = new Date().parse(dateFormat, params.fromSalesTransDate)
+				 def toTransDate = new Date().parse(dateFormat, params.toSalesTransDate)
 				 between('transactionDate', fromTransDate, toTransDate)
 		 	 } else {
 			  	le('transactionDate', accountDate)

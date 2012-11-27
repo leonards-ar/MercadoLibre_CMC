@@ -78,7 +78,7 @@ class ConciliationController extends SessionInfoController{
 		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site]);
 		def state3 = State.findById(3)
 
-		def accountDate = new Date().parse("yyyy-MM-dd",params.period)
+		def accountDate = new Date().parse(dateFormat,params.period)
 		
         def criteria = Receipt.createCriteria()
 		def receiptInstanceList = criteria.list(max:max, offset:offset){
@@ -91,15 +91,15 @@ class ConciliationController extends SessionInfoController{
 				 not{inList('id', ids)}
 			  }
 			 if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){
-				 def fromTransDate = new Date().parse("yyyy-MM-dd", params.fromReceiptTransDate)
-				 def toTransDate = new Date().parse("yyyy-MM-dd", params.toReceiptTransDate)
+				 def fromTransDate = new Date().parse(dateFormat, params.fromReceiptTransDate)
+				 def toTransDate = new Date().parse(dateFormat, params.toReceiptTransDate)
 				 between('transactionDate', fromTransDate, toTransDate)
 			 } else {
 			 	le('transactionDate', accountDate)
 			 }
 			 if(params.fromReceiptPaymtDate != null && params.toReceiptPaymtDate != null){
-				 def fromPaymtDate = new Date().parse("yyyy-MM-dd", params.fromReceiptPaymtDate)
-				 def toPaymtDate = new Date().parse("yyyy-MM-dd", params.toReceiptPaymtDate)
+				 def fromPaymtDate = new Date().parse(dateFormat, params.fromReceiptPaymtDate)
+				 def toPaymtDate = new Date().parse(dateFormat, params.toReceiptPaymtDate)
 				 between('paymentDate', fromPaymtDate, toPaymtDate)
 			 } else {
 			 	le('paymentDate', accountDate)
@@ -128,7 +128,7 @@ class ConciliationController extends SessionInfoController{
 		def medio = Medio.findAll("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
 		def state = State.findById(3)
 		
-		def accountDate = new Date().parse("yyyy-MM-dd",params.period)
+		def accountDate = new Date().parse(dateFormat,params.period)
 		
         def criteria = SalesSite.createCriteria()
 		def salesSiteInstanceList = criteria.list(max:max, offset:offset) {
@@ -142,8 +142,8 @@ class ConciliationController extends SessionInfoController{
                 not{inList('id', ids)}
              }
 			 if(params.fromSalesTransDate != null && params.toSalesTransDate != null){
-			  def fromTransDate = new Date().parse("yyyy-MM-dd", params.fromSalesTransDate)
-			  def toTransDate = new Date().parse("yyyy-MM-dd", params.toSalesTransDate)
+			  def fromTransDate = new Date().parse(dateFormat, params.fromSalesTransDate)
+			  def toTransDate = new Date().parse(dateFormat, params.toSalesTransDate)
 			  between('transactionDate', fromTransDate, toTransDate)
 			 } else {
 			 	le('transactionDate', accountDate)
