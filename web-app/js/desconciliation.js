@@ -161,7 +161,7 @@ $(function() {
         
         $('#fromReceiptTransDate').live("focus", function(){
             $(this).datepicker({
-                dateFormat: "dd/mm/yy",
+                dateFormat: "yy-mm-dd",
                 changeMonth: true,
                 changeYear: true,
                 showAnim: 'fadeIn',
@@ -173,7 +173,7 @@ $(function() {
 
         $('#toReceiptTransDate').live("focus", function(){
             $(this).datepicker({
-                dateFormat: "dd/mm/yy",
+                dateFormat: "yy-mm-dd",
                 changeMonth: true,
                 changeYear: true,
                 showAnim: 'fadeIn',
@@ -185,7 +185,7 @@ $(function() {
         
         $('#fromReceiptPaymtDate').live("focus", function(){
             $(this).datepicker({
-                dateFormat: "dd/mm/yy",
+                dateFormat: "yy-mm-dd",
                 changeMonth: true,
                 changeYear: true,
                 showAnim: 'fadeIn',
@@ -198,7 +198,7 @@ $(function() {
 
         $('#toReceiptPaymtDate').live("focus", function(){
             $(this).datepicker({
-                dateFormat: "dd/mm/yy",
+                dateFormat: "yy-mm-dd",
                 changeMonth: true,
                 changeYear: true,
                 showAnim: 'fadeIn',
@@ -210,7 +210,7 @@ $(function() {
         
         $('#fromSalesTransDate').live("focus", function(){
             $(this).datepicker({
-                dateFormat: "dd/mm/yy",
+                dateFormat: "yy-mm-dd",
                 changeMonth: true,
                 changeYear: true,
                 showAnim: 'fadeIn',
@@ -223,7 +223,7 @@ $(function() {
 
         $('#toSalesTransDate').live("focus", function(){
             $(this).datepicker({
-                dateFormat: "dd/mm/yy",
+                dateFormat: "yy-mm-dd",
                 changeMonth: true,
                 changeYear: true,
                 showAnim: 'fadeIn',

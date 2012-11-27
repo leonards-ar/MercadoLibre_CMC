@@ -80,8 +80,8 @@ class DespreconciliationController extends SessionInfoController {
             receipt{
                 eq('state',state3)
 				if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){
-					def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromReceiptTransDate)
-					def toTransDate = new Date().parse("dd/MM/yyyy", params.toReceiptTransDate)
+					def fromTransDate = new Date().parse(dateFormat, params.fromReceiptTransDate)
+					def toTransDate = new Date().parse(dateFormat, params.toReceiptTransDate)
 					between('transactionDate', fromTransDate, toTransDate)
 				}
 
@@ -92,8 +92,8 @@ class DespreconciliationController extends SessionInfoController {
 			sale {
 				eq('state',state3)
 				if(params.fromSalesTransDate != null && params.toSalesTransDate != null){
-					def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromSalesTransDate)
-					def toTransDate = new Date().parse("dd/MM/yyyy", params.toSalesTransDate)
+					def fromTransDate = new Date().parse(dateFormat, params.fromSalesTransDate)
+					def toTransDate = new Date().parse(dateFormat, params.toSalesTransDate)
 					between('transactionDate', fromTransDate, toTransDate)
 				}
 				if(colIdx > 12) {

@@ -18,6 +18,7 @@ class DesconciliationController extends SessionInfoController {
 
     def colNames = ["registerType","cardNumber","transactionDate","amount","shareAmount","authorization","shareNumber","shareQty","customerId","documentId","tid","nsu","documentNumber",
                 "registerType","cardNumber","amount","shareAmount","authorization","shareNumber","shareQty","customerId","documentId","tid","nsu","documentNumber","transactionDate"]
+	
     def index = {
         securityLockService.unLockFunctionality(getSessionId())
         def countryList = Medio.withCriteria{
@@ -77,13 +78,13 @@ class DesconciliationController extends SessionInfoController {
                 if(medio != null) eq('medio', medio)
                 eq('state',state4)
 				if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){
-					def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromReceiptTransDate)
-					def toTransDate = new Date().parse("dd/MM/yyyy", params.toReceiptTransDate)
+					def fromTransDate = new Date().parse(dateFormat, params.fromReceiptTransDate)
+					def toTransDate = new Date().parse(dateFormat, params.toReceiptTransDate)
 					between('transactionDate', fromTransDate, toTransDate)
 				}
 				if(params.fromReceiptPaymtDate != null && params.toReceiptPaymtDate != null){
-					def fromPaymtDate = new Date().parse("dd/MM/yyyy", params.fromReceiptPaymtDate)
-					def toPaymtDate = new Date().parse("dd/MM/yyyy", params.toReceiptPaymtDate)
+					def fromPaymtDate = new Date().parse(dateFormat, params.fromReceiptPaymtDate)
+					def toPaymtDate = new Date().parse(dateFormat, params.toReceiptPaymtDate)
 					between('transactionDate', fromPaymtDate, toPaymtDate)
 				}
                 if(colIdx < 13)
@@ -92,8 +93,8 @@ class DesconciliationController extends SessionInfoController {
             
 			sale {
 				if(params.fromSalesTransDate != null && params.toSalesTransDate != null){
-					def fromTransDate = new Date().parse("dd/MM/yyyy", params.fromSalesTransDate)
-					def toTransDate = new Date().parse("dd/MM/yyyy", params.toSalesTransDate)
+					def fromTransDate = new Date().parse(dateFormat, params.fromSalesTransDate)
+					def toTransDate = new Date().parse(dateFormat, params.toSalesTransDate)
 					between('transactionDate', fromTransDate, toTransDate)
 				}
 				if(colIdx > 12) {
