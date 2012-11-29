@@ -13,7 +13,7 @@ class SessionInfoController {
 	def securityLockService
 	
 	def dateFormat = 'yyyy-MM-dd'
-
+	def maxRecords = 50
     protected String getSessionId() {
         
         return org.springframework.web.context.request.RequestContextHolder.getRequestAttributes()?.getSessionId()
@@ -94,7 +94,7 @@ class SessionInfoController {
 		instanceList.each(){
 			data << ["DT_RowId":it.id.toString(),
 					 "0":formatDate(date:it?.transactionDate, format:"dd-MM-yyyy"),
-					 "1":it?.amount.toString(),
+					 "1":formatNumber(number:it?.amount,format:"###,###.00"),
 					 "2":it?.authorization.toString(),
 					 "3":it?.cardNumber.toString(),
 					 "4":it?.customerId.toString(),

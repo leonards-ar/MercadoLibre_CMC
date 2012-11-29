@@ -68,7 +68,7 @@ class ConciliationController extends SessionInfoController{
 
 	def listReceipts = {
         def responseMap = [:]
-        def max = params.iDisplayLength?params.iDisplayLength:10
+        def max = params.iDisplayLength?params.iDisplayLength:maxRecords
         def offset = params.iDisplayStart?params.iDisplayStart:0
 		
 		def colIdx = params.iSortCol? Integer.parseInt(params.iSortCol_0):0
@@ -119,7 +119,7 @@ class ConciliationController extends SessionInfoController{
 	def listSalesSite = {
         def responseMap = [:]
         
-        def max = params.iDisplayLength?params.iDisplayLength:10
+        def max = params.iDisplayLength?params.iDisplayLength:maxRecords
         def offset = params.iDisplayStart?params.iDisplayStart:0
 		def colIdx = params.iSortCol? Integer.parseInt(params.iSortCol_0):0
 		def colName = colNames[colIdx]
@@ -136,7 +136,7 @@ class ConciliationController extends SessionInfoController{
 			
 			 if(medio != null) inList('medio', medio)
 			 eq('state',state)
-			 eq('origen','I')
+			 eq('origin','I')
   			 if(params.selectedList.length() > 0) {
 				def ids = params.selectedList.split(",")
                 not{inList('id', ids)}

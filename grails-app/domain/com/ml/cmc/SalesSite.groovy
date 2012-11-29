@@ -19,8 +19,8 @@ class SalesSite {
     String customerId
     String documentId
     String receiptNumber
-    Long tid
-    Long nsu
+    String tid
+    String nsu
     Long ro
     Long store
     String cardLot
