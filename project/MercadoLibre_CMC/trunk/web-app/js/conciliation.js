@@ -74,7 +74,7 @@ $(function() {
 	    
 	    var balanced = parseFloat($('#balance').text());
 	    balanced = isNaN(balanced) ? 0 : balanced;
-	    var monto = parseFloat($(this).find('td:eq(1)').text());
+	    var monto = parseFloat($(this).find('td:eq(1)').text().replace(".",""));
 	    
     	if (index == -1) {
     		balanced += isNaN(monto)? 0 : monto;
@@ -96,7 +96,7 @@ $(function() {
         var id = this.id
         var index = jQuery.inArray(id, aSalesSelected);
 
-        var monto = parseFloat($(this).find('td:eq(1)').text());
+        var monto = parseFloat($(this).find('td:eq(1)').text().replace(".",""));
         var balanced = parseFloat($('#balance').text());
         balanced = isNaN(balanced) ? 0 : balanced;
         
@@ -321,6 +321,8 @@ $(function() {
 			    	
 				    $('#receipt_table').dataTable({
 				        "sDom": 'lrtip',
+				        "iDisplayLength": 20,
+				        "aLengthMenu":[20,50,75,100,500,1000],
 				        "sPaginationType": "full_numbers",
 				        "bProcessing": true,
 				        "bServerSide": true,        
@@ -356,6 +358,8 @@ $(function() {
 			    	
 				    $('#sales_table').dataTable({
 				        "sDom": 'lrtip',
+				        "iDisplayLength": 20,
+				        "aLengthMenu":[20,50,75,100,500,1000],
 				        "sPaginationType": "full_numbers",
 				        "bProcessing": true,
 				        "bServerSide": true,        
