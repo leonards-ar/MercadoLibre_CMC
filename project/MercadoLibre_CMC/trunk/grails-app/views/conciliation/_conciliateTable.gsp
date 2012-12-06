@@ -1,4 +1,4 @@
-  <table id="conciliate_table" width="100%" align="center">
+  <table id="conciliate_table" width="100%" align="center" class="display">
   <thead>
   <tr>
     <th class="header" colspan="15"><g:message code="preconciliation.receipts"/></th>

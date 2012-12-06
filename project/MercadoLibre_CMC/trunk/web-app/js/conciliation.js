@@ -114,6 +114,62 @@ $(function() {
 	    $('#balance').html(String(balanced.toFixed(2)));
 	});
 
+	$('#conciliate_table tbody tr').live('click',function() {
+		
+	    $(this).toggleClass('yellow');
+	    
+    });
+	
+	$('#desagrupar').live({
+		click: function() {
+
+			var conciliateTable = $('#conciliate_table').dataTable();
+		    var conciliatedRows = conciliateTable.$('tr.yellow');
+		    
+		    for(var i=0; i < conciliatedRows.length;i++){
+		    	var row = conciliatedRows[i];
+		    	var salesId = $(row).find('td:eq(22)').text();
+		    	var receiptId = $(row).find('td:eq(7)').text();
+		    	
+		    	var salesIndex = jQuery.inArray(salesId, salesList);
+		    	var receiptIndex = jQuery.inArray(receiptId, receiptList);
+		    	
+		    	receiptList.splice( receiptIndex, 1 );
+		    	salesList.splice(salesIndex, 1);
+		    	
+		    	var conciliateIndex = -1;
+		    	for(var j=0; j < conciliateList.length; j++){
+		    		var pair = conciliateList[j];
+		    		if(pair[0] == receiptId && pair[1] == salesId){
+		    			conciliateIndex = j;
+		    			break;
+		    		}
+		    		
+		    	}
+		    	
+		    	if(conciliateIndex >= 0) conciliateList.splice(conciliateIndex,1);
+		    	
+		    	conciliateTable.fnDeleteRow(row);
+		    	
+		    }
+		    
+			var receiptTable = $('#receipt_table').dataTable();
+		    var salesTable = $('#sales_table').dataTable();
+		    receiptTable.fnDraw();
+		    salesTable.fnDraw();
+		    
+		},
+		mouseover: function() {
+			$(this).addClass("ui-state-hover");
+			$(this).css("cursor","pointer");
+		},
+		  mouseout: function() {
+			$(this).removeClass("ui-state-hover");
+		}
+		
+	});
+	
+	
 	$('#conciliateButton').live('click', function() {
 		
 		var strdata = "";

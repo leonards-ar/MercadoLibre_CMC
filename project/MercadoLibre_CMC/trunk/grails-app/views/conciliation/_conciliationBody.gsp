@@ -187,9 +187,14 @@
  </tr>
  </table>
  <br/>
-     <center><div id="conciliado" style="width:1000;height:450;overflow:auto;">
-       <g:render template="conciliateTable"/>  
-    </div></center>
+     <center>
+        <div id="conciliado" style="width:1000;height:450;overflow:auto;">
+          <g:render template="conciliateTable"/>  
+        </div>
+        <div>
+          <span class="button"><input type="button" class="save" value="desagrupar" id="desagrupar"/></span>           
+        </div>
+     </center>
 
     <div class="buttons">
         <span class="button"><input type="button" class="save" id="conciliateButton" value="${message(code:'save', default:'Grabar')}"/></span>
