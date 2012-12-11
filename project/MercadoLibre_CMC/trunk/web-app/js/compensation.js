@@ -73,6 +73,8 @@ $(function() {
 			    	
                     $('#receipt_table').dataTable({
                         "sDom":'l<"receiptBalance">rtip<"receiptGroupButton">',
+				        "iDisplayLength": 50,
+				        "aLengthMenu":[50,75,100,500,1000],                        
                         "bPaginate": true,
                         "sPaginationType": "full_numbers",
                         "bProcessing": true,
@@ -105,10 +107,12 @@ $(function() {
                     
                     $("div.receiptBalance").html('<p id="receiptBalance" align="right"><b>Balance:' + receiptBalance + '</b></p>');
                     $("div.receiptGroupButton").html('<p align="left"><span class="button"><input id="receiptGroup" type="button" class="save" value="agrupar" id="agrupar"/></span></p>');
-
+                    //$("div.processing").html('<cener><p> Procesando...' + '</p>' + $("#spinner").html() + '</cener>');
                     
                     $('#sales_table').dataTable({
                         "sDom":'l<"salesBalance">rtip<"salesGroupButton">',
+				        "iDisplayLength": 50,
+				        "aLengthMenu":[50,75,100,500,1000],                        
                         "bPaginate": true,
                         "sPaginationType": "full_numbers",
                         "bProcessing": true,
@@ -138,6 +142,9 @@ $(function() {
                     $("div.salesGroupButton").html('<p align="left"><span class="button"><input id="salesGroup" type="button" class="save" value="agrupar" id="agrupar"/></span></p>');
                     
                     $('#compensated_receipt_table').dataTable({
+                    	"sDom":'lrtip<"receiptDescGroupButton">',
+				        "iDisplayLength": 50,
+				        "aLengthMenu":[50,75,100,500,1000],
                         "bPaginate": true,
                         "sPaginationType": "full_numbers",
                         "bProcessing": true,
@@ -145,11 +152,18 @@ $(function() {
                      });
                     
                     $('#compensated_sales_table').dataTable({
+                    	"sDom":'lrtip<"salesDescGroupButton">',
+				        "iDisplayLength": 50,
+				        "aLengthMenu":[50,75,100,500,1000],
                         "bPaginate": true,
                         "sPaginationType": "full_numbers",
                         "bProcessing": true,
                         "bSort":false
                      });
+                    
+                    $("div.receiptDescGroupButton").html('<p align="right"><span class="button"><input id="receiptDescGroup" type="button" class="save" value="desagrupar"/></span></p>');
+                    $("div.salesDescGroupButton").html('<p align="right"><span class="button"><input id="salesDescGroup" type="button" class="save" value="desagrupar"/></span></p>');
+                    
                     
 			        $('#fromReceiptTransDate').datepicker({ 
 		                dateFormat: dateformatter,
@@ -268,6 +282,14 @@ $(function() {
         $(this).toggleClass('row_selected');
     });
     
+    $('#compensated_receipt_table tbody tr').live('click',function() {
+        $(this).toggleClass('row_selected');
+    });
+
+    $('#compensated_sales_table tbody tr').live('click',function() {
+        $(this).toggleClass('row_selected');
+    });
+    
     $('#receiptGroup').live({
             'click':function(){
                 if ($('#receipt_table tbody tr:.row_selected').length <= 1) {
@@ -314,6 +336,48 @@ $(function() {
         }
 
     });
+    
+    $('#receiptDescGroup').live({
+        'click':function(){
+            if ($('#compensated_receipt_table tbody tr:.row_selected').length < 1) {
+                var $dialog = getDialog(compensationNoselectionError);
+                $dialog.dialog("open");
+                return;
+            }
+
+            degroup("#receipt_table","#compensated_receipt_table",compReceiptList,compReceipts);
+            
+        },
+        mouseover: function() {
+            $(this).addClass("ui-state-hover");
+            $(this).css("cursor","pointer");
+        },
+          mouseout: function() {
+            $(this).removeClass("ui-state-hover");
+        }
+
+    });
+
+	$('#salesDescGroup').live({
+	    'click':function(){
+	        if ($('#compensated_sales_table tbody tr:.row_selected').length < 1) {
+	            var $dialog = getDialog(compensationNoselectionError);
+	            $dialog.dialog("open");
+	            return;
+	        }
+	        
+	        degroup("#sales_table","#compensated_sales_table",compSalesList,compSales);
+	        
+	    },
+	    mouseover: function() {
+	        $(this).addClass("ui-state-hover");
+	        $(this).css("cursor","pointer");
+	    },
+	      mouseout: function() {
+	        $(this).removeClass("ui-state-hover");
+	    }
+	
+	});    
     
     $('#compensateReceiptButton').live({
         'click': function(){
@@ -418,6 +482,36 @@ function group(table, compensateTable, count, list, map){
     }
     map.push(tmpIds);
     oTable.fnDraw();
+}
+
+function degroup(table, compensateTable, list, map) {
+    var oTable = $(table).dataTable();
+    var oCompTable = $(compensateTable).dataTable();
+    var selectedRows = oCompTable.$('tr.row_selected');
+    var tmpIds = [];
+    for(var i=0; i < selectedRows.length; i++){
+    	var row = selectedRows[i];
+    	var id = $(row).find('td:eq(7)').text();
+    	
+    	var index = jQuery.inArray(id, list);
+    	
+    	list.splice( index, 1 );
+    	
+    	for(var j=0;j<map.length;j++){
+    		var subList = map[j];
+    		var subIndex = jQuery.inArray(id, subList);
+    		if(subIndex > -1) {
+    			subList.splice(subIndex, 1);
+   				map[j] = subList;
+    			break;
+    		}
+    	}
+
+    	oCompTable.fnDeleteRow(row);
+
+    }
+
+    oTable.fnDraw();	
 }
 
 function save(compensateTable, map, count, element, link) {
