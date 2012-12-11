@@ -72,7 +72,7 @@ class CompensationController extends SessionInfoController {
         def max = params.iDisplayLength?params.iDisplayLength:10
         def offset = params.iDisplayStart?params.iDisplayStart:0
 
-        def colIdx = params.iSortCol? Integer.parseInt(params.iSortCol_0):0
+        def colIdx = Integer.parseInt(params.iSortCol_0)
         def colName = colNames[colIdx]
         def sortDir = params.sSortDir_0? params.sSortDir_0:'asc'
         
@@ -122,7 +122,7 @@ class CompensationController extends SessionInfoController {
         def max = params.iDisplayLength?params.iDisplayLength:10
         def offset = params.iDisplayStart?params.iDisplayStart:0
 
-        def colIdx = params.iSortCol? Integer.parseInt(params.iSortCol_0):0
+        def colIdx = Integer.parseInt(params.iSortCol_0)
         def colName = colNames[colIdx]
         def sortDir = params.sSortDir_0? params.sSortDir_0:'asc'
 		
