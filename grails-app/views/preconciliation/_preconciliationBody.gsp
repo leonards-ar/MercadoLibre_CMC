@@ -81,7 +81,7 @@
       </tr>                    
     </table>
     </div>       
-     <div id="receipts" style="width:550;height:200;overflow:auto;border:1px solid #ccc;position:relative">
+     <div id="receipts" style="width:550;overflow:auto;border:1px solid #ccc;position:relative">
        <g:render template="receiptTable" model="[receiptInstanceList:receiptInstanceList]"/>
     </div>
    
@@ -181,7 +181,7 @@
   </table>
   </div>       
    
-     <div id="sales" style="width:550;height:200;overflow:auto;border:1px solid #ccc;position:relative">
+     <div id="sales" style="width:550;overflow:auto;border:1px solid #ccc;position:relative">
        <g:render template="salesSiteTable" model="[salesSiteInstanceList:salesSiteInstanceList]"/>
      </div>
    </td>      

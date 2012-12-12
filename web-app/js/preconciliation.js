@@ -378,6 +378,8 @@ $(function() {
 			    	
 				    $('#receipt_table').dataTable({
 				        "sDom": 'lrtip',
+				        "iDisplayLength": 20,
+				        "aLengthMenu":[20,50,75,100,500,1000],				        
 				        "sPaginationType": "full_numbers",
 				        "bProcessing": true,
 				        "bServerSide": true,        
@@ -412,6 +414,8 @@ $(function() {
 			    	
 				    $('#sales_table').dataTable({
 				        "sDom": 'lrtip',
+				        "iDisplayLength": 20,
+				        "aLengthMenu":[20,50,75,100,500,1000],				        
 				        "sPaginationType": "full_numbers",
 				        "bProcessing": true,
 				        "bServerSide": true,        

@@ -68,6 +68,8 @@ $(function() {
                     
                     $('#conciliate_table').dataTable({
 				        "sDom": 'lrtip',
+				        "iDisplayLength": 50,
+				        "aLengthMenu":[50,75,100,500,1000],				        
 				        "sPaginationType": "full_numbers",
 				        "bProcessing": true,
 				        "bServerSide": true,        
