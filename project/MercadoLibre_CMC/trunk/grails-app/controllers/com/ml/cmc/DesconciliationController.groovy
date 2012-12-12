@@ -17,8 +17,8 @@ class DesconciliationController extends SessionInfoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-    def colNames = ["registerType","cardNumber","transactionDate","amount","shareAmount","authorization","shareNumber","shareQty","customerId","documentId","tid","nsu","documentNumber",
-                "registerType","cardNumber","amount","shareAmount","authorization","shareNumber","shareQty","customerId","documentId","tid","nsu","documentNumber","transactionDate"]
+    def colNames = ["transactionDate","amount","authorization","cardNumber","customerId","documentNumber","documentId","id","ro","tid","nsu","shareNumber","shareQty","paymentDate","payment",
+                "transactionDate","amount","authorization","cardNumber","customerId","documentNumber","documentId","id","ro","tid","nsu","shareNumber","shareQty","paymentDate","payment"]
 	
     def index = {
         securityLockService.unLockFunctionality(getSessionId())
@@ -88,7 +88,7 @@ class DesconciliationController extends SessionInfoController {
 					def toPaymtDate = new Date().parse(dateFormat, params.toReceiptPaymtDate)
 					between('transactionDate', fromPaymtDate, toPaymtDate)
 				}
-                if(colIdx < 13)
+                if(colIdx < 15)
                 order(colName, params.sSortDir_0)
             }
             
@@ -98,7 +98,7 @@ class DesconciliationController extends SessionInfoController {
 					def toTransDate = new Date().parse(dateFormat, params.toSalesTransDate)
 					between('transactionDate', fromTransDate, toTransDate)
 				}
-				if(colIdx > 12) {
+				if(colIdx >= 15) {
                     order(colName, params.sSortDir_0)
                 }
             }
