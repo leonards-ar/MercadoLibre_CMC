@@ -164,7 +164,7 @@ class DesconciliationController extends SessionInfoController {
         conciliationInstanceList.each(){
             data << ["DT_RowId":it.id.toString(),
                      "0":formatDate(date:it.receipt?.transactionDate, format:"dd-MM-yyyy"),
-                     "1":it.receipt?.amount.toString(),
+                     "1":formatNumber(number:it?.receipt?.amount,format:"###,###.00"),
                      "2":it.receipt?.authorization.toString(),
                      "3":it.receipt?.cardNumber.toString(),
                      "4":it.receipt?.customerId.toString(),
@@ -179,7 +179,7 @@ class DesconciliationController extends SessionInfoController {
                      "13":formatDate(date:it.receipt?.paymentDate, format:"dd-MM-yyyy"),
                      "14":it.receipt?.payment.toString(),
                      "15":formatDate(date:it.sale?.transactionDate, format:"dd-MM-yyyy"),
-                     "16":it.sale?.amount.toString(),
+                     "16":formatNumber(number:it.sale?.amount,format:"###,###.00"),
                      "17":it.sale?.authorization.toString(),
                      "18":it.sale?.cardNumber.toString(),
                      "19":it.sale?.customerId.toString(),
