@@ -301,7 +301,7 @@ $(function() {
                 $("#receiptBalance").html('<b>Balance:' + receiptBalance + '</b>');
                 receiptCount++;
                 group("#receipt_table","#compensated_receipt_table",receiptCount,compReceiptList,compReceipts);
-                
+                aReceiptSelected = [];
             },
             mouseover: function() {
                 $(this).addClass("ui-state-hover");
@@ -325,7 +325,7 @@ $(function() {
             $("#salesBalance").html('<b>Balance:' + salesBalance + '</b>');
             salesCount++;
             group("#sales_table","#compensated_sales_table",salesCount,compSalesList,compSales);
-            
+            aSalesSelected = [];
         },
         mouseover: function() {
             $(this).addClass("ui-state-hover");

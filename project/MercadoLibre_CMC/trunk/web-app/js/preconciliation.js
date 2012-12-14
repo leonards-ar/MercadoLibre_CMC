@@ -274,6 +274,7 @@ $(function() {
 	$('.receiptCol').live('click',function(){
 
 		showHideColumn('#receipt_table', $(this).attr('name'), this.checked);
+		showHideColumn('#preconciliate_table', $(this).attr('name'), this.checked);
         if(!this.checked){
             $('#receiptColAll').attr('checked', false);
         }		
@@ -286,6 +287,7 @@ $(function() {
 				this.checked = checked;
 				var column = $(this).attr('name');
 				showHideColumn('#receipt_table', column, checked);
+				showHideColumn('#preconciliate_table',column, checked);
 		});
 		
 	});	
@@ -293,6 +295,7 @@ $(function() {
 	$('.salesSiteCol').live('click',function(){
 
 		showHideColumn('#sales_table', $(this).attr('name'), this.checked);
+		showHideColumn('#preconciliate_table', 15+parseInt($(this).attr('name')), this.checked);
         if(!this.checked){
             $('#salesColAll').attr('checked', false);
         }			
@@ -304,6 +307,7 @@ $(function() {
 		$('.salesSiteCol').each(function() {
 				this.checked = checked;
 				showHideColumn('#sales_table', $(this).attr('name'), checked);
+				showHideColumn('#preconciliate_table', 15+parseInt($(this).attr('name')), checked);
 		});
 		
 	});	
