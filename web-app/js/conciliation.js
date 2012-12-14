@@ -301,6 +301,7 @@ $(function() {
 		$('.receiptCol').live('click',function(){
 
 			showHideColumn('#receipt_table', $(this).attr('name'), this.checked);
+			showHideColumn('#conciliate_table', $(this).attr('name'), this.checked);
             if(!this.checked){
                 $('#receiptColAll').attr('checked', false);
             }			
@@ -310,8 +311,8 @@ $(function() {
 			var checked = this.checked;
 			$('.receiptCol').each(function() {
 					this.checked = checked;
-					var column = $(this).attr('name');
-					showHideColumn('#receipt_table', column, checked);
+					showHideColumn('#receipt_table', $(this).attr('name'), checked);
+					showHideColumn('#conciliate_table', $(this).attr('name'), checked);
 			});
 			
 		});
@@ -319,10 +320,7 @@ $(function() {
 		$('.salesSiteCol').live('click',function(){
 
 			showHideColumn('#sales_table', $(this).attr('name'), this.checked);
-            if(!this.checked){
-                $('#salesColAll').attr('checked', false);
-            }			
-			
+			showHideColumn('#conciliate_table', 15+parseInt($(this).attr('name')), this.checked);
 		});
 		
 		$('#salesColAll').live('click',function(){
@@ -330,6 +328,7 @@ $(function() {
 			$('.salesSiteCol').each(function() {
 					this.checked = checked;
 					showHideColumn('#sales_table', $(this).attr('name'), checked);
+					showHideColumn('#conciliate_table', 15+parseInt($(this).attr('name')), checked);
 			});
 			
 		});
@@ -406,9 +405,12 @@ $(function() {
 				        },
                         "fnDrawCallback": function (oSettings){
                             //show hide selected columns
+                        	var checked = 0;
                             $('.receiptCol').each(function() {
                                 showHideColumn('#receipt_table', $(this).attr('name'), this.checked);
-                            });                            
+                                showHideColumn('#conciliate_table', $(this).attr('name'), this.checked);
+                            });
+                            
                         }
 				    });
 			    	
@@ -442,10 +444,13 @@ $(function() {
 				        },
                         "fnDrawCallback": function (oSettings){
                             //show hide selected columns
+                        	var checked = 0;
                             $('.receiptCol').each(function() {
                                 showHideColumn('#sales_table', $(this).attr('name'), this.checked);
-                            });                            
-                        }    
+                                showHideColumn('#conciliate_table', 15+parseInt($(this).attr('name')), this.checked);
+                            });
+                            
+                        }
 				    });
 				    
 			    	$('#conciliate_table').dataTable({
