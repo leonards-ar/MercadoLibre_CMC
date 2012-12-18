@@ -104,6 +104,12 @@ class ConciliationController extends SessionInfoController{
 			 } else {
 			 	le('paymentDate', accountDate)
 			 }
+			 if(params.minReceiptAmount != null){
+				 ge('amount', params.minReceiptAmount?.toDouble())
+			 }
+			 if(params.maxReceiptAmount != null){
+				 le('amount', params.maxReceiptAmount?.toDouble())
+			 }
 
 		}
         
@@ -147,6 +153,12 @@ class ConciliationController extends SessionInfoController{
 			  between('transactionDate', fromTransDate, toTransDate)
 			 } else {
 			 	le('transactionDate', accountDate)
+			 }
+			 if(params.minSalesAmount != null){
+				 ge('amount', params.minSalesAmount?.toDouble())
+			 }
+			 if(params.maxSalesAmount != null){
+				 le('amount', params.maxSalesAmount?.toDouble())
 			 }
 		}
         

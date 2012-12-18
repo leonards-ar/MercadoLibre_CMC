@@ -466,6 +466,7 @@ $(function() {
                             //show hide selected columns
                             $('.receiptCol').each(function() {
                                 showHideColumn('#receipt_table', $(this).attr('name'), this.checked);
+                                showHideColumn('#preconciliate_table', $(this).attr('name'), this.checked);
                             });                            
                         }    
 				    });
@@ -501,8 +502,9 @@ $(function() {
 				        },
                         "fnDrawCallback": function (oSettings){
                             //show hide selected columns
-                            $('.receiptCol').each(function() {
+                            $('.salesSiteCol').each(function() {
                                 showHideColumn('#sales_table', $(this).attr('name'), this.checked);
+                                showHideColumn('#preconciliate_table', $(this).attr('name'), this.checked);
                             });
                         }
 				    });
