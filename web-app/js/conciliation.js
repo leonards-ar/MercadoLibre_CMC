@@ -264,21 +264,21 @@ $(function() {
 		  mouseout: function() {
 			$(this).removeClass("ui-state-hover");
 		}
-		});
+	});
 		
 		$('#salesSiteFilter').live({
-		click: function(){
-			$('#filterSalesColumns').toggle('blind',500);
-			$('#filterSalesColumns').draggable();
-		},	
-	    mouseover: function() {
-			$(this).addClass("ui-state-hover");
-			$(this).css("cursor","pointer");
-			
-		},
-		  mouseout: function() {
-			$(this).removeClass("ui-state-hover");
-		}
+			click: function(){
+				$('#filterSalesColumns').toggle('blind',500);
+				$('#filterSalesColumns').draggable();
+			},	
+		    mouseover: function() {
+				$(this).addClass("ui-state-hover");
+				$(this).css("cursor","pointer");
+				
+			},
+			  mouseout: function() {
+				$(this).removeClass("ui-state-hover");
+			}
 		});
 		
         $('#salesSiteFilterTable').live({
@@ -294,9 +294,53 @@ $(function() {
               mouseout: function() {
                 $(this).removeClass("ui-state-hover");
             }
-            });
+        });
 
-        
+
+        $('#minSalesAmount').live({
+        	keydown: function(event) {
+        		var text = $(this).val();
+        		if(!validNumber(event)) {
+        			event.preventDefault();
+        			$(this).val(text);
+        		}
+        		
+        	}
+        });
+        		
+        $('#maxSalesAmount').live({
+        	keydown: function(event) {
+        		var text = $(this).val();
+        		if(!validNumber(event)) {
+        			event.preventDefault();
+        			$(this).val(text);
+        		}
+        		
+        	}
+        });
+
+        $('#minReceiptAmount').live({
+        	keydown: function(event) {
+        		var text = $(this).val();
+        		if(!validNumber(event)) {
+        			event.preventDefault();
+        			$(this).val(text);
+        		}
+        		
+        	}
+        });        		
+
+        $('#maxReceiptAmount').live({
+        	keydown: function(event) {
+        		var text = $(this).val();
+        		if(!validNumber(event)) {
+        			event.preventDefault();
+        			$(this).val(text);
+        		}
+        		
+        	}
+        });        		
+        		
 		
 		$('.receiptCol').live('click',function(){
 
@@ -393,6 +437,8 @@ $(function() {
 				            if($('#toReceiptTransDate').val() !='') aoData.push( { "name":"toReceiptTransDate", "value":$('#toReceiptTransDate').val()} );
 				            if($('#fromReceiptPaymtDate').val() !='') aoData.push( { "name":"fromReceiptPaymtDate", "value":$('#fromReceiptPaymtDate').val()});
 				            if($('#toReceiptPaymtDate').val() !='') aoData.push( { "name":"toReceiptPaymtDate", "value":$('#toReceiptPaymtDate').val()}); 
+				            if($('#minReceiptAmount').val() !='') aoData.push( { "name":"minReceiptAmount", "value":$('#minReceiptAmount').val().replace(",",".")});
+				            if($('#maxReceiptAmount').val() !='') aoData.push( { "name":"maxReceiptAmount", "value":$('#maxReceiptAmount').val().replace(",",".")});
 				        },
 				        "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
 
@@ -431,6 +477,9 @@ $(function() {
 				            aoData.push( { "name": "selectedList", "value":salesList.join(",") } );
 				            if($('#fromSalesTransDate').val() !='') aoData.push( { "name":"fromSalesTransDate", "value":$('#fromSalesTransDate').val()} );
 				            if($('#toSalesTransDate').val() !='') aoData.push( { "name":"toSalesTransDate", "value":$('#toSalesTransDate').val()} );
+				            if($('#minSalesAmount').val() !='') aoData.push( { "name":"minSalesAmount", "value":$('#minSalesAmount').val().replace(",",".")});
+				            if($('#maxSalesAmount').val() !='') aoData.push( { "name":"maxSalesAmount", "value":$('#maxSalesAmount').val().replace(",",".")});
+				            
 
 				        },
 				        "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
@@ -445,7 +494,7 @@ $(function() {
                         "fnDrawCallback": function (oSettings){
                             //show hide selected columns
                         	var checked = 0;
-                            $('.receiptCol').each(function() {
+                            $('.salesSiteCol').each(function() {
                                 showHideColumn('#sales_table', $(this).attr('name'), this.checked);
                                 showHideColumn('#conciliate_table', 15+parseInt($(this).attr('name')), this.checked);
                             });
