@@ -52,8 +52,8 @@ $(function() {
 		    
 		    $('#balance').html("0.00");
 		    
-		    receiptTable.fnDraw();
-		    salesTable.fnDraw();
+		    receiptTable.fnDraw(false);
+		    salesTable.fnDraw(false);
 		    
 		},
 		mouseover: function() {
@@ -155,8 +155,8 @@ $(function() {
 		    
 			var receiptTable = $('#receipt_table').dataTable();
 		    var salesTable = $('#sales_table').dataTable();
-		    receiptTable.fnDraw();
-		    salesTable.fnDraw();
+		    receiptTable.fnDraw(false);
+		    salesTable.fnDraw(false);
 		    
 		},
 		mouseover: function() {
