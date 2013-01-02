@@ -100,6 +100,7 @@ function validNumber(event) {
             || event.keyCode == 46                              // delete
             || event.keyCode == 190								// .
             || event.keyCode == 188								// ,
+            || event.keyCode == 222								// -
             || (event.keyCode >= 35 && event.keyCode <= 40)     // arrow keys/home/end
             || (event.keyCode >= 48 && event.keyCode <= 57)     // numbers on keyboard
             || (event.keyCode >= 96 && event.keyCode <= 105))

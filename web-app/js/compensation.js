@@ -92,7 +92,8 @@ $(function() {
 				            if($('#toReceiptTransDate').val() !='') aoData.push( { "name":"toReceiptTransDate", "value":$('#toReceiptTransDate').val()} );
 				            if($('#fromReceiptPaymtDate').val() !='') aoData.push( { "name":"fromReceiptPaymtDate", "value":$('#fromReceiptPaymtDate').val()});
 				            if($('#toReceiptPaymtDate').val() !='') aoData.push( { "name":"toReceiptPaymtDate", "value":$('#toReceiptPaymtDate').val()}); 
-
+				            if($('#minReceiptAmount').val() !='') aoData.push( { "name":"minReceiptAmount", "value":$('#minReceiptAmount').val().replace(",",".")});
+				            if($('#maxReceiptAmount').val() !='') aoData.push( { "name":"maxReceiptAmount", "value":$('#maxReceiptAmount').val().replace(",",".")});
 
                         },
                         "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
@@ -126,7 +127,10 @@ $(function() {
                             aoData.push( { "name": "period", "value": $('#period').val() } );
                             aoData.push( { "name": "compSalesList", "value":compSalesList.join(",") } );       
 				            if($('#fromSalesTransDate').val() !='' && jQuery.type($('#fromSalesTransDate').val()) !='undefined') aoData.push( { "name":"fromSalesTransDate", "value":$('#fromSalesTransDate').val()} );
-				            if($('#toSalesTransDate').val() !='' && jQuery.type($('#toSalesTransDate').val()) !='undefined') aoData.push( { "name":"toSalesTransDate", "value":$('#toSalesTransDate').val()} );                            
+				            if($('#toSalesTransDate').val() !='' && jQuery.type($('#toSalesTransDate').val()) !='undefined') aoData.push( { "name":"toSalesTransDate", "value":$('#toSalesTransDate').val()} );
+				            if($('#minSalesAmount').val() !='') aoData.push( { "name":"minSalesAmount", "value":$('#minSalesAmount').val().replace(",",".")});
+				            if($('#maxSalesAmount').val() !='') aoData.push( { "name":"maxSalesAmount", "value":$('#maxSalesAmount').val().replace(",",".")});
+				            
                         },
                         "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
                             var index = jQuery.inArray(aData.DT_RowId, compSalesList); 
@@ -459,6 +463,50 @@ $(function() {
 		
 	});
     
+    $('#minSalesAmount').live({
+    	keydown: function(event) {
+    		var text = $(this).val();
+    		if(!validNumber(event)) {
+    			event.preventDefault();
+    			$(this).val(text);
+    		}
+    		
+    	}
+    });
+    		
+    $('#maxSalesAmount').live({
+    	keydown: function(event) {
+    		var text = $(this).val();
+    		if(!validNumber(event)) {
+    			event.preventDefault();
+    			$(this).val(text);
+    		}
+    		
+    	}
+    });
+
+    $('#minReceiptAmount').live({
+    	keydown: function(event) {
+    		var text = $(this).val();
+    		if(!validNumber(event)) {
+    			event.preventDefault();
+    			$(this).val(text);
+    		}
+    		
+    	}
+    });        		
+
+    $('#maxReceiptAmount').live({
+    	keydown: function(event) {
+    		var text = $(this).val();
+    		if(!validNumber(event)) {
+    			event.preventDefault();
+    			$(this).val(text);
+    		}
+    		
+    	}
+    });        		
+	
     
 });
 
@@ -481,7 +529,7 @@ function group(table, compensateTable, count, list, map){
         tmpIds.push(selectedRows[i].id);
     }
     map.push(tmpIds);
-    oTable.fnDraw();
+    oTable.fnDraw(false);
 }
 
 function degroup(table, compensateTable, list, map) {
@@ -511,7 +559,7 @@ function degroup(table, compensateTable, list, map) {
 
     }
 
-    oTable.fnDraw();	
+    oTable.fnDraw(false);	
 }
 
 function save(compensateTable, map, count, element, link) {
