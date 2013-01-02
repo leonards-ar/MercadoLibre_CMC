@@ -50,7 +50,7 @@ environments {
 			//dbCreate = "create-drop" // one of 'create', 'create-drop','update'
 			pooled = true
 			dialect = "org.hibernate.dialect.OracleDialect"
-			url = "jdbc:oracle:thin:@172.16.80.112:1521:con_w01_access"
+			url = "jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.16.80.112)(PORT=1521))(CONNECT_DATA=(SERVER = DEDICATED)(SERVICE_NAME=con_w01)))"
 			driverClassName = "oracle.jdbc.driver.OracleDriver"
 			username = "con_w01prod"
 			password = "%D5Eh?hxl^84@"
