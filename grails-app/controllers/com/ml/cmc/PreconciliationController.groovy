@@ -173,6 +173,12 @@ class PreconciliationController extends SessionInfoController{
 				def toTransDate = new Date().parse(dateFormat, params.toReceiptTransDate)
 				between('transactionDate', fromTransDate, toTransDate)
 			}
+			if(params.minReceiptAmount != null){
+				ge('amount', params.minReceiptAmount?.toDouble())
+			}
+			if(params.maxReceiptAmount != null){
+				le('amount', params.maxReceiptAmount?.toDouble())
+			}
             if(ids != null && ids.length > 0) {
                 not{inList('id', ids)}
             }
@@ -200,6 +206,12 @@ class PreconciliationController extends SessionInfoController{
 				 def fromTransDate = new Date().parse(dateFormat, params.fromSalesTransDate)
 				 def toTransDate = new Date().parse(dateFormat, params.toSalesTransDate)
 				 between('transactionDate', fromTransDate, toTransDate)
+			 }
+			 if(params.minSalesAmount != null){
+				 ge('amount', params.minSalesAmount?.toDouble())
+			 }
+			 if(params.maxSalesAmount != null){
+				 le('amount', params.maxSalesAmount?.toDouble())
 			 }
              if(ids != null && ids.size() > 0) {
                  not{inList('id', ids)}
@@ -229,6 +241,13 @@ class PreconciliationController extends SessionInfoController{
 				def toTransDate = new Date().parse(dateFormat, params.toReceiptTransDate)
 				between('transactionDate', fromTransDate, toTransDate)
 			}
+			if(params.minReceiptAmount != null){
+				ge('amount', params.minReceiptAmount?.toDouble())
+			}
+			if(params.maxReceiptAmount != null){
+				le('amount', params.maxReceiptAmount?.toDouble())
+			}
+
             if(ids != null && ids.size() > 0) {
                 not{inList('id', ids)}
             }
@@ -256,6 +275,12 @@ class PreconciliationController extends SessionInfoController{
 				 def fromTransDate = new Date().parse(dateFormat, params.fromSalesTransDate)
 				 def toTransDate = new Date().parse(dateFormat, params.toSalesTransDate)
 				 between('transactionDate', fromTransDate, toTransDate)
+			 }
+			 if(params.minSalesAmount != null){
+				 ge('amount', params.minSalesAmount?.toDouble())
+			 }
+			 if(params.maxSalesAmount != null){
+				 le('amount', params.maxSalesAmount?.toDouble())
 			 }
              if(ids != null && ids.size() > 0) {
                  not{inList('id', ids)}
