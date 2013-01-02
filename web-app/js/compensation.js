@@ -254,7 +254,7 @@ $(function() {
         var id = this.id;
         var index = jQuery.inArray(id, aReceiptSelected);
         
-        var monto = parseFloat($(this).find('td:eq(1)').text().replace(".",""));
+        var monto = parseFloat($(this).find('td:eq(1)').text().replace(".","").replace(",","."));
         
         if ( index == -1 ) {
             aReceiptSelected.push( id );
@@ -272,7 +272,7 @@ $(function() {
         var id = this.id;
         var index = jQuery.inArray(id, aSalesSelected);
         
-        var monto = parseFloat($(this).find('td:eq(1)').text().replace(".",""));
+        var monto = parseFloat($(this).find('td:eq(1)').text().replace(".","").replace(",","."));
         if ( index == -1 ) {
             aSalesSelected.push( id );
             salesBalance+= isNaN(monto)? 0 : monto;
@@ -569,7 +569,8 @@ function save(compensateTable, map, count, element, link) {
     strdata += "&ids=" + map.join(";");
 	strdata +="&site=" + $('#site').val();
 	strdata +="&country=" + $('#country').val();
-	strdata +="&card=" + $('#card').val(); 
+	strdata +="&card=" + $('#card').val();
+	strdata += "&period=" + $('#period').val();
     
 	var $processing = getProcessingDialog();
 	

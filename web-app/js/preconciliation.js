@@ -91,7 +91,7 @@ $(function() {
 	    
 	    var balanced = parseFloat($('#balance').text());
 	    balanced = isNaN(balanced) ? 0 : balanced;
-	    var monto = parseFloat($(this).find('td:eq(1)').text());
+	    var monto = parseFloat($(this).find('td:eq(1)').text().replace(".","").replace(",","."));
 	    
     	if (index == -1) {
     		balanced += isNaN(monto)? 0 : monto;
@@ -113,7 +113,7 @@ $(function() {
         var id = this.id
         var index = jQuery.inArray(id, aSalesSelected);
 
-        var monto = parseFloat($(this).find('td:eq(1)').text());
+        var monto = parseFloat($(this).find('td:eq(1)').text().replace(".","").replace(",","."));
         var balanced = parseFloat($('#balance').text());
         balanced = isNaN(balanced) ? 0 : balanced;
         
