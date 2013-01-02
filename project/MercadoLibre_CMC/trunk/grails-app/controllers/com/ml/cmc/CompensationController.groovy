@@ -100,6 +100,13 @@ class CompensationController extends SessionInfoController {
 			} else {
 				le('paymentDate', accountDate)
 			}
+			if(params.minReceiptAmount != null){
+				ge('amount', params.minReceiptAmount?.toDouble())
+			}
+			if(params.maxReceiptAmount != null){
+				le('amount', params.maxReceiptAmount?.toDouble())
+			}
+
 		}
 		
         responseMap.aaData = serializeReceiptData(receiptInstanceList)
@@ -144,6 +151,12 @@ class CompensationController extends SessionInfoController {
 		 	 } else {
 			  	le('transactionDate', accountDate)
 		 	 }
+			 if(params.minSalesAmount != null){
+				 ge('amount', params.minSalesAmount?.toDouble())
+			 }
+			 if(params.maxSalesAmount != null){
+				 le('amount', params.maxSalesAmount?.toDouble())
+			 }
 
 		}
 		
