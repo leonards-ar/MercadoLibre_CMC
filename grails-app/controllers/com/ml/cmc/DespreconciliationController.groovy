@@ -78,6 +78,11 @@ class DespreconciliationController extends SessionInfoController {
             
 			eq('period',AccountantPeriod.findById(params.period))
 			if(medio != null) eq('medio', medio)
+			
+			if(params.processedList?.length() > 0) {
+				def processedIds = params.processedList.split(",")
+				not{inList('id', processedIds.collect{it.toLong()})}
+			}
             receipt{
                 eq('state',state3)
 				if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){

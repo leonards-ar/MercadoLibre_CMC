@@ -106,3 +106,11 @@ function validNumber(event) {
             || (event.keyCode >= 96 && event.keyCode <= 105))
             
 }
+
+function clearTable(table, list) {
+	
+	oTable = table.dataTable();
+    oTable.fnClearTable();
+    list = [];
+	
+}

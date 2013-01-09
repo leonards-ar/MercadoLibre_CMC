@@ -205,7 +205,7 @@ $(function() {
 				$dialog.dialog( "option", "buttons", { 
 				    "Ok": function() { 
 				        $(this).dialog("close");
-				        $(location).attr('href',exitLink);
+				        clearTable($("#conciliate_table"), conciliateList);
 				    } 
 				});
 				$dialog.dialog('open');

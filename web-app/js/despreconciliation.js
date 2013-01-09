@@ -1,5 +1,6 @@
 $(function() {
     var aSelected = [];
+    var processed = [];
     
     $('#country').chainSelect('#card', cardLink, {
         nonSelectedValue : '---'
@@ -80,6 +81,7 @@ $(function() {
                             aoData.push( { "name": "card", "value": $('#card').val() } );
                             aoData.push( { "name": "site", "value": $('#site').val() } );
                             aoData.push( { "name": "period", "value": $('#period').val() } );
+                            aoData.push( { "name": "processedList", "value":processed.join(",") } );
 				            if($('#fromReceiptTransDate').val() !='') aoData.push( { "name":"fromReceiptTransDate", "value":$('#fromReceiptTransDate').val()} );
 				            if($('#toReceiptTransDate').val() !='') aoData.push( { "name":"toReceiptTransDate", "value":$('#toReceiptTransDate').val()} );
 				            if($('#fromSalesTransDate').val() !='') aoData.push( { "name":"fromSalesTransDate", "value":$('#fromSalesTransDate').val()} );
@@ -259,7 +261,10 @@ $(function() {
                     $dialog.dialog( "option", "buttons", { 
                         "Ok": function() { 
                             $(this).dialog("close");
-                            $(location).attr('href',exitLink);
+    				    	processed.push(aSelected);
+                            aSelected = [];
+                            var oTable = $('#conciliate_table').dataTable();
+                            oTable.fnDraw(false);                            
                         } 
                     });
                     $dialog.dialog('open');
