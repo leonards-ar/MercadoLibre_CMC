@@ -3,6 +3,7 @@ import grails.converters.JSON
 import grails.util.GrailsUtil
 
 import org.apache.commons.logging.LogFactory
+import org.apache.jasper.compiler.Node.ParamsAction;
 
 import com.ml.cmc.constants.Constant
 import com.ml.cmc.exception.SecLockException
@@ -143,10 +144,19 @@ class ConciliationController extends SessionInfoController{
 			 if(medio != null) inList('medio', medio)
 			 eq('state',state)
 			 eq('origin','I')
-  			 if(params.selectedList.length() > 0) {
-				def ids = params.selectedList.split(",")
-                not{inList('id', ids)}
+			 
+			 if(params.salesSelectedBox == "checked") {
+				 if(params.selectedRows.length() > 0) {
+					 def ids = params.selectedRows.split(",")
+					inList('id', ids)
+				  }
+			 } else {
+				 if(params.selectedList.length() > 0) {
+					 def ids = params.selectedList.split(",")
+					  not{inList('id', ids)}
+				}
              }
+			  
 			 if(params.fromSalesTransDate != null && params.toSalesTransDate != null){
 			  def fromTransDate = new Date().parse(dateFormat, params.fromSalesTransDate)
 			  def toTransDate = new Date().parse(dateFormat, params.toSalesTransDate)

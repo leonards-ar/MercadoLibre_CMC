@@ -377,6 +377,17 @@ $(function() {
 			
 		});
 		
+		$('#receiptSelectedBox').live('click',function(){
+			var oTable = $('#receipt_table').dataTable();
+			oTable.fnDraw();
+		});
+		
+		$('#salesSelectedBox').live('click',function(){
+			var oTable = $('#sales_table').dataTable();
+			oTable.fnDraw();
+		});
+
+		
 	$('#lock').click(function(){
 		
 		if($(this).attr('value') == 'Lock'){
@@ -419,7 +430,7 @@ $(function() {
 			    	$('#myBody').html(data);
 			    	
 				    $('#receipt_table').dataTable({
-				        "sDom": 'lrtip',
+				        "sDom": 'l<"receiptSelect">rtip',
 				        "iDisplayLength": 20,
 				        "aLengthMenu":[20,50,75,100,500,1000],
 				        "sPaginationType": "full_numbers",
@@ -433,6 +444,8 @@ $(function() {
 				            aoData.push( { "name": "site", "value": $('#site').val() } );
 				            aoData.push( { "name": "period", "value": $('#period').val() } );
 				            aoData.push( { "name": "selectedList", "value":receiptList.join(",") } );
+				            aoData.push( { "name": "selectedRows", "value":aReceiptSelected.join(",") } )
+				            aoData.push( { "name": "receiptSelectedBox", "value":$('#receiptSelectedBox').attr('checked') } );
 				            if($('#fromReceiptTransDate').val() !='') aoData.push( { "name":"fromReceiptTransDate", "value":$('#fromReceiptTransDate').val()} );
 				            if($('#toReceiptTransDate').val() !='') aoData.push( { "name":"toReceiptTransDate", "value":$('#toReceiptTransDate').val()} );
 				            if($('#fromReceiptPaymtDate').val() !='') aoData.push( { "name":"fromReceiptPaymtDate", "value":$('#fromReceiptPaymtDate').val()});
@@ -459,9 +472,11 @@ $(function() {
                             
                         }
 				    });
+				    
+				    $("div.receiptSelect").html('<p id="receiptSelect" align="right"><label>Mostrar Seleccion <input id="receiptSelectedBox" type="checkbox"></label></p>');
 			    	
 				    $('#sales_table').dataTable({
-				        "sDom": 'lrtip',
+				        "sDom": 'l<"salesSelect">rtip',
 				        "iDisplayLength": 20,
 				        "aLengthMenu":[20,50,75,100,500,1000],
 				        "sPaginationType": "full_numbers",
@@ -475,6 +490,8 @@ $(function() {
 				            aoData.push( { "name": "site", "value": $('#site').val() } );
 				            aoData.push( { "name": "period", "value": $('#period').val() } );
 				            aoData.push( { "name": "selectedList", "value":salesList.join(",") } );
+				            aoData.push( { "name": "selectedRows", "value":aSalesSelected.join(",")} )
+				            aoData.push( { "name": "salesSelectedBox", "value":$('#salesSelectedBox').attr('checked') } );
 				            if($('#fromSalesTransDate').val() !='') aoData.push( { "name":"fromSalesTransDate", "value":$('#fromSalesTransDate').val()} );
 				            if($('#toSalesTransDate').val() !='') aoData.push( { "name":"toSalesTransDate", "value":$('#toSalesTransDate').val()} );
 				            if($('#minSalesAmount').val() !='') aoData.push( { "name":"minSalesAmount", "value":$('#minSalesAmount').val().replace(",",".")});
@@ -501,6 +518,8 @@ $(function() {
                             
                         }
 				    });
+				    
+                    $("div.salesSelect").html('<p id="salesSelect" align="right"><label>Mostrar Seleccion <input id="salesSelectedBox" type="checkbox"></label></p>');
 				    
 			    	$('#conciliate_table').dataTable({
 			            "bPaginate":false,
