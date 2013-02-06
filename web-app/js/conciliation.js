@@ -50,6 +50,10 @@ $(function() {
 		    aReceiptSelected = [];
 		    aSalesSelected = [];
 		    
+	        $('#receiptSelectedBox').attr('checked',false);
+	        $('#salesSelectedBox').attr('checked',false);
+
+		    
 		    $('#balance').html("0.00");
 		    
 		    receiptTable.fnDraw(false);
