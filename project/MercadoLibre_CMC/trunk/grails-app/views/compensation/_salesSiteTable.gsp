@@ -23,6 +23,7 @@
 		  <tr>
 	      <th>${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}</th>
 	      <th>${message(code: 'salesSite.amount', default: 'Monto')}</th>
+	      <th>${message(code: 'salesSite.absamount', default: 'Monto Abs')}</th>
 	      <th>${message(code: 'salesSite.authorization', default: 'Autorizacion')}</th>
 	      <th>${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}</th>
 	      <th>${message(code: 'salesSite.customerId', default: 'Cliente')}</th>
@@ -52,6 +53,7 @@
       <tr>
 	      <th>${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}</th>
 	      <th>${message(code: 'salesSite.amount', default: 'Monto')}</th>
+	      <th>${message(code: 'salesSite.absamount', default: 'Monto Abs')}</th>
 	      <th>${message(code: 'salesSite.authorization', default: 'Autorizacion')}</th>
 	      <th>${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}</th>
 	      <th>${message(code: 'salesSite.customerId', default: 'Cliente')}</th>

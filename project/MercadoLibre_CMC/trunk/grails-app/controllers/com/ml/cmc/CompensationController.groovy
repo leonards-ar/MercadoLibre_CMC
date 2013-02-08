@@ -15,7 +15,7 @@ class CompensationController extends SessionInfoController {
     def lotGeneratorService
     def sessionFactory
 
-	def colNames = ["transactionDate","amount","authorization","cardNumber","customerId","documentNumber",
+	def colNames = ["transactionDate","amount","absAmount","authorization","cardNumber","customerId","documentNumber",
 		"documentId","id","ro","tid","nsu","shareNumber","shareQty","paymentDate","payment"]
 	
     def index = {
@@ -68,7 +68,7 @@ class CompensationController extends SessionInfoController {
 		def state1 = State.findById(1);
 		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
 
-        def receiptCriteria = Receipt.createCriteria()
+        
         def max = params.iDisplayLength?params.iDisplayLength:10
         def offset = params.iDisplayStart?params.iDisplayStart:0
 
@@ -78,42 +78,54 @@ class CompensationController extends SessionInfoController {
         
 		def accountDate = new Date().parse(dateFormat,params.period)
 		
-		def receiptInstanceList = receiptCriteria.list(max:max, offset:offset) {
-			order(colName, sortDir)
-			eq('medio', medio)
-			eq('state',state1)
-			if(params.compReceiptList.length() > 0) {
-				def ids = params.compReceiptList.split(",")
-                not{inList('id', ids)}
-            }
-			if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){
-				def fromTransDate = new Date().parse(dateFormat, params.fromReceiptTransDate)
-				def toTransDate = new Date().parse(dateFormat, params.toReceiptTransDate)
-				between('transactionDate', fromTransDate, toTransDate)
-			} else {
-				le('transactionDate', accountDate)
-			}
-			if(params.fromReceiptPaymtDate != null && params.toReceiptPaymtDate != null){
-				def fromPaymtDate = new Date().parse(dateFormat, params.fromReceiptPaymtDate)
-				def toPaymtDate = new Date().parse(dateFormat, params.toReceiptPaymtDate)
-				between('transactionDate', fromPaymtDate, toPaymtDate)
-			} else {
-				le('paymentDate', accountDate)
-			}
-			if(params.minReceiptAmount != null){
-				ge('amount', params.minReceiptAmount?.toDouble())
-			}
-			if(params.maxReceiptAmount != null){
-				le('amount', params.maxReceiptAmount?.toDouble())
-			}
+		def query = "from Receipt s where s.medio=:medio and s.state=:state "
+		def queryMap = [medio:medio, state:state1]
 
+		if(params.compReceiptList.length() > 0) {
+			 query += " and s.id not in (:ids) "
+			 queryMap.ids = params.compSalesList.split(",")
+        }
+		if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){
+		 query += " and s.transactionDate between :fromTransDate and :toTransDate "
+		 queryMap.fromTransDate = new Date().parse(dateFormat, params.fromReceiptTransDate)
+		 queryMap.toTransDate = new Date().parse(dateFormat, params.toReceiptTransDate)
+		} else {
+	  	  query += " and s.transactionDate <= :accountDate "
+		  queryMap.accountDate = accountDate
+		}
+		if(params.fromReceiptPaymtDate != null && params.toReceiptPaymtDate != null){
+		 query += " and s.paymentDate between :fromPaymentDate and :toPaymentDate "
+		 queryMap.fromPaymentDate = new Date().parse(dateFormat, params.fromReceiptPaymtDate)
+		 queryMap.toPaymentDate = new Date().parse(dateFormat, params.toReceiptPaymtDate)
+		} else {
+	  	  query += " and s.paymentDate <= :accountDate "
+		  queryMap.accountDate = accountDate
+		}
+		if(params.minReceiptAmount != null){
+		  query += " and s.amount >= :minReceiptAmount "
+		  queryMap.minReceiptAmount = params.minReceiptAmount?.toDouble()
+		}
+			
+		if(params.maxReceiptAmount != null){
+		   query += " and s.amount <= :maxReceiptAmount "
+		   queryMap.maxReceiptAmount = params.maxReceiptAmount?.toDouble()
+		}
+			
+		if(colName == "absAmount") {
+			query += " order by abs(amount) ${sortDir}"
+		} else {
+			query += " order by ${colName} ${sortDir}"
 		}
 		
+		def receiptInstanceList = Receipt.executeQuery(query,queryMap,[max:max, offset:offset])
+		
+		def receiptCount = Receipt.executeQuery("select count(*) " + query, queryMap);
+
         responseMap.aaData = serializeReceiptData(receiptInstanceList)
         
         responseMap.sEcho = params.sEcho
-        responseMap.iTotalRecords = receiptInstanceList.totalCount
-        responseMap.iTotalDisplayRecords = receiptInstanceList.totalCount
+        responseMap.iTotalRecords = receiptCount
+        responseMap.iTotalDisplayRecords = receiptCount
         
         render responseMap as JSON
 	}
@@ -124,8 +136,6 @@ class CompensationController extends SessionInfoController {
 		def state1 = State.findById(1);
 		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
 		
-        def salesCriteria = SalesSite.createCriteria()
-
         def max = params.iDisplayLength?params.iDisplayLength:10
         def offset = params.iDisplayStart?params.iDisplayStart:0
 
@@ -134,37 +144,50 @@ class CompensationController extends SessionInfoController {
         def sortDir = params.sSortDir_0? params.sSortDir_0:'asc'
 		
 		def accountDate = new Date().parse(dateFormat,params.period)
-		
-		def salesSiteInstanceList = salesCriteria.list(max:max, offset:offset) {
-			order(colName, sortDir)
-			 eq('medio', medio)
-			 eq('state',state1)
-             
-             if(params.compSalesList.length() > 0){
-				 def ids = params.compSalesList.split(",")
-                 not{inList('id', ids)}
-             }
-			 if(params.fromSalesTransDate != null  && params.toSalesTransDate != null){
-				 def fromTransDate = new Date().parse(dateFormat, params.fromSalesTransDate)
-				 def toTransDate = new Date().parse(dateFormat, params.toSalesTransDate)
-				 between('transactionDate', fromTransDate, toTransDate)
-		 	 } else {
-			  	le('transactionDate', accountDate)
-		 	 }
-			 if(params.minSalesAmount != null){
-				 ge('amount', params.minSalesAmount?.toDouble())
-			 }
-			 if(params.maxSalesAmount != null){
-				 le('amount', params.maxSalesAmount?.toDouble())
-			 }
 
-		}
+		def query = "from SalesSite s where s.medio=:medio and s.state=:state "
+		def queryMap = [medio:medio, state:state1]
+
+	
+         if(params.compSalesList.length() > 0){
+			 query += " and s.id not in (:ids) "
+			 queryMap.ids = params.compSalesList.split(",")
+         }
+		 
+		 if(params.fromSalesTransDate != null  && params.toSalesTransDate != null){
+			 
+			 query += " and s.transactionDate between :fromTransDate and :toTransDate "
+			 queryMap.fromTransDate = new Date().parse(dateFormat, params.fromSalesTransDate)
+			 queryMap.toTransDate = new Date().parse(dateFormat, params.toSalesTransDate)
+			 
+	 	 } else {
+		  	  query += " and s.transactionDate <= :accountDate "
+			  queryMap.accountDate = accountDate
+	 	 }
+		 if(params.minSalesAmount != null){
+			 query += " and s.amount >= :minSalesAmount "
+			 queryMap.minSalesAmount = params.minSalesAmount?.toDouble()
+		 }
+		 if(params.maxSalesAmount != null){
+			 query += " and s.amount <= :minSalesAmount "
+			 queryMap.maxSalesAmount = params.maxSalesAmount?.toDouble()
+		 }
+		 
+		 if(colName == "absAmount") {
+			 query += " order by abs(amount) ${sortDir}"
+		 } else {
+		 	query += " order by ${colName} ${sortDir}"
+		 }
+		
+		def salesSiteInstanceList = SalesSite.executeQuery(query,queryMap,[max:max, offset:offset])
+
+		def salesSiteCount = SalesSite.executeQuery("select count(*) " + query, queryMap);		
 		
         responseMap.aaData = serializeReceiptData(salesSiteInstanceList)
         
         responseMap.sEcho = params.sEcho
-        responseMap.iTotalRecords = salesSiteInstanceList.totalCount
-        responseMap.iTotalDisplayRecords = salesSiteInstanceList.totalCount
+        responseMap.iTotalRecords = salesSiteCount;
+        responseMap.iTotalDisplayRecords = salesSiteCount;
         
         render responseMap as JSON
         
@@ -206,5 +229,33 @@ class CompensationController extends SessionInfoController {
         render message(code:"compensation.calledProcess", default:"Se ha invocado el proceso", args:[username])
     
     }
+	
+	protected serializeReceiptData(instanceList) {
+		
+		def data = []
+		
+		instanceList.each(){
+			data << ["DT_RowId":it.id.toString(),
+					 "0":formatDate(date:it?.transactionDate, format:"dd-MM-yyyy"),
+					 "1":formatNumber(number:it?.amount,format:"###,###.00"),
+					 "2":formatNumber(number:it?.amount.abs(),format:"###,###.00"),
+					 "3":it?.authorization.toString(),
+					 "4":it?.cardNumber.toString(),
+					 "5":it?.customerId.toString(),
+					 "6":it?.documentNumber.toString(),
+					 "7":it?.documentId.toString(),
+					 "8":it?.id.toString(),
+					 "9":it?.ro.toString(),
+					 "10":it?.tid.toString(),
+					 "11":it?.nsu.toString(),
+					 "12":it?.shareNumber.toString(),
+					 "13":it?.shareQty.toString(),
+					 "14":formatDate(date:it?.paymentDate, format:"dd-MM-yyyy"),
+					 "15":it?.payment
+					 ]
+		}
+		
+		return data
+	}
     
 }
