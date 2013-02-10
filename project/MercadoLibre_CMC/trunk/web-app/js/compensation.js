@@ -73,8 +73,8 @@ $(function() {
 			    	
                     $('#receipt_table').dataTable({
                         "sDom":'l<"receiptBalance">rtip<"receiptGroupButton">',
-				        "iDisplayLength": 50,
-				        "aLengthMenu":[50,75,100,500,1000],                        
+				        "iDisplayLength": 20,
+				        "aLengthMenu":[20,30,50,100],                        
                         "bPaginate": true,
                         "sPaginationType": "full_numbers",
                         "bProcessing": true,
@@ -112,8 +112,8 @@ $(function() {
                     
                     $('#sales_table').dataTable({
                         "sDom":'l<"salesBalance">rtip<"salesGroupButton">',
-				        "iDisplayLength": 50,
-				        "aLengthMenu":[50,75,100,500,1000],                        
+				        "iDisplayLength": 20,
+				        "aLengthMenu":[20,30,50,100],                        
                         "bPaginate": true,
                         "sPaginationType": "full_numbers",
                         "bProcessing": true,
@@ -147,8 +147,8 @@ $(function() {
                     
                     $('#compensated_receipt_table').dataTable({
                     	"sDom":'lrtip<"receiptDescGroupButton">',
-				        "iDisplayLength": 50,
-				        "aLengthMenu":[50,75,100,500,1000],
+				        "iDisplayLength": 20,
+				        "aLengthMenu":[20,30,50,100],
                         "bPaginate": true,
                         "sPaginationType": "full_numbers",
                         "bProcessing": true,
