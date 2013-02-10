@@ -83,7 +83,7 @@ class CompensationController extends SessionInfoController {
 
 		if(params.compReceiptList.length() > 0) {
 			 query += " and s.id not in (:ids) "
-			 queryMap.ids = params.compSalesList.split(",")
+			 queryMap.ids = params.compReceiptList.split(",")
         }
 		if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){
 		 query += " and s.transactionDate between :fromTransDate and :toTransDate "
