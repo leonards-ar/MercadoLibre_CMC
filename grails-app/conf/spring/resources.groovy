@@ -1,9 +1,7 @@
 import org.springframework.security.core.session.SessionRegistryImpl
 import org.springframework.security.web.authentication.session.ConcurrentSessionControlStrategy
 import org.springframework.security.web.session.ConcurrentSessionFilter
-
 import com.ml.cmc.handlers.UnlockLogoutHandler
-import com.ml.cmc.security.CmcUserDetailsContextMapper
 
 beans = {
 
@@ -30,6 +28,4 @@ beans = {
         defaultLocale = new Locale("es","ES")
         java.util.Locale.setDefault(defaultLocale)
      }
-	
-	ldapUserDetailsMapper(CmcUserDetailsContextMapper) 
 }

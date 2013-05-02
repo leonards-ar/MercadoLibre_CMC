@@ -19,7 +19,7 @@
         <sec:ifLoggedIn>
           <g:link controller="logout"><g:message code="logout" default="Abandonar" /></g:link>
           <br/><br/>
-          <g:message code="login.bar.welcomeback" args="${[sec.loggedInUserInfo(field:'displayName')]}"/>
+          <g:message code="login.bar.welcomeback" args="${[sec.loggedInUserInfo(field:'username')]}"/>
         </sec:ifLoggedIn>
         <br/><br/>
   </div>
