@@ -19,8 +19,67 @@
     </span>        
   </div>
 </div>
+<div style="position:relative">
+  <span class="menuButton"><input type="button" class="filter" id="receiptFilter" value="${message(code:'preconciliation.filtercolumns', default:'Filtrar Columnas')}"></span>
+</div>
 <br/>
-<br/>
+
+ <div id="filterReceiptColumns" class="receiptfilterColumns">
+ <h3>${message(code: 'preconciliation.receipts', default: 'Ventas del Sitio')}</h3>
+  <table>
+    <tr>
+     <td><g:checkBox name="receiptColAll" id='receiptColAll' value="${true}" /></td>
+     <td>${message(code: 'salesSite.unselect', default: 'Seleccionar Todo')}</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+    </tr>
+      <tr>
+        <td><g:checkBox class='receiptColCol' name="1" value="${true}" /></td>
+        <td>${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}</td>
+        <td><g:checkBox class='receiptCol' name="2" value="${true}" /></td>
+        <td>${message(code: 'salesSite.amount', default: 'Monto')}</td>
+        <td><g:checkBox class='receiptCol' name="3" value="${true}" /></td>
+        <td>${message(code: 'salesSite.absamount', default: 'Monto Abs.')}</td>
+        <td><g:checkBox class='receiptCol' name="4" value="${true}" /></td>
+        <td>${message(code: 'salesSite.authorization', default: 'Autorizacion')}</td>        
+      </tr>
+      <tr>
+        <td><g:checkBox class='receiptCol' name="5" value="${true}" /></td>
+        <td>${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}</td>
+        <td><g:checkBox class='receiptCol' name="6" value="${true}" /></td>
+        <td>${message(code: 'salesSite.customerId', default: 'Cliente')}</td>
+        <td><g:checkBox class='receiptCol' name="7" value="${true}" /></td>
+        <td>${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</td>
+        <td><g:checkBox class='receiptCol' name="8" value="${true}" /></td>
+        <td>${message(code: 'salesSite.documentId', default: 'DNI')}</td>
+       </tr>
+       <tr>
+        <td><g:checkBox class='receiptCol' name="9" value="${true}" /></td>
+        <td>${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</td>
+        <td><g:checkBox class='receiptCol' name="10" value="${true}" /></td>
+        <td>${message(code: 'salesSite.ro', default: 'RO')}</td>
+        <td><g:checkBox class='receiptCol' name="11" value="${true}" /></td>
+        <td>${message(code: 'salesSite.tid', default: 'TID')}</td>
+        <td><g:checkBox class='receiptCol' name="12" value="${true}" /></td>
+        <td>${message(code: 'salesSite.nsu', default: 'NSU')}</td>
+      </tr>
+      <tr>
+        <td><g:checkBox class='receiptCol' name="13" value="${true}" /></td>
+        <td>${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}</td>
+        <td><g:checkBox class='receiptCol' name="14" value="${true}" /></td>
+        <td>${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}</td>
+        <td><g:checkBox class='receiptCol' name="15" value="true"/></td>
+        <td>${message(code: 'salesSite.paymentDate', default: 'Fecha de Pago')}</td>
+        <td><g:checkBox class='receiptCol' name="16" value="true"/></td>
+        <td>${message(code: 'salesSite.payment', default: 'Pagado')}</td>
+      </tr>                    
+  </table>
+  </div>       
+
 <div style="width:100%;width:1200px;overflow:auto;border:1px solid #ccc;position:relative">
 
   <table id="receipt_table" class="display">

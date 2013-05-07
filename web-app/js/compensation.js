@@ -26,6 +26,85 @@ $(function() {
         showAnim: 'fadeIn'
 	});
 	
+	$('#salesSiteFilter').live({
+		click: function(){
+			$('#filterSalesColumns').toggle('blind',500);
+			$('#filterSalesColumns').draggable();
+		},	
+	    mouseover: function() {
+			$(this).addClass("ui-state-hover");
+			$(this).css("cursor","pointer");
+			
+		},
+		  mouseout: function() {
+			$(this).removeClass("ui-state-hover");
+		}
+	});
+	
+	$('.salesSiteCol').live('click',function(){
+
+		showHideColumn('#sales_table', $(this).attr('name'), this.checked);
+		showHideColumn('#compensated_sales_table', $(this).attr('name'), this.checked);
+        if(!this.checked){
+            $('#salesColAll').attr('checked', false);
+        }			
+		
+	});
+	
+	$('#salesColAll').live('click',function(){
+		var checked = this.checked;
+		$('.salesSiteCol').each(function() {
+				this.checked = checked;
+				showHideColumn('#sales_table', $(this).attr('name'), checked);
+				showHideColumn('#compensated_sales_table', $(this).attr('name'), checked);
+		});
+		
+	});
+
+	$('#receiptFilter').live({
+		click: function(){
+			$('#filterReceiptColumns').toggle('blind',500);
+			$('#filterReceiptColumns').draggable();
+		},
+		mouseover: function() {
+			$(this).addClass("ui-state-hover");
+			$(this).css("cursor","pointer");
+		},
+		  mouseout: function() {
+			$(this).removeClass("ui-state-hover");
+		}
+	});
+	
+	$('.receiptCol').live('click',function(){
+
+		showHideColumn('#receipt_table', $(this).attr('name'), this.checked);
+		showHideColumn('#compensated_receipt_table', $(this).attr('name'), this.checked);
+        if(!this.checked){
+            $('#receiptColAll').attr('checked', false);
+        }			
+	});	
+	
+	$('#receiptColAll').live('click',function(){
+		var checked = this.checked;
+		$('.receiptCol').each(function() {
+				this.checked = checked;
+				showHideColumn('#receipt_table', $(this).attr('name'), checked);
+				showHideColumn('#compensated_receipt_table', $(this).attr('name'), checked);
+		});
+		
+	});
+	
+	
+	$('#receiptSelectedBox').live('click',function(){
+		var oTable = $('#receipt_table').dataTable();
+		oTable.fnDraw();
+	});
+	
+	$('#salesSelectedBox').live('click',function(){
+		var oTable = $('#sales_table').dataTable();
+		oTable.fnDraw();
+	});
+	
 	
 	
 	$('#lock').click(function(){
