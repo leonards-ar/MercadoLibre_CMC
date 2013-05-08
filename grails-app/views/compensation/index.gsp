@@ -26,6 +26,7 @@
       
       var completeFilters = "${message(code:'conciliation.nofilterselection.error', default:'Seleccione todos los filtros')}";
       var compensationNoselectionError = "${message(code:'compensation.noselection.error', default:'Seleccione mas de un elemento')}";
+      var rangeValueMissing = "${message(code:'compensation.incompleteRange.error', default:'Complete el Rango')}";
       var $loading = getProcessingDialog();
     </g:javascript>
   

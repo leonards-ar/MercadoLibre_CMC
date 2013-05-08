@@ -369,6 +369,10 @@ $(function() {
 
 			showHideColumn('#sales_table', $(this).attr('name'), this.checked);
 			showHideColumn('#conciliate_table', 15+parseInt($(this).attr('name')), this.checked);
+            if(!this.checked){
+                $('#salesColAll').attr('checked', false);
+            }			
+			
 		});
 		
 		$('#salesColAll').live('click',function(){
