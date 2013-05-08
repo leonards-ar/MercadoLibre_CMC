@@ -101,11 +101,11 @@
      <div class="title_box receiptFilter">
       <div id="title"><g:message code="desconciliation.receipt" default="Recibos"/></div>
       <div id="receiptContent"> 
-        <div><g:message code="salesSite.transDate" default="Fecha de la Transaccion'"/></div>
+        <div><g:message code="salesSite.transDate" default="Fecha de la Transaccion"/></div>
 	      <g:message code="salesSite.from" default="Desde"/>: <g:textField name="fromReceiptTransDate" id="fromReceiptTransDate" value="${fromReceiptTransDate}" size="10" />
 	      <g:message code="salesSite.to" default="Hasta"/>: <g:textField name="toReceiptTransDate" id="toReceiptTransDate" value="${toReceiptTransDate}" size="10" />
 	      
-	      <div><g:message code="salesSite.paymtDate" default="Fecha de Pago'"/></div>
+	      <div><g:message code="salesSite.paymtDate" default="Fecha de Pago"/></div>
 	      <g:message code="salesSite.from" default="Desde"/>: <g:textField name="fromReceiptPaymtDate" id="fromReceiptPaymtDate" value="${fromReceiptPaymtDate}" size="10" />
 	      <g:message code="salesSite.to" default="Hasta"/>: <g:textField name="toReceiptPaymtDate" id="toReceiptPaymtDate" value="${toReceiptPaymtDate}" size="10" />
       </div>
@@ -113,7 +113,7 @@
      <div class="title_box salesFilter" >
       <div id="title"><g:message code="desconciliation.sales" default="Ventas"/></div>
       <div id="salesContent"> 
-	      <div><g:message code="salesSite.transDate" default="Fecha de la Transaccion'"/></div>
+	      <div><g:message code="salesSite.transDate" default="Fecha de la Transaccion"/></div>
 	      <g:message code="salesSite.from" default="Desde"/>: <g:textField name="fromSalesTransDate" id="fromSalesTransDate" value="${fromSalesTransDate}" size="10" />
 	      <g:message code="salesSite.to" default="Hasta"/>: <g:textField name="toSalesTransDate" id="toSalesTransDate" value="${toSalesTransDate}" size="10" />
 	     </div>

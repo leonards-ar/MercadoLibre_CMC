@@ -26,6 +26,86 @@ $(function() {
         showAnim: 'fadeIn'
 	});
 	
+	$('#salesSiteFilter').live({
+		click: function(){
+			$('#filterSalesColumns').toggle('blind',500);
+			$('#filterSalesColumns').draggable();
+		},	
+	    mouseover: function() {
+			$(this).addClass("ui-state-hover");
+			$(this).css("cursor","pointer");
+			
+		},
+		  mouseout: function() {
+			$(this).removeClass("ui-state-hover");
+		}
+	});
+	
+	$('.salesSiteCol').live('click',function(){
+
+		showHideColumn('#sales_table', $(this).attr('name'), this.checked);
+		showHideColumn('#compensated_sales_table', $(this).attr('name'), this.checked);
+        if(!this.checked){
+            $('#salesColAll').attr('checked', false);
+        }			
+		
+	});
+	
+	$('#salesColAll').live('click',function(){
+		var checked = this.checked;
+		$('.salesSiteCol').each(function() {
+				this.checked = checked;
+				showHideColumn('#sales_table', $(this).attr('name'), checked);
+				showHideColumn('#compensated_sales_table', $(this).attr('name'), checked);
+		});
+		
+	});
+
+	$('#receiptFilter').live({
+		click: function(){
+			$('#filterReceiptColumns').toggle('blind',500);
+			$('#filterReceiptColumns').draggable();
+		},
+		mouseover: function() {
+			$(this).addClass("ui-state-hover");
+			$(this).css("cursor","pointer");
+		},
+		  mouseout: function() {
+			$(this).removeClass("ui-state-hover");
+		}
+	});
+	
+	$('.receiptCol').live('click',function(){
+
+		showHideColumn('#receipt_table', $(this).attr('name'), this.checked);
+		showHideColumn('#compensated_receipt_table', $(this).attr('name'), this.checked);
+        if(!this.checked){
+            $('#receiptColAll').attr('checked', false);
+        }			
+	});	
+	
+	$('#receiptColAll').live('click',function(){
+		var checked = this.checked;
+		$('.receiptCol').each(function() {
+				this.checked = checked;
+				showHideColumn('#receipt_table', $(this).attr('name'), checked);
+				showHideColumn('#compensated_receipt_table', $(this).attr('name'), checked);
+		});
+		
+	});
+	
+	
+	$('#receiptSelectedBox').live('click',function(){
+		
+		var oTable = $('#receipt_table').dataTable();
+		oTable.fnDraw();
+	});
+	
+	$('#salesSelectedBox').live('click',function(){
+		var oTable = $('#sales_table').dataTable();
+		oTable.fnDraw();
+	});
+	
 	
 	
 	$('#lock').click(function(){
@@ -88,12 +168,16 @@ $(function() {
                             aoData.push( { "name": "site", "value": $('#site').val() } );
                             aoData.push( { "name": "period", "value": $('#period').val() } );
                             aoData.push( { "name": "compReceiptList", "value":compReceiptList.join(",") } );
+				            aoData.push( { "name": "receiptAbsvalue", "value":$('#receiptAbsvalue').attr('checked') } );
 				            if($('#fromReceiptTransDate').val() !='') aoData.push( { "name":"fromReceiptTransDate", "value":$('#fromReceiptTransDate').val()} );
 				            if($('#toReceiptTransDate').val() !='') aoData.push( { "name":"toReceiptTransDate", "value":$('#toReceiptTransDate').val()} );
 				            if($('#fromReceiptPaymtDate').val() !='') aoData.push( { "name":"fromReceiptPaymtDate", "value":$('#fromReceiptPaymtDate').val()});
 				            if($('#toReceiptPaymtDate').val() !='') aoData.push( { "name":"toReceiptPaymtDate", "value":$('#toReceiptPaymtDate').val()}); 
 				            if($('#minReceiptAmount').val() !='') aoData.push( { "name":"minReceiptAmount", "value":$('#minReceiptAmount').val().replace(",",".")});
 				            if($('#maxReceiptAmount').val() !='') aoData.push( { "name":"maxReceiptAmount", "value":$('#maxReceiptAmount').val().replace(",",".")});
+				            if($('#minReceiptAmount2').val() !='') aoData.push( { "name":"minReceiptAmount2", "value":$('#minReceiptAmount2').val().replace(",",".")});
+				            if($('#maxReceiptAmount2').val() !='') aoData.push( { "name":"maxReceiptAmount2", "value":$('#maxReceiptAmount2').val().replace(",",".")});
+
 
                         },
                         "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
@@ -125,11 +209,14 @@ $(function() {
                             aoData.push( { "name": "card", "value": $('#card').val() } );
                             aoData.push( { "name": "site", "value": $('#site').val() } );
                             aoData.push( { "name": "period", "value": $('#period').val() } );
-                            aoData.push( { "name": "compSalesList", "value":compSalesList.join(",") } );       
+                            aoData.push( { "name": "compSalesList", "value":compSalesList.join(",") } );  
+				            aoData.push( { "name": "salesAbsvalue", "value":$('#salesAbsvalue').attr('checked') } );
 				            if($('#fromSalesTransDate').val() !='' && jQuery.type($('#fromSalesTransDate').val()) !='undefined') aoData.push( { "name":"fromSalesTransDate", "value":$('#fromSalesTransDate').val()} );
 				            if($('#toSalesTransDate').val() !='' && jQuery.type($('#toSalesTransDate').val()) !='undefined') aoData.push( { "name":"toSalesTransDate", "value":$('#toSalesTransDate').val()} );
 				            if($('#minSalesAmount').val() !='') aoData.push( { "name":"minSalesAmount", "value":$('#minSalesAmount').val().replace(",",".")});
 				            if($('#maxSalesAmount').val() !='') aoData.push( { "name":"maxSalesAmount", "value":$('#maxSalesAmount').val().replace(",",".")});
+				            if($('#minSalesAmount2').val() !='') aoData.push( { "name":"minSalesAmount2", "value":$('#minSalesAmount2').val().replace(",",".")});
+				            if($('#maxSalesAmount2').val() !='') aoData.push( { "name":"maxSalesAmount2", "value":$('#maxSalesAmount2').val().replace(",",".")});				            
 				            
                         },
                         "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
@@ -431,6 +518,15 @@ $(function() {
     
 	$('#applyReceiptFilter').live({
 		click: function(){
+			if(($('#minReceiptAmount').val() !='' && $('#maxReceiptAmount').val() == '')
+					|| ($('#minReceiptAmount').val() =='' && $('#maxReceiptAmount').val() != '')
+					|| ($('#minReceiptAmount2').val() !='' && $('#maxReceiptAmount2').val() == '')
+					|| ($('#minReceiptAmount2').val() =='' && $('#maxReceiptAmount2').val() != '')){
+				 var $dialog = getDialog(compensation.incompleteRange.error);
+	             $dialog.dialog("open");
+	             return;			
+			}
+
 			aReceiptSelected = [];
 			oTable = $('#receipt_table').dataTable();
 			
@@ -449,6 +545,15 @@ $(function() {
 	$('#applySalesFilter').live({
 		
 		click: function(){
+			if(($('#minSalesAmount').val() !='' && $('#maxSalesAmount').val() == '')
+					|| ($('#minSalesAmount').val() =='' && $('#maxSalesAmount').val() != '')
+					|| ($('#minSalesAmount2').val() !='' && $('#maxSalesAmount2').val() == '')
+					|| ($('#minSalesAmount2').val() =='' && $('#maxSalesAmount2').val() != '')){
+				 var $dialog = getDialog(compensationNoselectionError);
+	             $dialog.dialog("open");
+	             return;			
+			}
+			
 			aSalesSelected = [];
 			oTable = $('#sales_table').dataTable();
 			oTable.fnDraw();

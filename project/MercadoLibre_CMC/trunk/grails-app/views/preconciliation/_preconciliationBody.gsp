@@ -15,12 +15,12 @@
     <div style="width:550;height:110;border:1px solid #ccc;position:relative">
  
     <div class="prefilterFields">
-      <div><g:message code="salesSite.transDate" default="Fecha de la Transaccion'"/></div>
+      <div><g:message code="salesSite.transDate" default="Fecha de la Transaccion"/></div>
       <g:message code="salesSite.from" default="Desde"/>: <g:textField name="fromReceiptTransDate" id="fromReceiptTransDate" value="${fromReceiptTransDate}" size="10" />
       <g:message code="salesSite.to" default="Hasta"/>: <g:textField name="toReceiptTransDate" id="toReceiptTransDate" value="${toReceiptTransDate}" size="10" />
 
-      <div><g:message code="salesSite.amount" default="Monto'"/></div>
-      <g:message code="salesSite.minAmount" default="Monto Minimo'"/>: <g:textField name="minReceiptAmount" id="minReceiptAmount" value="${minReceiptAmount}" size="10" />
+      <div><g:message code="salesSite.amount" default="Monto"/></div>
+      <g:message code="salesSite.minAmount" default="Monto Minimo"/>: <g:textField name="minReceiptAmount" id="minReceiptAmount" value="${minReceiptAmount}" size="10" />
       <g:message code="salesSite.maxAmount" default="Monto Maximo"/>: <g:textField name="maxReceiptAmount" id="maxReceiptAmount" value="${maxReceiptAmount}" size="10" />
       
       
@@ -122,12 +122,12 @@
     <br/>
     <div style="width:550;height:110;border:1px solid #ccc;position:relative">
       <div class="prefilterFields">
-        <div><g:message code="salesSite.transDate" default="Fecha de la Transaccion'"/></div>
-        <g:message code="salesSite.from" default="Desde'"/>: <g:textField name="fromSalesTransDate" id="fromSalesTransDate" value="${fromSalesTransDate}" size="10" />
-        <g:message code="salesSite.to" default="Hasta'"/>: <g:textField name="toSalesTransDate" id="toSalesTransDate" value="${toSalesTransDate}" size="10" />
+        <div><g:message code="salesSite.transDate" default="Fecha de la Transaccion"/></div>
+        <g:message code="salesSite.from" default="Desde"/>: <g:textField name="fromSalesTransDate" id="fromSalesTransDate" value="${fromSalesTransDate}" size="10" />
+        <g:message code="salesSite.to" default="Hasta"/>: <g:textField name="toSalesTransDate" id="toSalesTransDate" value="${toSalesTransDate}" size="10" />
         
-        <div><g:message code="salesSite.amount" default="Monto'"/></div>
-        <g:message code="salesSite.minAmount" default="Monto Minimo'"/>: <g:textField name="minSalesAmount" id="minSalesAmount" value="${minSalesAmount}" size="10" />
+        <div><g:message code="salesSite.amount" default="Monto"/></div>
+        <g:message code="salesSite.minAmount" default="Monto Minimo"/>: <g:textField name="minSalesAmount" id="minSalesAmount" value="${minSalesAmount}" size="10" />
         <g:message code="salesSite.maxAmount" default="Monto Maximo"/>: <g:textField name="maxSalesAmount" id="maxSalesAmount" value="${maxSalesAmount}" size="10" />
         
       </div>
