@@ -1,12 +1,16 @@
-<div style="width:100%;height:110;border:1px solid #ccc;position:relative">
+<div style="width:100%;height:140;border:1px solid #ccc;position:relative">
   <div class="prefilterFields">
-    <div><g:message code="salesSite.transDate" default="Fecha de la Transaccion'"/></div>
+    <div><g:message code="salesSite.transDate" default="Fecha de la Transaccion"/></div>
     <g:message code="salesSite.from" default="Desde"/>: <g:textField name="fromSalesTransDate" id="fromSalesTransDate" value="${fromSalesTransDate}" size="10" />
     <g:message code="salesSite.to" default="Hasta"/>: <g:textField name="toSalesTransDate" id="toSalesTransDate" value="${toSalesTransDate}" size="10" />
     
-    <div><g:message code="salesSite.amount" default="Monto'"/></div>
-    <g:message code="salesSite.minAmount" default="Monto Minimo'"/>: <g:textField name="minSalesAmount" id="minSalesAmount" value="${minSalesAmount}" size="10" />
+    <div><g:message code="compensation.amount1" default="Monto"/></div>
+    <g:message code="salesSite.minAmount" default="Monto Minimo"/>: <g:textField name="minSalesAmount" id="minSalesAmount" value="${minSalesAmount}" size="10" />
     <g:message code="salesSite.maxAmount" default="Monto Maximo"/>: <g:textField name="maxSalesAmount" id="maxSalesAmount" value="${maxSalesAmount}" size="10" />
+
+    <div><g:message code="compensation.amount2" default="Monto"/></div>
+    <g:message code="salesSite.minAmount" default="Monto Minimo"/>: <g:textField name="minSalesAmount2" id="minSalesAmount2" value="${minSalesAmount2}" size="10" />
+    <g:message code="salesSite.maxAmount" default="Monto Maximo"/>: <g:textField name="maxSalesAmount2" id="maxSalesAmount2" value="${maxSalesAmount2}" size="10" />
     
   </div>
        <div class="filterButton">

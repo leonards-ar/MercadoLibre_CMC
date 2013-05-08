@@ -101,16 +101,29 @@ class CompensationController extends SessionInfoController {
 	  	  query += " and s.paymentDate <= :accountDate "
 		  queryMap.accountDate = accountDate
 		}
-		if(params.minReceiptAmount != null){
-		  query += " and s.amount >= :minReceiptAmount "
-		  queryMap.minReceiptAmount = params.minReceiptAmount?.toDouble()
-		}
+		
+		if(params.minReceiptAmount != null && params.minReceiptAmount2 != null){
+			query += " and ((s.amount between :minReceiptAmount and :maxReceiptAmount) "
+			query += "	or (s.amount between :minReceiptAmount2 and :maxReceiptAmount2))"
+			queryMap.minReceiptAmount = params.minReceiptAmount?.toDouble()
+			queryMap.maxReceiptAmount = params.maxReceiptAmount?.toDouble()
+			queryMap.minReceiptAmount2 = params.minReceiptAmount2?.toDouble()
+			queryMap.maxReceiptAmount2 = params.maxReceiptAmount2?.toDouble()
+		} else {
+			if(params.minReceiptAmount != null){
+				query += " and (s.amount between :minReceiptAmount and :maxReceiptAmount) "
+				queryMap.minReceiptAmount = params.minReceiptAmount?.toDouble()
+				queryMap.maxReceiptAmount = params.maxReceiptAmount?.toDouble()
+			} else {
+				if(params.minReceiptAmount2 != null) {
+					query += "	and (s.amount between :minReceiptAmount2 and :maxReceiptAmount2)"
+					queryMap.minReceiptAmount2 = params.minReceiptAmount2?.toDouble()
+					queryMap.maxReceiptAmount2 = params.maxReceiptAmount2?.toDouble()
+				}
+			}
 			
-		if(params.maxReceiptAmount != null){
-		   query += " and s.amount <= :maxReceiptAmount "
-		   queryMap.maxReceiptAmount = params.maxReceiptAmount?.toDouble()
 		}
-			
+
 		if(colName == "absAmount") {
 			query += " order by abs(amount) ${sortDir}"
 		} else {
@@ -164,13 +177,26 @@ class CompensationController extends SessionInfoController {
 		  	  query += " and s.transactionDate <= :accountDate "
 			  queryMap.accountDate = accountDate
 	 	 }
-		 if(params.minSalesAmount != null){
-			 query += " and s.amount >= :minSalesAmount "
+		 if(params.minSalesAmount != null && params.minSalesAmount2 != null){
+			 query += " and ((s.amount between :minSalesAmount and :maxSalesAmount) " 
+			 query += "	or (s.amount between :minSalesAmount2 and :maxSalesAmount2))"
 			 queryMap.minSalesAmount = params.minSalesAmount?.toDouble()
-		 }
-		 if(params.maxSalesAmount != null){
-			 query += " and s.amount <= :minSalesAmount "
 			 queryMap.maxSalesAmount = params.maxSalesAmount?.toDouble()
+			 queryMap.minSalesAmount2 = params.minSalesAmount2?.toDouble()
+			 queryMap.maxSalesAmount2 = params.maxSalesAmount2?.toDouble()
+		 } else {
+		 	if(params.minSalesAmount != null){
+				 query += " and (s.amount between :minSalesAmount and :maxSalesAmount) "
+				 queryMap.minSalesAmount = params.minSalesAmount?.toDouble()
+				 queryMap.maxSalesAmount = params.maxSalesAmount?.toDouble()
+			 } else {
+			 	if(params.minSalesAmount2 != null) {
+					 query += "	and (s.amount between :minSalesAmount2 and :maxSalesAmount2)"
+					 queryMap.minSalesAmount2 = params.minSalesAmount2?.toDouble()
+					 queryMap.maxSalesAmount2 = params.maxSalesAmount2?.toDouble()
+				 }
+			 }
+			 
 		 }
 		 
 		 if(colName == "absAmount") {
