@@ -118,7 +118,6 @@ log4j = {
     warn   'org.mortbay.log'
 	
 	info   'grails.app'
-	debug  'org.springframework.security'
 	environments {
 		mercadolibre {
 			info dailycmcAppender: 'grails.app'
@@ -128,46 +127,31 @@ log4j = {
 			info dailycmcAppender: 'grails.app'
 		}
 	}
+	
+	
+	
 }
 
 // Added by the Spring Security Core plugin:
-//grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.ml.cmc.User'
-//grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.ml.cmc.UserRole'
-//grails.plugins.springsecurity.authority.className = 'com.ml.cmc.Role'
-//grails.plugins.springsecurity.useHttpSessionEventPublisher = true
-grails.plugins.springsecurity.providerNames = ['ldapAuthProvider','anonymousAuthenticationProvider']
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.ml.cmc.User'
+grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.ml.cmc.UserRole'
+grails.plugins.springsecurity.authority.className = 'com.ml.cmc.Role'
+grails.plugins.springsecurity.useHttpSessionEventPublisher = true
 grails.plugins.springsecurity.logout.handlerNames = ['rememberMeServices','securityContextLogoutHandler', 'unlockLogoutHander']
 grails.plugins.springsecurity.securityConfigType = "InterceptUrlMap"
 grails.plugins.springsecurity.interceptUrlMap = [
-    '/home/**':    ['ROLE_USER','ROLE_FOCUS_Conciliacion'],
-    '/preconciliation/**':    ['ROLE_USER','ROLE_FOCUS_Conciliacion'],
-	'/compensation/**':    ['ROLE_USER','ROLE_FOCUS_Conciliacion'],
-	'/conciliation/**':    ['ROLE_USER','ROLE_FOCUS_Conciliacion'],
-    '/desconciliation/**':    ['ROLE_USER','ROLE_FOCUS_Conciliacion'],
-	'/despreconciliation/**':    ['ROLE_USER','ROLE_FOCUS_Conciliacion'],
-	'/auditLog/**':    ['ROLE_USER','ROLE_FOCUS_Conciliacion'],
+    '/home/**':    ['ROLE_USER'],
+    '/preconciliation/**':    ['ROLE_USER'],
+	'/compensation/**':    ['ROLE_USER'],
+	'/conciliation/**':    ['ROLE_USER'],
+    '/desconciliation/**':    ['ROLE_USER'],
+	'/despreconciliation/**':    ['ROLE_USER'],
+	'/auditLog/**':    ['ROLE_USER'],
     '/index.gsp':  ['IS_AUTHENTICATED_ANONYMOUSLY'],
     '/login/**':     ['IS_AUTHENTICATED_ANONYMOUSLY'],
     '/logout/**':    ['IS_AUTHENTICATED_ANONYMOUSLY']
     
  ]
-
-grails.plugins.springsecurity.ldap.context.managerDn = 'CN=Conciliador Focus,OU=FOCUS,OU=Usuarios Aplicativos,OU=Usuarios,OU=MELI,OU=MercadoLibre,DC=ml,DC=com'
-grails.plugins.springsecurity.ldap.context.managerPassword = 'Xsw2.3edc'
-grails.plugins.springsecurity.ldap.context.server = 'ldap://localhost:10389'
-grails.plugins.springsecurity.ldap.authorities.ignorePartialResultException = true // typically needed for Active Directory
-grails.plugins.springsecurity.ldap.search.base = 'DC=ml,DC=com'
-grails.plugins.springsecurity.ldap.search.filter="sAMAccountName={0}" // for Active Directory you need this
-grails.plugins.springsecurity.ldap.search.searchSubtree = true
-grails.plugins.springsecurity.ldap.auth.hideUserNotFoundExceptions = false
-grails.plugins.springsecurity.ldap.search.attributesToReturn = ['name', 'displayName', 'userPrincipalName', 'samaccountname','sn']
-
-// role-specific LDAP config
-grails.plugins.springsecurity.ldap.useRememberMe = false
-grails.plugins.springsecurity.ldap.authorities.retrieveGroupRoles = true
-grails.plugins.springsecurity.ldap.authorities.groupSearchBase ='OU=FOCUS,OU=Usuarios Aplicativos,OU=Usuarios,OU=MELI,OU=MercadoLibre,DC=ml,DC=com'
-// If you don't want to support group membership recursion (groups in groups), then use the following setting
-grails.plugins.springsecurity.ldap.authorities.groupSearchFilter = 'member={0}' // Active Directory specific
 
 // jquery configuration
 grails.views.javascript.library="jquery"

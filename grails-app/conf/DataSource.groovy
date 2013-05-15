@@ -26,10 +26,10 @@ environments {
 			//dbCreate = "create-drop" // one of 'create', 'create-drop','update'
 			pooled = true
 			dialect = "org.hibernate.dialect.OracleDialect"
-			url = "jdbc:oracle:thin:@10.3.207.108:1521:ORCL"
+			url = "jdbc:oracle:thin:@10.3.207.108:1521:ORCL "
 			driverClassName = "oracle.jdbc.driver.OracleDriver"
 			username = "ORCL_W01"
-			password = "ora_desa1"
+			password = "ora_desa"
 			properties {
 				maxActive = 50
 				maxIdle = 25
@@ -50,11 +50,10 @@ environments {
 			//dbCreate = "create-drop" // one of 'create', 'create-drop','update'
 			pooled = true
 			dialect = "org.hibernate.dialect.OracleDialect"
-			url = "jdbc:oracle:thin:con_w01prod/\"%D5Eh?hxl^84@\"@172.16.80.112:1521:con_w01"
+			url = "jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.16.80.112)(PORT=1521))(CONNECT_DATA=(SERVER = DEDICATED)(SERVICE_NAME=con_w01)))"
 			driverClassName = "oracle.jdbc.driver.OracleDriver"
-			//username = "con_w01prod"
-			//def pass = ['\\"','%','D','5','E','h','?','h','x','l','^','84','@','\\"']
-			//password = "${pass.join()}"
+			username = "con_w01prod"
+			password = "%D5Eh?hxl^84@"
 			properties {
 				maxActive = 50
 				maxIdle = 25

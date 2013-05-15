@@ -564,14 +564,42 @@ class BootStrap {
 		
         assert receipt.hasErrors() == false
         assert salesSite.hasErrors() == false
-//        assert User.count() == 2
-//        assert Role.count() == 1
-//        assert UserRole.count() == 2
-//        assert State.count() == 5
-//        assert RegisterType.count() == 4
+        assert User.count() == 2
+        assert Role.count() == 1
+        assert UserRole.count() == 2
+        assert State.count() == 5
+        assert RegisterType.count() == 4
         //assert Receipt.count() == 2
         
-      }
+      } else {
+
+		  // Temporary Users
+		  if(Role.count() == 0) {	  
+		  
+			  def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
+		  
+		  }
+		  
+		  if(User.count() == 0) {
+	
+			  def testUser = new User(username:'elvis',enabled: true,password: '1234')
+			  def testUser2 = new User(username:'jorge',enabled:true,password: '1234')
+		
+			  testUser.save(flush:true)
+			  testUser2.save(flush: true)
+		  }
+		  
+		  if(UserRole.count() == 0) {
+			  def userRole = Role.findByAuthority('ROLE_USER')
+			  def testUser2 = User.findByUsername('elvis');
+			  def testUser = User.findByUsername('jorge');
+			  
+			  UserRole.create testUser2, userRole, true
+			  UserRole.create testUser, userRole, true
+			  
+		  }  
+
+	  }
 		
     }
     
