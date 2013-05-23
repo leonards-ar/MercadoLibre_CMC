@@ -644,7 +644,7 @@ function degroup(table, compensateTable, list, map) {
     var tmpIds = [];
     for(var i=0; i < selectedRows.length; i++){
     	var row = selectedRows[i];
-    	var id = $(row).find('td:eq(7)').text();
+    	var id = $(row).find('td:eq(8)').text();
     	
     	var index = jQuery.inArray(id, list);
     	
