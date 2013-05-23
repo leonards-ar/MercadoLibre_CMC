@@ -10,14 +10,13 @@ class CmcUserDetailsContextMapper implements UserDetailsContextMapper {
 
 	UserDetails mapUserFromContext(DirContextOperations ctx, String username, Collection authorities) {
 
-		//'name', 'displayName', 'userPrincipalName', 'sn', 'primaryGroupID'
+		
 		String fullname = ctx.originalAttrs.attrs['name'].values[0] 
-		String displayName = ctx.originalAttrs.attrs['displayName'].values[0]
-		String mail = ctx.originalAttrs.attrs['userPrincipalName'].values[0]
+		String mail = "some@mail.com"//ctx.originalAttrs.attrs['mail'].values[0].toString().toLowerCase()
 		String title = ctx.originalAttrs.attrs['sn']
 
 
-		def userDetails = new CmcUserDetails(username, null, true, true, true, true, authorities, fullname, displayName, mail, title == null ? '' : title.values[0]) 
+		def userDetails = new CmcUserDetails(username, '', true, true, true, true, authorities, fullname, mail, title == null ? '' : title) 
 		
 		return userDetails
 	}

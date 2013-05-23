@@ -10,12 +10,11 @@ class CmcUserDetails extends User {
 	final String email 
 	final String displayName
 	
-	CmcUserDetails(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<GrantedAuthority> authorities, String fullname, String displayName, String email, String title) {
+	CmcUserDetails(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<GrantedAuthority> authorities, String fullname, String email, String title) {
 
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities)
 		
 		this.fullname = fullname
-		this.displayName = displayName 
 		this.email = email
 		  
 	}
