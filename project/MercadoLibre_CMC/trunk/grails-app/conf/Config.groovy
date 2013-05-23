@@ -118,7 +118,7 @@ log4j = {
     warn   'org.mortbay.log'
 	
 	info   'grails.app'
-	debug  'org.springframework.security'
+	debug 
 	environments {
 		mercadolibre {
 			info dailycmcAppender: 'grails.app'
@@ -139,13 +139,13 @@ grails.plugins.springsecurity.providerNames = ['ldapAuthProvider','anonymousAuth
 grails.plugins.springsecurity.logout.handlerNames = ['rememberMeServices','securityContextLogoutHandler', 'unlockLogoutHander']
 grails.plugins.springsecurity.securityConfigType = "InterceptUrlMap"
 grails.plugins.springsecurity.interceptUrlMap = [
-    '/home/**':    ['ROLE_USER','ROLE_FOCUS_Conciliacion'],
-    '/preconciliation/**':    ['ROLE_USER','ROLE_FOCUS_Conciliacion'],
-	'/compensation/**':    ['ROLE_USER','ROLE_FOCUS_Conciliacion'],
-	'/conciliation/**':    ['ROLE_USER','ROLE_FOCUS_Conciliacion'],
-    '/desconciliation/**':    ['ROLE_USER','ROLE_FOCUS_Conciliacion'],
-	'/despreconciliation/**':    ['ROLE_USER','ROLE_FOCUS_Conciliacion'],
-	'/auditLog/**':    ['ROLE_USER','ROLE_FOCUS_Conciliacion'],
+    '/home/**':    ['ROLE_USER','ROLE_FOCUS_CONCILIACION','ROLE_FOCUS_CONCILIACION_ADMIN', 'ROLE_FOCUS_PRECONCILIACION', 'ROLE_FOCUS_PRECONCILIACION_ADMIN'],
+    '/preconciliation/**':    ['ROLE_USER','ROLE_FOCUS_PRECONCILIACION', 'ROLE_FOCUS_PRECONCILIACION_ADMIN'],
+	'/compensation/**':    ['ROLE_USER','ROLE_FOCUS_CONCILIACION', 'ROLE_FOCUS_CONCILIACION_ADMIN'],
+	'/conciliation/**':    ['ROLE_USER','ROLE_FOCUS_CONCILIACION', 'ROLE_FOCUS_CONCILIACION_ADMIN'],
+    '/desconciliation/**':    ['ROLE_USER','ROLE_FOCUS_CONCILIACION','ROLE_FOCUS_CONCILIACION_ADMIN'],
+	'/despreconciliation/**':    ['ROLE_USER','ROLE_FOCUS_PRECONCILIACION','ROLE_FOCUS_PRECONCILIACION_ADMIN'],
+	'/auditLog/**':    ['ROLE_USER','ROLE_FOCUS_CONCILIACION','ROLE_FOCUS_CONCILIACION_ADMIN','ROLE_FOCUS_PRECONCILIACION','ROLE_FOCUS_PRECONCILIACION_ADMIN'],
     '/index.gsp':  ['IS_AUTHENTICATED_ANONYMOUSLY'],
     '/login/**':     ['IS_AUTHENTICATED_ANONYMOUSLY'],
     '/logout/**':    ['IS_AUTHENTICATED_ANONYMOUSLY']
@@ -154,13 +154,14 @@ grails.plugins.springsecurity.interceptUrlMap = [
 
 grails.plugins.springsecurity.ldap.context.managerDn = 'CN=Conciliador Focus,OU=FOCUS,OU=Usuarios Aplicativos,OU=Usuarios,OU=MELI,OU=MercadoLibre,DC=ml,DC=com'
 grails.plugins.springsecurity.ldap.context.managerPassword = 'Xsw2.3edc'
-grails.plugins.springsecurity.ldap.context.server = 'ldap://localhost:10389'
+grails.plugins.springsecurity.ldap.context.server = 'ldap://10.200.1.10:389'
+//grails.plugins.springsecurity.ldap.context.server = 'ldap://localhost:10389'
 grails.plugins.springsecurity.ldap.authorities.ignorePartialResultException = true // typically needed for Active Directory
 grails.plugins.springsecurity.ldap.search.base = 'DC=ml,DC=com'
 grails.plugins.springsecurity.ldap.search.filter="sAMAccountName={0}" // for Active Directory you need this
 grails.plugins.springsecurity.ldap.search.searchSubtree = true
 grails.plugins.springsecurity.ldap.auth.hideUserNotFoundExceptions = false
-grails.plugins.springsecurity.ldap.search.attributesToReturn = ['name', 'displayName', 'userPrincipalName', 'samaccountname','sn']
+grails.plugins.springsecurity.ldap.search.attributesToReturn = ['name', 'mail','sn']
 
 // role-specific LDAP config
 grails.plugins.springsecurity.ldap.useRememberMe = false
