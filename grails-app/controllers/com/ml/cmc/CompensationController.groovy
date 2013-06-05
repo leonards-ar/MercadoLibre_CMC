@@ -65,7 +65,8 @@ class CompensationController extends SessionInfoController {
 	def listReceipts = {
         def responseMap = [:]
         
-		def state1 = State.findById(1);
+		def state1 = State.findById(1)
+		def state3 = State.findById(3)
 		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
 
         
@@ -78,8 +79,8 @@ class CompensationController extends SessionInfoController {
         
 		def accountDate = new Date().parse(dateFormat,params.period)
 		
-		def query = "from Receipt s where s.medio=:medio and s.state=:state "
-		def queryMap = [medio:medio, state:state1]
+		def query = "from Receipt s where s.medio=:medio and s.state in(:state1,:state3) "
+		def queryMap = [medio:medio, state:state1, state3:state3]
 
 		if(params.compReceiptList.length() > 0) {
 			 query += " and s.id not in (:ids) "
@@ -146,7 +147,8 @@ class CompensationController extends SessionInfoController {
 	def listSalesSite = {
         def responseMap = [:]
         
-		def state1 = State.findById(1);
+		def state1 = State.findById(1)
+		def state3 = State.findById(3)
 		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
 		
         def max = params.iDisplayLength?params.iDisplayLength:10
@@ -158,8 +160,8 @@ class CompensationController extends SessionInfoController {
 		
 		def accountDate = new Date().parse(dateFormat,params.period)
 
-		def query = "from SalesSite s where s.medio=:medio and s.state=:state "
-		def queryMap = [medio:medio, state:state1]
+		def query = "from SalesSite s where s.medio=:medio and s.state in (:state1,:state3)  "
+		def queryMap = [medio:medio, state1:state1, state3:state3]
 
 	
          if(params.compSalesList.length() > 0){
@@ -244,10 +246,15 @@ class CompensationController extends SessionInfoController {
         
         /* call datastage */
         def username = getUsername()
-		def jobName = params.element == "F_RECIBOS"?"/datastage/CompManual_Recibos.sh":"/datastage/CompManual_Ventas.sh"
+		def jobName;
+		if(GrailsUtil.getEnvironment().equals('mercadolibre')) {
+			jobName = params.element == "F_RECIBOS"?"/datastage/CompManual_Recibos_PROD.sh":"/datastage/CompManual_Ventas_PROD.sh"
+		} else {
+			jobName = params.element == "F_RECIBOS"?"/datastage/CompManual_Recibos.sh":"/datastage/CompManual_Ventas.sh"
+		}
 		def strLot = formatNumber(number:lot, format:"000")
 		def accountDate = formatDate(date:new Date().parse('yyyy-MM-dd',params.period),format:'yyyy-MM_dd')
-		def command = "${jobName}" + (GrailsUtil.getEnvironment().equals('mercadolibre') ? "_PROD":"")
+		def command = "${jobName}"
 		Thread.start{
 			executeCommand("${command} ${username} ${strLot} ${accountDate}")
         }

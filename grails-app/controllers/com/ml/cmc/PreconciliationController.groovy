@@ -146,7 +146,7 @@ class PreconciliationController extends SessionInfoController{
 
        	def username = getUsername()
 		def strLot = formatNumber(number:lot, format:"000")
-		def command = "/datastage/PreConcManual.sh" + (GrailsUtil.getEnvironment().equals('mercadolibre') ? "_PROD":"")
+		def command = GrailsUtil.getEnvironment().equals('mercadolibre') ?"/datastage/PreConcManual_PROD.sh":"/datastage/PreConcManual.sh"
 		Thread.start{
 			executeCommand("${command} ${username} ${strLot}" )
        	}
