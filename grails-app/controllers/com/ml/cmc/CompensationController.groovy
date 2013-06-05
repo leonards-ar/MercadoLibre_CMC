@@ -80,7 +80,7 @@ class CompensationController extends SessionInfoController {
 		def accountDate = new Date().parse(dateFormat,params.period)
 		
 		def query = "from Receipt s where s.medio=:medio and s.state in(:state1,:state3) "
-		def queryMap = [medio:medio, state:state1, state3:state3]
+		def queryMap = [medio:medio, state1:state1, state3:state3]
 
 		if(params.compReceiptList.length() > 0) {
 			 query += " and s.id not in (:ids) "
