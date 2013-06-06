@@ -160,7 +160,7 @@ class CompensationController extends SessionInfoController {
 		
 		def accountDate = new Date().parse(dateFormat,params.period)
 
-		def query = "select /*+ INDEX(F_VENTAS_SITE,IDX_F_V_SITE_CDM_CDE_FCO_FLO) */ * from F_VENTAS_SITE s where s.CD_MEDIO=:medio and s.CD_ESTADO in (:state1,:state3) and rownum<=20 "
+		def query = "from SalesSite s where s.medio=:medio and s.state in (:state1,:state3)  "
 		def queryMap = [medio:medio, state1:state1, state3:state3]
 
 	
@@ -176,7 +176,7 @@ class CompensationController extends SessionInfoController {
 			 queryMap.toTransDate = new Date().parse(dateFormat, params.toSalesTransDate)
 			 
 	 	 } else {
-		  	  query += " and s.FC_OPERACION <= :accountDate "
+		  	  query += " and s.transactionDate <= :accountDate "
 			  queryMap.accountDate = accountDate
 	 	 }
 		 if(params.minSalesAmount != null && params.minSalesAmount2 != null){
@@ -204,22 +204,12 @@ class CompensationController extends SessionInfoController {
 		 if(colName == "absAmount") {
 			 query += " order by abs(amount) ${sortDir}"
 		 } else {
-		 	query += " order by FC_OPERACION ${sortDir}"
+		 	query += " order by ${colName} ${sortDir}"
 		 }
 		
-		def session = sessionFactory.currentSession
-		
-		def sqlQuery = session.createSQLQuery(query)
-		sqlQuery.addEntity(com.ml.cmc.SalesSite.class)
-		sqlQuery.setLong("medio", medio.id)
-		sqlQuery.setLong("state1",state1.id)
-		sqlQuery.setLong("state3",state3.id)
-		sqlQuery.setDate("accountDate", accountDate)
-		
-		//def salesSiteInstanceList = SalesSite.executeQuery(query,queryMap,[max:max, offset:offset])
-		def salesSiteInstanceList = sqlQuery.list()
+		def salesSiteInstanceList = SalesSite.executeQuery(query,queryMap,[max:max, offset:offset])
 
-		def salesSiteCount = SalesSite.executeQuery("select count(*) from SalesSite")// + query, queryMap);		
+		def salesSiteCount = SalesSite.executeQuery("select count(*) " + query, queryMap);		
 		
         responseMap.aaData = serializeReceiptData(salesSiteInstanceList)
         
