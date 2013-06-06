@@ -10,7 +10,7 @@ class AuditLog {
 	String description
 	String rollback
 	Long rollbackLot
-	AccountantPeriod period
+	Long period
 	
     static constraints = {
 		

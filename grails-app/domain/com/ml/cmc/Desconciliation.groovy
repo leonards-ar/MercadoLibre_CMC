@@ -8,7 +8,7 @@ class Desconciliation implements Serializable{
 	Conciliated conciliated
 	String username
 	Medio medio
-	AccountantPeriod period
+	Long period
 	
     static constraints = {
 		

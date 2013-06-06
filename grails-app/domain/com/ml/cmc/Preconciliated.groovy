@@ -8,7 +8,7 @@ class Preconciliated {
 	Receipt receipt
 	Long lot
 	Medio medio
-	AccountantPeriod period
+	Long period
 	String registerType
 	String origin
 

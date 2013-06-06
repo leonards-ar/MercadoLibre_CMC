@@ -10,7 +10,7 @@ class DesPreconciliation implements Serializable{
 	Preconciliated preconciliated
 	String username
 	Medio medio
-	AccountantPeriod period
+	Long period
 	String status
 	
 	static constraints = {

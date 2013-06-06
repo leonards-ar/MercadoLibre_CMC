@@ -74,7 +74,7 @@ class DesconciliationController extends SessionInfoController {
 
         def conciliationInstanceList = conciliatedCriteria.list(max:max, offset:offset) {
             
-			eq('period', AccountantPeriod.findById(params.period))
+			eq('period',params.period)
 			if(params.processedList?.length() > 0) {
 				def processedIds = params.processedList.split(",") 
 				not{inList('id', processedIds.collect{it.toLong()})}

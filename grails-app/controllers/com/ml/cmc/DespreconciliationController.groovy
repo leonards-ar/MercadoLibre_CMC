@@ -76,7 +76,7 @@ class DespreconciliationController extends SessionInfoController {
 		
         def preconciliationInstanceList = preconciliatedCriteria.list(max:max, offset:offset) {
             
-			eq('period',AccountantPeriod.findById(params.period))
+			eq('period',params.period)
 			if(medio != null) eq('medio', medio)
 			
 			if(params.processedList?.length() > 0) {

@@ -7,7 +7,7 @@ class Preconciliation implements Serializable{
     Long lot
     Medio medio
 	String saleStatus
-    AccountantPeriod period
+    Long period
     RegisterType registerType
 	String origin
 	
