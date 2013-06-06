@@ -29,7 +29,7 @@ class Receipt {
     String uniqueRo
     String documentNumber
     Long payment
-	AccountantPeriod period
+	Long period
 	String payed;
 
     

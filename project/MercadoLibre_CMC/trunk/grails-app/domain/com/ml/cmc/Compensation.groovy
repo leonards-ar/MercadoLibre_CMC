@@ -7,7 +7,7 @@ class Compensation implements Serializable{
     String lot
     Medio medio
     Long group
-    AccountantPeriod period
+    Long period
     String type="MANUAL"
 	Long serial
 

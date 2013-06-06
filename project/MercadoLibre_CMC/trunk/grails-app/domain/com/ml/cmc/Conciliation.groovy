@@ -6,7 +6,7 @@ class Conciliation implements Serializable {
 	Receipt receipt
 	Long lot
 	Medio medio
-	AccountantPeriod period
+	Long period
 	RegisterType registerType
 	
     static constraints = {

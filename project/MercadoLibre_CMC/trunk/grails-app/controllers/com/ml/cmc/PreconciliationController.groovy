@@ -166,7 +166,7 @@ class PreconciliationController extends SessionInfoController{
 			order(sortType, orderType)
 			if(medio != null) eq('medio', medio)
 			eq('state',state1)
-			eq('period', AccountantPeriod.findById(params.period))
+			eq('period', params.period)
 			inList('registerType',registerTypes)
 			if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){
 				def fromTransDate = new Date().parse(dateFormat, params.fromReceiptTransDate)
@@ -201,7 +201,7 @@ class PreconciliationController extends SessionInfoController{
 			 if(medios != null) inList('medio', medios)
 			 inList('state',states)
 			 inList('registerType',registerTypes)
-			 eq('period', AccountantPeriod.findById(params.period))
+			 eq('period', params.period)
 			 if(params.fromSalesTransDate != null && params.toSalesTransDate != null){
 				 def fromTransDate = new Date().parse(dateFormat, params.fromSalesTransDate)
 				 def toTransDate = new Date().parse(dateFormat, params.toSalesTransDate)
@@ -235,7 +235,7 @@ class PreconciliationController extends SessionInfoController{
 			if(medio != null) eq('medio', medio)
 			eq('state',state1)
 			eq('registerType',registerType3)
-			eq('period', AccountantPeriod.findById(params.period))
+			eq('period', params.period)
 			if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){
 				def fromTransDate = new Date().parse(dateFormat, params.fromReceiptTransDate)
 				def toTransDate = new Date().parse(dateFormat, params.toReceiptTransDate)
@@ -270,7 +270,7 @@ class PreconciliationController extends SessionInfoController{
 			 if(medios != null) inList('medio', medios)
 			 inList('state',states)
 			 eq('registerType',registerType3)
-			 eq('period', AccountantPeriod.findById(params.period))
+			 eq('period', params.period)
 			 if(params.fromSalesTransDate != null && params.toSalesTransDate != null){
 				 def fromTransDate = new Date().parse(dateFormat, params.fromSalesTransDate)
 				 def toTransDate = new Date().parse(dateFormat, params.toSalesTransDate)

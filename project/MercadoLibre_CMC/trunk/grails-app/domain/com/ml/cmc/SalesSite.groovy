@@ -27,7 +27,7 @@ class SalesSite {
     String uniqueRo
     String documentNumber 
     Long payment  
-	AccountantPeriod period
+	Long period
 	String origin
     
     static constraints = {

@@ -6,7 +6,7 @@ class Conciliated {
 	Receipt receipt
 	Long lot
 	Medio medio
-	AccountantPeriod period
+	Long period
 	String registerType
 	Date accountDate
 	
