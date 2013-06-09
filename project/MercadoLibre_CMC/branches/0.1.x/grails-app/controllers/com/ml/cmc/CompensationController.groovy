@@ -247,7 +247,7 @@ class CompensationController extends SessionInfoController {
         /* call datastage */
         def username = getUsername()
 		def jobName;
-		if(GrailsUtil.getEnvironment().equals('mercadolibre')) {
+		if(GrailsUtil.getEnvironment().equals('mercadolibre') || GrailsUtil.getEnvironment().equals('mercadolibreUat') ) {
 			jobName = params.element == "F_RECIBOS"?"/datastage/CompManual_Recibos_PROD.sh":"/datastage/CompManual_Ventas_PROD.sh"
 		} else {
 			jobName = params.element == "F_RECIBOS"?"/datastage/CompManual_Recibos.sh":"/datastage/CompManual_Ventas.sh"
