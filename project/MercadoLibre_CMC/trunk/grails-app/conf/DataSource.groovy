@@ -42,6 +42,30 @@ environments {
 			}
 		}
 	}
+	mercadolibreUat {
+		hibernate {
+			show_sql=true
+		}
+		dataSource {
+			//dbCreate = "create-drop" // one of 'create', 'create-drop','update'
+			pooled = true
+			dialect = "org.hibernate.dialect.OracleDialect"
+			url = "jdbc:oracle:thin:@//cluster04-scan.melirac.com:1521/con_w01"
+			driverClassName = "oracle.jdbc.driver.OracleDriver"
+			username = "con_w01prod"
+			password = "%D5Eh?hxl^84@"
+			properties {
+				maxActive = 50
+				maxIdle = 25
+				minIdle = 5
+				initialSize = 5
+				minEvictableIdleTimeMillis = 60000
+				timeBetweenEvictionRunsMillis = 60000
+				maxWait = 10000
+				validationQuery = "select 1 from dual"
+			}
+		}
+	}
 	mercadolibre {
 		hibernate {
 			show_sql=false
