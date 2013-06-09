@@ -68,6 +68,10 @@ environments {
 		grails.serverURL = "http://localhost:8080/${appName}DEV"
 		grails.app.context = "/cmcDev"
 	}
+	mercadolibreUat {
+		grails.serverURL = "http://localhost:8080/${appName}UAT"
+		grails.app.context = "/cmcUat"
+	}
 	mercadolibre {
 		grails.serverURL = "http://localhost:8080/${appName}"
 	}
@@ -86,8 +90,15 @@ log4j = {
 				appender new DailyRollingFileAppender(
 					name:'dailycmcAppender',
 					datePattern: "'.'yyyy-MM-dd",
-					//file:'C:/workspace/cmc.log',
 					file:'/usr/java/logs/cmcDev.log',
+					layout:pattern(conversionPattern: '%d [%t] %-5p %c{2} %x - %m%n')
+				)
+			}
+			mercadolibreUat {
+				appender new DailyRollingFileAppender(
+					name:'dailycmcAppender',
+					datePattern: "'.'yyyy-MM-dd",
+					file:'/usr/java/logs/cmcUat.log',
 					layout:pattern(conversionPattern: '%d [%t] %-5p %c{2} %x - %m%n')
 				)
 			}
@@ -95,7 +106,6 @@ log4j = {
 				appender new DailyRollingFileAppender(
 					name:'dailycmcAppender',
 					datePattern: "'.'yyyy-MM-dd",
-					//file:'C:/workspace/cmc.log',
 					file:'/usr/java/logs/cmc.log',
 					layout:pattern(conversionPattern: '%d [%t] %-5p %c{2} %x - %m%n')
 				)
@@ -123,7 +133,9 @@ log4j = {
 		mercadolibre {
 			info dailycmcAppender: 'grails.app'
 		}
-		
+		mercadolibreUat {
+			info dailycmcAppender: 'grails.app'
+		}
 		mercadolibreDev {
 			info dailycmcAppender: 'grails.app'
 		}

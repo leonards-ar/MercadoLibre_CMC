@@ -153,7 +153,7 @@ class DespreconciliationController extends SessionInfoController {
 		
 		def username = getUsername()
 		def strLot = formatNumber(number:lot, format:"000")
-		def command =  GrailsUtil.getEnvironment().equals('mercadolibre') ?"/datastage/DesPreConcManual_PROD.sh":"/datastage/DesPreConcManual.sh"
+		def command =  GrailsUtil.getEnvironment().equals('mercadolibre') || GrailsUtil.getEnvironment().equals('mercadolibreUat') ?"/datastage/DesPreConcManual_PROD.sh":"/datastage/DesPreConcManual.sh"
 		Thread.start{
 			executeCommand("${command} ${username} ${strLot}")
 		}

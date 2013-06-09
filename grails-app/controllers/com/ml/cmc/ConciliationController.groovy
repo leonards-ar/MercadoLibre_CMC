@@ -209,7 +209,7 @@ class ConciliationController extends SessionInfoController{
 		def strLot = formatNumber(number:lot, format:"000")
 		def accountDate = formatDate(date:new Date().parse('yyyy-MM-dd',params.period),format:'yyyy-MM_dd')
 
-		def command = GrailsUtil.getEnvironment().equals('mercadolibre') ? "/datastage/ConcManual_PROD.sh":"/datastage/ConcManual.sh"  
+		def command = GrailsUtil.getEnvironment().equals('mercadolibre') || GrailsUtil.getEnvironment().equals('mercadolibreUat') ? "/datastage/ConcManual_PROD.sh":"/datastage/ConcManual.sh"  
 		Thread.start{
 				executeCommand("${command} ${username} ${strLot} ${accountDate}")
 		}
