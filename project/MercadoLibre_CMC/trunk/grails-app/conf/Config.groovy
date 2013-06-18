@@ -87,12 +87,20 @@ log4j = {
         console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
 		environments {
 			mercadolibreDev {
-				appender new DailyRollingFileAppender(
+				appenders{
+					 appender new DailyRollingFileAppender(
 					name:'dailycmcAppender',
 					datePattern: "'.'yyyy-MM-dd",
 					file:'/usr/java/logs/cmcDev.log',
 					layout:pattern(conversionPattern: '%d [%t] %-5p %c{2} %x - %m%n')
-				)
+					 )
+					appender new DailyRollingFileAppender(
+					name:"sqlAppender",
+					datePattern: "'.'yyyy-MM-dd",
+					file:'/usr/java/logs/cmcDevSQL.log',
+					layout:pattern(conversionPattern: '%d [%t] %-5p %c{2} %x - %m%n')
+					)
+				}
 			}
 			mercadolibreUat {
 				appender new DailyRollingFileAppender(
@@ -103,12 +111,14 @@ log4j = {
 				)
 			}
 			mercadolibre {
-				appender new DailyRollingFileAppender(
-					name:'dailycmcAppender',
-					datePattern: "'.'yyyy-MM-dd",
-					file:'/usr/java/logs/cmc.log',
-					layout:pattern(conversionPattern: '%d [%t] %-5p %c{2} %x - %m%n')
-				)
+				appenders{
+					appender new DailyRollingFileAppender(
+						name:'dailycmcAppender',
+						datePattern: "'.'yyyy-MM-dd",
+						file:'/usr/java/logs/cmc.log',
+						layout:pattern(conversionPattern: '%d [%t] %-5p %c{2} %x - %m%n')
+					)
+				}
 			}
 		}
     }
@@ -132,11 +142,14 @@ log4j = {
 	environments {
 		mercadolibre {
 			info dailycmcAppender: 'grails.app'
+			 
 		}
 		mercadolibreUat {
 			info dailycmcAppender: 'grails.app'
 		}
 		mercadolibreDev {
+			trace sqlAppender: 'org.hibernate.type'
+			debug sqlAppender: 'org.hibernate.SQL'
 			info dailycmcAppender: 'grails.app'
 		}
 	}
