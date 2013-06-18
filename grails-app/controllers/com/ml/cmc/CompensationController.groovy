@@ -81,8 +81,8 @@ class CompensationController extends SessionInfoController {
         
 		def accountDate = new Date().parse(dateFormat,params.period)
 		
-		def query = " from F_RECIBOS s where s.CD_MEDIO=:medio and s.CD_ESTADO in(:state1,:state3) "
-		def queryCount = "select count(*) from F_RECIBOS s where s.CD_MEDIO=:medio and s.CD_ESTADO in(:state1,:state3) "
+		def query = " from F_RECIBOS s where s.CD_MEDIO=:medio and s.CD_ESTADO in(:state1,:state3) and fl_pagado = 'OK' "
+		def queryCount = "select count(*) from F_RECIBOS s where s.CD_MEDIO=:medio and s.CD_ESTADO in(:state1,:state3)  "
 		def queryMap = [medio:medio, state1:state1, state3:state3]
 
 		if(params.compReceiptList.length() > 0) {
@@ -93,10 +93,8 @@ class CompensationController extends SessionInfoController {
 		 query += " and s.FC_OPERACION between :fromTransDate and :toTransDate "
 		 queryMap.fromTransDate = new Date().parse(dateFormat, params.fromReceiptTransDate)
 		 queryMap.toTransDate = new Date().parse(dateFormat, params.toReceiptTransDate)
-		} else {
-	  	  query += " and s.FC_OPERACION <= :accountDate "
-		  queryMap.accountDate = accountDate
 		}
+		
 		if(params.fromReceiptPaymtDate != null && params.toReceiptPaymtDate != null){
 		 query += " and s.FC_PAGO between :fromPaymentDate and :toPaymentDate "
 		 queryMap.fromPaymentDate = new Date().parse(dateFormat, params.fromReceiptPaymtDate)
@@ -165,9 +163,6 @@ class CompensationController extends SessionInfoController {
 		 sqlCountQuery.setDate("fromTransDate",queryMap.fromTransDate)
 		 sqlQuery.setDate("toTransDate",queryMap.toTransDate)
 		 sqlCountQuery.setDate("toTransDate",queryMap.toTransDate)
-		} else {
-		  sqlQuery.setDate("accountDate", queryMap.accountDate)
-		  sqlCountQuery.setDate("accountDate", queryMap.accountDate)
 		}
 		if(params.fromReceiptPaymtDate != null && params.toReceiptPaymtDate != null){
 		 sqlQuery.setDate("frompaymentDate",queryMap.fromPaymentDate)
@@ -247,8 +242,8 @@ class CompensationController extends SessionInfoController {
 		
 		def accountDate = new Date().parse(dateFormat,params.period)
 
-		def query = "select /*+ INDEX(F_VENTAS_SITE,IDX_F_V_SITE_CDM_CDE_FCO) */ * from F_VENTAS_SITE s where s.CD_MEDIO=:medio and s.CD_ESTADO in (:state1,:state3) "
-		def queryCount = "select count(*) from F_VENTAS_SITE s where s.CD_MEDIO=:medio and s.CD_ESTADO in (:state1,:state3) "
+		def query = "select /*+ INDEX(F_VENTAS_SITE,IDX_F_V_SITE_CDM_CDE_FCO) */ * from F_VENTAS_SITE s where s.CD_MEDIO=:medio and s.CD_ESTADO in (:state1,:state3) and FL_ORIGEN='I' "
+		def queryCount = "select count(*) from F_VENTAS_SITE s where s.CD_MEDIO=:medio and s.CD_ESTADO in (:state1,:state3) and  FL_ORIGEN='I' "
 		def queryMap = [medio:medio, state1:state1, state3:state3]
 
 	

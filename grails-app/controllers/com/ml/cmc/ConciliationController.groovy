@@ -86,7 +86,8 @@ class ConciliationController extends SessionInfoController{
 			 order(colName, sortDir)
 			 if(medio != null) eq('medio', medio)
 			 eq('state',state3)
-
+			 eq('payed','OK')
+			 
 			 if(params.selectedList.length() > 0) {
 				 def ids = params.selectedList.split(",")
 				 not{inList('id', ids)}
@@ -95,9 +96,9 @@ class ConciliationController extends SessionInfoController{
 				 def fromTransDate = new Date().parse(dateFormat, params.fromReceiptTransDate)
 				 def toTransDate = new Date().parse(dateFormat, params.toReceiptTransDate)
 				 between('transactionDate', fromTransDate, toTransDate)
-			 } else {
-			 	le('transactionDate', accountDate)
-			 }
+			 } //else {
+			 	//le('transactionDate', accountDate)
+			 //}
 			 if(params.fromReceiptPaymtDate != null && params.toReceiptPaymtDate != null){
 				 def fromPaymtDate = new Date().parse(dateFormat, params.fromReceiptPaymtDate)
 				 def toPaymtDate = new Date().parse(dateFormat, params.toReceiptPaymtDate)
@@ -111,6 +112,7 @@ class ConciliationController extends SessionInfoController{
 			 if(params.maxReceiptAmount != null){
 				 le('amount', params.maxReceiptAmount?.toDouble())
 			 }
+			 
 
 		}
         
@@ -132,7 +134,7 @@ class ConciliationController extends SessionInfoController{
 		def colName = colNames[colIdx]
 		def sortDir = params.sSortDir_0? params.sSortDir_0:'asc'
 
-		def medio = Medio.findAll("from Medio m where m.country= :country and m.site= :site", [country:params.country, site: params.site])
+		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site]);
 		def state = State.findById(3)
 		
 		def accountDate = new Date().parse(dateFormat,params.period)
@@ -141,7 +143,7 @@ class ConciliationController extends SessionInfoController{
 		def salesSiteInstanceList = criteria.list(max:max, offset:offset) {
 			order(colName, sortDir)
 			
-			 if(medio != null) inList('medio', medio)
+			 if(medio != null) eq('medio', medio)
 			 eq('state',state)
 			 eq('origin','I')
 			 
