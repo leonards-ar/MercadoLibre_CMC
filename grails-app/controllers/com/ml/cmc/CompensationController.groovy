@@ -81,9 +81,9 @@ class CompensationController extends SessionInfoController {
         
 		def accountDate = new Date().parse(dateFormat,params.period)
 		
-		def query = " from F_RECIBOS s where s.CD_MEDIO=:medio and s.CD_ESTADO in(:state1,:state3) and fl_pagado = 'OK' "
-		def queryCount = "select count(*) from F_RECIBOS s where s.CD_MEDIO=:medio and s.CD_ESTADO in(:state1,:state3)  "
-		def queryMap = [medio:medio, state1:state1, state3:state3]
+		def query = " from F_RECIBOS s where s.CD_MEDIO=:medio and s.CD_ESTADO=:state3 and fl_pagado = 'OK' "
+		def queryCount = "select count(*) from F_RECIBOS s where s.CD_MEDIO=:medio and s.CD_ESTADO=:state3 and fl_pagado = 'OK' "
+		def queryMap = [medio:medio, state3:state3]
 
 		if(params.compReceiptList.length() > 0) {
 			 query += " and s.CD_RECIBO not in (:ids) "
@@ -146,12 +146,12 @@ class CompensationController extends SessionInfoController {
 		
 		sqlQuery.addEntity(com.ml.cmc.Receipt.class)
 		sqlQuery.setLong("medio", medio.id)
-		sqlQuery.setLong("state1",state1.id)
+		//sqlQuery.setLong("state1",state1.id)
 		sqlQuery.setLong("state3",state3.id)
 
 		
 		sqlCountQuery.setLong("medio", medio.id)
-		sqlCountQuery.setLong("state1",state1.id)
+		//sqlCountQuery.setLong("state1",state1.id)
 		sqlCountQuery.setLong("state3",state3.id)
 
 		if(params.compReceiptList.length() > 0){
@@ -229,7 +229,7 @@ class CompensationController extends SessionInfoController {
 	def listSalesSite = {
         def responseMap = [:]
         
-		def state1 = State.findById(1)
+		//def state1 = State.findById(1)
 		def state3 = State.findById(3)
 		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
 		
@@ -242,9 +242,9 @@ class CompensationController extends SessionInfoController {
 		
 		def accountDate = new Date().parse(dateFormat,params.period)
 
-		def query = "select /*+ INDEX(F_VENTAS_SITE,IDX_F_V_SITE_CDM_CDE_FCO) */ * from F_VENTAS_SITE s where s.CD_MEDIO=:medio and s.CD_ESTADO in (:state1,:state3) and FL_ORIGEN='I' "
-		def queryCount = "select count(*) from F_VENTAS_SITE s where s.CD_MEDIO=:medio and s.CD_ESTADO in (:state1,:state3) and  FL_ORIGEN='I' "
-		def queryMap = [medio:medio, state1:state1, state3:state3]
+		def query = "select /*+ INDEX(F_VENTAS_SITE,IDX_F_V_SITE_CDM_CDE_FCO) */ * from F_VENTAS_SITE s where s.CD_MEDIO=:medio and s.CD_ESTADO=:state3 and FL_ORIGEN='I' "
+		def queryCount = "select count(*) from F_VENTAS_SITE s where s.CD_MEDIO=:medio and s.CD_ESTADO=:state3 and  FL_ORIGEN='I' "
+		def queryMap = [medio:medio, state3:state3]
 
 	
          if(params.compSalesList.length() > 0){
@@ -310,12 +310,10 @@ class CompensationController extends SessionInfoController {
 		
 		sqlQuery.addEntity(com.ml.cmc.SalesSite.class)
 		sqlQuery.setLong("medio", medio.id)
-		sqlQuery.setLong("state1",state1.id)
 		sqlQuery.setLong("state3",state3.id)
 
 		//sqlCountQuery.addScalar(com.ml.cmc.SalesSite.class)
 		sqlCountQuery.setLong("medio", medio.id)
-		sqlCountQuery.setLong("state1",state1.id)
 		sqlCountQuery.setLong("state3",state3.id)
 
 		if(params.compSalesList.length() > 0){

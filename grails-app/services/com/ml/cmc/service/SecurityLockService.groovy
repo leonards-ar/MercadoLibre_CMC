@@ -13,7 +13,7 @@ class SecurityLockService {
     private static Map constraints = [
         (Constant.FUNC_PRECONCILIATE):[(Constant.FUNC_COMPENSATE)], 
         (Constant.FUNC_CONCILIATE):[(Constant.FUNC_DESPRECONCILIATE)],
-        (Constant.FUNC_COMPENSATE):[(Constant.FUNC_PRECONCILIATE)],
+        (Constant.FUNC_COMPENSATE):[(Constant.FUNC_CONCILIATE)],
         (Constant.FUNC_DESPRECONCILIATE):[(Constant.FUNC_CONCILIATE)]
         ]
 
