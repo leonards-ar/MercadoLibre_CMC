@@ -321,10 +321,10 @@ class CompensationController extends SessionInfoController {
 			 sqlCountQuery.setString("ids",queryMap.ids)
 		}
 		if(params.fromSalesTransDate != null  && params.toSalesTransDate != null){
-			sqlQuery.setDate("fromTransDate",queryMaps.fromTransDate)
+			sqlQuery.setDate("fromTransDate",queryMap.fromTransDate)
 			sqlQuery.setDate("toTransDate",queryMap.toTransDate)
 			
-			sqlCountQuery.setDate("fromTransDate",queryMaps.fromTransDate)
+			sqlCountQuery.setDate("fromTransDate",queryMap.fromTransDate)
 			sqlCountQuery.setDate("toTransDate",queryMap.toTransDate)
 
 		} else {
