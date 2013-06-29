@@ -18,19 +18,19 @@ $(function() {
 		strdata +="&card=" + $('#card').val(); 
 		$.ajax({
 			type : 'POST',
-			url : periodLink,
+			url : lotLink,
 			data : strdata,
 			success : function(data) {
 				var index = 0;
-				$('#period').html("");//clear old options
+				$('#lot').html("");//clear old options
 				data = eval(data);//get json array
-				$('#period').get(0).add(new Option('---', '---'), document.all ? 0 : null);
+				$('#lot').get(0).add(new Option('---', '---'), document.all ? 0 : null);
 				index = 1;
 				for (i = 0; i < data.length; i++)//iterate over all options
 				{
 					var item = data[i];
 					
-					$('#period').get(0).add(new Option(item[1],item[0]), document.all ? index++ : null);
+					$('#lot').get(0).add(new Option(item[1],item[0]), document.all ? index++ : null);
 				}
 
 		    } 
@@ -45,7 +45,7 @@ $(function() {
             var strdata = $('#country').attr('id') + "=" + $('#country').val();
             strdata += "&" + $('#card').attr('id') + "=" + $('#card').val();
             strdata += "&" + $('#site').attr('id') + "=" + $('#site').val();
-            strdata += "&" + $('#period').attr('id') + "=" + $('#period').val();
+            strdata += "&" + $('#lot').attr('id') + "=" + $('#lot').val();
             
             var $processing = getProcessingDialog();
             
@@ -63,7 +63,7 @@ $(function() {
                     $('#country').attr("disabled", true);
                     $('#card').attr("disabled", true);
                     $('#site').attr("disabled", true);
-                    $('#period').attr("disabled", true);
+                    $('#lot').attr("disabled", true);
                     $('#lock').attr("value","Unlock");
                     $('#myBody').html(data);
                     
@@ -80,7 +80,7 @@ $(function() {
                             aoData.push( { "name": "country", "value": $('#country').val() } );
                             aoData.push( { "name": "card", "value": $('#card').val() } );
                             aoData.push( { "name": "site", "value": $('#site').val() } );
-                            aoData.push( { "name": "period", "value": $('#period').val() } );
+                            aoData.push( { "name": "lot", "value": $('#lot').val() } );
                             aoData.push( { "name": "processedList", "value":processed.join(",") } );
 				            if($('#fromReceiptTransDate').val() !='') aoData.push( { "name":"fromReceiptTransDate", "value":$('#fromReceiptTransDate').val()} );
 				            if($('#toReceiptTransDate').val() !='') aoData.push( { "name":"toReceiptTransDate", "value":$('#toReceiptTransDate').val()} );
