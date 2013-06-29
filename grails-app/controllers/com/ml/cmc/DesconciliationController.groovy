@@ -30,6 +30,26 @@ class DesconciliationController extends SessionInfoController {
         }
         render(view:'index', model:[countryList: countryList])
     }
+	
+	def lots = {
+		if(params._value == '---' || params.country == null || params.card == null || params.site == null ) return
+		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site])
+		def lotList = Conciliated.createCriteria().list {
+			projections {
+				distinct("lot")
+    		}
+			eq('medio',medio)
+		} 
+		
+		def lotKey = []
+		lotList.each { item ->
+			lotKey.add([item, item])
+			
+		}
+		render lotKey as JSON
+		
+	}
+
 
     def lock = {
         
@@ -74,7 +94,7 @@ class DesconciliationController extends SessionInfoController {
 
         def conciliationInstanceList = conciliatedCriteria.list(max:max, offset:offset) {
             
-			eq('period',params.period)
+			eq('lot',params.lot.toLong())
 			if(params.processedList?.length() > 0) {
 				def processedIds = params.processedList.split(",") 
 				not{inList('id', processedIds.collect{it.toLong()})}

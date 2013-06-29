@@ -15,7 +15,7 @@
     <g:javascript>
       var cardLink = '${createLink(action:"cards")}';
       var siteLink = '${createLink(action:"sites")}';
-      var periodLink = '${createLink(action:"periods")}';
+      var lotLink = '${createLink(action:"lots")}';
       var saveLink = '${createLink(action:"save")}';
       var exitLink = '${createLink(action:"exit")}';
       var lockLink = '${createLink(action:"lock")}';
@@ -52,9 +52,13 @@
           <g:select name="site" id="site" noSelection="['':'']" />
           </td>
           <td>
+            <div><g:message code="desconciliation.lot" default="Lote"/> </div>
+          <g:select name="lot" id="lot" noSelection="['':'']" />
+          </td>
+          <!-- td>
             <div><g:message code="conciliation.period" default="Site"/> </div>
             <g:select name="period" id="period" optionKey="id" noSelection="['':'']" />
-          </td>
+          </td-->
           <td>
             <span class="button">
               <input type="button" class="save" value="Lock" id="lock"/>
