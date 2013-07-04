@@ -21,6 +21,7 @@
       var lockLink = '${createLink(action:"lock")}';
       var index = '${createLink(action:"index")}';
       var listLink = '${createLink(action:"list")}';
+      var nofilterSelectionError = "${message(code:'desconciliation.nofilterselection.error', default:'Seleccione todos los filtros')}";
       var conciliationNoselectionError = "${message(code:'desconciliation.noselection.error', default:'Seleccione un Recibo y una Venta')}";
       var concliationOnlyoneError = "${message(code:'desconcliation.onlyone.error', default:'Seleccione solo uno') }";
 
@@ -53,7 +54,7 @@
           </td>
           <td>
             <div><g:message code="desconciliation.lot" default="Lote"/> </div>
-          <g:select name="lot" id="lot" noSelection="['':'']" />
+            <g:textField name="lot" id="lot" noSelection="['':'']" />
           </td>
           <!-- td>
             <div><g:message code="conciliation.period" default="Site"/> </div>
