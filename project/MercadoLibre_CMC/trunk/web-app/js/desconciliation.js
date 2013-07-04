@@ -10,38 +10,23 @@ $(function() {
         nonSelectedValue : '---'
     });
     
-	$('#site').change(function(){
-		var site = $(this).val();
-		if(site == '---') return;
-		var strdata = "site=" + $(this).val();
-		strdata+="&country=" + $('#country').val();
-		strdata +="&card=" + $('#card').val(); 
-		$.ajax({
-			type : 'POST',
-			url : lotLink,
-			data : strdata,
-			success : function(data) {
-				var index = 0;
-				$('#lot').html("");//clear old options
-				data = eval(data);//get json array
-				$('#lot').get(0).add(new Option('---', '---'), document.all ? 0 : null);
-				index = 1;
-				for (i = 0; i < data.length; i++)//iterate over all options
-				{
-					var item = data[i];
-					
-					$('#lot').get(0).add(new Option(item[1],item[0]), document.all ? index++ : null);
-				}
-
-		    } 
-		});
-					
-	});
-
     
     $('#lock').click(function(){
+    	
         
         if($(this).attr('value') == 'Lock'){
+        	var lot = $('#lot').val();
+    	    if($('#country').val()== ''  || $('#country').val()== '---' ||
+    		        $('#card').val()== '' || $('#card').val()== '---' ||
+    		        $('#site').val()== '' || $('#site').val()== '---' || 
+    		        $.trim(lot) == ''){
+    		        var $dialog = getDialog(nofilterSelectionError);
+                    $dialog.dialog("open");
+                    return;
+    	    }
+    	    
+        	
+        	
             var strdata = $('#country').attr('id') + "=" + $('#country').val();
             strdata += "&" + $('#card').attr('id') + "=" + $('#card').val();
             strdata += "&" + $('#site').attr('id') + "=" + $('#site').val();
