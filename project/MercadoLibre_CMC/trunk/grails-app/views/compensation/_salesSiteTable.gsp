@@ -55,7 +55,7 @@
         <td><g:checkBox class='salesSiteCol' name="7" value="${true}" /></td>
         <td>${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</td>
         <td><g:checkBox class='salesSiteCol' name="8" value="${true}" /></td>
-        <td>${message(code: 'salesSite.documentId', default: 'DNI')}</td>
+        <td>${message(code: 'salesSite.documentIdType', default: 'DNI')}</td>
        </tr>
        <tr>
         <td><g:checkBox class='salesSiteCol' name="9" value="${true}" /></td>
@@ -91,7 +91,7 @@
 	      <th>${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}</th>
 	      <th>${message(code: 'salesSite.customerId', default: 'Cliente')}</th>
 	      <th>${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</th>
-	      <th>${message(code: 'salesSite.documentId', default: 'DNI')}</th>
+	      <th>${message(code: 'salesSite.documentIdType', default: 'DNI')}</th>
 	      <th>${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</th> 
 	      <th>${message(code: 'salesSite.ro', default: 'RO')}</th>
 	      <th>${message(code: 'salesSite.tid', default: 'TID')}</th>
@@ -121,7 +121,7 @@
 	      <th>${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}</th>
 	      <th>${message(code: 'salesSite.customerId', default: 'Cliente')}</th>
 	      <th>${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</th>
-	      <th>${message(code: 'salesSite.documentId', default: 'DNI')}</th>
+	      <th>${message(code: 'salesSite.documentIdType', default: 'DNI')}</th>
 	      <th>${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</th> 
 	      <th>${message(code: 'salesSite.ro', default: 'RO')}</th>
 	      <th>${message(code: 'salesSite.tid', default: 'TID')}</th>

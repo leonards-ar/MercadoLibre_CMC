@@ -18,6 +18,16 @@ class ConciliationController extends SessionInfoController{
 	def colNames = ["transactionDate","amount","authorization","cardNumber","customerId","documentNumber",
 		"documentId","id","ro","tid","nsu","shareNumber","shareQty","paymentDate","payment"]
 
+	def salesColNames = ["saleMl","id","medio","state","registerType","lot","cardNumber","transactionDate",
+		"paymentDate","amount","shareAmount","authorization","shareNumber","shareQty","liq",
+		"customerId","documentId","receiptNumber","tid","nsu","ro","store","cardLot","uniqueRo",
+		"payment","documentNumber","period","origin","operation","sap","paymentReference","pricing",
+		"concPay"]
+	
+	def receiptColNames = ["id","medio","state","registerType","lot","cardNumber","transactionDate",
+		"paymentDate","amount","shareAmount","authorization","shareNumber","shareQty","liq",
+		"customerId","documentId","receiptNumber","tid","nsu","ro","store","cardLot","uniqueRo","payment",
+		"documentNumber","period","payed"]
 	def index = {
 		securityLockService.unLockFunctionality(getSessionId())
 		def countryList = Medio.withCriteria{
@@ -73,7 +83,7 @@ class ConciliationController extends SessionInfoController{
         def offset = params.iDisplayStart?params.iDisplayStart:0
 		
 		def colIdx = Integer.parseInt(params.iSortCol_0)
-		def colName = colNames[colIdx]
+		def colName = receiptColNames[colIdx]
 		def sortDir = params.sSortDir_0? params.sSortDir_0:'asc'
 
 		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site]);
@@ -131,7 +141,7 @@ class ConciliationController extends SessionInfoController{
         def max = params.iDisplayLength?params.iDisplayLength:maxRecords
         def offset = params.iDisplayStart?params.iDisplayStart:0
 		def colIdx = Integer.parseInt(params.iSortCol_0)
-		def colName = colNames[colIdx]
+		def colName = salesColNames[colIdx]
 		def sortDir = params.sSortDir_0? params.sSortDir_0:'asc'
 
 		def medio = Medio.find("from Medio m where m.country= :country and m.card= :card and m.site= :site", [country:params.country, card:params.card, site: params.site]);
@@ -174,7 +184,7 @@ class ConciliationController extends SessionInfoController{
 			 }
 		}
         
-        responseMap.aaData = serializeReceiptData(salesSiteInstanceList)
+        responseMap.aaData = serializeSalesData(salesSiteInstanceList)
         responseMap.sEcho = params.sEcho
         responseMap.iTotalRecords = salesSiteInstanceList.totalCount
         responseMap.iTotalDisplayRecords = salesSiteInstanceList.totalCount
