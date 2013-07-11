@@ -5,7 +5,7 @@ class SalesSite {
     Long saleMl
     Medio medio
     State state
-    RegisterType registerType
+    Long registerType
     Long lot
     String cardNumber
     Date transactionDate
@@ -29,6 +29,12 @@ class SalesSite {
     Long payment  
 	Long period
 	String origin
+	Long operation
+	Long sap
+	String paymentReference
+	Long pricing
+	Long concPay
+	
     
     static constraints = {
 		cardNumber(nullable:true)
@@ -52,6 +58,11 @@ class SalesSite {
 		documentNumber(nullable:true)
 		payment(nullable:true)
 		origin(nullable:true)
+		operation(nullable:true)
+		sap(nullable:true)
+		paymentReference(nullable:true)
+		pricing(nullable:true)
+		concPay(nullable:true)
     }
     
     static mapping = {
@@ -87,5 +98,10 @@ class SalesSite {
         payment column:'PAYMENT_ID'
 		period column:'CD_PERIODO'
 		origin column:'FL_ORIGEN'
+		operation column:'OPERATION_ID'
+		sap column:'SAP_ID'
+		paymentReference column:'PAY_REFERENCE'
+		pricing column:'PRICING'
+		concPay column:'CONC_PAY_ID'
     }
 }

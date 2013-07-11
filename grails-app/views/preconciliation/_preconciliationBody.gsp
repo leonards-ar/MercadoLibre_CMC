@@ -65,7 +65,7 @@
         <td><g:checkBox class='receiptCol' name="6" value="${true}" /></td>
         <td>${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</td>
         <td><g:checkBox class='receiptCol' name="7" value="${true}" /></td>
-        <td>${message(code: 'salesSite.documentId', default: 'DNI')}</td>
+        <td>${message(code: 'salesSite.documentIdType', default: 'DNI')}</td>
         <td><g:checkBox class='receiptCol' name="8" value="${true}" /></td>
         <td>${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</td>
         <td><g:checkBox class='receiptCol' name="9" value="${true}" /></td>
@@ -169,7 +169,7 @@
         <td><g:checkBox class='salesSiteCol' name="6" value="${true}" /></td>
         <td>${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</td>
         <td><g:checkBox class='salesSiteCol' name="7" value="${true}" /></td>
-        <td>${message(code: 'salesSite.documentId', default: 'DNI')}</td>
+        <td>${message(code: 'salesSite.documentIdType', default: 'DNI')}</td>
         <td><g:checkBox class='salesSiteCol' name="8" value="${true}" /></td>
         <td>${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</td>
         <td><g:checkBox class='salesSiteCol' name="9" value="${true}" /></td>

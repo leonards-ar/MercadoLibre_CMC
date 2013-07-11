@@ -35,7 +35,7 @@
         <td><g:checkBox class='desconciliationCol' name="6" value="${true}" /></td>
         <td>R${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</td>
         <td><g:checkBox class='desconciliationCol' name="7" value="${true}" /></td>
-        <td>R${message(code: 'salesSite.documentId', default: 'DNI')}</td>
+        <td>R${message(code: 'salesSite.documentIdType', default: 'DNI')}</td>
         <td><g:checkBox class='desconciliationCol' name="8" value="${true}" /></td>
         <td>R${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</td>
         <td><g:checkBox class='desconciliationCol' name="9" value="${true}" /></td>
@@ -71,7 +71,7 @@
         <td><g:checkBox class='desconciliationCol' name="21" value="${true}" /></td>
         <td>S${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</td>
         <td><g:checkBox class='desconciliationCol' name="22" value="${true}" /></td>
-        <td>S${message(code: 'salesSite.documentId', default: 'DNI')}</td>
+        <td>S${message(code: 'salesSite.documentIdType', default: 'DNI')}</td>
         <td><g:checkBox class='desconciliationCol' name="23" value="${true}" /></td>
         <td>S${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</td>
         <td><g:checkBox class='desconciliationCol' name="24" value="${true}" /></td>
@@ -131,7 +131,7 @@
     <th>R${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}</th>
     <th>R${message(code: 'salesSite.customerId', default: 'Cliente')}</th>
     <th>R${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</th>
-    <th>R${message(code: 'salesSite.documentId', default: 'DNI')}</th>
+    <th>R${message(code: 'salesSite.documentIdType', default: 'DNI')}</th>
     <th>R${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</th>
     <th>R${message(code: 'salesSite.ro', default: 'RO')}</th>
     <th>R${message(code: 'salesSite.tid', default: 'TID')}</th>
@@ -146,7 +146,7 @@
     <th>S${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}</th>
     <th>S${message(code: 'salesSite.customerId', default: 'Cliente')}</th>
     <th>S${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</th>
-    <th>S${message(code: 'salesSite.documentId', default: 'DNI')}</th>
+    <th>S${message(code: 'salesSite.documentIdType', default: 'DNI')}</th>
     <th>S${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</th>
     <th>S${message(code: 'salesSite.ro', default: 'RO')}</th>
     <th>S${message(code: 'salesSite.tid', default: 'TID')}</th>

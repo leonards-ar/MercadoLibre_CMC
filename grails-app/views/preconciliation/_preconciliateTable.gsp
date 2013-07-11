@@ -7,7 +7,7 @@
     <th>R${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}</th>
     <th>R${message(code: 'salesSite.customerId', default: 'Cliente')}</th>
     <th>R${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</th>
-    <th>R${message(code: 'salesSite.documentId', default: 'DNI')}</th>
+    <th>R${message(code: 'salesSite.documentIdType', default: 'DNI')}</th>
     <th>R${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</th>
     <th>R${message(code: 'salesSite.ro', default: 'RO')}</th>
     <th>R${message(code: 'salesSite.tid', default: 'TID')}</th>
@@ -22,7 +22,7 @@
     <th>S${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}</th>
     <th>S${message(code: 'salesSite.customerId', default: 'Cliente')}</th>
     <th>S${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</th>
-    <th>S${message(code: 'salesSite.documentId', default: 'DNI')}</th>
+    <th>S${message(code: 'salesSite.documentIdType', default: 'DNI')}</th>
     <th>S${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</th>
     <th>S${message(code: 'salesSite.ro', default: 'RO')}</th>
     <th>S${message(code: 'salesSite.tid', default: 'TID')}</th>

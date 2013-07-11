@@ -78,7 +78,7 @@ $(function() {
 	    
 	    var balanced = parseFloat($('#balance').text());
 	    balanced = isNaN(balanced) ? 0 : balanced;
-	    var monto = parseFloat($(this).find('td:eq(1)').text().replace(".","").replace(",","."));
+	    var monto = parseFloat($(this).find('td:eq(8)').text().replace(".","").replace(",","."));
 	    
     	if (index == -1) {
     		balanced += isNaN(monto)? 0 : monto;
@@ -100,7 +100,7 @@ $(function() {
         var id = this.id
         var index = jQuery.inArray(id, aSalesSelected);
 
-        var monto = parseFloat($(this).find('td:eq(1)').text().replace(".","").replace(",","."));
+        var monto = parseFloat($(this).find('td:eq(9)').text().replace(".","").replace(",","."));
         var balanced = parseFloat($('#balance').text());
         balanced = isNaN(balanced) ? 0 : balanced;
         
@@ -132,8 +132,8 @@ $(function() {
 		    
 		    for(var i=0; i < conciliatedRows.length;i++){
 		    	var row = conciliatedRows[i];
-		    	var salesId = $(row).find('td:eq(22)').text();
-		    	var receiptId = $(row).find('td:eq(7)').text();
+		    	var salesId = $(row).find('td:eq(28)').text();
+		    	var receiptId = $(row).find('td:eq(0)').text();
 		    	
 		    	var salesIndex = jQuery.inArray(salesId, salesList);
 		    	var receiptIndex = jQuery.inArray(receiptId, receiptList);
@@ -368,7 +368,7 @@ $(function() {
 		$('.salesSiteCol').live('click',function(){
 
 			showHideColumn('#sales_table', $(this).attr('name'), this.checked);
-			showHideColumn('#conciliate_table', 15+parseInt($(this).attr('name')), this.checked);
+			showHideColumn('#conciliate_table', 27+parseInt($(this).attr('name')), this.checked);
             if(!this.checked){
                 $('#salesColAll').attr('checked', false);
             }			

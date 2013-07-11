@@ -93,26 +93,84 @@ class SessionInfoController {
 		
 		instanceList.each(){
 			data << ["DT_RowId":it.id.toString(),
-					 "0":formatDate(date:it?.transactionDate, format:"dd-MM-yyyy"),
-					 "1":formatNumber(number:it?.amount,format:"###,###.00"),
-					 "2":it?.authorization.toString(),
-					 "3":it?.cardNumber.toString(),
-					 "4":it?.customerId.toString(),
-					 "5":it?.documentNumber.toString(),
-					 "6":it?.documentId.toString(),
-					 "7":it?.id.toString(),
-					 "8":it?.ro.toString(),
-					 "9":it?.tid.toString(),
-					 "10":it?.nsu.toString(),
+					 "0":it?.id.toString(),
+					 "1":it?.medio.id,
+					 "2":it?.state.id,
+					 "3":it?.registerType,
+					 "4":it?.lot,
+					 "5":it?.cardNumber,
+					 "6":formatDate(date:it?.transactionDate, format:"dd-MM-yyyy"),//documentId.toString(),
+					 "7":formatDate(date:it?.paymentDate, format:"dd-MM-yyyy"),
+					 "8":formatNumber(number:it?.amount,format:"###,###.00"),
+					 "9":formatNumber(number:it?.shareAmount,format:"###,###.00"),
+					 "10":it?.authorization.toString(),
 					 "11":it?.shareNumber.toString(),
 					 "12":it?.shareQty.toString(),
-					 "13":formatDate(date:it?.paymentDate, format:"dd-MM-yyyy"),
-					 "14":it?.payment
+					 "13":it?.liq.toString(),
+					 "14":it?.customerId.toString(),
+					 "15":it?.documentId.toString(),
+					 "16":it?.receiptNumber.toString(),
+					 "17":it?.tid.toString(),
+					 "18":it?.nsu.toString(),
+					 "19":it?.ro.toString(),
+					 "20":it?.store.toString(),
+					 "21":it?.cardLot.toString(),
+					 "22":it?.uniqueRo.toString(),
+					 "23":it?.payment.toString(),
+					 "24":it?.documentNumber.toString(),
+					 "25":it?.period.toString(),
+					 "26":it?.payed.toString()
 					 ]
 		}
 		
 		return data
 	}
+	
+	protected serializeSalesData(instanceList) {
+		
+		def data = []
+		
+		instanceList.each(){
+			data << ["DT_RowId":it.id.toString(),
+					 "0":it?.saleMl,
+					 "1":it?.id,
+					 "2":it?.medio.id.toString(),
+					 "3":it?.state.id.toString(),
+					 "4":it?.registerType.toString(),
+					 "5":it?.lot.toString(),
+					 "6":it?.cardNumber.toString(),
+					 "7":formatDate(date:it?.transactionDate, format:"dd-MM-yyyy"),
+					 "8":formatDate(date:it?.paymentDate, format:"dd-MM-yyyy"),
+					 "9":formatNumber(number:it?.amount,format:"###,###.00"),
+					 "10":formatNumber(number:it?.shareAmount,format:"###,###.00"),
+					 "11":it?.authorization.toString(),
+					 "12":it?.shareNumber.toString(),
+					 "13":it?.shareQty.toString(),
+					 "14":it?.liq.toString(),
+					 "15":it?.customerId.toString(),
+					 "16":it?.documentId.toString(),
+					 "17":it?.receiptNumber.toString(),
+					 "18":it?.tid.toString(),
+					 "19":it?.nsu.toString(),
+					 "20":it?.ro.toString(),
+					 "21":it?.store.toString(),
+					 "22":it?.cardLot.toString(),
+					 "23":it?.uniqueRo.toString(),
+					 "24":it?.payment.toString(),
+					 "25":it?.documentNumber.toString(),
+					 "26":it?.period.toString(),
+					 "27":it?.origin.toString(),
+					 "28":it?.operation.toString(),
+					 "29":it?.sap.toString(),
+					 "30":it?.paymentReference.toString(),
+					 "31":it?.pricing.toString(),
+					 "32":it?.concPay.toString()
+					 ]
+		}
+		
+		return data
+	}
+
 	
 	protected Integer executeCommand(String command) {
 		

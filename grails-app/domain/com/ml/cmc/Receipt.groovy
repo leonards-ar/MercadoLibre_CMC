@@ -7,7 +7,7 @@ class Receipt {
 	String id
     Medio medio
     State state
-    RegisterType registerType
+    Long registerType
     Long lot
     String cardNumber
     Date transactionDate
