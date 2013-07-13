@@ -15,10 +15,15 @@ class CompensationController extends SessionInfoController {
     def lotGeneratorService
     def sessionFactory
 
-	def colNames = ["transactionDate","amount","absAmount","authorization","cardNumber","customerId","documentNumber",
-		"documentId","id","ro","tid","nsu","shareNumber","shareQty","paymentDate","payment"]
-	def colSQLNames = ["FC_OPERACION","VL_IMPORTE","absAmount","NU_AUTORIZACION","NU_TARJETA","CUST_ID","DOC_NUMBER",
-		"DOC_ID","CD_VENTA_CUOTA","RO","TID","NSU","NU_CUOTA","NU_CANT_CUOTAS","FC_PAGO","PAYMENT_ID"]
+	def salesColSQLNames = ["CD_VENTA_CUOTA","CD_VENTA_ML","CD_MEDIO","CD_ESTADO","CD_TIPO_REGISTRO","LOTE","NU_TARJETA",
+		"FC_OPERACION","FC_PAGO","VL_IMPORTE","absAmount","VL_CUOTA","NU_AUTORIZACION","NU_CUOTA","NU_CANT_CUOTAS","NU_LIQUIDACION","CUST_ID",
+		"DOC_ID","NU_RECIBO","TID","NSU","RO","NU_COMERCIO","LOTE_TARJETA","NU_UNICO_RO","DOC_NUMBER","PAYMENT_ID","CD_PERIODO",
+		"FL_ORIGEN","OPERATION_ID","SAP_ID","PAY_REFERENCE","PRICING","CONC_PAY_ID"]
+	
+	def receiptColSqlNames = ["CD_RECIBO","CD_MEDIO","CD_ESTADO","CD_TIPO_REGISTRO","LOTE","NU_TARJETA","FC_OPERACION",
+		"FC_PAGO","VL_IMPORTE","absAmount","VL_CUOTA","NU_AUTORIZACION","NU_CUOTA","NU_CANT_CUOTAS","NU_LIQUIDACION",
+		"CUST_ID","DOC_ID","NU_RECIBO","TID","NSU","RO","NU_COMERCIO","LOTE_TARJETA","NU_UNICO_RO","PAYMENT_ID",
+		"DOC_NUMBER","CD_PERIODO","FL_PAGADO"]
 	
     def index = {
 		securityLockService.unLockFunctionality(getSessionId())
@@ -76,7 +81,7 @@ class CompensationController extends SessionInfoController {
         def offset = params.iDisplayStart?params.iDisplayStart:0
 
         def colIdx = Integer.parseInt(params.iSortCol_0)
-        def colName = colSQLNames[colIdx]
+        def colName = receiptColSqlNames[colIdx]
         def sortDir = params.sSortDir_0? params.sSortDir_0:'asc'
         
 		def accountDate = new Date().parse(dateFormat,params.period)
@@ -178,12 +183,12 @@ class CompensationController extends SessionInfoController {
 		if(params.minReceiptAmount != null && params.minReceiptAmount2 != null){
 			sqlQuery.setDouble("minReceiptAmount",queryMap.minReceiptAmount)
 			sqlQuery.setDouble("maxReceiptAmount",queryMap.maxReceiptAmount)
-			sqlQuery.setDouble("minReceiptAmount2",queryMap.minRecepitAmount2)
-			sqlQuery.setDouble("maxReceiptAmount2",querymap.maxReceiptAmount2)
+			sqlQuery.setDouble("minReceiptAmount2",queryMap.minReceiptAmount2)
+			sqlQuery.setDouble("maxReceiptAmount2",queryMap.maxReceiptAmount2)
 			
 			sqlCountQuery.setDouble("minReceiptAmount",queryMap.minReceiptAmount)
 			sqlCountQuery.setDouble("maxReceiptAmount",queryMap.maxReceiptAmount)
-			sqlCountQuery.setDouble("minReceiptAmount2",queryMap.minRecepitAmount2)
+			sqlCountQuery.setDouble("minReceiptAmount2",queryMap.minReceiptAmount2)
 			sqlCountQuery.setDouble("maxReceiptAmount2",queryMap.maxReceiptAmount2)
 		} else {
 			if(params.minReceiptAmount != null){
@@ -195,10 +200,10 @@ class CompensationController extends SessionInfoController {
 		
 			} else {
 				if(params.minReceiptAmount2 != null) {
-				  sqlQuery.setDouble("minReceiptAmount2",queryMap.minRecepitAmount2)
+				  sqlQuery.setDouble("minReceiptAmount2",queryMap.minReceiptAmount2)
 				  sqlQuery.setDouble("maxReceiptAmount2",queryMap.maxReceiptAmount2)
 				  
-				  sqlCountQuery.setDouble("minReceiptAmount2",queryMap.minRecepitAmount2)
+				  sqlCountQuery.setDouble("minReceiptAmount2",queryMap.minReceiptAmount2)
 				  sqlCountQuery.setDouble("maxReceiptAmount2",queryMap.maxReceiptAmount2)
 				}
 			}
@@ -237,7 +242,7 @@ class CompensationController extends SessionInfoController {
         def offset = params.iDisplayStart?params.iDisplayStart:0
 
         def colIdx = Integer.parseInt(params.iSortCol_0)
-        def colName = colSQLNames[colIdx]
+        def colName = salesColSQLNames[colIdx]
         def sortDir = params.sSortDir_0? params.sSortDir_0:'asc'
 		
 		def accountDate = new Date().parse(dateFormat,params.period)
@@ -335,12 +340,12 @@ class CompensationController extends SessionInfoController {
 			sqlQuery.setDouble("minSalesAmount",queryMap.minSalesAmount )
 			sqlQuery.setDouble("maxSalesAmount",queryMap.maxSalesAmount)
 			sqlQuery.setDouble("minSalesAmount2",queryMap.minSalesAmount2)
-			sqlQuery.setDouble("maxSalesAmounts",queryMap.maxSalesAmount2)
+			sqlQuery.setDouble("maxSalesAmount2",queryMap.maxSalesAmount2)
 			
 			sqlCountQuery.setDouble("minSalesAmount",queryMap.minSalesAmount )
 			sqlCountQuery.setDouble("maxSalesAmount",queryMap.maxSalesAmount)
 			sqlCountQuery.setDouble("minSalesAmount2",queryMap.minSalesAmount2)
-			sqlCountQuery.setDouble("maxSalesAmounts",queryMap.maxSalesAmount2)
+			sqlCountQuery.setDouble("maxSalesAmount2",queryMap.maxSalesAmount2)
 		} else {
 			if(params.minSalesAmount != null){
 				sqlQuery.setDouble("minSalesAmount",queryMap.minSalesAmount )
@@ -352,10 +357,10 @@ class CompensationController extends SessionInfoController {
 			} else {
 				if(params.minSalesAmount2 != null) {
 					sqlQuery.setDouble("minSalesAmount2",queryMap.minSalesAmount2)
-					sqlQuery.setDouble("maxSalesAmounts",queryMap.maxSalesAmount2)
+					sqlQuery.setDouble("maxSalesAmount2",queryMap.maxSalesAmount2)
 					
 					sqlCountQuery.setDouble("minSalesAmount2",queryMap.minSalesAmount2)
-					sqlCountQuery.setDouble("maxSalesAmounts",queryMap.maxSalesAmount2)
+					sqlCountQuery.setDouble("maxSalesAmount2",queryMap.maxSalesAmount2)
 
 				}
 			}
@@ -374,7 +379,7 @@ class CompensationController extends SessionInfoController {
 		def salesSiteCount = sqlCountQuery.list()[0]
 		
 
-        responseMap.aaData = serializeReceiptData(salesSiteInstanceList)
+        responseMap.aaData = serializeSalesData(salesSiteInstanceList)
         
         responseMap.sEcho = params.sEcho
         responseMap.iTotalRecords = salesSiteCount;
@@ -432,26 +437,85 @@ class CompensationController extends SessionInfoController {
 		
 		instanceList.each(){
 			data << ["DT_RowId":it.id.toString(),
-					 "0":formatDate(date:it?.transactionDate, format:"dd-MM-yyyy"),
-					 "1":formatNumber(number:it?.amount,format:"###,###.00"),
-					 "2":formatNumber(number:it?.amount.abs(),format:"###,###.00"),
-					 "3":it?.authorization.toString(),
-					 "4":it?.cardNumber.toString(),
-					 "5":it?.customerId.toString(),
-					 "6":it?.documentNumber.toString(),
-					 "7":it?.documentId.toString(),
-					 "8":it?.id.toString(),
-					 "9":it?.ro.toString(),
-					 "10":it?.tid.toString(),
-					 "11":it?.nsu.toString(),
-					 "12":it?.shareNumber.toString(),
-					 "13":it?.shareQty.toString(),
-					 "14":formatDate(date:it?.paymentDate, format:"dd-MM-yyyy"),
-					 "15":it?.payment
+					 "0":it?.id.toString(),
+					 "1":it?.medio.id,
+					 "2":it?.state.id,
+					 "3":it?.registerType,
+					 "4":it?.lot,
+					 "5":it?.cardNumber,
+					 "6":formatDate(date:it?.transactionDate, format:"dd-MM-yyyy"),//documentId.toString(),
+					 "7":formatDate(date:it?.paymentDate, format:"dd-MM-yyyy"),
+					 "8":formatNumber(number:it?.amount,format:"###,###.00"),
+					 "9":formatNumber(number:it?.amount?.abs(),format:"###,###.00"),
+					 "10":formatNumber(number:it?.shareAmount,format:"###,###.00"),
+					 "11":it?.authorization?.toString(),
+					 "12":it?.shareNumber?.toString(),
+					 "13":it?.shareQty?.toString(),
+					 "14":it?.liq?.toString(),
+					 "15":it?.customerId?.toString(),
+					 "16":it?.documentId?.toString(),
+					 "17":it?.receiptNumber?.toString(),
+					 "18":it?.tid?.toString(),
+					 "19":it?.nsu?.toString(),
+					 "20":it?.ro?.toString(),
+					 "21":it?.store?.toString(),
+					 "22":it?.cardLot?.toString(),
+					 "23":it?.uniqueRo?.toString(),
+					 "24":it?.payment?.toString(),
+					 "25":it?.documentNumber?.toString(),
+					 "26":it?.period?.toString(),
+					 "27":it?.payed?.toString()
 					 ]
 		}
 		
 		return data
 	}
+
+	protected serializeSalesData(instanceList) {
+		
+		def data = []
+		
+		instanceList.each(){
+			data << ["DT_RowId":it.id.toString(),
+					 "0":it?.saleMl,
+					 "1":it?.id,
+					 "2":it?.medio.id.toString(),
+					 "3":it?.state.id.toString(),
+					 "4":it?.registerType?.toString(),
+					 "5":it?.lot.toString(),
+					 "6":it?.cardNumber?.toString(),
+					 "7":formatDate(date:it?.transactionDate, format:"dd-MM-yyyy"),
+					 "8":formatDate(date:it?.paymentDate, format:"dd-MM-yyyy"),
+					 "9":formatNumber(number:it?.amount,format:"###,###.00"),
+					 "10":formatNumber(number:it?.amount?.abs(),format:"###,###.00"),
+					 "11":formatNumber(number:it?.shareAmount,format:"###,###.00"),
+					 "12":it?.authorization?.toString(),
+					 "13":it?.shareNumber?.toString(),
+					 "14":it?.shareQty?.toString(),
+					 "15":it?.liq?.toString(),
+					 "16":it?.customerId?.toString(),
+					 "17":it?.documentId?.toString(),
+					 "18":it?.receiptNumber?.toString(),
+					 "19":it?.tid?.toString(),
+					 "20":it?.nsu?.toString(),
+					 "21":it?.ro?.toString(),
+					 "22":it?.store?.toString(),
+					 "23":it?.cardLot?.toString(),
+					 "24":it?.uniqueRo?.toString(),
+					 "25":it?.payment?.toString(),
+					 "26":it?.documentNumber?.toString(),
+					 "27":it?.period?.toString(),
+					 "28":it?.origin?.toString(),
+					 "29":it?.operation?.toString(),
+					 "30":it?.sap?.toString(),
+					 "31":it?.paymentReference?.toString(),
+					 "32":it?.pricing?.toString(),
+					 "33":it?.concPay?.toString()
+					 ]
+		}
+		
+		return data
+	}
+
     
 }

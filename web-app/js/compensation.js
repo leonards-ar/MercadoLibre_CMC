@@ -341,7 +341,7 @@ $(function() {
         var id = this.id;
         var index = jQuery.inArray(id, aReceiptSelected);
         
-        var monto = parseFloat($(this).find('td:eq(1)').text().replace(".","").replace(",","."));
+        var monto = parseFloat($(this).find('td:eq(8)').text().replace(".","").replace(",","."));
         
         if ( index == -1 ) {
             aReceiptSelected.push( id );
@@ -359,7 +359,7 @@ $(function() {
         var id = this.id;
         var index = jQuery.inArray(id, aSalesSelected);
         
-        var monto = parseFloat($(this).find('td:eq(1)').text().replace(".","").replace(",","."));
+        var monto = parseFloat($(this).find('td:eq(9)').text().replace(".","").replace(",","."));
         if ( index == -1 ) {
             aSalesSelected.push( id );
             salesBalance+= isNaN(monto)? 0 : monto;

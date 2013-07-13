@@ -36,71 +36,138 @@
      <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
     </tr>
       <tr>
         <td><g:checkBox class='salesSiteCol' name="1" value="${true}" /></td>
-        <td>${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}</td>
+        <td>${message(code: 'salesSite.saleCode', default: 'Cod. Venta')}</td>
         <td><g:checkBox class='salesSiteCol' name="2" value="${true}" /></td>
-        <td>${message(code: 'salesSite.amount', default: 'Monto')}</td>
-        <td><g:checkBox class='salesSiteCol' name="3" value="${true}" /></td>
-        <td>${message(code: 'salesSite.absamount', default: 'Monto Abs.')}</td>
-        <td><g:checkBox class='salesSiteCol' name="4" value="${true}" /></td>
-        <td>${message(code: 'salesSite.authorization', default: 'Autorizacion')}</td>        
-      </tr>
-      <tr>
-        <td><g:checkBox class='salesSiteCol' name="5" value="${true}" /></td>
-        <td>${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}</td>
-        <td><g:checkBox class='salesSiteCol' name="6" value="${true}" /></td>
-        <td>${message(code: 'salesSite.customerId', default: 'Cliente')}</td>
-        <td><g:checkBox class='salesSiteCol' name="7" value="${true}" /></td>
-        <td>${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</td>
-        <td><g:checkBox class='salesSiteCol' name="8" value="${true}" /></td>
-        <td>${message(code: 'salesSite.documentIdType', default: 'DNI')}</td>
-       </tr>
-       <tr>
-        <td><g:checkBox class='salesSiteCol' name="9" value="${true}" /></td>
         <td>${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</td>
-        <td><g:checkBox class='salesSiteCol' name="10" value="${true}" /></td>
-        <td>${message(code: 'salesSite.ro', default: 'RO')}</td>
-        <td><g:checkBox class='salesSiteCol' name="11" value="${true}" /></td>
-        <td>${message(code: 'salesSite.tid', default: 'TID')}</td>
-        <td><g:checkBox class='salesSiteCol' name="12" value="${true}" /></td>
-        <td>${message(code: 'salesSite.nsu', default: 'NSU')}</td>
+        <td><g:checkBox class='salesSiteCol' name="3" value="${true}" /></td>
+        <td>${message(code: 'salesSite.medio', default: 'Medio')}</td>
+        <td><g:checkBox class='salesSiteCol' name="4" value="${true}" /></td>
+        <td>${message(code: 'salesSite.state', default: 'Estado')}</td>
+        <td><g:checkBox class='salesSiteCol' name="5" value="${true}" /></td>
+        <td>${message(code: 'salesSite.registerType', default: 'Tipo Registro')}</td>
+        <td><g:checkBox class='salesSiteCol' name="6" value="${true}" /></td>
+        <td>${message(code: 'salesSite.lot', default: 'Lote')}</td>
+        <td><g:checkBox class='salesSiteCol' name="7" value="${true}" /></td>
+        <td>${message(code: 'salesSite.cardNumber', default: 'Nro. Tarjeta')}</td>
+        <td><g:checkBox class='salesSiteCol' name="8" value="${true}" /></td>
+        <td>${message(code: 'salesSite.transDate', default: 'Fecha de Operacion')}</td>
       </tr>
-      <tr>
-        <td><g:checkBox class='salesSiteCol' name="13" value="${true}" /></td>
-        <td>${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}</td>
-        <td><g:checkBox class='salesSiteCol' name="14" value="${true}" /></td>
-        <td>${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}</td>
-        <td><g:checkBox class='salesSiteCol' name="15" value="true"/></td>
+      <tr>        
+        <td><g:checkBox class='salesSiteCol' name="9" value="${true}" /></td>
         <td>${message(code: 'salesSite.paymentDate', default: 'Fecha de Pago')}</td>
+        <td><g:checkBox class='salesSiteCol' name="10" value="${true}" /></td>
+        <td>${message(code: 'salesSite.amount', default: 'Monto')}</td>
+        <td><g:checkBox class='salesSiteCol' name="11" value="${true}" /></td>
+        <td>${message(code: 'salesSite.absamount', default: 'Monto Absoluto')}</td>
+        <td><g:checkBox class='salesSiteCol' name="12" value="${true}" /></td>
+        <td>${message(code: 'salesSite.shareAmount', default: 'Monto Cuota')}</td>
+        <td><g:checkBox class='salesSiteCol' name="13" value="${true}" /></td>
+        <td>${message(code: 'salesSite.authorization', default: 'Autorizacion')}</td>
+        <td><g:checkBox class='salesSiteCol' name="14" value="${true}" /></td>
+        <td>${message(code: 'salesSite.shareNumber', default: 'Nro. Cuota')}</td>
+        <td><g:checkBox class='salesSiteCol' name="15" value="true"/></td>
+        <td>${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}</td>
         <td><g:checkBox class='salesSiteCol' name="16" value="true"/></td>
-        <td>${message(code: 'salesSite.payment', default: 'Pagado')}</td>
-      </tr>                    
-  </table>
+        <td>${message(code: 'salesSite.liq', default: 'Num. Liquidacion')}</td>
+      </tr>
+      <tr>        
+        <td><g:checkBox class='salesSiteCol' name="17" value="true"/></td>
+        <td>${message(code: 'salesSite.customerId', default: 'Cliente')}</td>
+        <td><g:checkBox class='salesSiteCol' name="18" value="${true}" /></td>
+        <td>${message(code: 'salesSite.documentIdTypeType', default: 'Tipo de Doc.')}</td>
+        <td><g:checkBox class='salesSiteCol' name="19" value="${true}" /></td>
+        <td>${message(code: 'salesSite.receiptNumber', default: 'Num. Recibo')}</td>
+        <td><g:checkBox class='salesSiteCol' name="20" value="${true}" /></td>
+        <td>${message(code: 'salesSite.tid', default: 'TID')}</td>
+        <td><g:checkBox class='salesSiteCol' name="21" value="${true}" /></td>
+        <td>${message(code: 'salesSite.nsu', default: 'NSU')}</td>
+        <td><g:checkBox class='salesSiteCol' name="22" value="${true}" /></td>
+        <td>${message(code: 'salesSite.ro', default: 'RO')}</td>
+        <td><g:checkBox class='salesSiteCol' name="23" value="true"/></td>
+        <td>${message(code: 'salesSite.store', default: 'Num. comercio')}</td>
+        <td><g:checkBox class='salesSiteCol' name="24" value="true"/></td>
+        <td>${message(code: 'salesSite.cardLot', default: 'Lote Tarjeta')}</td>
+      </tr>
+      <tr>        
+        <td><g:checkBox class='salesSiteCol' name="25" value="true"/></td>
+        <td>${message(code: 'salesSite.uniqueRo', default: 'Unico RO')}</td>
+        <td><g:checkBox class='salesSiteCol' name="26" value="${true}" /></td>
+        <td>${message(code: 'salesSite.payment', default: 'Ref. de Pago')}</td>
+        <td><g:checkBox class='salesSiteCol' name="27" value="${true}" /></td>
+        <td>${message(code: 'salesSite.documentNumber', default: 'Nro. Doc.')}</td>
+        <td><g:checkBox class='salesSiteCol' name="28" value="${true}" /></td>
+        <td>${message(code: 'salesSite.period', default: 'Periodo')}</td>
+        <td><g:checkBox class='salesSiteCol' name="29" value="${true}" /></td>
+        <td>${message(code: 'salesSite.origin', default: 'Flag Origen')}</td>
+        <td><g:checkBox class='salesSiteCol' name="30" value="${true}" /></td>
+        <td>${message(code: 'salesSite.operationId', default: 'Operation ID')}</td>
+        <td><g:checkBox class='salesSiteCol' name="31" value="true"/></td>
+        <td>${message(code: 'salesSite.sapId', default: 'Sap ID')}</td>
+        <td><g:checkBox class='salesSiteCol' name="32" value="true"/></td>
+        <td>${message(code: 'salesSite.paymentReference', default: 'Pay Reference')}</td>
+        <td><g:checkBox class='salesSiteCol' name="33" value="true"/></td>
+        <td>${message(code: 'salesSite.pricing', default: 'Pricing')}</td>
+        <td><g:checkBox class='salesSiteCol' name="34" value="true"/></td>
+        <td>${message(code: 'salesSite.concPayId', default: 'Conc Pay ID')}</td>
+      </tr>                                      
+    </table>
   </div>       
 
 <div style="width:100%;width:1200px;overflow:auto;border:1px solid #ccc;position:relative">
 	<table id="sales_table" class="display">
 	  <thead>
 		  <tr>
-	      <th>${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}</th>
-	      <th>${message(code: 'salesSite.amount', default: 'Monto')}</th>
-	      <th>${message(code: 'salesSite.absamount', default: 'Monto Abs')}</th>
-	      <th>${message(code: 'salesSite.authorization', default: 'Autorizacion')}</th>
-	      <th>${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}</th>
-	      <th>${message(code: 'salesSite.customerId', default: 'Cliente')}</th>
-	      <th>${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</th>
-	      <th>${message(code: 'salesSite.documentIdType', default: 'DNI')}</th>
-	      <th>${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</th> 
-	      <th>${message(code: 'salesSite.ro', default: 'RO')}</th>
-	      <th>${message(code: 'salesSite.tid', default: 'TID')}</th>
-	      <th>${message(code: 'salesSite.nsu', default: 'NSU')}</th>
-	      <th>${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}</th>          
-	      <th>${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}</th>
-	      <th>${message(code: 'salesSite.paymentDate', default: 'Fecha de Pago')}</th>
-	      <th>${message(code: 'salesSite.payment', default: 'Ref. de Pago')}</th>
-			</tr>
+		      <th>${message(code: 'salesSite.saleCode', default: 'Cod. Venta')}</th>
+		      <th>${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</th>
+		      <th>${message(code: 'salesSite.medio', default: 'Medio')}</th>
+		      <th>${message(code: 'salesSite.state', default: 'Estado')}</th>
+		      <th>${message(code: 'salesSite.registerType', default: 'Tipo Registro')}</th>
+		      <th>${message(code: 'salesSite.lot', default: 'Lote')}</th>
+		      <th>${message(code: 'salesSite.cardNumber', default: 'Nro. Tarjeta')}</th>
+		      <th>${message(code: 'salesSite.transDate', default: 'Fecha de Operacion')}</th> 
+		      <th>${message(code: 'salesSite.paymentDate', default: 'Fecha de Pago')}</th>
+		      <th>${message(code: 'salesSite.amount', default: 'Monto')}</th>
+		      <th>${message(code: 'salesSite.absamount', default: 'Monto Absoluto')}</th>
+		      <th>${message(code: 'salesSite.shareAmount', default: 'Monto Cuota')}</th>
+		      <th>${message(code: 'salesSite.authorization', default: 'Autorizacion')}</th>          
+		      <th>${message(code: 'salesSite.shareNumber', default: 'Nro. Cuota')}</th>
+		      <th>${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}</th>
+		      <th>${message(code: 'salesSite.liq', default: 'Num. Liquidacion')}</th>
+		      <th>${message(code: 'salesSite.customerId', default: 'Cliente')}</th>
+		      <th>${message(code: 'salesSite.documentIdTypeType', default: 'Tipo de Doc.')}</th>
+		      <th>${message(code: 'salesSite.receiptNumber', default: 'Num. Recibo')}</th>
+		      <th>${message(code: 'salesSite.tid', default: 'TID')}</th>
+		      <th>${message(code: 'salesSite.nsu', default: 'NSU')}</th>
+		      <th>${message(code: 'salesSite.ro', default: 'RO')}</th>
+		      <th>${message(code: 'salesSite.store', default: 'Num. comercio')}</th>
+		      <th>${message(code: 'salesSite.cardLot', default: 'Lote Tarjeta')}</th>
+		      <th>${message(code: 'salesSite.uniqueRo', default: 'Unico RO')}</th>
+		      <th>${message(code: 'salesSite.payment', default: 'Ref. de Pago')}</th>
+		      <th>${message(code: 'salesSite.documentNumber', default: 'Nro. Doc.')}</th>
+		      <th>${message(code: 'salesSite.period', default: 'Periodo')}</th>
+		      <th>${message(code: 'salesSite.origin', default: 'Flag Origen')}</th>
+		      <th>${message(code: 'salesSite.operationId', default: 'Operation ID')}</th>
+		      <th>${message(code: 'salesSite.sapId', default: 'Sap ID')}</th>
+		      <th>${message(code: 'salesSite.paymentReference', default: 'Pay Reference')}</th>
+		      <th>${message(code: 'salesSite.pricing', default: 'Pricing')}</th>
+		      <th>${message(code: 'salesSite.concPayId', default: 'Conc Pay ID')}</th>
+		    </tr>
 		</thead>
 		<tbody>
 	    <tr>
@@ -114,22 +181,40 @@
   <table id="compensated_sales_table" class="display">
     <thead>
       <tr>
-	      <th>${message(code: 'salesSite.transDate', default: 'Fecha de la Transaccion')}</th>
+          <th>${message(code: 'salesSite.saleCode', default: 'Cod. Venta')}</th>
+          <th>${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</th>
+          <th>${message(code: 'salesSite.medio', default: 'Medio')}</th>
+	      <th>${message(code: 'salesSite.state', default: 'Estado')}</th>
+	      <th>${message(code: 'salesSite.registerType', default: 'Tipo Registro')}</th>
+	      <th>${message(code: 'salesSite.lot', default: 'Lote')}</th>
+	      <th>${message(code: 'salesSite.cardNumber', default: 'Nro. Tarjeta')}</th>
+	      <th>${message(code: 'salesSite.transDate', default: 'Fecha de Operacion')}</th> 
+	      <th>${message(code: 'salesSite.paymentDate', default: 'Fecha de Pago')}</th>
 	      <th>${message(code: 'salesSite.amount', default: 'Monto')}</th>
-	      <th>${message(code: 'salesSite.absamount', default: 'Monto Abs')}</th>
-	      <th>${message(code: 'salesSite.authorization', default: 'Autorizacion')}</th>
-	      <th>${message(code: 'salesSite.cardNumber', default: 'Nro Tarjeta')}</th>
+	      <th>${message(code: 'salesSite.absamount', default: 'Monto Absoluto')}</th>
+	      <th>${message(code: 'salesSite.shareAmount', default: 'Monto Cuota')}</th>
+	      <th>${message(code: 'salesSite.authorization', default: 'Autorizacion')}</th>          
+	      <th>${message(code: 'salesSite.shareNumber', default: 'Nro. Cuota')}</th>
+	      <th>${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}</th>
+	      <th>${message(code: 'salesSite.liq', default: 'Num. Liquidacion')}</th>
 	      <th>${message(code: 'salesSite.customerId', default: 'Cliente')}</th>
-	      <th>${message(code: 'salesSite.documentNumber', default: 'Doc. Nro.')}</th>
-	      <th>${message(code: 'salesSite.documentIdType', default: 'DNI')}</th>
-	      <th>${message(code: 'salesSite.receiptNumber', default: 'Nro. Recibo')}</th> 
-	      <th>${message(code: 'salesSite.ro', default: 'RO')}</th>
+	      <th>${message(code: 'salesSite.documentIdTypeType', default: 'Tipo de Doc.')}</th>
+	      <th>${message(code: 'salesSite.receiptNumber', default: 'Num. Recibo')}</th>
 	      <th>${message(code: 'salesSite.tid', default: 'TID')}</th>
 	      <th>${message(code: 'salesSite.nsu', default: 'NSU')}</th>
-	      <th>${message(code: 'salesSite.shareNumber', default: 'Nro Cuota')}</th>          
-	      <th>${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}</th>
-	      <th>${message(code: 'salesSite.paymentDate', default: 'Fecha de Pago')}</th>
+	      <th>${message(code: 'salesSite.ro', default: 'RO')}</th>
+	      <th>${message(code: 'salesSite.store', default: 'Num. comercio')}</th>
+	      <th>${message(code: 'salesSite.cardLot', default: 'Lote Tarjeta')}</th>
+	      <th>${message(code: 'salesSite.uniqueRo', default: 'Unico RO')}</th>
 	      <th>${message(code: 'salesSite.payment', default: 'Ref. de Pago')}</th>
+	      <th>${message(code: 'salesSite.documentNumber', default: 'Nro. Doc.')}</th>
+	      <th>${message(code: 'salesSite.period', default: 'Periodo')}</th>
+	      <th>${message(code: 'salesSite.origin', default: 'Flag Origen')}</th>
+	      <th>${message(code: 'salesSite.operationId', default: 'Operation ID')}</th>
+	      <th>${message(code: 'salesSite.sapId', default: 'Sap ID')}</th>
+	      <th>${message(code: 'salesSite.paymentReference', default: 'Pay Reference')}</th>
+	      <th>${message(code: 'salesSite.pricing', default: 'Pricing')}</th>
+	      <th>${message(code: 'salesSite.concPayId', default: 'Conc Pay ID')}</th>
       </tr>
     </thead>
     <tbody>
