@@ -16,12 +16,12 @@ class CompensationController extends SessionInfoController {
     def sessionFactory
 
 	def salesColSQLNames = ["CD_VENTA_CUOTA","CD_VENTA_ML","CD_MEDIO","CD_ESTADO","CD_TIPO_REGISTRO","LOTE","NU_TARJETA",
-		"FC_OPERACION","FC_PAGO","VL_IMPORTE","absAmount","VL_CUOTA","NU_AUTORIZACION","NU_CUOTA","NU_CANT_CUOTAS","NU_LIQUIDACION","CUST_ID",
+		"FC_OPERACION","FC_PAGO","VL_IMPORTE","absAmount","VL_CUOTA","absCuota","NU_AUTORIZACION","NU_CUOTA","NU_CANT_CUOTAS","NU_LIQUIDACION","CUST_ID",
 		"DOC_ID","NU_RECIBO","TID","NSU","RO","NU_COMERCIO","LOTE_TARJETA","NU_UNICO_RO","DOC_NUMBER","PAYMENT_ID","CD_PERIODO",
 		"FL_ORIGEN","OPERATION_ID","SAP_ID","PAY_REFERENCE","PRICING","CONC_PAY_ID"]
 	
 	def receiptColSqlNames = ["CD_RECIBO","CD_MEDIO","CD_ESTADO","CD_TIPO_REGISTRO","LOTE","NU_TARJETA","FC_OPERACION",
-		"FC_PAGO","VL_IMPORTE","absAmount","VL_CUOTA","NU_AUTORIZACION","NU_CUOTA","NU_CANT_CUOTAS","NU_LIQUIDACION",
+		"FC_PAGO","VL_IMPORTE","absAmount","VL_CUOTA","absCuota","NU_AUTORIZACION","NU_CUOTA","NU_CANT_CUOTAS","NU_LIQUIDACION",
 		"CUST_ID","DOC_ID","NU_RECIBO","TID","NSU","RO","NU_COMERCIO","LOTE_TARJETA","NU_UNICO_RO","PAYMENT_ID",
 		"DOC_NUMBER","CD_PERIODO","FL_PAGADO"]
 	
@@ -133,6 +133,8 @@ class CompensationController extends SessionInfoController {
 
 		if(colName == "absAmount") {
 			query += " order by abs(VL_IMPORTE) ${sortDir}"
+		} else if(colName == "absCuota"){
+			query += " order by abs(VL_CUOTA) ${sortDir}"
 		} else {
 			query += " order by ${colName} ${sortDir}"
 		}
@@ -160,8 +162,8 @@ class CompensationController extends SessionInfoController {
 		sqlCountQuery.setLong("state3",state3.id)
 
 		if(params.compReceiptList.length() > 0){
-			sqlQuery.setString("ids",queryMap.ids)
-			sqlCountQuery.setString("ids",queryMap.ids)
+			sqlQuery.setParameterList("ids",queryMap.ids.split(","))
+			sqlCountQuery.setParameterList("ids",queryMap.ids.split(","))
 		}
 		if(params.fromReceiptTransDate != null && params.toReceiptTransDate != null){
 		 sqlQuery.setDate("fromTransDate",queryMap.fromTransDate)
@@ -298,6 +300,8 @@ class CompensationController extends SessionInfoController {
 		 }
 		 if(colName == "absAmount") {
 			 query += " order by abs(s.VL_IMPORTE) ${sortDir}"
+		 } else if(colName == "absCuota"){
+		 	query += " order by abs(VL_IMPORTE) ${sortDir}"
 		 } else {
 		 	query += " order by ${colName} ${sortDir}"
 		 }
@@ -322,8 +326,8 @@ class CompensationController extends SessionInfoController {
 		sqlCountQuery.setLong("state3",state3.id)
 
 		if(params.compSalesList.length() > 0){
-			 sqlQuery.setString("ids",queryMap.ids)
-			 sqlCountQuery.setString("ids",queryMap.ids)
+			 sqlQuery.setParameterList("ids",queryMap.ids.split(","))
+			 sqlCountQuery.setParameterList("ids",queryMap.ids.split(","))
 		}
 		if(params.fromSalesTransDate != null  && params.toSalesTransDate != null){
 			sqlQuery.setDate("fromTransDate",queryMap.fromTransDate)
@@ -436,35 +440,37 @@ class CompensationController extends SessionInfoController {
 		def data = []
 		
 		instanceList.each(){
+			int i=0
 			data << ["DT_RowId":it.id.toString(),
-					 "0":it?.id.toString(),
-					 "1":it?.medio.id,
-					 "2":it?.state.id,
-					 "3":it?.registerType,
-					 "4":it?.lot,
-					 "5":it?.cardNumber,
-					 "6":formatDate(date:it?.transactionDate, format:"dd-MM-yyyy"),//documentId.toString(),
-					 "7":formatDate(date:it?.paymentDate, format:"dd-MM-yyyy"),
-					 "8":formatNumber(number:it?.amount,format:"###,###.00"),
-					 "9":formatNumber(number:it?.amount?.abs(),format:"###,###.00"),
-					 "10":formatNumber(number:it?.shareAmount,format:"###,###.00"),
-					 "11":it?.authorization?.toString(),
-					 "12":it?.shareNumber?.toString(),
-					 "13":it?.shareQty?.toString(),
-					 "14":it?.liq?.toString(),
-					 "15":it?.customerId?.toString(),
-					 "16":it?.documentId?.toString(),
-					 "17":it?.receiptNumber?.toString(),
-					 "18":it?.tid?.toString(),
-					 "19":it?.nsu?.toString(),
-					 "20":it?.ro?.toString(),
-					 "21":it?.store?.toString(),
-					 "22":it?.cardLot?.toString(),
-					 "23":it?.uniqueRo?.toString(),
-					 "24":it?.payment?.toString(),
-					 "25":it?.documentNumber?.toString(),
-					 "26":it?.period?.toString(),
-					 "27":it?.payed?.toString()
+					 "${i++}":it?.id.toString(),
+					 "${i++}":it?.medio.id,
+					 "${i++}":it?.state.id,
+					 "${i++}":it?.registerType,
+					 "${i++}":it?.lot,
+					 "${i++}":it?.cardNumber,
+					 "${i++}":formatDate(date:it?.transactionDate, format:"dd-MM-yyyy"),//documentId.toString(),
+					 "${i++}":formatDate(date:it?.paymentDate, format:"dd-MM-yyyy"),
+					 "${i++}":formatNumber(number:it?.amount,format:"###,###.00"),
+					 "${i++}":formatNumber(number:it?.amount?.abs(),format:"###,###.00"),
+					 "${i++}":formatNumber(number:it?.shareAmount,format:"###,###.00"),
+				     "${i++}":formatNumber(number:it?.shareAmount?.abs(),format:"###,###.00"),
+					 "${i++}":it?.authorization?.toString(),
+					 "${i++}":it?.shareNumber?.toString(),
+					 "${i++}":it?.shareQty?.toString(),
+					 "${i++}":it?.liq?.toString(),
+					 "${i++}":it?.customerId?.toString(),
+					 "${i++}":it?.documentId?.toString(),
+					 "${i++}":it?.receiptNumber?.toString(),
+					 "${i++}":it?.tid?.toString(),
+					 "${i++}":it?.nsu?.toString(),
+					 "${i++}":it?.ro?.toString(),
+					 "${i++}":it?.store?.toString(),
+					 "${i++}":it?.cardLot?.toString(),
+					 "${i++}":it?.uniqueRo?.toString(),
+					 "${i++}":it?.payment?.toString(),
+					 "${i++}":it?.documentNumber?.toString(),
+					 "${i++}":it?.period?.toString(),
+					 "${i++}":it?.payed?.toString()
 					 ]
 		}
 		
@@ -476,41 +482,43 @@ class CompensationController extends SessionInfoController {
 		def data = []
 		
 		instanceList.each(){
+			int i=0
 			data << ["DT_RowId":it.id.toString(),
-					 "0":it?.saleMl,
-					 "1":it?.id,
-					 "2":it?.medio.id.toString(),
-					 "3":it?.state.id.toString(),
-					 "4":it?.registerType?.toString(),
-					 "5":it?.lot.toString(),
-					 "6":it?.cardNumber?.toString(),
-					 "7":formatDate(date:it?.transactionDate, format:"dd-MM-yyyy"),
-					 "8":formatDate(date:it?.paymentDate, format:"dd-MM-yyyy"),
-					 "9":formatNumber(number:it?.amount,format:"###,###.00"),
-					 "10":formatNumber(number:it?.amount?.abs(),format:"###,###.00"),
-					 "11":formatNumber(number:it?.shareAmount,format:"###,###.00"),
-					 "12":it?.authorization?.toString(),
-					 "13":it?.shareNumber?.toString(),
-					 "14":it?.shareQty?.toString(),
-					 "15":it?.liq?.toString(),
-					 "16":it?.customerId?.toString(),
-					 "17":it?.documentId?.toString(),
-					 "18":it?.receiptNumber?.toString(),
-					 "19":it?.tid?.toString(),
-					 "20":it?.nsu?.toString(),
-					 "21":it?.ro?.toString(),
-					 "22":it?.store?.toString(),
-					 "23":it?.cardLot?.toString(),
-					 "24":it?.uniqueRo?.toString(),
-					 "25":it?.payment?.toString(),
-					 "26":it?.documentNumber?.toString(),
-					 "27":it?.period?.toString(),
-					 "28":it?.origin?.toString(),
-					 "29":it?.operation?.toString(),
-					 "30":it?.sap?.toString(),
-					 "31":it?.paymentReference?.toString(),
-					 "32":it?.pricing?.toString(),
-					 "33":it?.concPay?.toString()
+					 "${i++}":it?.saleMl,
+					 "${i++}":it?.id,
+					 "${i++}":it?.medio.id.toString(),
+					 "${i++}":it?.state.id.toString(),
+					 "${i++}":it?.registerType?.toString(),
+					 "${i++}":it?.lot.toString(),
+					 "${i++}":it?.cardNumber?.toString(),
+					 "${i++}":formatDate(date:it?.transactionDate, format:"dd-MM-yyyy"),
+					 "${i++}":formatDate(date:it?.paymentDate, format:"dd-MM-yyyy"),
+					 "${i++}":formatNumber(number:it?.amount,format:"###,###.00"),
+					 "${i++}":formatNumber(number:it?.amount?.abs(),format:"###,###.00"),
+					 "${i++}":formatNumber(number:it?.shareAmount,format:"###,###.00"),
+					 "${i++}":formatNumber(number:it?.shareAmount?.abs(),format:"###,###.00"),
+					 "${i++}":it?.authorization?.toString(),
+					 "${i++}":it?.shareNumber?.toString(),
+					 "${i++}":it?.shareQty?.toString(),
+					 "${i++}":it?.liq?.toString(),
+					 "${i++}":it?.customerId?.toString(),
+					 "${i++}":it?.documentId?.toString(),
+					 "${i++}":it?.receiptNumber?.toString(),
+					 "${i++}":it?.tid?.toString(),
+					 "${i++}":it?.nsu?.toString(),
+					 "${i++}":it?.ro?.toString(),
+					 "${i++}":it?.store?.toString(),
+					 "${i++}":it?.cardLot?.toString(),
+					 "${i++}":it?.uniqueRo?.toString(),
+					 "${i++}":it?.payment?.toString(),
+					 "${i++}":it?.documentNumber?.toString(),
+					 "${i++}":it?.period?.toString(),
+					 "${i++}":it?.origin?.toString(),
+					 "${i++}":it?.operation?.toString(),
+					 "${i++}":it?.sap?.toString(),
+					 "${i++}":it?.paymentReference?.toString(),
+					 "${i++}":it?.pricing?.toString(),
+					 "${i++}":it?.concPay?.toString()
 					 ]
 		}
 		

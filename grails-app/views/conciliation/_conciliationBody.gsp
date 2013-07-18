@@ -86,9 +86,9 @@
         <td><g:checkBox class='salesSiteCol' name="16" value="true"/></td>
         <td>${message(code: 'salesSite.customerId', default: 'Cliente')}</td>
         <td><g:checkBox class='salesSiteCol' name="17" value="${true}" /></td>
-        <td>${message(code: 'salesSite.documentIdTypeType', default: 'Tipo de Doc.')}</td>
+        <td>${message(code: 'salesSite.documentIdType', default: 'Tipo de Doc.')}</td>
         <td><g:checkBox class='salesSiteCol' name="18" value="${true}" /></td>
-        <td>${message(code: 'salesSite.receiptNumber', default: 'Num. Recibo')}</td>
+        <td>${message(code: 'salesSite.receiptNum', default: 'Num. Recibo')}</td>
         <td><g:checkBox class='salesSiteCol' name="19" value="${true}" /></td>
         <td>${message(code: 'salesSite.tid', default: 'TID')}</td>
         <td><g:checkBox class='salesSiteCol' name="20" value="${true}" /></td>
@@ -242,7 +242,7 @@
         <td><g:checkBox class='receiptCol' name="16" value="${true}" /></td>
         <td>${message(code: 'salesSite.documentIdType', default: 'Tipo de Doc.')}</td>
         <td><g:checkBox class='receiptCol' name="17" value="${true}" /></td>
-        <td>${message(code: 'salesSite.receiptNumber', default: 'Num. Recibo')}</td>
+        <td>${message(code: 'salesSite.receiptNum', default: 'Num. Recibo')}</td>
         <td><g:checkBox class='receiptCol' name="18" value="${true}" /></td>
         <td>${message(code: 'salesSite.tid', default: 'TID')}</td>
        </tr>

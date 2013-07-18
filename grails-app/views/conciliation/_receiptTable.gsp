@@ -17,7 +17,7 @@
       <th>${message(code: 'salesSite.liq', default: 'Num. Liquidacion')}</th>
       <th>${message(code: 'salesSite.customerId', default: 'Cliente')}</th>
       <th>${message(code: 'salesSite.documentIdType', default: 'Tipo de Doc.')}</th>
-      <th>${message(code: 'salesSite.receiptNumber', default: 'Num. Recibo')}</th>
+      <th>${message(code: 'salesSite.receiptNum', default: 'Num. Recibo')}</th>
       <th>${message(code: 'salesSite.tid', default: 'TID')}</th>
       <th>${message(code: 'salesSite.nsu', default: 'NSU')}</th>
       <th>${message(code: 'salesSite.ro', default: 'RO')}</th>

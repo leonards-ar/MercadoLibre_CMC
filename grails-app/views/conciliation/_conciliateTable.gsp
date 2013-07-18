@@ -17,7 +17,7 @@
     <th>R${message(code: 'salesSite.liq', default: 'Num. Liquidacion')}</th>
     <th>R${message(code: 'salesSite.customerId', default: 'Cliente')}</th>
     <th>R${message(code: 'salesSite.documentIdType', default: 'Tipo de Doc.')}</th>
-    <th>R${message(code: 'salesSite.receiptNumber', default: 'Num. Recibo')}</th>
+    <th>R${message(code: 'salesSite.receiptNum', default: 'Num. Recibo')}</th>
     <th>R${message(code: 'salesSite.tid', default: 'TID')}</th>
     <th>R${message(code: 'salesSite.nsu', default: 'NSU')}</th>
     <th>R${message(code: 'salesSite.ro', default: 'RO')}</th>
@@ -44,8 +44,8 @@
     <th>S${message(code: 'salesSite.shareQty', default: 'Cant. Cuotas')}</th>
     <th>S${message(code: 'salesSite.liq', default: 'Num. Liquidacion')}</th>
     <th>S${message(code: 'salesSite.customerId', default: 'Cliente')}</th>
-    <th>S${message(code: 'salesSite.documentIdTypeType', default: 'Tipo de Doc.')}</th>
-    <th>S${message(code: 'salesSite.receiptNumber', default: 'Num. Recibo')}</th>
+    <th>S${message(code: 'salesSite.documentIdType', default: 'Tipo de Doc.')}</th>
+    <th>S${message(code: 'salesSite.receiptNum', default: 'Num. Recibo')}</th>
     <th>S${message(code: 'salesSite.tid', default: 'TID')}</th>
     <th>S${message(code: 'salesSite.nsu', default: 'NSU')}</th>
     <th>S${message(code: 'salesSite.ro', default: 'RO')}</th>
