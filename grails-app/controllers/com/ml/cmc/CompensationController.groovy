@@ -176,7 +176,7 @@ class CompensationController extends SessionInfoController {
 		 sqlQuery.setDate("toPaymentDate",queryMap.toPaymentDate)
 		 
 		 sqlCountQuery.setDate("fromPaymentDate",queryMap.fromPaymentDate)
-		 sqlCountQuery.setdate("toPaymentDate",queryMap.toPaymentDate)
+		 sqlCountQuery.setDate("toPaymentDate",queryMap.toPaymentDate)
 		} else {
 		  sqlQuery.setDate("accountPaymentDate", queryMap.accountPaymentDate)
 		  sqlCountQuery.setDate("accountPaymentDate", queryMap.accountPaymentDate)
