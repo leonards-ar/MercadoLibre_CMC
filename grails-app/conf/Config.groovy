@@ -12,7 +12,6 @@ import org.apache.log4j.DailyRollingFileAppender
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
 
-grails.config.locations = ["classpath:${application.name-config.properties}"]
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.use.accept.header = false
@@ -69,15 +68,18 @@ environments {
 		grails.serverURL = "http://localhost:8080/${appName}DEV"
 		grails.app.context = "/cmcDev"
 		application.name= "cmcDev"
+		grails.config.locations = ["classpath:${application.name}-config.groovy"]
 	}
 	mercadolibreUat {
 		grails.serverURL = "http://localhost:8080/${appName}UAT"
 		grails.app.context = "/cmcUat"
 		application.name= "cmcUat"
+		grails.config.locations = ["classpath:${application.name}-config.groovy"]
 	}
 	mercadolibre {
 		grails.serverURL = "http://localhost:8080/${appName}"
 		application.name= "cmc"
+		grails.config.locations = ["classpath:${application.name}-config.properties"]
 	}
 
 }
