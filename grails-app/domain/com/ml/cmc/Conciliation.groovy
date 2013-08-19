@@ -7,7 +7,7 @@ class Conciliation implements Serializable {
 	Long lot
 	Medio medio
 	Long period
-	RegisterType registerType
+	Long registerType
 	
     static constraints = {
 		

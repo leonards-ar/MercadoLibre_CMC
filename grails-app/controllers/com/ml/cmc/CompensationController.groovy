@@ -407,8 +407,11 @@ class CompensationController extends SessionInfoController {
                     def item = params.element == 'F_RECIBOS'?Receipt.findById(it):SalesSite.findById(it)                    
                     def compensation = new Compensation(source:params.element, registerId:item?.id,medio: medio, group:groupId, period:item?.period, serial:lot)
 
-                    compensation.save()
-					
+                    if(!compensation.save()){
+						compensation.errors.each{
+							println it
+						}
+					}
                 }
             }
         }

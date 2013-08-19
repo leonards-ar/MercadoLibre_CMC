@@ -209,7 +209,11 @@ class ConciliationController extends SessionInfoController{
 				def conciliation = new Conciliation(sale:salesSite, receipt:receipt,
 					lot:lot, medio:medio, period:receipt?.period, registerType:receipt?.registerType)
 				
-				conciliation.save()
+				if(!conciliation.save()) {
+					conciliation.errors.each {
+						println it
+					}
+				}
 			}
 		}
 		
