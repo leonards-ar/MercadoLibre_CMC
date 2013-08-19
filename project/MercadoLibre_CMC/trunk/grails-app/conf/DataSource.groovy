@@ -29,7 +29,7 @@ environments {
 			url = "jdbc:oracle:thin:@10.3.207.108:1521:ORCL"
 			driverClassName = "oracle.jdbc.driver.OracleDriver"
 			username = "ORCL_W01"
-			password = "ora_desa1"
+			password = "ORACLE"
 			properties {
 				maxActive = 50
 				maxIdle = 25
