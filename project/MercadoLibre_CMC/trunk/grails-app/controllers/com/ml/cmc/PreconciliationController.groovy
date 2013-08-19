@@ -136,7 +136,11 @@ class PreconciliationController extends SessionInfoController{
 	                lot:lot, medio:medio, period: receipt?.period, registerType:receipt?.registerType,
 					saleStatus: salesSite.state, origin:salesSite?.origin)
 	            
-	            preConciliation.save()
+	            if(!preConciliation.save()){
+					preConciliation.errors.each{
+						println it
+					}
+				}
 	        }
         }
         

@@ -143,7 +143,11 @@ class DespreconciliationController extends SessionInfoController {
 					status: preconciliated?.sale?.state
                 )
                 
-                despreconciliation.save();
+                if(!despreconciliation.save()){
+					despreconciliation.errors.each{
+						println it
+					}
+				}
                 
             }
             

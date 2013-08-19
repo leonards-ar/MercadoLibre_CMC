@@ -163,8 +163,11 @@ class DesconciliationController extends SessionInfoController {
                     period: conciliated.period
                 )
                 
-                desconciliation.save();
-                
+                if(!desconciliation.save()){
+					desconciliation.errors.each {
+						println it
+					}	
+				}
             }
             
         }

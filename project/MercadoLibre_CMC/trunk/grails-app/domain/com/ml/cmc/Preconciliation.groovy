@@ -8,7 +8,7 @@ class Preconciliation implements Serializable{
     Medio medio
 	String saleStatus
     Long period
-    RegisterType registerType
+    Long registerType
 	String origin
 	
     static constraints = {
