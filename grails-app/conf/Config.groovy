@@ -68,13 +68,13 @@ environments {
 		grails.serverURL = "http://localhost:8080/${appName}DEV"
 		grails.app.context = "/cmcDev"
 		application.name= "cmcDev"
-		grails.config.locations = ["classpath:${application.name}-config.groovy"]
+		grails.config.locations = ["classpath:${application.name}-config.properties"]
 	}
 	mercadolibreUat {
 		grails.serverURL = "http://localhost:8080/${appName}UAT"
 		grails.app.context = "/cmcUat"
 		application.name= "cmcUat"
-		grails.config.locations = ["classpath:${application.name}-config.groovy"]
+		grails.config.locations = ["classpath:${application.name}-config.properties"]
 	}
 	mercadolibre {
 		grails.serverURL = "http://localhost:8080/${appName}"
